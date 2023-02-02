@@ -11,35 +11,32 @@
 </head>
 <body>
 <c:set var="side" value="test" />
-<%@ include file="common/navbar.jsp" %>
+<%@ include file="../common/navbar.jsp" %>
 	<div class="container">
 		<div class="row">
 			<div class="col-2 bg-dark mr-3">
-				<%@ include file="common/sidebar.jsp" %>
+				<%@ include file="../common/sidebar.jsp" %>
 			</div>
 			<div class="col-10">
 				<div class="row">
-					<h1>휴가항목설정</h1>
+					<h1>휴가일수조회</h1>
 					<hr>
 				</div>
-				<div class="row">
-					<div class="col-4 text-center">
-						<p>근태구분</p>
-					</div>
-					<div class="col-4">	
+			<form>
+				<div class="mb-2 text-end">
+					<label class="form-label">근태구분</label>
 						<select style="width: 150px">
 							<option>전체</option>
 							<option>연차</option>
 							<option>병가</option>
 						</select>
-					</div>
-					<div class="col-4 text-end">
-						<button>검색</button>
+						<button type="button" class="btn btn-dark btn-sm text-end" id="btn-search-postcode">검색</button>
 				</div>
+				</form>
 				<div class="row">
 					<div class="col-3 text-left">
 						<p>
-							<i class="bi bi-arrow-right-square"></i>
+							<i class="bi bi-arrow-right-square "></i>
 							근속연수별 휴가 설정
 						</p>
 					</div>
