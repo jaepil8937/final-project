@@ -27,7 +27,7 @@
 				<ul class="dropdown-menu dropdown-menu-dark" id="sub-menu">
 					<li><a class="dropdown-item  ${side eq '5' ? 'text-light fw-bold' : '' }" href="#">근속연수별 휴가 설정</a></li>
 					<li><a class="dropdown-item  ${side eq '5' ? 'text-light fw-bold' : '' }" href="#">국민연금/건강보험/고용보험 조회</a></li>
-					<li><a class="dropdown-item  ${side eq 'test' ? 'text-light fw-bold' : '' }" href="#">휴가항목설정</a></li>
+					<li><a class="dropdown-item  ${side eq 'itemsetting' ? 'text-light fw-bold' : '' }" href="/vacation/setting">휴가항목설정</a></li>
 					<li><a class="dropdown-item  ${side eq '7' ? 'text-light fw-bold' : '' }" href="#">휴가일수조회</a></li>
 					<li><a class="dropdown-item  ${side eq '8' ? 'text-light fw-bold' : '' }" href="#">휴가신청/취소</a></li>
 					<li><a class="dropdown-item  ${side eq '9' ? 'text-light fw-bold' : '' }" href="#">휴가사용현황</a></li>

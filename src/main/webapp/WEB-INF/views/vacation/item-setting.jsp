@@ -10,42 +10,47 @@
 <title>애플리케이션</title>
 </head>
 <body>
-<c:set var="side" value="test" />
-<%@ include file="../common/navbar.jsp" %>
+<c:set var="side" value="itemsetting" />
+<%@ include file="common/navbar.jsp" %>
 	<div class="container">
 		<div class="row">
 			<div class="col-2 bg-dark mr-3">
-				<%@ include file="../common/sidebar.jsp" %>
+				<%@ include file="common/sidebar.jsp" %>
 			</div>
 			<div class="col-10">
-				<div class="row">
-					<h1>휴가일수조회</h1>
-					<hr>
+				<div class="row mb-3">
+					<h2>휴가항목설정</h2>
 				</div>
+				<hr>
 			<form>
-				<div class="mb-2 text-end">
-					<label class="form-label">근태구분</label>
+				<div class="row mb-3 bg-light p-4">
+					<div>
+						<label class="form-label"><strong>근태구분</strong></label>
 						<select style="width: 150px">
 							<option>전체</option>
 							<option>연차</option>
 							<option>병가</option>
 						</select>
-						<button type="button" class="btn btn-dark btn-sm text-end" id="btn-search-postcode">검색</button>
-				</div>
-				</form>
-				<div class="row">
-					<div class="col-3 text-left">
-						<p>
-							<i class="bi bi-arrow-right-square "></i>
-							근속연수별 휴가 설정
-						</p>
-					</div>
-					<div class="col-9 text-end">
-						<button>행추가</button>
+							<button type="button" class="btn btn-danger" style="float:right;" id="btn-search-">검색</button>
 					</div>
 				</div>
+			</form>
+			<div class="row">
+				<div class="col-3 text-left mb-1">
+					<p>
+						<i class="bi bi-arrow-right-square-fill text-danger"></i>
+						<strong>휴가항목설정</strong>
+					</p>
+				</div>
+			</div>
+			<form>
 				<div class="row">
-					<table class="table table-sm border-top">
+					<div class="col text-end mb-3">
+						<button type="button" class="btn btn-outline-dark btn-sm" style="float:right;" id="">행삭제</button>
+						<button type="button" class="btn btn-outline-dark btn-sm" style="float:right;" id="">행추가</button>
+					</div>
+				<div class="row">
+					<table class="table table-bordered table-hover table-striped table-sm">
 						<colgroup>
 							<col width="5%">
 							<col width="7%">
@@ -102,24 +107,27 @@
 						</tbody>
 					</table>
 				</div>
+				<div class="row mb-2 bg-light m-2">
+						<hr>
+						<div class="col">
+						<p>
+							<i class="bi bi-exclamation-circle-fill"></i>
+							코드는 휴가신청시 사용하는 항목을 등록합니다. 코드를 설정하셔야 휴가신청을 진행할 수 있습니다.<br>
+							&nbsp;&nbsp;&nbsp;&nbsp;예)연차(년차), 병가, 경조휴가 등
+						</p>
+						<p>
+							<i class="bi bi-exclamation-circle-fill"></i>
+							코드 등록시 연차 반영이 선택되어 있는 코드는 휴가 신청의 휴가 일수를 결재 완료시 사용 연차에 "+"를 해줍니다.
+						</p>
+						</div>
+				</div>
 				<div class="row">
 					<div class="col text-end">
-						<button>저장</button>
+						<button type="submit" class="btn btn-dark" style="float:right;" id="">저장</button>
 					</div>
 				</div>
+				</form>
 			</div>	
-		</div>
-		<div class="row">
-			<hr>
-			<p>
-				<i class="bi bi-exclamation-circle-fill"></i>
-				코드는 휴가신청시 사용하는 항목을 등록합니다. 코드를 설정하셔야 휴가신청을 진행할 수 있습니다.<br>
-				&nbsp;&nbsp;&nbsp;&nbsp;예)연차(년차), 병가, 경조휴가 등
-			</p>
-			<p>
-				<i class="bi bi-exclamation-circle-fill"></i>
-				코드 등록시 연차 반영이 선택되어 있는 코드는 휴가 신청의 휴가 일수를 결재 완료시 사용 연차에 "+"를 해줍니다.
-			</p>
 		</div>
 	</div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
