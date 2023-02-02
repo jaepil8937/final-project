@@ -6,6 +6,11 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css">
+<style>
+	.dropdown-item {
+		font-size: x-small;
+	}
+</style>
 </head>
 <div class="container bg-dark">
 	<nav class="navbar bg-dark fixed-left" data-bs-theme="dark">
@@ -20,11 +25,12 @@
 			</li>
 			<li class="nav-item dropdown"><a class="nav-link dropdown-toggle text-light " href="#" role="button" data-bs-toggle="dropdown" data-bs-auto-close="false" aria-expanded="false">휴가관리</a>
 				<ul class="dropdown-menu dropdown-menu-dark" id="sub-menu">
-					<li><a class="dropdown-item ${side eq '5' ? 'text-light fw-bold' : '' }" href="#">근속연수별 휴가 설정</a></li>
-					<li><a class="dropdown-item ${side eq 'test' ? 'text-light fw-bold' : '' }" href="#">휴가항목설정</a></li>
-					<li><a class="dropdown-item ${side eq '7' ? 'text-light fw-bold' : '' }" href="#">휴가일수조회</a></li>
-					<li><a class="dropdown-item ${side eq '8' ? 'text-light fw-bold' : '' }" href="#">휴가신청/취소</a></li>
-					<li><a class="dropdown-item ${side eq '9' ? 'text-light fw-bold' : '' }" href="#">휴가사용현황</a></li>
+					<li><a class="dropdown-item  ${side eq '5' ? 'text-light fw-bold' : '' }" href="#">근속연수별 휴가 설정</a></li>
+					<li><a class="dropdown-item  ${side eq '5' ? 'text-light fw-bold' : '' }" href="#">국민연금/건강보험/고용보험 조회</a></li>
+					<li><a class="dropdown-item  ${side eq 'test' ? 'text-light fw-bold' : '' }" href="#">휴가항목설정</a></li>
+					<li><a class="dropdown-item  ${side eq '7' ? 'text-light fw-bold' : '' }" href="#">휴가일수조회</a></li>
+					<li><a class="dropdown-item  ${side eq '8' ? 'text-light fw-bold' : '' }" href="#">휴가신청/취소</a></li>
+					<li><a class="dropdown-item  ${side eq '9' ? 'text-light fw-bold' : '' }" href="#">휴가사용현황</a></li>
 				</ul>
 			</li>			
 		</ul>
