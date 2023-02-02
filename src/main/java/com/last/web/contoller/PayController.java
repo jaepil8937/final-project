@@ -1,5 +1,13 @@
 package com.last.web.contoller;
 
-public class PayController {
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 
+@Controller
+public class PayController {
+	
+	@GetMapping("/paybank")
+	public String paybank() {
+		return "paybank";
+	}
 }
