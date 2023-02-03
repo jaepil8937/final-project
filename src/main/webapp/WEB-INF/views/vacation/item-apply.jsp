@@ -39,7 +39,8 @@
 				<div class="row mb-3 bg-light p-4">
 					<div>
 						<label class="form-label"><strong>기준년도</strong></label>
-						<input type="text" id="datepicker" >
+						<select id="year" style="width: 100px">
+						</select>
 						<label class="form-label"><strong>결재상태</strong></label>
 						<select style="width: 100px">
 							<option>전체</option>
@@ -191,18 +192,16 @@
 					</p>
 				</div>
 				<div class="col-6 mb-1">
-					<button type="button" class="btn btn-outline-dark btn-sm" style="float:right;">
-						<a href="" style="text-decoration: none; color : black;" download="">양식다운로드</a>
-					</button>
+						<a href="" class="btn btn-outline-dark btn-sm" style="float:right; margin-right: 4px;" id="">양식다운로드</a>
 				</div>
 			</div>
 			<form method="post" enctype="multipart/form-data">
-				<table class="table table-bordered">
+				<table class="table">
 					<tr class="fw-bold">
-						<td>휴가신청일 <input type="text" placeholder="2021-12-31" style="text-align:center; width:100px" disabled/></td>
-						<td>휴가기간 <input type="text" placeholder="2021-01-01" style="text-align:center; width:100px" disabled/>~
-								<input type="text" placeholder="2021-12-31" style="text-align:center; width:100px" disabled/>
-								(일수: <input type="text" placeholder="1" style="text-align:center; width:40px" disabled/>일)</td>
+						<td>휴가신청일 <input type="text" id="currentDate" name="" value="" style="text-align:center; width:100px" disabled/></td>
+						<td>휴가기간 <input type="date" id="vacation-start-date" name="" value="2023-02-03" style="text-align:center; width:130px"/>~
+								<input type="date" id="vacation-end-date" name="" value="2023-02-03"style="text-align:center; width:130px"/>
+								(일수: <input type="text" id="day-count"name="" value="" style="text-align:center; width:40px" disabled/>일)</td>
 						</td>
 						<td>휴가구분 <select style="width: 80px">
 							<option>연차</option>
@@ -213,7 +212,7 @@
 						<td>결재상태 <input type="text" placeholder="대기" style="text-align:center; width:70px" disabled/></td>
 					</tr>
 				</table>
-				<table class="table table-bordered">
+				<table class="table">
 					<tr class="fw-bold">
 						<td>휴가사유 <input type="text" id="" style="width:500px;"></td>
 						<td>첨부파일 <input type="file" id="fileUpload" /></td>
@@ -237,11 +236,11 @@
 					</p>									
 					</div>
 			</div>
-			<div class="row">
+			<div class="row p-3">
 				<div class="col">
 					<button type="submit" class="btn btn-dark" style="float:right;" id="">신청</button>
-					<button type="submit" class="btn btn-outline-dark" style="float:right; margin-right: 4px;" id="">수정</button>
-					<button type="submit" class="btn btn-outline-dark" style="float:right; margin-right: 4px;" id="">취소</button>
+					<a href="" class="btn btn-outline-dark" style="float:right; margin-right: 4px;" id="">수정</a>
+					<a href="" class="btn btn-outline-dark" style="float:right; margin-right: 4px;" id="">취소</a>
 				</div>
 			</div>
 			</form>
@@ -251,6 +250,18 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
 <script>
+$(function() {
+	let now = new Date();
+	let now_year = now.getFullYear();
+	
+	$("#year").append("<option value=''>선택</option>");
+	// i는 창립년도
+	for (let i = 2010; i <= now_year; i++) {
+		$("#year").append("<option value='"+ i +"'>"+ i +"</option>");
+	}
+	
+	$('#currentDate').val(new Date().toISOString().substring(0, 10));
+});
 </script>
 </body>
 </html>
