@@ -23,4 +23,9 @@ public class VacationController {
 	public String calculation() {
 		return "vacation/item-calculation";
 	}
+
+	@GetMapping("/apply")
+	public String apply() {
+		return "vacation/item-apply";
+	}	
 }

@@ -9,7 +9,7 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css">
 </head>
 <body>
-<c:set var="side" value="item-used" />
+<c:set var="side" value="item-apply" />
 <%@ include file="../common/navbar.jsp" %>
 	<div class="container">
 		<div class="row">
@@ -18,7 +18,7 @@
 			</div>
 			<div class="col-10">
 				<div class="row mb-3">
-					<h2>휴가사용현황</h2>
+					<h2>휴가신청/취소</h2>
 				</div>
 				<hr>
 			<form>
