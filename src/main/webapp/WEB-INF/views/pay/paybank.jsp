@@ -9,7 +9,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css">
-<title>애플리케이션</title>
+<title>인사관리시스템</title>
 </head>
 <body>
 <c:set var="menu" value="pay" />
@@ -28,7 +28,7 @@
 			<h4>상세정보</h4>
 				<div class="col-12 mb-2">
 					<div class="btn-group" >
-						<a href="paybank" class="btn btn-light px-4">급여기본</a>
+						<a href="paybank" class="btn active btn-light px-4">급여기본</a>
 						<a href="paybankinfo" class="btn btn-light px-4">급여지급</a>
 					</div>
 				</div>
@@ -39,7 +39,7 @@
 						<col width="25%">
 						<col width="25%">			
 					</colgroup>
-					<thead>
+					<thead class="bg-light">
 						<tr>
 							<th>은행</th>
 							<th>계좌번호</th>
@@ -68,22 +68,22 @@
 							<col width="10%">			
 						</colgroup>
 						<tr>
-							<th >국민연금</th>
-							<th>기준소득월액</th><td>4,800,000</td>
-							<th>취득일자</th><td>2022/02/22</td>
-							<th>퇴직일자</th><td>2022/02/22</td>
+							<th class="bg-light">국민연금</th>
+							<th class="bg-light">기준소득월액</th><td>4,800,000</td>
+							<th class="bg-light">취득일자</th><td>2022/02/22</td>
+							<th class="bg-light">퇴직일자</th><td>2022/02/22</td>
 						</tr>				
 						<tr>
-							<th>건강보험</th>
-							<th>기준소득월액</th><td>4,800,000</td>
-							<th>취득일자</th><td>2022/02/22</td>
-							<th>퇴직일자</th><td>2022/02/22</td>
+							<th class="bg-light">건강보험</th>
+							<th class="bg-light">기준소득월액</th><td>4,800,000</td>
+							<th class="bg-light">취득일자</th><td>2022/02/22</td>
+							<th class="bg-light">퇴직일자</th><td>2022/02/22</td>
 						</tr>				
 						<tr>
-							<th>고용보험</th>
-							<th>기준소득월액</th><td>4,800,000</td>
-							<th>취득일자</th><td>2022/02/22</td>
-							<th>퇴직일자</th><td>2022/02/22</td>
+							<th class="bg-light">고용보험</th>
+							<th class="bg-light">기준소득월액</th><td>4,800,000</td>
+							<th class="bg-light">취득일자</th><td>2022/02/22</td>
+							<th class="bg-light">퇴직일자</th><td>2022/02/22</td>
 						</tr>				
 				</table>
 		</div>
