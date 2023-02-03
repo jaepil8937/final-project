@@ -17,7 +17,7 @@
 <div class="container mb-3">
 	<div class="row mb-3">
 		<div class="col-3">
-			사이드바 넣을 곳 
+<%@ include file="../common/sidebar.jsp" %>
 		</div>
 		<div class="col-9 mb-3">
 			<div class="row mb-3">
@@ -28,8 +28,8 @@
 			<h4>상세정보</h4>
 				<div class="col-12 mb-2">
 					<div class="btn-group" >
-						<button class="btn btn-light px-4">급여기본</button>
-						<button class="btn btn-light px-4">급여지급</button>
+						<a href="paybank" class="btn btn-light px-4">급여기본</a>
+						<a href="paybankinfo" class="btn btn-light px-4">급여지급</a>
 					</div>
 				</div>
 				<table class="table table-sm" id="PayBase">
@@ -58,7 +58,7 @@
 				<tbody>
 					<tr>
 						<td>10001</td>
-						<td>48,000,00</td>
+						<td>4,800,000</td>
 						<td>0</td>
 						<td>0</td>
 						<td>0</td>

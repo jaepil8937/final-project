@@ -12,12 +12,13 @@
 <title>애플리케이션</title>
 </head>
 <body>
+<c:set var="menu" value="pay" />
 <%@ include file="../common/navbar.jsp" %>
 <div class="container mb-3">
 	<div class="row mb-3">
 	
 		<div class="col-3">
-			사이드바 넣을 곳 
+<%@ include file="../common/sidebar.jsp" %> 
 		</div>
 		
 		<div class="col-9 mb-3">
@@ -27,7 +28,7 @@
 				</div>
 			</div>		
 			<h4>기본정보</h4>
-			<table class="table table-sm" id="PayBase">
+			<table class="table table-sm">
 				<colgroup>
 					<col width="15%">
 					<col width="15%">
@@ -39,8 +40,8 @@
 				</colgroup>
 				<thead>
 					<tr>
-						<th>사원번호</th>
-						<th>성명</th>
+						<th >사원번호</th>
+						<th >성명</th>
 						<th>직급</th>
 						<th>부서</th>
 						<th>입사일자</th>
@@ -51,7 +52,7 @@
 				<tbody>
 					<tr>
 						<td>10001</td>
-						<td>홍길동</td>
+						<td><a href="paybank">홍길동</a></td>
 						<td>사원</td>
 						<td>개발부</td>
 						<td>2020/11/20</td>
