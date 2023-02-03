@@ -11,11 +11,11 @@
 </head>
 <body>
 <c:set var="side" value="itemsetting" />
-<%@ include file="common/navbar.jsp" %>
+<%@ include file="../common/navbar.jsp" %>
 	<div class="container">
 		<div class="row">
 			<div class="col-2 bg-dark mr-3">
-				<%@ include file="common/sidebar.jsp" %>
+				<%@ include file="../common/sidebar.jsp" %>
 			</div>
 			<div class="col-10">
 				<div class="row mb-3">

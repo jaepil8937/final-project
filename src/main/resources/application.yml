@@ -23,8 +23,7 @@ spring:
 mybatis:
   mapper-locations:
   - mybatis/mappers/*.xml
-  type-aliases-package: com.example.vo, com.example.dto
+  type-aliases-package: com.last.vo, com.last.dto
   configuration:
     jdbc-type-for-null: null
     log-impl: org.apache.ibatis.logging.log4j2.Log4j2Impl
-
