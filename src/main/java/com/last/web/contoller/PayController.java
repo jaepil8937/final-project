@@ -27,6 +27,21 @@ public class PayController {
 	public String extrapay() {
 		return "/pay/extrapay";
 	}
+
+	@GetMapping("/grade")
+	public String grade() {
+		return "/pay/grade";
+	}
+	
+	@GetMapping("/simpletax")
+	public String simpletax() {
+		return "/pay/simpletax";
+	}
+
+	@GetMapping("/salarytax")
+	public String salarytax() {
+		return "/pay/salarytax";
+	}
 	
 	
 }

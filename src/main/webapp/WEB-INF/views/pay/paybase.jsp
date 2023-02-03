@@ -9,7 +9,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css">
-<title>애플리케이션</title>
+<title>인사관리시스템</title>
 </head>
 <body>
 <c:set var="menu" value="pay" />
@@ -39,7 +39,7 @@
 					<col width="15%">			
 				</colgroup>
 				<thead>
-					<tr>
+					<tr class="bg-light">
 						<th >사원번호</th>
 						<th >성명</th>
 						<th>직급</th>
