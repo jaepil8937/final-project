@@ -5,20 +5,28 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
+@RequestMapping("/pay")
 public class PayController {
 	
 	@GetMapping("/paybank")
 	public String paybank() {
-		return "paybank";
+		return "pay/paybank";
 	}
 	
-	@GetMapping("/paybankin")
+	@GetMapping("/paybankinfo")
 	public String paybankinfo() {
-		return "paybankinfo";
+		return "pay/paybankinfo";
 	}
 	
 	@GetMapping("/paybase")
 	public String paybase() {
-		return "../paybase";
+		return "/pay/paybase";
 	}
+	
+	@GetMapping("/extrapay")
+	public String extrapay() {
+		return "/pay/extrapay";
+	}
+	
+	
 }
