@@ -31,7 +31,17 @@
 					<li><a class="dropdown-item  ${side eq 'item-apply' ? 'text-light fw-bold' : '' }" href="/vacation/apply">휴가신청/취소</a></li>
 					<li><a class="dropdown-item  ${side eq 'item-used' ? 'text-light fw-bold' : '' }" href="/vacation/used">휴가사용현황</a></li>
 				</ul>
-			</li>			
+			</li>		
+			<li class="nav-item dropdown"><a class="nav-link dropdown-toggle text-light" href="#" data-bs-toggle="dropdown" data-bs-auto-close="false" aria-expanded="false">인사관리</a>
+				<ul class="dropdown-menu dropdown-menu-dark" id="sub-menu">
+					<li><a class="dropdown-item ${side eq '1' ? 'text-light fw-bold' : '' }" href="#">인사정보등록</a></li>
+					<li><a class="dropdown-item ${side eq '2' ? 'text-light fw-bold' : '' }" href="#">인사정보재등록</a></li>
+					<li><a class="dropdown-item ${side eq '3' ? 'text-light fw-bold' : '' }" href="#">사원명부/인사기록카드</a></li>
+					<li><a class="dropdown-item ${side eq '4' ? 'text-light fw-bold' : '' }" href="#">인사발령등록</a></li>
+					<li><a class="dropdown-item ${side eq '5' ? 'text-light fw-bold' : '' }" href="#">증명서발급</a></li>
+					<li><a class="dropdown-item ${side eq '6' ? 'text-light fw-bold' : '' }" href="#">회원탈퇴/비밀번호변경</a></li>
+				</ul>
+			</li>	
 		</ul>
 	</nav>
 </div>
