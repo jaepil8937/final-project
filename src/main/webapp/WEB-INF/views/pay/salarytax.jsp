@@ -16,58 +16,46 @@
 <%@ include file="../common/navbar.jsp" %>
 <div class="container mb-3">
 	<div class="row mb-3">
+	
 		<div class="col-3">
-<%@ include file="../common/sidebar.jsp" %>
+<%@ include file="../common/sidebar.jsp" %> 
 		</div>
+		
 		<div class="col-9 mb-3">
 			<div class="row mb-3">
 				<div class="col">
-					<h1>급여기본정보관리</h1>
+					<h1>급여비과세표</h1>
 				</div>
 			</div>		
-			<h4>상세정보</h4>
-				<div class="col-12 mb-2">
-					<div class="btn-group" >
-						<a href="paybank" class="btn btn-light px-4">급여기본</a>
-						<a href="paybankinfo" class="btn active btn-light px-4">급여지급</a>
-					</div>
-				</div>
-				<table class="table table-sm" id="PayBase">
-				<colgroup>
-					<col width="12%">
-					<col width="13%">
-					<col width="13%">
-					<col width="13%">
-					<col width="13%">
-					<col width="13%">
-					<col width="13%">			
-					<col width="10%">			
-				</colgroup>
+			<h4>항목정보</h4>
+			<table class="table table-sm">
 				<thead>
 					<tr class="bg-light">
-						<th>사원번호</th>
+						<th></th>
 						<th>기본급</th>
 						<th>연장수당</th>
 						<th>야간수당</th>
 						<th>휴일근무수당</th>
-						<th>시작년월</th>
-						<th>종료년월</th>
-						<th>비고</th>
+						<th>보육수당</th>
+						<th>상여금</th>
+						<th>식대비</th>
+						<th>출장비</th>
 					</tr>
 				</thead>
 				<tbody>
 					<tr>
-						<td>10001</td>
-						<td>4,800,000</td>
+						<th class="bg-light">비과세</th>
 						<td>0</td>
 						<td>0</td>
 						<td>0</td>
-						<td>2022/11/01</td>
-						<td>2022/11/31</td>
-						<td>없음</td>
+						<td>0</td>
+						<td>0</td>
+						<td>0</td>
+						<td>200,000</td>
+						<td>0</td>
 					</tr>
 				</tbody>
-			</table>	
+			</table>			
 		</div>
 	</div>
 </div>

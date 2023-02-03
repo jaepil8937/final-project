@@ -53,7 +53,7 @@
 			</div>
 			<%-- 근무일자설정 --%>
 			<div class="col-5 text-end">
-				<label <p style="font-size:18px" for="date">근무일자 : 
+				<label></label> <p style="font-size:18px" for="date">근무일자 : 
 					<input type="date"
 					       id="date"
 					       max="2024-01-01"
@@ -95,7 +95,13 @@
 			    </tr>
 			</tbody>
 		</div>
+		
+		</table>
+		</div>
+		
 	</div>
+	</div>
+</div>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>

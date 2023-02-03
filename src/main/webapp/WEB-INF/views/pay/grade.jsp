@@ -31,28 +31,21 @@
 				<h1 class="border p-2 bg-light fs-4 mt-1">검색년월</h1>
 			</div>
 	<div class="row mb-3">
-		<div class="col-5">
+		<div class="col-4">
 			<div class="card">
 				<div class="card-header">기본정보</div>
 				<div class="card-body">
 					<table class="table">
 						<thead>
 							<tr>
-								<th>사원번호</th>
-								<th>성명</th>
-								<th>부서명</th>
+								<th>No</th>
+								<th>직급</th>
 							</tr>
 						</thead>
 						<tbody>
 							<tr>
-								<td>1001</td>
-								<td id="">홍길동</td>
-								<td>홍보과</td>
-							</tr>
-							<tr>
-								<td>1002</td>
-								<td id="">이순신</td>
-								<td>인사과</td>
+								<th>1</th>
+								<th>인턴</th>
 							</tr>
 						</tbody>
 					</table>
@@ -61,35 +54,34 @@
 				</div>
 			</div>
 		</div>
-		<div class="col-7">
+		<div class="col-8">
 			<div class="card">
-				<div class="card-header">기본수당외 수당관리</div>
+				<div class="card-header">호봉별 항목정보</div>
 				<div class="card-body">
-					<table class="table" id="">
+					<table class="table">
 						<colgroup>
+							<col width="10%">
 							<col width="20%">
 							<col width="30%">
-							<col width="20%">
 							<col width="30%">
+							<col width="10%">
 						</colgroup>
-						<tbody>
+						<thead>
 							<tr>
-								<th>지급/공제</th>
-								<td id=""></td>
-								<th>보육수당</th>
-								<td id=""></td>
-							</tr>
-							<tr>
-								<th>상여금</th>
-								<td id=""></td>
-								<th>식대비</th>
-								<td id=""></td>
-							</tr>
-							<tr>
-								<th>출장비</th>
-								<td id=""></td>
+								<th></th>
+								<th>호봉</th>
+								<th>항목명</th>
+								<th>항목금액</th>
 								<th>비고</th>
-								<td id=""></td>
+							</tr>
+						</thead>
+						</tbody>
+							<tr>
+								<td class="text-center"><input type="checkbox"></td>
+								<td>1</td>
+								<td>기본급</td>
+								<td>100,000</td>
+								<td>x</td>
 							</tr>
 						</tbody>
 					</table>
