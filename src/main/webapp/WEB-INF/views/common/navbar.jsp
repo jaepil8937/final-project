@@ -2,9 +2,9 @@
 <nav class="navbar navbar-expand-sm bg-dark navbar-dark mb-3">
 	<div class="container">
 		<ul class="navbar-nav me-auto">
-			<li class="nav-item"><a class="nav-link ${menu eq 'home' ? 'active' : '' }" href="/">인사관리시스템</a></li>
+			<li class="nav-item"><a class="nav-link ${menu eq 'home' ? 'active' : '' }" href="/home">인사관리시스템</a></li>
 			<sec:authorize access="hasAnyRole('ROLE_ADMIN', 'ROLE_USER')">
-					<a class="nav-link ${menu eq 'employee' ? 'active' : '' }" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+					<a class="nav-link ${menu eq 'employee' ? 'active' : '' }" href="/employeelist/info" role="button" >
 						인사
 					</a>
 			</sec:authorize>	
