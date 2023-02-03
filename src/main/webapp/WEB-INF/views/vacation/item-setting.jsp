@@ -7,15 +7,14 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css">
-<title>애플리케이션</title>
 </head>
 <body>
-<c:set var="side" value="itemsetting" />
-<%@ include file="common/navbar.jsp" %>
+<c:set var="side" value="item-setting" />
+<%@ include file="../common/navbar.jsp" %>
 	<div class="container">
 		<div class="row">
 			<div class="col-2 bg-dark mr-3">
-				<%@ include file="common/sidebar.jsp" %>
+				<%@ include file="../common/sidebar.jsp" %>
 			</div>
 			<div class="col-10">
 				<div class="row mb-3">
