@@ -48,66 +48,68 @@
 				<div class="row">
 					<table class="table table-bordered table-hover table-striped table-sm">
 						<colgroup>
-							<col width="5%">
+							<col width="10%">
+							<col width="7%">
+							<col width="7%">
+							<col width="7%">
+							<col width="12%">
+							<col width="12%">
 							<col width="7%">
 							<col width="7%">
 							<col width="10%">
 							<col width="10%">
-							<col width="10%">
-							<col width="10%">
-							<col width="*">
 						</colgroup>
 						<thead>
 							<tr class="text-center">
-								<th>No</th>
 								<th>사원번호</th>
 								<th>성명</th>
 								<th>직급</th>
 								<th>부서</th>
-								<th>일수</th>
-								<th>휴가구분</th>
-								<th>신청일</th>
-								<th>시작일</th>
-								<th>종료일</th>
+								<th>입사일자</th>
+								<th>근속기준일</th>
+								<th>근속년수</th>
+								<th>근속연차</th>
+								<th>사용연차</th>
+								<th>잔여연차</th>
 							</tr>
 						</thead>
 						<tbody>
 							<tr class="text-center">
-								<td>1</td>
 								<td>1001</td>
 								<td>홍길동</td>
 								<td>사원</td>
 								<td>개발팀</td>
+								<td>2011-04-01</td>
+								<td>2021-12-31</td>
 								<td>1</td>
-								<td>연차</td>
-								<td>2022-01-15</td>
-								<td>2022-01-17</td>
-								<td>2022-01-20</td>
-							</tr>
-							<tr class="text-center">
-								<td>2</td>
-								<td>1001</td>
-								<td>홍길동</td>
-								<td>사원</td>
-								<td>개발팀</td>
-								<td>1</td>
-								<td>연차</td>
-								<td>2022-01-15</td>
-								<td>2022-01-17</td>
-								<td>2022-01-20</td>
-							</tr>
-							<tr class="text-center">
+								<td>15</td>
 								<td>3</td>
+								<td>12</td>
+							</tr>
+							<tr class="text-center">
 								<td>1001</td>
 								<td>홍길동</td>
 								<td>사원</td>
 								<td>개발팀</td>
+								<td>2011-04-01</td>
+								<td>2021-12-31</td>
 								<td>1</td>
-								<td>연차</td>
-								<td>2022-01-15</td>
-								<td>2022-01-17</td>
-								<td>2022-01-20</td>
-							</tr>												
+								<td>15</td>
+								<td>3</td>
+								<td>12</td>
+							</tr>
+							<tr class="text-center">
+								<td>1001</td>
+								<td>홍길동</td>
+								<td>사원</td>
+								<td>개발팀</td>
+								<td>2011-04-01</td>
+								<td>2021-12-31</td>
+								<td>1</td>
+								<td>15</td>
+								<td>3</td>
+								<td>12</td>
+							</tr>														
 						</tbody>
 					</table>
 				</div>
@@ -116,7 +118,7 @@
 						<div class="col">
 						<p>
 							<i class="bi bi-exclamation-circle-fill"></i>
-							휴가신청에서 결재상태가 "승인"된 휴가만 조회됩니다. 
+							관리자가 아닌 사원들은 자신의 휴가일수 정보만 조회가 가능합니다.
 						</p>
 						</div>
 				</div>
