@@ -3,25 +3,29 @@
 	<div class="container">
 		<ul class="navbar-nav me-auto">
 			<li class="nav-item"><a class="nav-link ${menu eq 'home' ? 'active' : '' }" href="/">인사관리시스템</a></li>
+			&emsp;&emsp;&emsp;&emsp;&emsp;
 			<sec:authorize access="hasAnyRole('ROLE_ADMIN', 'ROLE_USER')">
-					<a class="nav-link ${menu eq 'employee' ? 'active' : '' }" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-						인사
-					</a>
+				<a class="nav-link ${menu eq 'employee' ? 'active' : '' }" href="#" role="button">
+					인사
+				</a>
 			</sec:authorize>	
+			&nbsp;
 			<sec:authorize access="hasAnyRole('ROLE_ADMIN', 'ROLE_USER')">	
-					<a class="nav-link ${menu eq 'attendences' ? 'active' : '' }" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-						근무
-					</a>
+				<a class="nav-link ${menu eq 'attendences' ? 'active' : '' }" href="#" role="button">
+					근무
+				</a>
 			</sec:authorize>
+			&nbsp;
 			<sec:authorize access="hasAnyRole('ROLE_ADMIN')">
-					<a class="nav-link ${menu eq 'salary' ? 'active' : '' }" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-						급여
-					</a>
+				<a class="nav-link ${menu eq 'pay' ? 'active' : '' }" href="#" role="button">
+					급여
+				</a>
 			</sec:authorize>	
 		</ul>
 		<sec:authorize access="isAuthenticated()">
 			<span class="navbar-text"><strong class="text-white"><sec:authentication property="principal.name"/></strong>님 환영합니다.</span>
 		</sec:authorize>
+		&emsp;
 		<ul class="navbar-nav">
 			<sec:authorize access="isAuthenticated()">
 				<li class="nav-item"><a class="nav-link" href="/logout" id="logout">로그아웃</a></li>
