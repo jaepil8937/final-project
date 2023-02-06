@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.last.service.VacationService;
-import com.last.vo.VacationItems;
+import com.last.vo.VacationItem;
 import com.last.web.request.VacationItemRequest;
 
 
@@ -23,16 +23,23 @@ public class VacationController {
 
 	@GetMapping("/setting")
 	public String setting(Model model) {
-		List<VacationItems> items = vacationService.getAllItems();
-		
+		List<VacationItem> items = vacationService.getAllItems();
+		System.out.println("테스트");
 		model.addAttribute("items", items);
 		
 		return "vacation/item-setting";
 	}
 	
 	@PostMapping("/setting")
-	public String im(VacationItemRequest form) {
-		System.out.println(form.getName());
+	public String im(List<VacationItemRequest> forms) {
+		System.out.println("테스트2");
+		for (VacationItemRequest form : forms) {
+			if (vacationService.getItemCode(form.getCode()) != null) {
+				vacationService.insertItem(form);
+			} else {
+				vacationService.updateItem(form);
+			}
+		}
 		return "redirect:setting";
 	};
 	

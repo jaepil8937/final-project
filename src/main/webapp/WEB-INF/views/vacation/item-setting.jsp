@@ -84,9 +84,9 @@
 										<td>휴가</td>
 										<td><input type="number" name="code" value="${item.code }" style="text-align:center; width:50px; border:0 solid black;"></td>
 										<td><input type="text" id="item-name" name="name" value="${item.name }" style="text-align:center; width:50px; border:0 solid black;"></td>
-										<td><input type="checkbox" name="used" ${item.used eq 'Y' ? "checked" : ""}></td>
-										<td><input type="checkbox" name="deleted" ${item.deleted eq 'Y' ? "checked" : ""}></td>
-										<td><input type="checkbox" name="payed" ${item.payed eq 'Y' ? "checked" : ""}></td>
+										<td><input type="checkbox" name="used" ${item.used eq 'Y' ? "checked" : ""} value="${item.used eq 'Y' ? 'Y' : 'N' }"></td>
+										<td><input type="checkbox" name="deleted" ${item.deleted eq 'Y' ? "checked" : ""} value="${item.deleted eq 'Y' ? 'Y' : 'N' } "></td>
+										<td><input type="checkbox" name="payed" ${item.payed eq 'Y' ? "checked" : ""} value="${item.payed eq 'Y' ? 'Y' : 'N' }"></td>
 										<td><input type="text" class="form-control form-control-xs w-100"></td>									
 									</tr>
 								</c:forEach>
@@ -122,6 +122,17 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
 <script type="text/javascript">
 $(function() {
+	
+	// 개별체크백수 개수의 따른 전체선택/전체해제 선택처리 기능 구현
+	function checkAll() {
+	    $("input[name=chk]").on('click', function() {
+	        if($('input[name=chk]:checked').length == $('input[name=chk]').length){
+	            $('#check-all').prop('checked',true);
+	        }else{
+	           $('#check-all').prop('checked',false);
+	        }
+	    })		
+	}
 	// 행추가 버튼 클릭을 통한 행 추가 기능 구현
 	$('#btn-add-row').click(function() {
 		let row_index = $("input[name=chk]").length + 1;
@@ -141,6 +152,8 @@ $(function() {
 		innerHtml += '</tr>';
 		$("#item-noting").addClass("d-none");
 	    $('#table-item > tbody:last').append(innerHtml);
+	    checkAll();
+	    
 	  });
 	
 	// 체크박스 전체선택/전체해제 기능 구현
@@ -157,14 +170,7 @@ $(function() {
         }
     })
     
-    // 개별체크백수 개수의 따른 전체선택/전체해제 선택처리 기능 구현
-    $("input[name=chk]").on('click', function() {
-        if($('input[name=chk]:checked').length == $('input[name=chk]').length){
-            $('#check-all').prop('checked',true);
-        }else{
-           $('#check-all').prop('checked',false);
-        }
-    })
+    checkAll();
     
     $("#item-add").click(function() {
     	// 체크된 체크박스가 없으면 알림창.
@@ -173,7 +179,7 @@ $(function() {
     		return false;
     	}
     	
-    
+    	return true;
     });
 	
 });

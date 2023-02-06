@@ -11,7 +11,7 @@
 			</sec:authorize>	
 			&nbsp;
 			<sec:authorize access="hasAnyRole('ROLE_ADMIN', 'ROLE_USER')">	
-				<a class="nav-link ${menu eq 'attendences' ? 'active' : '' }" href="#" role="button">
+				<a class="nav-link ${menu eq 'attendences' ? 'active' : '' }" href="/work/day" role="button">
 					근무
 				</a>
 			</sec:authorize>

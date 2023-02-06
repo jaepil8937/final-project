@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.last.mapper.VacationMapper">
-	
 	<select id="getItems" resultType="VacationItems">
 		select 
 			item_code as code,
@@ -14,6 +13,20 @@
 			vacation_items
 		order by
 			item_code desc
+	</select>
+
+	<select id="getItemByCode" parameterType="int" resultType="VacationItems">
+		select 
+			item_code as code,
+			item_name as name,
+			year_vacation_used as used,
+			item_used as deleted,
+			salary_payed as payed,
+			note as note
+		from
+			vacation_items
+		where
+			item_code = #{value}
 	</select>
 	
 	<!-- 
