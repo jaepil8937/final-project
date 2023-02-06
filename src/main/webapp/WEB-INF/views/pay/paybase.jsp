@@ -9,7 +9,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css">
-<title>애플리케이션</title>
+<title>인사관리시스템</title>
 </head>
 <body>
 <c:set var="menu" value="pay" />
@@ -18,7 +18,7 @@
 	<div class="row mb-3">
 	
 		<div class="col-3">
-			사이드바 넣을 곳 
+<%@ include file="../common/sidebar.jsp" %> 
 		</div>
 		
 		<div class="col-9 mb-3">
@@ -28,7 +28,7 @@
 				</div>
 			</div>		
 			<h4>기본정보</h4>
-			<table class="table table-sm" id="PayBase">
+			<table class="table table-sm">
 				<colgroup>
 					<col width="15%">
 					<col width="15%">
@@ -39,9 +39,9 @@
 					<col width="15%">			
 				</colgroup>
 				<thead>
-					<tr>
-						<th>사원번호</th>
-						<th>성명</th>
+					<tr class="bg-light">
+						<th >사원번호</th>
+						<th >성명</th>
 						<th>직급</th>
 						<th>부서</th>
 						<th>입사일자</th>
@@ -52,7 +52,7 @@
 				<tbody>
 					<tr>
 						<td>10001</td>
-						<td>홍길동</td>
+						<td><a href="paybank">홍길동</a></td>
 						<td>사원</td>
 						<td>개발부</td>
 						<td>2020/11/20</td>

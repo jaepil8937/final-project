@@ -12,4 +12,36 @@ public class PayController {
 	public String paybank() {
 		return "pay/paybank";
 	}
+	
+	@GetMapping("/paybankinfo")
+	public String paybankinfo() {
+		return "pay/paybankinfo";
+	}
+	
+	@GetMapping("/paybase")
+	public String paybase() {
+		return "/pay/paybase";
+	}
+	
+	@GetMapping("/extrapay")
+	public String extrapay() {
+		return "/pay/extrapay";
+	}
+
+	@GetMapping("/grade")
+	public String grade() {
+		return "/pay/grade";
+	}
+	
+	@GetMapping("/simpletax")
+	public String simpletax() {
+		return "/pay/simpletax";
+	}
+
+	@GetMapping("/salarytax")
+	public String salarytax() {
+		return "/pay/salarytax";
+	}
+	
+	
 }
