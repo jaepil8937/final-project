@@ -8,7 +8,7 @@ import lombok.Setter;
 @Alias("VacationItems")
 @Getter
 @Setter
-public class VacationItems {
+public class VacationItem {
 	private int code;		// 항목코드
 	private String name;	// 휴가명칭
 	private String used;	// 연차사용여부
