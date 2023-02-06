@@ -14,4 +14,9 @@ public class HrController {
 		
 		return "hr/employeelist";
 	}
+	
+	@GetMapping("/register")
+	public String register() {
+		return "hr/register";
+	}
 }
