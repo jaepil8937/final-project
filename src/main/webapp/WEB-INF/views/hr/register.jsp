@@ -1,4 +1,5 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" trimDirectiveWhitespaces="true"%>
+<%@ include file="../common/tags.jsp" %>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -10,11 +11,10 @@
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <body>
 <c:set var="menu" value="employee" />
-<c:set var="side" value="" />
 <%@ include file="../common/navbar.jsp" %>
-<div class="container">
-	<div class="row">
-		<div class="col-2 bg-dark mr-3">
+<div class="container mb-3">
+	<div class="row mb-3">
+		<div class="col-2">
 			<%@ include file="../common/sidebar.jsp" %>
 		</div>
 		<div class="col-10">
