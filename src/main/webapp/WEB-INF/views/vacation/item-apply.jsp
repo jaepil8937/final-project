@@ -79,8 +79,8 @@
 						</thead>
 						<tbody>
 							<tr>
-								<td><input type="text" placeholder="1001" style="text-align:center; width:100px" disabled/></td>
-								<td><input type="text" placeholder="1" style="text-align:center; width:100px" disabled/></td>
+								<td><input type="text" value="1001" style="text-align:center; width:100px" disabled/></td>
+								<td><input type="text" value="1" style="text-align:center; width:100px" disabled/></td>
 							</tr>
 						</tbody>
 					</table>
@@ -95,8 +95,8 @@
 						</thead>
 						<tbody>
 							<tr>
-								<td><input type="text" placeholder="홍길동" style="text-align:center; width:100px" disabled/></td>
-								<td><input type="text" placeholder="10" style="text-align:center; width:100px" disabled/></td>
+								<td><input type="text" value="홍길동" style="text-align:center; width:100px" disabled/></td>
+								<td><input type="text" value="10" style="text-align:center; width:100px" disabled/></td>
 							</tr>
 						</tbody>
 					</table>	
@@ -110,8 +110,8 @@
 						</thead>
 						<tbody>
 							<tr>
-								<td><input type="text" placeholder="2021-01-01" style="text-align:center; width:100px" disabled/>~
-								<input type="text" placeholder="2021-12-31" style="text-align:center; width:100px" disabled/>
+								<td><input type="text" value="2021-01-01" style="text-align:center; width:100px" disabled/>~
+								<input type="text" value="2021-12-31" style="text-align:center; width:100px" disabled/>
 								</td>
 							</tr>
 						</tbody>
@@ -198,7 +198,7 @@
 			<form method="post" enctype="multipart/form-data">
 				<table class="table">
 					<tr class="fw-bold">
-						<td>휴가신청일 <input type="text" id="currentDate" name="" value="" style="text-align:center; width:100px" disabled/></td>
+						<td>휴가신청일 <input type="date" id="currentDate" name="" value="2023-02-03" style="text-align:center; width:130px" disabled/></td>
 						<td>휴가기간 <input type="date" id="vacation-start-date" name="" value="2023-02-03" style="text-align:center; width:130px"/>~
 								<input type="date" id="vacation-end-date" name="" value="2023-02-03"style="text-align:center; width:130px"/>
 								(일수: <input type="text" id="day-count"name="" value="" style="text-align:center; width:40px" disabled/>일)</td>
@@ -209,7 +209,7 @@
 							<option>출산휴가</option>
 							<option>반차</option>
 						</select></td>
-						<td>결재상태 <input type="text" placeholder="대기" style="text-align:center; width:70px" disabled/></td>
+						<td>결재상태 <input type="text" value="대기" style="text-align:center; width:70px" disabled/></td>
 					</tr>
 				</table>
 				<table class="table">
@@ -218,7 +218,13 @@
 						<td>첨부파일 <input type="file" id="fileUpload" /></td>
 					</tr>
 				</table>
-			<div class="row mb-2 bg-light m-2">
+				<div class="row mb-2">
+					<div class="col">
+						<a href="" class="btn btn-outline-dark btn-sm" style="float:right; margin-right: 4px;" id="">반려</a>
+						<a href="" class="btn btn-outline-dark btn-sm" style="float:right; margin-right: 4px;" id="">승인</a>
+					</div>
+				</div>
+				<div class="row mb-2 bg-light m-2">
 					<hr>
 					<div class="col">
 					<p>
