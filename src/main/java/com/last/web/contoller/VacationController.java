@@ -28,4 +28,9 @@ public class VacationController {
 	public String apply() {
 		return "vacation/item-apply";
 	}	
+	
+	@GetMapping("/year")
+	public String yearVacationDay() {
+		return "vacation/year-vacation";
+	}
 }
