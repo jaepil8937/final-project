@@ -44,6 +44,17 @@
 					<li><a class="dropdown-item ${side eq '6' ? 'text-light fw-bold' : '' }" href="#">회원탈퇴/비밀번호변경</a></li>
 				</ul>
 			</li>	
+			<li class="nav-item dropdown"><a class="nav-link dropdown-toggle text-light" href="#" data-bs-toggle="dropdown" data-bs-auto-close="false" aria-expanded="false">급여관리</a>
+				<ul class="dropdown-menu dropdown-menu-dark" id="sub-menu">
+					<li><a class="dropdown-item ${side eq '1' ? 'text-light fw-bold' : '' }" href="/pay/paybase">급여기본정보관리</a></li>
+					<li><a class="dropdown-item ${side eq '2' ? 'text-light fw-bold' : '' }" href="/pay/extrapay">기본수당외 수당</a></li>
+					<li><a class="dropdown-item ${side eq '3' ? 'text-light fw-bold' : '' }" href="/pay/salarytax">급여비과세표</a></li>
+					<li><a class="dropdown-item ${side eq '3' ? 'text-light fw-bold' : '' }" href="/pay/grade">급호테이블</a></li>
+					<li><a class="dropdown-item ${side eq '4' ? 'text-light fw-bold' : '' }" href="/pay/simpletax">간이세액조견표</a></li>
+					<li><a class="dropdown-item ${side eq '4' ? 'text-light fw-bold' : '' }" href="/pay/insurance">4대보험요율표</a></li>
+					<li><a class="dropdown-item ${side eq '4' ? 'text-light fw-bold' : '' }" href="/pay/simpletax">급여계산</a></li>
+				</ul>
+			</li>	
 		</ul>
 	</nav>
 </div>

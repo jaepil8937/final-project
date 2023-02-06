@@ -62,12 +62,18 @@
 						<td>0</td>
 						<td>0</td>
 						<td>0</td>
-						<td>2022/11/01</td>
-						<td>2022/11/31</td>
+						<td>2022/11</td>
+						<td>2022/11</td>
 						<td>없음</td>
 					</tr>
 				</tbody>
-			</table>	
+			</table>
+				<div class="row mb-2">
+					<div class="col">
+						<button class="btn btn-outline-dark btn-xs" style="float:right;">등록</button>
+						<button class="btn btn-outline-dark btn-xs" style="float:right;">수정</button>
+					</div>
+				</div>				
 		</div>
 	</div>
 </div>
