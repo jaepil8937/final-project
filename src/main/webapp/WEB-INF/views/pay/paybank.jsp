@@ -86,6 +86,12 @@
 							<th class="bg-light">퇴직일자</th><td>2022/02/22</td>
 						</tr>				
 				</table>
+				<div class="row mb-2">
+					<div class="col">
+						<button class="btn btn-outline-dark btn-xs" style="float:right;" data-bs-toggle="modal" data-bs-targer="#modal-form-banks">등록</button>
+						<button class="btn btn-outline-dark btn-xs" style="float:right;">수정</button>
+					</div>
+				</div>
 		</div>
 	</div>
 </div>
