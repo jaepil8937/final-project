@@ -39,7 +39,7 @@
 					</p>
 				</div>
 			</div>
-			<form>
+			<form id="form-setting" method="post" action="setting">
 				<div class="row">
 					<div class="col text-end mb-3">
 						<button type="button" class="btn btn-outline-dark btn-sm" style="float:right;" id="btn-add-row">행추가</button>
@@ -123,6 +123,8 @@
 <script type="text/javascript">
 $(function() {
 	
+	let checkbox = $("input[name=chk]:checked").length;
+	
 	// 개별체크백수 개수의 따른 전체선택/전체해제 선택처리 기능 구현
 	function checkAll() {
 	    $("input[name=chk]").on('click', function() {
@@ -145,10 +147,11 @@ $(function() {
 		innerHtml += '	<td>휴가</td>';
 		innerHtml += '	<td><input type="number" name="code" value="' + row_index + '" style="text-align:center; width:50px; border:0 solid black;"></td>';
 		innerHtml += '	<td><input type="text" id="item-name" name="name" value="" style="text-align:center; width:100%; border:0 solid black;"></td>';
-		innerHtml += '	<td><input type="checkbox" name="used" value="Y"></td>';
-		innerHtml += '	<td><input type="checkbox" name="deleted" value="Y"></td>';
-		innerHtml += '	<td><input type="checkbox" name="payed" value="Y"></td>';
+		innerHtml += '	<td><input type="checkbox" name="used" value="Y" id="input_check_used"></td>';
+		innerHtml += '	<td><input type="checkbox" name="deleted" value="Y" id="input_check_deleted"></td>';
+		innerHtml += '	<td><input type="checkbox" name="payed" value="Y" id="input_check_payed"></td>';
 		innerHtml += '	<td><input type="text" class="form-control form-control-xs w-100"></td>';
+		innerHtml += '	<td><input type="hidden" value="N" id="input_check_hidden"></td>';
 		innerHtml += '</tr>';
 		$("#item-noting").addClass("d-none");
 	    $('#table-item > tbody:last').append(innerHtml);
@@ -171,17 +174,16 @@ $(function() {
     })
     
     checkAll();
-    
+	
+	
     $("#item-add").click(function() {
     	// 체크된 체크박스가 없으면 알림창.
-    	if($('input[name=chk]:checked').length === 0) {
+    	if($("input[name=chk]:checked").length == 0) {
     		alert("수정/저장할 휴가 항목을 선택하세요.");
     		return false;
     	}
-    	
-    	return true;
+    	// 체크된 row의 값들을 [{code:1, name="연차"}, {code:1, name="연차"}] 식으로 담아 전달하고싶다.
     });
-	
 });
 </script>
 </body>

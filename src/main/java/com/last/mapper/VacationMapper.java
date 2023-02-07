@@ -12,7 +12,7 @@ public interface VacationMapper {
 
 	VacationItem getItemByCode();
 
-	void insertItem();
+	void insertItem(VacationItem item);
 
-	void updateItem();
+	void updateItem(VacationItem item);
 }
