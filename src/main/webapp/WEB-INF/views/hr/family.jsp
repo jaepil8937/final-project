@@ -61,7 +61,7 @@
 						</colgroup>
 						<thead>
 							<tr class="text-center">
-								<th><input type="checkbox"></th>
+								<th><input type="checkbox" id="checkbox-all-toggle" onchange="toggleAllCheckUncheck()"></th>
 								<th>성명</th>
 								<th>가족관계</th>
 								<th>최종학력</th>
@@ -74,7 +74,7 @@
 						</thead>
 						<tbody>
 							<tr class="text-center">
-								<td><input type="checkbox"></td>
+								<td><input type="checkbox" name="skill"></td>
 								<td>홍길동</td>
 								<td>배우자</td>
 								<td>학사</td>
@@ -85,7 +85,7 @@
 								<td><input type="checkbox"></td>
 							</tr>
 							<tr class="text-center">
-								<td><input type="checkbox"></td>
+								<td><input type="checkbox" name="skill"></td>
 								<td>홍길동</td>
 								<td>배우자</td>
 								<td>학사</td>
@@ -96,7 +96,7 @@
 								<td><input type="checkbox"></td>
 							</tr>
 							<tr class="text-center">
-								<td><input type="checkbox"></td>
+								<td><input type="checkbox" name="skill"></td>
 								<td>홍길동</td>
 								<td>배우자</td>
 								<td>학사</td>
@@ -111,13 +111,15 @@
 				</div>
 			
 			
+			
 			<div class="row">
 					<div class="col text-end">
 						<button type="submit" class="btn btn-dark" style="float:right;" id="">저장</button>
 					</div>
 				</div>
 			
-		
+	
+	
 			
 					
 				</div>
@@ -132,5 +134,36 @@
 				
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+<script type="text/javascript">
+
+function toggleAllCheckUncheck() {
+	// 전체 선택/해제 체크박스의 체크상태를 조회하다.
+	var el = document.querySelector("#checkbox-all-toggle");
+	var currentChecked = el.checked;
+	
+	// 모든 보유기술 체크박스의 체크상태를 위에서 조회한 전체 선택/해제 체크박스의 체크상태와 같은 상태로 만든다.
+	var collection = document.querySelectorAll('[name=skill]');
+	for (var index = 0; index < collection.length; index++) {
+		var el = collection[index];
+		el.checked = currentChecked;
+	}
+}
+function checkAll() {
+	// 체크박스 전체 선택하기
+	var collection = document.querySelectorAll('[name=skill]');
+	for (var index = 0; index < collection.length; index++) {
+		var el = collection[index];
+		el.checked = true;
+	}
+}
+function uncheckAll() {
+	// 체크박스 전체 선택하기
+	var collection = document.querySelectorAll('[name=skill]');
+	for (var index = 0; index < collection.length; index++) {
+		var el = collection[index];
+		el.checked = false;
+	}
+}
+</script>
 </body>
 </html>
