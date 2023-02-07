@@ -41,7 +41,7 @@
 				</div>
 			</div>
 			
-			<div class="row">
+			<div class="row" >
 					<div class="col text-end mb-3">
 						<button type="button" class="btn btn-outline-dark btn-sm" id="btn-del">행삭제</button>
 						<button type="button" class="btn btn-outline-dark btn-sm" id="btn-add">행추가</button>
@@ -61,7 +61,7 @@
 						</colgroup>
 						<thead>
 							<tr class="text-center">
-								<th><input type="checkbox" id="checkbox-all-toggle" onchange="toggleAllCheckUncheck()"></th>
+								<th><input type="checkbox" id="checkbox-all-toggle" onchange="toggleAllCheckUncheck()" ></th>
 								<th>성명</th>
 								<th>가족관계</th>
 								<th>최종학력</th>
@@ -73,30 +73,8 @@
 							</tr>
 						</thead>
 						<tbody>
-							<tr class="text-center">
-								<td><input type="checkbox" name="skill"></td>
-								<td>홍길동</td>
-								<td>배우자</td>
-								<td>학사</td>
-								<td>회사원</td>
-								<td>삼성</td>
-								<td><input type="checkbox"></td>
-								<td><input type="checkbox"></td>
-								<td><input type="checkbox"></td>
-							</tr>
-							<tr class="text-center">
-								<td><input type="checkbox" name="skill"></td>
-								<td>홍길동</td>
-								<td>배우자</td>
-								<td>학사</td>
-								<td>회사원</td>
-								<td>삼성</td>
-								<td><input type="checkbox"></td>
-								<td><input type="checkbox"></td>
-								<td><input type="checkbox"></td>
-							</tr>
-							<tr class="text-center">
-								<td><input type="checkbox" name="skill"></td>
+							<tr class="text-center" id="box-career">
+								<td><input type="checkbox" name="skill" ></td>
 								<td>홍길동</td>
 								<td>배우자</td>
 								<td>학사</td>
@@ -157,20 +135,37 @@ function uncheckAll() {
 	}
 }
 
-function() {
+$(function() {
 	$("#btn-add").click(function() {
 		
-		var careerFieldLength = $("#box-career :input[name=career]").length;
-		if (careerFieldLength >= 5) {
-			alert("가족사항 입력필드는 최대 4개까지만 추가 가능합니다.");
+		var skillFieldLength = $("#box-career :input[name=skill]").length;
+		if (skillFieldLength >= 5) {
+			alert("경력사항 입력필드는 최대 4개까지만 추가 가능합니다.");
 			return;
 		}
 		
-		
-	})
+		var htmlContent = `
+			<div class="row">
+				<div class="col-10">
+					<input type="text" class="form-control mb-2" name="skill">
+				</div>
+				<div class="col-2 text-end pt-1">
+					<button type="button" class="btn btn-danger btn-xs">삭제</button>
+				</div>
+			</div>
+		`;
+		$("#box-career").append(htmlContent);
+	});
 	
-}
-
+	// <div id="box-career"> 내부에 미래에 추가된 삭제버튼을 클릭했을 실행될 이벤트 핸들러 등록하기
+	$("#box-career").on("click", '.btn-danger', function() {
+		// this는 클릭이벤트가 발생할 엘리먼트다.
+		// $(this) 함수의 실행결과는 this를 포함하는 jQuery객체다.
+		
+		// .closest('선택자')는 조상 엘리먼트 중에서 지정한 선택자에 해당하는 가장 가까운 조상엘리먼트가 포함된 jQuery객체를 반환한다.
+		$(this).closest('.row').remove();
+	});
+})
 </script>
 </body>
 </html>
