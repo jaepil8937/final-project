@@ -21,7 +21,7 @@ public class VacationService {
 	}
 
 	public VacationItem getItemCode(int code) {
-		return vacationMapper.getItemByCode();
+		return vacationMapper.getItemByCode(code);
 	}
 
 	public void insertItem(VacationItem item) {

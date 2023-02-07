@@ -2,10 +2,12 @@ package com.last.web.request;
 
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
 @Setter
+@NoArgsConstructor
 public class VacationItemRequest {
 	private int code;		// 항목코드
 	private String name;	// 휴가명칭

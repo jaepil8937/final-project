@@ -10,7 +10,7 @@ import com.last.vo.VacationItem;
 public interface VacationMapper {
 	List<VacationItem> getItems();
 
-	VacationItem getItemByCode();
+	VacationItem getItemByCode(int code);
 
 	void insertItem(VacationItem item);
 

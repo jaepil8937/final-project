@@ -50,7 +50,7 @@
 							<col width="5%">
 							<col width="7%">
 							<col width="7%">
-							<col width="10%">
+							<col width="12%">
 							<col width="10%">
 							<col width="10%">
 							<col width="10%">
@@ -83,7 +83,7 @@
 										<td><input type="checkbox" name="chk"></td>
 										<td>휴가</td>
 										<td><input type="number" name="code" value="${item.code }" style="text-align:center; width:50px; border:0 solid black;"></td>
-										<td><input type="text" id="item-name" name="name" value="${item.name }" style="text-align:center; width:50px; border:0 solid black;"></td>
+										<td><input type="text" id="item-name" name="name" value="${item.name }" style="text-align:center; width:100px; border:0 solid black;"></td>
 										<td><input type="checkbox" name="used" ${item.used eq 'Y' ? "checked" : ""} value="${item.used eq 'Y' ? 'Y' : 'N' }"></td>
 										<td><input type="checkbox" name="deleted" ${item.deleted eq 'Y' ? "checked" : ""} value="${item.deleted eq 'Y' ? 'Y' : 'N' } "></td>
 										<td><input type="checkbox" name="payed" ${item.payed eq 'Y' ? "checked" : ""} value="${item.payed eq 'Y' ? 'Y' : 'N' }"></td>
@@ -111,7 +111,7 @@
 				</div>
 				<div class="row">
 					<div class="col text-end">
-						<button type="submit" class="btn btn-dark" style="float:right;" id="item-add">저장</button>
+						<button type="button" class="btn btn-dark" style="float:right;" id="item-add">저장</button>
 					</div>
 				</div>
 				</form>
@@ -147,11 +147,10 @@ $(function() {
 		innerHtml += '	<td>휴가</td>';
 		innerHtml += '	<td><input type="number" name="code" value="' + row_index + '" style="text-align:center; width:50px; border:0 solid black;"></td>';
 		innerHtml += '	<td><input type="text" id="item-name" name="name" value="" style="text-align:center; width:100%; border:0 solid black;"></td>';
-		innerHtml += '	<td><input type="checkbox" name="used" value="Y" id="input_check_used"></td>';
-		innerHtml += '	<td><input type="checkbox" name="deleted" value="Y" id="input_check_deleted"></td>';
-		innerHtml += '	<td><input type="checkbox" name="payed" value="Y" id="input_check_payed"></td>';
+		innerHtml += '	<td><input type="checkbox" name="used" value="" class="is_check"></td>';
+		innerHtml += '	<td><input type="checkbox" name="deleted" value="" class="is_check"></td>';
+		innerHtml += '	<td><input type="checkbox" name="payed" value="" class="is_check"></td>';
 		innerHtml += '	<td><input type="text" class="form-control form-control-xs w-100"></td>';
-		innerHtml += '	<td><input type="hidden" value="N" id="input_check_hidden"></td>';
 		innerHtml += '</tr>';
 		$("#item-noting").addClass("d-none");
 	    $('#table-item > tbody:last').append(innerHtml);
@@ -181,8 +180,40 @@ $(function() {
     	if($("input[name=chk]:checked").length == 0) {
     		alert("수정/저장할 휴가 항목을 선택하세요.");
     		return false;
+    	} else {
+    		var itemArr = [];
+    		$("input[name=chk]:checked").each(function(){
+    			 var thisRow = $(this).closest('tr');
+	    		var items_code = thisRow.find('td:eq(2)').find('input').val();
+	    		var items_name = thisRow.find('td:eq(3)').find('input').val();
+	    		var items_used = thisRow.find('td:eq(4)').find('input').is(':checked') ? 'Y' : 'N';
+	    		var items_deleted = thisRow.find('td:eq(5)').find('input').is(':checked') ? 'Y' : 'N';
+	    		var items_payed = thisRow.find('td:eq(6)').find('input').is(':checked') ? 'Y' : 'N';
+	    		var data = {
+	    				"code" : items_code,
+	    				"name" : items_name,
+	    				"used" : items_used,
+	    				"deleted" : items_deleted,
+	    				"payed" : items_payed
+	    		};
+	    		
+	    		itemArr.push(data);
+    			
+    		});
+	    		$.ajax({
+	    			type: 'post',
+	    			url: '/vacation/setting',
+	    			data: JSON.stringify(itemArr),
+	    			contentType: 'application/json',
+	    			dataType: 'json',
+	    			success: function(data) {
+	    				if (data.result == "ok") {
+	    					$("input[name=chk]").prop("checked",false);
+	    				}
+	    			}
+	    		});
+    		
     	}
-    	// 체크된 row의 값들을 [{code:1, name="연차"}, {code:1, name="연차"}] 식으로 담아 전달하고싶다.
     });
 });
 </script>
