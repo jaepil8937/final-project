@@ -38,27 +38,27 @@ public class HrController {
 		return "hr/certificate";
 	}
 	
-	@GetMapping("/register")
+	@GetMapping("/register")     // 인사정보등록
 	public String register() {
 		return "hr/register";
 	}
 	
-	@GetMapping("/re-register")
+	@GetMapping("/re-register")		// 인사정보재등록
 	public String reregister() {
 		return "hr/re-register";
 	}
 	
-	@GetMapping("/family")
+	@GetMapping("/family")			// 가족사항
 	public String family() {
 		return "hr/family";
 	}
 	
-	@GetMapping("/education")
+	@GetMapping("/education")		// 학력정보
 	public String education() {
 		return "hr/education";
 	}
 	
-	@GetMapping("/order")
+	@GetMapping("/order")			// 발령정보
 	public String order() {
 		return "hr/order";
 	}
