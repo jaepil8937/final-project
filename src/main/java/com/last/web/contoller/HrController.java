@@ -13,7 +13,7 @@ import com.last.service.EmployeeService;
 
 
 @Controller
-@RequestMapping("/employee")
+@RequestMapping("/hr")
 public class HrController {
 
 	@Autowired
@@ -27,7 +27,7 @@ public class HrController {
 	}
 	
 	@GetMapping("/personnel")	// 인사발령등록
-	public String register() {
+	public String personnel() {
 		
 		return "hr/personnel";
 	}
