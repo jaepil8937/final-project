@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.last.mapper.VacationMapper">
-	<select id="getItems" resultType="VacationItems">
+	<select id="getItems" resultType="VacationItem">
 		select 
 			item_code as code,
 			item_name as name,
@@ -15,7 +15,7 @@
 			item_code desc
 	</select>
 
-	<select id="getItemByCode" parameterType="int" resultType="VacationItems">
+	<select id="getItemByCode" parameterType="int" resultType="VacationItem">
 		select 
 			item_code as code,
 			item_name as name,
@@ -32,7 +32,7 @@
 	<!-- 
 		void insertPost()
 	 -->
-	 <insert id="insertItem" parameterType="VacationItems">
+	 <insert id="insertItem" parameterType="VacationItem">
 	 	insert into vacation_items
 	 		(item_code, item_name, year_vacation_used, item_used, salary_payed)
 	 	values

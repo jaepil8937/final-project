@@ -5,7 +5,7 @@ import org.apache.ibatis.type.Alias;
 import lombok.Getter;
 import lombok.Setter;
 
-@Alias("VacationItems")
+@Alias("VacationItem")
 @Getter
 @Setter
 public class VacationItem {
