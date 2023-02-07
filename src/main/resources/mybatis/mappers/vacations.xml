@@ -12,7 +12,7 @@
 		from
 			vacation_items
 		order by
-			item_code desc
+			item_code asc
 	</select>
 
 	<select id="getItemByCode" parameterType="int" resultType="VacationItem">
@@ -38,5 +38,17 @@
 	 	values
 	 		(#{code}, #{name}, #{used}, #{deleted}, #{payed})
 	 </insert>
+	 
+	<update id="updateItem" parameterType="VacationItem">
+		update
+			vacation_items
+		set
+			item_name = #{name},
+			year_vacation_used = #{used},
+			item_used = #{deleted},
+			salary_payed = #{payed}
+		where
+			item_code = #{code}
+	</update>	 
 
 </mapper>
