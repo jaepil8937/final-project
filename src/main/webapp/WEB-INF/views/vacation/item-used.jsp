@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -45,7 +47,6 @@
 					</p>
 				</div>
 			</div>
-			<form>
 				<div class="row">
 					<table class="table table-bordered table-hover table-striped table-sm">
 						<colgroup>
@@ -123,12 +124,6 @@
 						</p>
 						</div>
 				</div>
-				<div class="row">
-					<div class="col text-end">
-						<button type="submit" class="btn btn-dark" style="float:right;" id="">저장</button>
-					</div>
-				</div>
-				</form>
 			</div>	
 		</div>
 	</div>

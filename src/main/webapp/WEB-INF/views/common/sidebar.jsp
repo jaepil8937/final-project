@@ -1,4 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" trimDirectiveWhitespaces="true"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -19,8 +21,9 @@
 				<ul class="dropdown-menu dropdown-menu-dark" id="sub-menu">
 					<li><a class="dropdown-item ${side eq '1' ? 'text-light fw-bold' : '' }" href="#">일일근태등록</a></li>
 					<li><a class="dropdown-item ${side eq '2' ? 'text-light fw-bold' : '' }" href="#">월근태생성/마감</a></li>
-					<li><a class="dropdown-item ${side eq '3' ? 'text-light fw-bold' : '' }" href="#">휴일설정</a></li>
-					<li><a class="dropdown-item ${side eq '4' ? 'text-light fw-bold' : '' }" href="#">휴일/연장/야간근무</a></li>
+					<li><a class="dropdown-item ${side eq '3' ? 'text-light fw-bold' : '' }" href="#">휴일달력</a></li>
+					<li><a class="dropdown-item ${side eq '3' ? 'text-light fw-bold' : '' }" href="#">휴일일괄설정</a></li>
+					<li><a class="dropdown-item ${side eq '4' ? 'text-light fw-bold' : '' }" href="#">휴일/연장/야간근무조회</a></li>
 				</ul>
 			</li>
 			<li class="nav-item dropdown"><a class="nav-link dropdown-toggle text-light " href="#" role="button" data-bs-toggle="dropdown" data-bs-auto-close="false" aria-expanded="false">휴가관리</a>
@@ -34,12 +37,23 @@
 			</li>		
 			<li class="nav-item dropdown"><a class="nav-link dropdown-toggle text-light" href="#" data-bs-toggle="dropdown" data-bs-auto-close="false" aria-expanded="false">인사관리</a>
 				<ul class="dropdown-menu dropdown-menu-dark" id="sub-menu">
-					<li><a class="dropdown-item ${side eq '1' ? 'text-light fw-bold' : '' }" href="#">인사정보등록</a></li>
-					<li><a class="dropdown-item ${side eq '2' ? 'text-light fw-bold' : '' }" href="#">인사정보재등록</a></li>
+					<li><a class="dropdown-item ${side eq '1' ? 'text-light fw-bold' : '' }" href="/employeelist/register">인사정보등록</a></li>
+					<li><a class="dropdown-item ${side eq '2' ? 'text-light fw-bold' : '' }" href="/hr/re-register">인사정보재등록</a></li>
 					<li><a class="dropdown-item ${side eq 'employeelist' ? 'text-light fw-bold' : '' }" href="/employee/info">사원명부/인사기록카드</a></li>
 					<li><a class="dropdown-item ${side eq 'personnel' ? 'text-light fw-bold' : '' }" href="/employee/personnel">인사발령등록</a></li>
 					<li><a class="dropdown-item ${side eq 'certificate' ? 'text-light fw-bold' : '' }" href="/employee/issue">증명서발급</a></li>
 					<li><a class="dropdown-item ${side eq '6' ? 'text-light fw-bold' : '' }" href="#">회원탈퇴/비밀번호변경</a></li>
+				</ul>
+			</li>	
+			<li class="nav-item dropdown"><a class="nav-link dropdown-toggle text-light" href="#" data-bs-toggle="dropdown" data-bs-auto-close="false" aria-expanded="false">급여관리</a>
+				<ul class="dropdown-menu dropdown-menu-dark" id="sub-menu">
+					<li><a class="dropdown-item ${side eq '1' ? 'text-light fw-bold' : '' }" href="/pay/paybase">급여기본정보관리</a></li>
+					<li><a class="dropdown-item ${side eq '2' ? 'text-light fw-bold' : '' }" href="/pay/extrapay">기본수당외 수당</a></li>
+					<li><a class="dropdown-item ${side eq '3' ? 'text-light fw-bold' : '' }" href="/pay/salarytax">급여비과세표</a></li>
+					<li><a class="dropdown-item ${side eq '3' ? 'text-light fw-bold' : '' }" href="/pay/grade">급호테이블</a></li>
+					<li><a class="dropdown-item ${side eq '4' ? 'text-light fw-bold' : '' }" href="/pay/simpletax">간이세액조견표</a></li>
+					<li><a class="dropdown-item ${side eq '4' ? 'text-light fw-bold' : '' }" href="/pay/insurance">4대보험요율표</a></li>
+					<li><a class="dropdown-item ${side eq '4' ? 'text-light fw-bold' : '' }" href="/pay/simpletax">급여계산</a></li>
 				</ul>
 			</li>	
 		</ul>

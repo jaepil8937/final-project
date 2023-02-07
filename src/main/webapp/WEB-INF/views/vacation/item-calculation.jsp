@@ -1,5 +1,7 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"  pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+  
 <!DOCTYPE html>
 <html>
 <head>
@@ -42,7 +44,6 @@
 						<button type="button" class="btn btn-danger" style="float:right;" id="btn-search">검색</button>
 					</div>
 				</div>
-			</form>
 			<div class="row">
 				<div class="col-3 text-left mb-1">
 					<p>
@@ -129,12 +130,6 @@
 						</p>
 						</div>
 				</div>
-				<div class="row">
-					<div class="col text-end">
-						<button type="submit" class="btn btn-dark" style="float:right;" id="">저장</button>
-					</div>
-				</div>
-				</form>
 			</div>	
 		</div>
 	</div>

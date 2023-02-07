@@ -42,6 +42,11 @@ public class PayController {
 	public String salarytax() {
 		return "/pay/salarytax";
 	}
+
+	@GetMapping("/insurance")
+	public String insurance() {
+		return "/pay/insurance";
+	}
 	
 	
 }
