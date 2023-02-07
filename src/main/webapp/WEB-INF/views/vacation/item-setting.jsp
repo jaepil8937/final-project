@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -67,37 +69,30 @@
 							</tr>
 						</thead>
 						<tbody>
-							<tr class="text-center">
-								<td><input type="checkbox" name="chk"></td>
-								<td>휴가</td>
-								<td>00</td>
-								<td>병가</td>
-								<td><input type="checkbox" name="used" value="Y"></td>
-								<td><input type="checkbox" name="deleted" value="Y"></td>
-								<td><input type="checkbox" name="payed" value="Y"></td>
-								<td><input type="text" class="form-control form-control-xs w-100"></td>
-							</tr>
-							<tr class="text-center">
-								<td><input type="checkbox" name="chk"></td>
-								<td>휴가</td>
-								<td>01</td>
-								<td>휴가(연차)</td>
-								<td><input type="checkbox" name="used" value="Y"></td>
-								<td><input type="checkbox" name="deleted" value="Y"></td>
-								<td><input type="checkbox" name="payed" value="Y"></td>
-								<td><input type="text" class="form-control form-control-xs w-100"></td>
-							</tr>
-							<tr class="text-center">
-								<td><input type="checkbox" name="chk"></td>
-								<td>휴가</td>
-								<td>02</td>
-								<td>휴가(연차)</td>
-								<td><input type="checkbox" name="used" value="Y"></td>
-								<td><input type="checkbox" name="deleted" value="Y"></td>
-								<td><input type="checkbox" name="payed" value="Y"></td>
-								<td><input type="text" class="form-control form-control-xs w-100"></td>
-							</tr>												
-						</tbody>
+						<!-- 등록된 게시글이 없으면 아래 내용을 출력한다. -->
+						<c:choose>
+							<c:when test="${empty items }">
+								<tr>
+									<td id="item-noting" colspan="12" class="text-center">설정된 휴가항목이 없습니다.</td>
+								</tr>
+							</c:when>
+							<c:otherwise>
+								<c:forEach var="item" items="${items }">
+									<!-- 등록된 휴가항목이 있으면 등록된 휴가항목들의 갯수만큼 아래 내용을 출력한다. -->
+									<tr class="text-center">
+										<td><input type="checkbox" name="chk"></td>
+										<td>휴가</td>
+										<td><input type="number" name="code" value="${item.code }" style="text-align:center; width:50px; border:0 solid black;"></td>
+										<td><input type="text" id="item-name" name="name" value="${item.name }" style="text-align:center; width:50px; border:0 solid black;"></td>
+										<td><input type="checkbox" name="used" ${item.used eq 'Y' ? "checked" : ""} value="${item.used eq 'Y' ? 'Y' : 'N' }"></td>
+										<td><input type="checkbox" name="deleted" ${item.deleted eq 'Y' ? "checked" : ""} value="${item.deleted eq 'Y' ? 'Y' : 'N' } "></td>
+										<td><input type="checkbox" name="payed" ${item.payed eq 'Y' ? "checked" : ""} value="${item.payed eq 'Y' ? 'Y' : 'N' }"></td>
+										<td><input type="text" class="form-control form-control-xs w-100"></td>									
+									</tr>
+								</c:forEach>
+							</c:otherwise>
+						</c:choose>											
+							</tbody>
 					</table>
 				</div>
 				<div class="row mb-2 bg-light m-2">
@@ -116,7 +111,7 @@
 				</div>
 				<div class="row">
 					<div class="col text-end">
-						<button type="submit" class="btn btn-dark" style="float:right;" id="">저장</button>
+						<button type="submit" class="btn btn-dark" style="float:right;" id="item-add">저장</button>
 					</div>
 				</div>
 				</form>
@@ -127,20 +122,38 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
 <script type="text/javascript">
 $(function() {
+	
+	// 개별체크백수 개수의 따른 전체선택/전체해제 선택처리 기능 구현
+	function checkAll() {
+	    $("input[name=chk]").on('click', function() {
+	        if($('input[name=chk]:checked').length == $('input[name=chk]').length){
+	            $('#check-all').prop('checked',true);
+	        }else{
+	           $('#check-all').prop('checked',false);
+	        }
+	    })		
+	}
 	// 행추가 버튼 클릭을 통한 행 추가 기능 구현
 	$('#btn-add-row').click(function() {
+		let row_index = $("input[name=chk]").length + 1;
+		if (row_index === 1) {
+			row_index = 1;
+		}
 		let innerHtml = "";
 		innerHtml += '<tr class="text-center">';
 		innerHtml += '	<td><input type="checkbox" name="chk"></td>';
 		innerHtml += '	<td>휴가</td>';
-		innerHtml += '	<td><input type="number" name="code" value="" style="text-align:center; width:50px; border:0 solid black;"></td>';
-		innerHtml += '	<td><input type="text" name="code" value="" style="text-align:center; width:100%; border:0 solid black;"></td>';
+		innerHtml += '	<td><input type="number" name="code" value="' + row_index + '" style="text-align:center; width:50px; border:0 solid black;"></td>';
+		innerHtml += '	<td><input type="text" id="item-name" name="name" value="" style="text-align:center; width:100%; border:0 solid black;"></td>';
 		innerHtml += '	<td><input type="checkbox" name="used" value="Y"></td>';
 		innerHtml += '	<td><input type="checkbox" name="deleted" value="Y"></td>';
 		innerHtml += '	<td><input type="checkbox" name="payed" value="Y"></td>';
 		innerHtml += '	<td><input type="text" class="form-control form-control-xs w-100"></td>';
 		innerHtml += '</tr>';
+		$("#item-noting").addClass("d-none");
 	    $('#table-item > tbody:last').append(innerHtml);
+	    checkAll();
+	    
 	  });
 	
 	// 체크박스 전체선택/전체해제 기능 구현
@@ -157,14 +170,17 @@ $(function() {
         }
     })
     
-    // 개별체크백수 개수의 따른 전체선택/전체해제 선택처리 기능 구현
-    $("input[name=chk]").on('click', function() {
-        if($('input[name=chk]:checked').length==$('input[name=chk]').length){
-            $('#check-all').prop('checked',true);
-        }else{
-           $('#check-all').prop('checked',false);
-        }
-    })
+    checkAll();
+    
+    $("#item-add").click(function() {
+    	// 체크된 체크박스가 없으면 알림창.
+    	if($('input[name=chk]:checked').length === 0) {
+    		alert("수정/저장할 휴가 항목을 선택하세요.");
+    		return false;
+    	}
+    	
+    	return true;
+    });
 	
 });
 </script>

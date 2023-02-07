@@ -27,78 +27,81 @@
 				</div>
 			</div>	
 				
-			<div class="col-12">
-				<h1 class="border p-2 bg-light fs-4 mt-1">검색년월</h1>
-			</div>
-	<div class="row mb-3">
-		<div class="col-5">
-			<div class="card">
-				<div class="card-header">기본정보</div>
-				<div class="card-body">
-					<table class="table">
-						<thead>
-							<tr>
-								<th>사원번호</th>
-								<th>성명</th>
-								<th>부서명</th>
-							</tr>
-						</thead>
-						<tbody>
-							<tr>
-								<td>1001</td>
-								<td id="">홍길동</td>
-								<td>홍보과</td>
-							</tr>
-							<tr>
-								<td>1002</td>
-								<td id="">이순신</td>
-								<td>인사과</td>
-							</tr>
-						</tbody>
-					</table>
-					<div class="text-end">
-					</div>
+			<div class="col-12 border ">
+				<div class="border p-2 bg-light fs-6" >검색년월
+				<input type="month"/>
+				<button class="btn btn-danger btn-xm">검색</button>
 				</div>
 			</div>
-		</div>
-		<div class="col-7">
-			<div class="card">
-				<div class="card-header">기본수당외 수당관리</div>
-				<div class="card-body">
-					<table class="table" id="">
-						<colgroup>
-							<col width="20%">
-							<col width="30%">
-							<col width="20%">
-							<col width="30%">
-						</colgroup>
-						<tbody>
-							<tr>
-								<th>지급/공제</th>
-								<td id=""></td>
-								<th>보육수당</th>
-								<td id=""></td>
-							</tr>
-							<tr>
-								<th>상여금</th>
-								<td id=""></td>
-								<th>식대비</th>
-								<td id=""></td>
-							</tr>
-							<tr>
-								<th>출장비</th>
-								<td id=""></td>
-								<th>비고</th>
-								<td id=""></td>
-							</tr>
-						</tbody>
-					</table>
-					<div class="text-end">
+			<div class="row mb-3" >
+				<div class="col-5">
+					<div class="card">
+						<div class="card-header">기본정보</div>
+						<div class="card-body">
+							<table class="table">
+								<thead>
+									<tr>
+										<th>사원번호</th>
+										<th>성명</th>
+										<th>부서명</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td>1001</td>
+										<td id="">홍길동</td>
+										<td>홍보과</td>
+									</tr>
+									<tr>
+										<td>1002</td>
+										<td id="">이순신</td>
+										<td>인사과</td>
+									</tr>
+								</tbody>
+							</table>
+							<div class="text-end">
+							</div>
+						</div>
 					</div>
 				</div>
-			</div>
-		</div>
-	</div>				
+				<div class="col-7">
+					<div class="card">
+						<div class="card-header">기본수당외 수당관리</div>
+						<div class="card-body">
+							<table class="table" id="">
+								<colgroup>
+									<col width="20%">
+									<col width="30%">
+									<col width="20%">
+									<col width="30%">
+								</colgroup>
+								<tbody>
+									<tr>
+										<th>지급/공제</th>
+										<td id=""></td>
+										<th>보육수당</th>
+										<td id=""></td>
+									</tr>
+									<tr>
+										<th>상여금</th>
+										<td id=""></td>
+										<th>식대비</th>
+										<td id=""></td>
+									</tr>
+									<tr>
+										<th>출장비</th>
+										<td id=""></td>
+										<th>비고</th>
+										<td id=""></td>
+									</tr>
+								</tbody>
+							</table>
+							<div class="text-end">
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>				
 	</div>
 </div>	
 </div>
