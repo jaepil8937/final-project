@@ -1,10 +1,12 @@
 package com.last.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.last.dto.VacationRequestDto;
 import com.last.mapper.VacationMapper;
 import com.last.vo.VacationDay;
 import com.last.vo.VacationItem;
@@ -18,7 +20,7 @@ public class VacationService {
 
 	// 모든 휴가항목을 조회하는 서비스 메소드를 정의한다.
 	public List<VacationItem> getAllItems() {
-			return vacationMapper.getItems();
+		return vacationMapper.getItems();
 	}
 
 	public VacationItem getItemCode(int code) {
@@ -40,5 +42,10 @@ public class VacationService {
 	}
 	
 	
+
+	public List<VacationRequestDto> getUsedVacations(Map<String, Object> param) {
+		System.out.println("서비스클래스: " + param.get("year"));
+		return vacationMapper.getUsedVacations(param);
+	}
 
 }

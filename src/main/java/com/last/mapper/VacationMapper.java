@@ -1,10 +1,14 @@
 package com.last.mapper;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
+
+import com.last.dto.VacationRequestDto;
 import com.last.vo.VacationDay;
+
 import com.last.vo.VacationItem;
 
 @Mapper
@@ -30,6 +34,10 @@ public interface VacationMapper {
 	// 근속연수별 행 삭제
 	void deleteYearVacationDay(int workedYear);
 
+
+	void updateItem(VacationItem item);
+
+	List<VacationRequestDto> getUsedVacations(Map<String, Object> param);
 }
 	
 

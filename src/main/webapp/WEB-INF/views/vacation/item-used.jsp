@@ -23,18 +23,19 @@
 					<h2>휴가사용현황</h2>
 				</div>
 				<hr>
-			<form>
+			<form name="form-search">
 				<div class="row mb-3 bg-light p-4">
 					<div>
 						<label class="form-label"><strong>기준년도</strong></label>
-							<select id="year" style="width: 100px">
+							<select id="year" name="baseYear" style="width: 100px">
 							</select>
 						<label class="form-label"><strong>검색어</strong></label>
-						<select>
-							<option>사원번호</option>
-							<option>성명</option>
+						<select name="opt">
+							<option value="empNo">사원번호</option>
+							<option value="empName">성명</option>
+							<option value="dept">부서명</option>
 						</select>
-						<input type="text" />
+						<input type="text" name="keyword" value=""/>
 						<button type="button" class="btn btn-danger" style="float:right;" id="btn-search">검색</button>
 					</div>
 				</div>
@@ -48,7 +49,7 @@
 				</div>
 			</div>
 				<div class="row">
-					<table class="table table-bordered table-hover table-striped table-sm">
+					<table class="table table-bordered table-hover table-striped table-sm" id="used-table">
 						<colgroup>
 							<col width="3%">
 							<col width="7%">
@@ -76,42 +77,9 @@
 							</tr>
 						</thead>
 						<tbody>
-							<tr class="text-center">
-								<td>1</td>
-								<td>1001</td>
-								<td>홍길동</td>
-								<td>사원</td>
-								<td>개발팀</td>
-								<td>1</td>
-								<td>연차</td>
-								<td>2022-01-15</td>
-								<td>2022-01-17</td>
-								<td>2022-01-20</td>
-							</tr>
-							<tr class="text-center">
-								<td>2</td>
-								<td>1001</td>
-								<td>홍길동</td>
-								<td>사원</td>
-								<td>개발팀</td>
-								<td>1</td>
-								<td>연차</td>
-								<td>2022-01-15</td>
-								<td>2022-01-17</td>
-								<td>2022-01-20</td>
-							</tr>
-							<tr class="text-center">
-								<td>3</td>
-								<td>1001</td>
-								<td>홍길동</td>
-								<td>사원</td>
-								<td>개발팀</td>
-								<td>1</td>
-								<td>연차</td>
-								<td>2022-01-15</td>
-								<td>2022-01-17</td>
-								<td>2022-01-20</td>
-							</tr>												
+							<tr>
+								<td id="item-noting" colspan="12" class="text-center">기준년도를 선택해 검색해주시기 바랍니다.</td>
+							</tr>											
 						</tbody>
 					</table>
 				</div>
@@ -122,6 +90,10 @@
 							<i class="bi bi-exclamation-circle-fill"></i>
 							휴가신청에서 결재상태가 "승인"된 휴가만 조회됩니다. 
 						</p>
+						<p>
+							<i class="bi bi-exclamation-circle-fill"></i>
+							관리자가 아닌 사원들은 자신의 사용현황 정보만 조회가 가능합니다.
+						</p>
 						</div>
 				</div>
 			</div>	
@@ -131,6 +103,13 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
 <script>
 $(function() {
+	// 엔터키 눌러도 넘어가지 않도록 이벤트 걸기
+	$('input[type="text"]').keydown(function() {
+		if (event.keyCode === 13) {
+			event.preventDefault();
+		};
+	});
+	
 	let now = new Date();
 	let now_year = now.getFullYear();
 	
@@ -139,7 +118,48 @@ $(function() {
 	for (let i = 2010; i <= now_year; i++) {
 		$("#year").append("<option value='"+ i +"'>"+ i +"</option>");
 	}
+	
+	$("#btn-search").click(function() {
+		$.ajax({
+			type: 'GET',
+			url : '/vacation/used-search',
+			data : $("form[name=form-search]").serialize(),
+			success : function(result) {
+				$('#used-table > tbody').empty();
+				if (result.length >= 1) {
+					result.forEach(function(item) {
+						let row_index = $("#used-table > tbody > tr[name=index]").length + 1;
+						if (row_index === 1) {
+							row_index = 1;
+						}
+						let innerHtml = "";
+						innerHtml += '<tr class="text-center" name="index">';
+						innerHtml += "<td>" + row_index + "</td>";
+						innerHtml += "<td>" + item.empNo + "</td>";
+						innerHtml += "<td>" + item.empName + "</td>";
+						innerHtml += "<td>" + item.positionName + "</td>";
+						innerHtml += "<td>" + item.deptName + "</td>";
+						innerHtml += "<td>" + item.days + "</td>";
+						innerHtml += "<td>" + item.itemName + "</td>";
+						innerHtml += "<td>" + item.requestDate + "</td>";
+						innerHtml += "<td>" + item.startDate + "</td>";
+						innerHtml += "<td>" + item.endDate + "</td>";
+						innerHtml += '</tr>';
+						$('#used-table > tbody').append(innerHtml);
+					})
+				} else {
+					let innerHtml = "";
+					innerHtml += '<tr>';
+					innerHtml += '<td id="item-noting" colspan="12" class="text-center">해당 년도에 대한 휴가 사용 정보가 없습니다.</td>'
+					innerHtml += '</tr>';
+					$('#used-table > tbody').append(innerHtml);
+				}
+			}
+		})
+	});
+	
 });
+	
 </script>
 </body>
 </html>
