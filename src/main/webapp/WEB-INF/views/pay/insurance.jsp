@@ -21,68 +21,75 @@
 		</div>
 		<div class="col-9 mb-3">
 			<div class="row mb-3">
-				<div class="col">
+				<div class="col-12">
 					<h1>4대보험 요율표</h1>
 				</div>
 			</div>	
-				
-			<div class="col-12 border ">
-				<div class="border p-2 bg-light fs-6" >검색년월
-				<input type="month"/>
+			<form>
+			<div class="col-12 border" >
+				<div class="border p-2 bg-light" >기준년도
+				<select>	
+					<option>2023</option>
+					<option>2022</option>
+				</select>
 				<button class="btn btn-danger btn-xm">검색</button>
 				</div>
-			</div>
+			</div>	
+					
 			<div class="row mb-3">
-				<div>
+				<div class="col-12 text-center">
 					<table class="table table-bordered">
+						<c:forEach var="insurance" items="${insurance }">
 						<tr>
-							<th rowspan="2">국민연금</th>
-							<th >요율</th>
-							<th>개인부담분</th>
-							<td>4.5%</td>
-							<th>회사부담금</th>
-							<td>4.5%</td>
+							<th rowspan="2" class="bg-light">국민연금</th>
+							<th class="bg-light">요율</th>
+							<th class="bg-light">개인부담분</th>
+							<td>${insurance.pensionEmployeeInsurance } %</td>
+							<th class="bg-light">회사부담금</th>
+							<td>${insurance.pensionCompanyInsurance } %</td>
 						</tr>
 						<tr>
-							<th>기준소득월액</th>
-							<th>하한금액</th>
-							<td>290,000원</td>
-							<th>상한금액</th>
-							<td>4,490,000원</td>
+							<th class="bg-light">기준소득월액</th>
+							<th class="bg-light">하한금액</th>
+							<td><fmt:formatNumber value="${insurance.minSalary }" /> 원</td>
+							<th class="bg-light">상한금액</th>
+							<td><fmt:formatNumber value="${insurance.maxSalary }" /> 원</td>
 						</tr>
 						<tr>
-							<th rowspan="2">건강보험</th>
-							<th>요율</th>
-							<th>개인부담분</th>
-							<td>3.12%</td>
-							<th>회사부담금</th>
-							<td>3.12%</td>
+							<th rowspan="2" class="bg-light">건강보험</th>
+							<th class="bg-light">요율</th>
+							<th class="bg-light">개인부담분</th>
+							<td>${insurance.healthEmployeeInsurance } %</td>
+							<th class="bg-light">회사부담금</th>
+							<td>${insurance.healthCompanyInsurance }%</td>
 						</tr>
 						<tr>
-							<th>장기요양보험</th>
-							<th>개인부담분</th>
-							<td>7.38%</td>
-							<th>회사부담금</th>
-							<td>7.38%</td>
+							<th class="bg-light">장기요양보험</th>
+							<th class="bg-light">개인부담분</th>
+							<td>${insurance.longtermEmployeeInsurance } %</td>
+							<th class="bg-light">회사부담금</th>
+							<td>${insurance.longtermCompanyInsurance } %</td>
 						</tr>
 						<tr>
-							<th>고용보험</th>
-							<th>요율</th>
-							<th>개인부담분</th>
-							<td>0.65%</td>
-							<th>회사부담금</th>
-							<td>0.65%</td>
+							<th class="bg-light">고용보험</th>
+							<th class="bg-light">요율</th>
+							<th class="bg-light">개인부담분</th>
+							<td>${insurance.employmentEmployeeInsurance } %</td>
+							<th class="bg-light">회사부담금</th>
+							<td>${insurance.employmentCompanyInsurance } %</td>
 						</tr>
 						<tr>
-							<th>산재보험</th>
-							<th>요율</th>
-							<th>회사부담금</th>
-							<td>%</td>
+							<th class="bg-light">산재보험</th>
+							<th class="bg-light">요율</th>
+							<th class="bg-light">회사부담금</th>
+							<td>${insurance.industrialCompanyInsurance } %</td>
 							<td colspan="2">회사 규정마다 다름</td>
 						</tr>
+						</c:forEach>
 					</table>
 				</div>	
 			</div>
+			</form>
 		</div>	
 	</div>
 </div>

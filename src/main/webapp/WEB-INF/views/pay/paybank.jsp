@@ -49,14 +49,23 @@
 					</thead>
 					<tbody>
 						<tr>
-							<td>서울은행</td>
-							<td>100220023002</td>
-							<td>홍길동</td>
-							<td>2022/02/22</td>
+							<td><select>
+							<option>NH농협은행</option>
+							<option>KDB산업은행</option>
+							<option>KB국민은행</option>
+							<option>신한은행</option>
+							<option>우리은행</option>
+							<option>하나은행</option>
+							<option>SC제일은행</option>
+							<option>한국씨티은행</option>
+							<option>카카오뱅크</option>
+							</select></td>
+							<td><input class="text" /></td>
+							<td><input class="text" /></td>
+							<td><input type="date" style="text-align:center; width:130px"/></td>
 						</tr>
 					</tbody>
 					</table>
-					
 					<table class="table table-bordered">
 						<colgroup>
 							<col width="25%">
@@ -70,25 +79,25 @@
 						<tr>
 							<th class="bg-light">국민연금</th>
 							<th class="bg-light">기준소득월액</th><td>4,800,000</td>
-							<th class="bg-light">취득일자</th><td>2022/02/22</td>
-							<th class="bg-light">퇴직일자</th><td>2022/02/22</td>
+							<th class="bg-light">취득일자</th><td><input type="date" style="text-align:center; width:130px"/></td>
+							<th class="bg-light">퇴직일자</th><td><input type="date" style="text-align:center; width:130px"/></td>
 						</tr>				
 						<tr>
 							<th class="bg-light">건강보험</th>
 							<th class="bg-light">기준소득월액</th><td>4,800,000</td>
-							<th class="bg-light">취득일자</th><td>2022/02/22</td>
-							<th class="bg-light">퇴직일자</th><td>2022/02/22</td>
+							<th class="bg-light">취득일자</th><td><input type="date" style="text-align:center; width:130px"/></td>
+							<th class="bg-light">퇴직일자</th><td><input type="date" style="text-align:center; width:130px"/></td>
 						</tr>				
 						<tr>
 							<th class="bg-light">고용보험</th>
 							<th class="bg-light">기준소득월액</th><td>4,800,000</td>
-							<th class="bg-light">취득일자</th><td>2022/02/22</td>
-							<th class="bg-light">퇴직일자</th><td>2022/02/22</td>
+							<th class="bg-light">취득일자</th><td><input type="date" style="text-align:center; width:130px"/></td>
+							<th class="bg-light">퇴직일자</th><td><input type="date" style="text-align:center; width:130px"/></td>
 						</tr>				
 				</table>
 				<div class="row mb-2">
 					<div class="col">
-						<button class="btn btn-outline-dark btn-xs" style="float:right;" data-bs-toggle="modal" data-bs-targer="#modal-form-banks">등록</button>
+						<button type="submit" class="btn btn-outline-dark btn-xs" style="float:right;" id="">등록</button>
 						<button class="btn btn-outline-dark btn-xs" style="float:right;">수정</button>
 					</div>
 				</div>
