@@ -10,17 +10,17 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @RequestMapping("/salary")
 public class SalaryController {
 	
-	@GetMapping("/salarycalculate")
+	@GetMapping("/salarycalculate")    	// 급여계산
 	public String salarycalculate() {
 		return "salary/salarycalculate";
 	}
 
-	@GetMapping("/salarycheck")
+	@GetMapping("/salarycheck")			// 급여조회
 	public String salarycheck() {
 		return "salary/salarycheck";
 	}
 	
-   /*
+	/*
 	@GetMapping("/detail.json")
 	@ResponseBody
 	public PayDetailDto payDetail(@RequestParam("userId") String employeeNo) {
@@ -29,4 +29,9 @@ public class SalaryController {
 		return dto;
 	}
 	*/
+	
+	@GetMapping("/salarybook")          // 급여대장
+	public String salarybook() {
+		return "salary/salarybook";
+	}
 }

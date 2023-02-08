@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.last.mapper.SalaryMapper">
+
+	<!-- 
+		PayHistories getPayHistoriesByNo(int employeeNo);
+	 -->
+	  <select id = "getPayHistoriesByNo" parameterType="int" resultType="PayHistories">
+	 	select
+	 		A.EMPLOYEE_NO				as employeeNo,
+	 		A.BASE_YEAR_MONTH     		as baseYearMonth,
+	 		A.BASE_SALARY_TTL     		as baseSalary,
+	 		A.OVERTIME_SALARY_TTL		as overtimeSalary,
+	 		A.NIGHT_SALARY_TTL			as overtimeSalary,
+	 		A.HOLIDAY_SALARY			as holidaySalary,
+	 		A.CARE_SALARY_TTL			as careSalary,
+	 		A.REWARD_SALARY_TTL			as rewardSalary,
+	 		A.MEAL_TTL					as mealSalary,
+	 		A.BUSINESS_SALARY_TTL		as businessSalary,
+	 		A.INCOME_TAX_TTL			as incomeTax,
+	 		A.RESIDENCE_TAX_TTL			as residenceTax,
+	 		A.PENSION_TTL				as pension,
+	 		A.INSURANCE_TTL				as healthInsurance,
+	 		A.LONGTERM_INSURANCE_TTL	as longtermInsurance,
+	 		A.EMPLOYMENT_INSURANCE_TTL	as employmentInsurance,
+	 		C.DEPT_NAME					as deptName
+	 	from
+	 		SALARY_HISTORIES A, EMPLOYEES B, DEPARTMENTS C
+	 	where
+	 		A.EMPLOYEE_NO = #{value}	
+	 	and 
+	 		A.EMPLOYEE_NO = B.EMPLOYEE_NO
+	 	and
+	 		B.DEPT_NO = C.DEPT_NO		
+	 </select>
+	 
+	 	 <!--
+	 <select id = "getPayHistoriesByNo" parameterType="int" resultType="PayHistories">
+	 	select
+	 		EMPLOYEE_NO					as employeeNo,
+	 		BASE_YEAR_MONTH     		as baseYearMonth,
+	 		BASE_SALARY_TTL     		as baseSalary,
+	 		OVERTIME_SALARY_TTL			as overtimeSalary,
+	 		NIGHT_SALARY_TTL			as overtimeSalary,
+	 		HOLIDAY_SALARY				as holidaySalary,
+	 		CARE_SALARY_TTL				as careSalary,
+	 		REWARD_SALARY_TTL			as rewardSalary,
+	 		MEAL_TTL					as mealSalary,
+	 		BUSINESS_SALARY_TTL			as businessSalary,
+	 		INCOME_TAX_TTL				as incomeTax,
+	 		RESIDENCE_TAX_TTL			as residenceTax,
+	 		PENSION_TTL					as pension,
+	 		INSURANCE_TTL				as healthInsurance,
+	 		LONGTERM_INSURANCE_TTL		as longtermInsurance,
+	 		EMPLOYMENT_INSURANCE_TTL	as employmentInsurance
+	 	from
+	 		SALARY_HISTORIES
+	 	where
+	 		EMPLOYEE_NO	= #{value}		
+	 </select>
+	  -->
+	 
+  
+</mapper>
