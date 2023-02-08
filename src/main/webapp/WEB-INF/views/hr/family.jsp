@@ -47,7 +47,7 @@
 						<button type="button" class="btn btn-outline-dark btn-sm" id="btn-add">행추가</button>
 					</div>
 				<div class="row">
-					<table class="table table-bordered table-hover table-striped table-sm">
+					<table class="table table-bordered table-hover table-striped table-sm" id="table-family">
 						<colgroup>
 							<col width="5%">
 							<col width="7%">
@@ -73,8 +73,8 @@
 							</tr>
 						</thead>
 						<tbody>
-							<tr class="text-center" id="box-career">
-								<td><input type="checkbox" name="skill" ></td>
+							<tr class="text-center" >
+								<td><input type="checkbox" name="familyNo" ></td>
 								<td>홍길동</td>
 								<td>배우자</td>
 								<td>학사</td>
@@ -112,7 +112,7 @@ function toggleAllCheckUncheck() {
 	var currentChecked = el.checked;
 	
 	// 모든 보유기술 체크박스의 체크상태를 위에서 조회한 전체 선택/해제 체크박스의 체크상태와 같은 상태로 만든다.
-	var collection = document.querySelectorAll('[name=skill]');
+	var collection = document.querySelectorAll('[name=familyNo]');
 	for (var index = 0; index < collection.length; index++) {
 		var el = collection[index];
 		el.checked = currentChecked;
@@ -120,7 +120,7 @@ function toggleAllCheckUncheck() {
 }
 function checkAll() {
 	// 체크박스 전체 선택하기
-	var collection = document.querySelectorAll('[name=skill]');
+	var collection = document.querySelectorAll('[name=familyNo]');
 	for (var index = 0; index < collection.length; index++) {
 		var el = collection[index];
 		el.checked = true;
@@ -128,33 +128,50 @@ function checkAll() {
 }
 function uncheckAll() {
 	// 체크박스 전체 선택하기
-	var collection = document.querySelectorAll('[name=skill]');
+	var collection = document.querySelectorAll('[name=familyNo]');
 	for (var index = 0; index < collection.length; index++) {
 		var el = collection[index];
 		el.checked = false;
 	}
 }
 
+$("#table-family tbody").on('change', ":checkbox[name=familyNo]", function() {
+	let checkboxLen = $("#table-family tbody :checkbox[name=familyNo]").length;
+	let checkedCheckboxLen = $("#table-family tbody :checkbox[name=familyNo]:checked").length;
+
+
+if (checkboxLen == checkedCheckboxLen) {
+		$("#checkbox-all-toggle").prop("checked", true);
+	} else {
+		$("#checkbox-all-toggle").prop("checked", false);
+	}
+})
+
+
+
 $(function() {
 	$("#btn-add").click(function() {
 		
-		var skillFieldLength = $("#box-career :input[name=skill]").length;
-		if (skillFieldLength >= 5) {
-			alert("경력사항 입력필드는 최대 4개까지만 추가 가능합니다.");
+		var familyRowsLength = $("#table-family tbody tr").length;
+		if (familyRowsLength >= 10) {
+			alert("가족사항 입력필드는 최대 10개까지만 추가 가능합니다.");
 			return;
 		}
 		
 		var htmlContent = `
-			<div class="row">
-				<div class="col-10">
-					<input type="text" class="form-control mb-2" name="skill">
-				</div>
-				<div class="col-2 text-end pt-1">
-					<button type="button" class="btn btn-danger btn-xs">삭제</button>
-				</div>
-			</div>
+			<tr class="text-center" >
+				<td><input type="checkbox" name="familyNo" ></td>
+				<td>홍길동</td>
+				<td>배우자</td>
+				<td>학사</td>
+				<td>회사원</td>
+				<td>삼성</td>
+				<td><input type="checkbox"></td>
+				<td><input type="checkbox"></td>
+				<td><input type="checkbox"></td>
+			</tr>		
 		`;
-		$("#box-career").append(htmlContent);
+		$("#table-family tbody").append(htmlContent);
 	});
 	
 	// <div id="box-career"> 내부에 미래에 추가된 삭제버튼을 클릭했을 실행될 이벤트 핸들러 등록하기

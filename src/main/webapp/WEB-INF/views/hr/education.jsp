@@ -49,7 +49,7 @@
 			</div>
 			<div class="row">
 				<div class="col-12">
-					<table class="table table-bordered table-hover table-striped table-sm">
+					<table class="table table-bordered table-hover table-striped table-sm" id="edu">
 						<colgroup>
 							<col width="5%">
 							<col width="7%">
@@ -148,6 +148,18 @@ function uncheckAll() {
 		el.checked = false;
 	}
 }
+
+$("#edu tbody").on('change', ":checkbox[name=skill]", function() {
+	let checkboxLen = $("#edu tbody :checkbox[name=skill]").length;
+	let checkedCheckboxLen = $("#edu tbody :checkbox[name=skill]:checked").length;
+
+
+if (checkboxLen == checkedCheckboxLen) {
+		$("#checkbox-all-toggle").prop("checked", true);
+	} else {
+		$("#checkbox-all-toggle").prop("checked", false);
+	}
+})
 </script>
 </body>
 </html>
