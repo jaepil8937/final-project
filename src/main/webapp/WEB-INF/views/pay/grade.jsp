@@ -66,7 +66,17 @@
 									<tr>
 										<td>1</td>
 										<td>기본급</td>
+										<td>50,000</td>
+									</tr>
+									<tr>
+										<td>2</td>
+										<td>기본급</td>
 										<td>100,000</td>
+									</tr>
+									<tr>
+										<td>3</td>
+										<td>기본급</td>
+										<td>150,000</td>
 									</tr>
 								</tbody>
 							</table>

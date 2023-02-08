@@ -27,9 +27,12 @@
 				</div>
 			</div>	
 				
-			<div class="col-12 border ">
-				<div class="border p-2 bg-light fs-6" >검색년월
-				<input type="month"/>
+			<div class="col-12 border" >
+				<div class="border p-2 bg-light" >기준년도
+				<select>	
+					<option>2023</option>
+					<option>2022</option>
+				</select>
 				<button class="btn btn-danger btn-xm">검색</button>
 				</div>
 			</div>

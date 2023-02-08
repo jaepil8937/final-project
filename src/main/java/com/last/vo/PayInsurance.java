@@ -12,13 +12,16 @@ import lombok.Setter;
 @Alias("Insurance")
 public class PayInsurance {
 	
-	private int year;
-	private int pensionInsurance;
-	private int healthInsurance;
-	private int longTermInsurance;
-	private int employementInsurance;
-	private int employeeContribution;
-	private int companyContribution;
+	private int baseYear;
+	private int pensionEmployeeInsurance;
+	private int pensionCompanyInsurance;
+	private int healthEmployeeInsurance;
+	private int healthCompanyInsurance;
+	private int longtermEmployeeInsurance;
+	private int longtermCompanyInsurance;
+	private int employmentEmployeeInsurance;
+	private int employmentCompanyInsurance;
+	private int industrialCompanyInsurance;
 	private int minSalary;
 	private int maxSalary;
 }
