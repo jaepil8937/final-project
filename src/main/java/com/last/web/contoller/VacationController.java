@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.last.dto.VacationRequestDto;
 import com.last.service.VacationService;
 import com.last.vo.VacationItem;
 import com.last.web.request.VacationItemRequest;
@@ -37,7 +38,7 @@ public class VacationController {
 	
 	@PostMapping("/setting")
 	@ResponseBody
-	public Map insert(@RequestBody List<VacationItemRequest> forms) {
+	public Map<String, Object> insert(@RequestBody List<VacationItemRequest> forms) {
 		for (VacationItemRequest form : forms) {
 			VacationItem checkItem = vacationService.getItemCode(form.getCode());
 			
@@ -59,7 +60,20 @@ public class VacationController {
 	
 	@GetMapping("/used")
 	public String used() {
+		
 		return "vacation/item-used";
+	}	
+	
+	@GetMapping("/used-search")
+	@ResponseBody
+	public List<VacationRequestDto> usedSearch(@RequestParam("baseYear") int baseYear,
+			@RequestParam("opt") String opt, @RequestParam("keyword") String keyword) {
+		
+		Map<String, Object> param = new HashMap<String, Object>();
+		param.put(opt, keyword);
+		param.put("year", baseYear);
+		
+		return vacationService.getUsedVacations(param);
 	}	
 	
 	@GetMapping("/calculation")
