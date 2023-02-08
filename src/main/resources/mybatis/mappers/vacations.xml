@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.last.mapper.VacationMapper">
+
 	<select id="getItems" resultType="VacationItem">
 		select 
 			item_code as code,
@@ -38,8 +39,8 @@
 	 	values
 	 		(#{code}, #{name}, #{used}, #{deleted}, #{payed})
 	 </insert>
-	 
-	<update id="updateItem" parameterType="VacationItem">
+   
+   <update id="updateItem" parameterType="VacationItem">
 		update
 			vacation_items
 		set
@@ -50,5 +51,47 @@
 		where
 			item_code = #{code}
 	</update>	 
+	 
+	 <!--  
+	 	근속연수별 휴가설정 조회 
+	 -->
+	 <select id="getYearVacationDay" resultType="VacationDay">
+		select 
+		    worked_year 	as workedYear,
+		    vacation_days 	as vacationDays
+		from
+		    year_vacation_days
+		order by
+		    worked_year asc
+    </select>
+    
+	 <!--  
+	 	근속연수별 휴가설정 행추가 
+	 -->
+	 <insert id="insertYearVacationDay" parameterType="VacationDay">
+	 	insert into year_vacation_days
+   		 	(worked_year, vacation_days)
+		values
+			(#{workedYear}, #{vacationDays})
+	 </insert>
+	 
+	 <!-- 근속연수별 휴가설정 수정 -->
+	 <update id="updateYearVacationDay" parameterType="VacationDay">
+	 	update
+	 		year_vacation_days
+	 	set  
+		    worked_year 	= #{workedYear},
+		    vacation_days 	= #{vacationDays}
+		where 
+			worked_year = #{workedYear}
+	 </update>
+	 
+	 <!-- 근속연수별 휴가 삭제 -->
+	 <delete id="deleteYearVacationDay" parameterType="VacationDay">
+	 	delete from 
+		    year_vacation_days
+		where
+		   worked_year = #{workedYear}
+	 </delete>
 
 </mapper>
