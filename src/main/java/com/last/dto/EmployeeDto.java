@@ -12,14 +12,14 @@ import lombok.Setter;
 @Setter
 public class EmployeeDto {
 
-	public String no;
-	public String name;
-	public Date hire;
-	public String mobileTel;
-	public String companyEmail;
-	public String basicAddress;
-	public String status;
+	private String no;
+	private String name;
+	private Date hire;
+	private String mobileTel;
+	private String companyEmail;
+	private String basicAddress;
+	private String status;
 	
-	public String deptName;
-	public String positionName;
+	private String deptName;
+	private String positionName;
 }
