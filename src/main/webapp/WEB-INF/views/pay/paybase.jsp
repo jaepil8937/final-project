@@ -40,8 +40,8 @@
 				</colgroup>
 				<thead>
 					<tr class="bg-light">
-						<th >사원번호</th>
-						<th >성명</th>
+						<th>사원번호</th>
+						<th>성명</th>
 						<th>직급</th>
 						<th>부서</th>
 						<th>입사일자</th>

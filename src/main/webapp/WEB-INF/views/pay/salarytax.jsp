@@ -45,14 +45,16 @@
 				<tbody>
 					<tr>
 						<th class="bg-light">비과세</th>
-						<td>0</td>
-						<td>0</td>
-						<td>0</td>
-						<td>0</td>
-						<td>0</td>
-						<td>0</td>
-						<td>200,000</td>
-						<td>0</td>
+					<c:forEach var="tax" items="${taxs }">
+						<td>${tax.baseSalaryTax}</td>
+						<td>${tax.overtimeSalaryTax}</td>
+						<td>${tax.nightSalaryTax}</td>
+						<td>${tax.holidaySalaryTax}</td>
+						<td>${tax.careSalaryTax}</td>
+						<td>${tax.rewardSalaryTax}</td>
+						<td>${tax.mealTax}</td>
+						<td>${tax.businessSalaryTax}</td>
+					</c:forEach>
 					</tr>
 				</tbody>
 			</table>			

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.last.mapper.PayMapper">
+	
+	<select id="getAllTaxs" resultType="SalaryTax">
+		select
+			base_salary_tax 		as baseSalaryTax,
+			overtime_salary_tax 	as overtimeSalaryTax,
+			night_salary_tax		as nightSalaryTax,
+			holiday_salary_tax		as holidaySalaryTax,
+			care_salary_tax			as careSalaryTax,
+			reward_salary_tax		as rewardSalaryTax,
+			meal_tax				as mealTax,
+			business_salary_tax		as businessSalaryTax
+		from
+			salary_tax
+	</select>
+	
+	<select id="getInsurances" resultType="Insurance">
+		select
+			base_year						as year,
+			min_salary						as minSalary,
+			max_salary						as maxSalary,
+			pension_employee_insurance		as pensionEmployeeInsurance,
+			pension_company_insurance		as pensionCompanyInsurance,
+			health_employee_insurance		as healthEmplyoeeInsurance,
+			health_company_insurance		as healthCompanyInsurance,
+			longterm_employee_insurance		as longtermEmployeeInsurance,
+			longterm_company_insurance		as longtermCompanyInsurance,
+			employment_employee_insurance	as employmentEmployeeInsurance,
+			employment_company_insurance	as employmentCompnayInsurance,
+			industrial_company_insurance	as industrialCompanyInsurance
+		from
+			INSURANCE_CONTRIBUTIONS
+	</select>
+	
+</mapper>

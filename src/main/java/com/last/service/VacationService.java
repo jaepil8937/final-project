@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.last.dto.VacationRequestDto;
 import com.last.mapper.VacationMapper;
+import com.last.vo.VacationDay;
 import com.last.vo.VacationItem;
 import com.last.web.request.VacationItemRequest;
 
@@ -30,11 +31,17 @@ public class VacationService {
 		System.out.println("서비스클래스: " + item.getName());
 		vacationMapper.insertItem(item);
 	}
-
+  
 	public void updateItem(VacationItem item) {
 		vacationMapper.updateItem(item);
-		
 	}
+	
+	// 모든 근속연수별 휴가일수 조회
+	public List<VacationDay> getYearVacationDay() {
+		return vacationMapper.getYearVacationDay();
+	}
+	
+	
 
 	public List<VacationRequestDto> getUsedVacations(Map<String, Object> param) {
 		System.out.println("서비스클래스: " + param.get("year"));
