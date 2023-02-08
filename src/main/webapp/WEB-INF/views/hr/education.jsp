@@ -1,4 +1,5 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" trimDirectiveWhitespaces="true"%>
+<%@ include file="../common/tags.jsp" %>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -48,7 +49,7 @@
 			</div>
 			<div class="row">
 				<div class="col-12">
-					<table class="table table-bordered table-hover table-striped table-sm">
+					<table class="table table-bordered table-hover table-striped table-sm" id="edu">
 						<colgroup>
 							<col width="5%">
 							<col width="7%">
@@ -61,7 +62,7 @@
 						</colgroup>
 						<thead>
 							<tr class="text-center">
-								<th><input type="checkbox"></th>
+								<th><input type="checkbox" id="checkbox-all-toggle" onchange="toggleAllCheckUncheck()"></th>
 								<th>입학년월</th>
 								<th>졸업년월</th>
 								<th>학교명</th>
@@ -73,7 +74,7 @@
 						</thead>
 						<tbody>
 							<tr class="text-center">
-								<td><input type="checkbox"></td>
+								<td><input type="checkbox" name="skill"></td>
 								<td><input type="date" id="start-date" name="" value="2023-02-03" style="text-align:center; width:130px"/></td>
 								<td><input type="date" id="end-date" name="" value="2023-02-03" style="text-align:center; width:130px"/></td>
 								<td>서울대</td>
@@ -83,7 +84,7 @@
 								<td>서울</td>
 							</tr>
 							<tr class="text-center">
-								<td><input type="checkbox"></td>
+								<td><input type="checkbox" name="skill"></td>
 								<td><input type="date" id="start-date" name="" value="2023-02-03" style="text-align:center; width:130px"/></td>
 								<td><input type="date" id="end-date" name="" value="2023-02-03" style="text-align:center; width:130px"/></td>
 								<td>서울대</td>
@@ -93,7 +94,7 @@
 								<td>서울</td>
 							</tr>
 							<tr class="text-center">
-								<td><input type="checkbox"></td>
+								<td><input type="checkbox" name="skill"></td>
 								<td><input type="date" id="start-date" name="" value="2023-02-03" style="text-align:center; width:130px"/></td>
 								<td><input type="date" id="end-date" name="" value="2023-02-03" style="text-align:center; width:130px"/></td>
 								<td>서울대</td>
@@ -118,5 +119,47 @@
 </div>				
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+<script type="text/javascript">
+function toggleAllCheckUncheck() {
+	// 전체 선택/해제 체크박스의 체크상태를 조회하다.
+	var el = document.querySelector("#checkbox-all-toggle");
+	var currentChecked = el.checked;
+	
+	// 모든 보유기술 체크박스의 체크상태를 위에서 조회한 전체 선택/해제 체크박스의 체크상태와 같은 상태로 만든다.
+	var collection = document.querySelectorAll('[name=skill]');
+	for (var index = 0; index < collection.length; index++) {
+		var el = collection[index];
+		el.checked = currentChecked;
+	}
+}
+function checkAll() {
+	// 체크박스 전체 선택하기
+	var collection = document.querySelectorAll('[name=skill]');
+	for (var index = 0; index < collection.length; index++) {
+		var el = collection[index];
+		el.checked = true;
+	}
+}
+function uncheckAll() {
+	// 체크박스 전체 선택하기
+	var collection = document.querySelectorAll('[name=skill]');
+	for (var index = 0; index < collection.length; index++) {
+		var el = collection[index];
+		el.checked = false;
+	}
+}
+
+$("#edu tbody").on('change', ":checkbox[name=skill]", function() {
+	let checkboxLen = $("#edu tbody :checkbox[name=skill]").length;
+	let checkedCheckboxLen = $("#edu tbody :checkbox[name=skill]:checked").length;
+
+
+if (checkboxLen == checkedCheckboxLen) {
+		$("#checkbox-all-toggle").prop("checked", true);
+	} else {
+		$("#checkbox-all-toggle").prop("checked", false);
+	}
+})
+</script>
 </body>
 </html>

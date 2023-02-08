@@ -22,15 +22,16 @@ public class VacationService {
 	}
 
 	public VacationItem getItemCode(int code) {
-		return vacationMapper.getItemByCode();
+		return vacationMapper.getItemByCode(code);
 	}
 
-	public void insertItem(VacationItemRequest form) {
-		vacationMapper.insertItem();
+	public void insertItem(VacationItem item) {
+		System.out.println("서비스클래스: " + item.getName());
+		vacationMapper.insertItem(item);
 	}
-
-	public void updateItem(VacationItemRequest form) {
-		vacationMapper.updateItem();
+  
+	public void updateItem(VacationItem item) {
+		vacationMapper.updateItem(item);
 	}
 	
 	// 모든 근속연수별 휴가일수 조회

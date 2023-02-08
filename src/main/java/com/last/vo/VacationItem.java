@@ -3,11 +3,13 @@ package com.last.vo;
 import org.apache.ibatis.type.Alias;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Alias("VacationItems")
+@Alias("VacationItem")
 @Getter
 @Setter
+@NoArgsConstructor
 public class VacationItem {
 	private int code;		// 항목코드
 	private String name;	// 휴가명칭

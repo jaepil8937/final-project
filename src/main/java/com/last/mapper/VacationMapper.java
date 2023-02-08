@@ -12,12 +12,12 @@ public interface VacationMapper {
 	
 	List<VacationItem> getItems();
 
-	VacationItem getItemByCode();
+	VacationItem getItemByCode(int code);
 
-	void insertItem();
+	void insertItem(VacationItem item);
+  
+  void updateItem(VacationItem item);
 
-	void updateItem();
-	
 	// 모든 근속연수별 조회
 	List<VacationDay> getYearVacationDay();
 	
@@ -29,7 +29,7 @@ public interface VacationMapper {
 	
 	// 근속연수별 행 삭제
 	void deleteYearVacationDay(int workedYear);
-	
+
 }
 	
 

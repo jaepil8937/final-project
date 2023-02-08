@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.last.mapper.EmployeeMapper">
+	<select id="getAllEmployees" resultType="EmployeeDto">
+		select
+			E.employee_no			as no,
+			E.employee_name			as name,
+			E.hire_date				as hire,
+			E.mobile_tel			as mobileTel,
+			E.company_email			as companyEmail,
+			E.home_basic_address	as basicAddress,
+			E.employee_status		as status,
+			D.dept_name				as deptName,
+			P.position_name			as positionName
+		from
+			employees E, departments D, positions P
+		where
+			E.dept_no = D.dept_no
+		and
+			E.position_no = P.position_no
+		and
+			E.employee_status = 'N'
+	</select>
+
+</mapper>

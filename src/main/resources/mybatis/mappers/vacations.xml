@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.last.mapper.VacationMapper">
 
-	<select id="getItems" resultType="VacationItems">
+	<select id="getItems" resultType="VacationItem">
 		select 
 			item_code as code,
 			item_name as name,
@@ -13,10 +13,10 @@
 		from
 			vacation_items
 		order by
-			item_code desc
+			item_code asc
 	</select>
 
-	<select id="getItemByCode" parameterType="int" resultType="VacationItems">
+	<select id="getItemByCode" parameterType="int" resultType="VacationItem">
 		select 
 			item_code as code,
 			item_name as name,
@@ -33,12 +33,24 @@
 	<!-- 
 		void insertPost()
 	 -->
-	 <insert id="insertItem" parameterType="VacationItems">
+	 <insert id="insertItem" parameterType="VacationItem">
 	 	insert into vacation_items
 	 		(item_code, item_name, year_vacation_used, item_used, salary_payed)
 	 	values
 	 		(#{code}, #{name}, #{used}, #{deleted}, #{payed})
 	 </insert>
+   
+   <update id="updateItem" parameterType="VacationItem">
+		update
+			vacation_items
+		set
+			item_name = #{name},
+			year_vacation_used = #{used},
+			item_used = #{deleted},
+			salary_payed = #{payed}
+		where
+			item_code = #{code}
+	</update>	 
 	 
 	 <!--  
 	 	근속연수별 휴가설정 조회 
@@ -81,4 +93,5 @@
 		where
 		   worked_year = #{workedYear}
 	 </delete>
+
 </mapper>

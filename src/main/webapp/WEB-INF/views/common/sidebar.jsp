@@ -1,6 +1,4 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" trimDirectiveWhitespaces="true"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -37,11 +35,11 @@
 			</li>		
 			<li class="nav-item dropdown"><a class="nav-link dropdown-toggle text-light" href="#" data-bs-toggle="dropdown" data-bs-auto-close="false" aria-expanded="false">인사관리</a>
 				<ul class="dropdown-menu dropdown-menu-dark" id="sub-menu">
-					<li><a class="dropdown-item ${side eq '1' ? 'text-light fw-bold' : '' }" href="register">인사정보등록</a></li>
-					<li><a class="dropdown-item ${side eq '2' ? 'text-light fw-bold' : '' }" href="re-register">인사정보재등록</a></li>
-					<li><a class="dropdown-item ${side eq '3' ? 'text-light fw-bold' : '' }" href="#">사원명부/인사기록카드</a></li>
-					<li><a class="dropdown-item ${side eq '4' ? 'text-light fw-bold' : '' }" href="#">인사발령등록</a></li>
-					<li><a class="dropdown-item ${side eq '5' ? 'text-light fw-bold' : '' }" href="#">증명서발급</a></li>
+					<li><a class="dropdown-item ${side eq '1' ? 'text-light fw-bold' : '' }" href="/hr/register">인사정보등록</a></li>
+					<li><a class="dropdown-item ${side eq '2' ? 'text-light fw-bold' : '' }" href="/hr/re-register">인사정보재등록</a></li>
+					<li><a class="dropdown-item ${side eq 'employeelist' ? 'text-light fw-bold' : '' }" href="/hr/info">사원명부/인사기록카드</a></li>
+					<li><a class="dropdown-item ${side eq 'personnel' ? 'text-light fw-bold' : '' }" href="/hr/personnel">인사발령등록</a></li>
+					<li><a class="dropdown-item ${side eq 'certificate' ? 'text-light fw-bold' : '' }" href="/hr/issue">증명서발급</a></li>
 					<li><a class="dropdown-item ${side eq '6' ? 'text-light fw-bold' : '' }" href="#">회원탈퇴/비밀번호변경</a></li>
 				</ul>
 			</li>	
