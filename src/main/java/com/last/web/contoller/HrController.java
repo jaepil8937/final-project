@@ -2,14 +2,21 @@ package com.last.web.contoller;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+
 
 import com.last.dto.EmployeeDto;
 import com.last.service.EmployeeService;
+import com.last.web.request.EmployeeRegisterForm;
 
 
 @Controller
@@ -62,5 +69,19 @@ public class HrController {
 	public String order() {
 		return "hr/order";
 	}
-  
+	
+	@PostMapping("/register") // valid 유효성체크를 실행하게함, BindingResult 유효성검사결과가 저장되는 객체
+	public String register(@ModelAttribute("userRegisterForm") @Valid EmployeeRegisterForm userRegisterForm) {
+		return "redirect:registered";
+	}
+	
+	// 회원가입 완료 화면 요청
+		@GetMapping("/registered")
+		public String success() {
+			return "success";
+		}
+	
 }
+			
+  
+

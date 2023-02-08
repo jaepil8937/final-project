@@ -99,6 +99,7 @@
 				</div>
 			</div>
 			
+			
 			<div class="row mb-3">
 				<div class="col-12">
 					<div class="btn-group" >
@@ -110,6 +111,7 @@
 				</div>
 			</div>
 			
+			<form:form modelAttribute="userRegisterForm" id="form-register" class="border bg-light p-3" method="post" action="register">
 			<div class="row mb-3">
 				<div class="col-12">
 					<table class="table table-bordered">
@@ -128,7 +130,7 @@
 									<input type="file" class="form-control form-control-sm" name="file1">	
 								</td>	
 								<th class="table-secondary text-end">사원번호</th>
-								<td><input type="text" class="form-control form-control-sm"  style="width: 130px;" path="empNo"/></td>
+								<td><input type="text" class="form-control form-control-sm"  style="width: 130px;" path="employeeNo"/></td>
 								<th class="table-secondary text-end">비밀번호</th>
 								<td colspan="2"><input type="text" class="form-control form-control-sm"  style="width: 130px;" path="password"/></td>	
 							</tr>
@@ -136,13 +138,13 @@
 								<th class="table-secondary text-end">성명</th>
 								<td><input type="text" class="form-control form-control-sm"  style="width: 130px;" path="name"/></td>
 								<th class="table-secondary text-end">생년월일</th>
-								<td colspan="2"><input type="text" class="form-control form-control-sm"  style="width: 130px;" path="birth"/></td>
+								<td colspan="2"><input type="text" class="form-control form-control-sm"  style="width: 130px;" path="birthday"/></td>
 							</tr>
 							<tr>
 								<th class="table-secondary text-end">성별</th>
-								<td><input class="form-check-input" type="radio" name="flexRadioDefault1" id="flexRadioDefault1" checked >
+								<td><input class="form-check-input" type="radio" name="flexRadioDefault1" path="gender" id="flexRadioDefault1" checked >
 								<label class="form-check-label" for="flexRadioDefault1">남</label>
-								<input class="form-check-input" type="radio" name="flexRadioDefault1" id="flexRadioDefault1" >
+								<input class="form-check-input" type="radio" path="gender" name="flexRadioDefault1" id="flexRadioDefault1" >
   								<label class="form-check-label" for="flexRadioDefault2">여</label>
 								</td>	
 								
@@ -152,11 +154,11 @@
 							</tr>
 							<tr>
 								<th class="table-secondary text-end">회사전화</th>
-								<td colspan="1"><input type="text" class="form-control form-control-sm"  style="width: 130px;" path="com-tel"/></td>
+								<td colspan="1"><input type="text" class="form-control form-control-sm"  style="width: 130px;" path="com_tel"/></td>
 								<th class="table-secondary text-end">자택전화</th>
-								<td colspan="1"><input type="text" class="form-control form-control-sm"  style="width: 130px;" path="tel"/></td>
+								<td colspan="1"><input type="text" class="form-control form-control-sm"  style="width: 130px;" path="home_tel"/></td>
 								<th class="table-secondary text-end">핸드폰</th>
-								<td colspan="1"><input type="text" class="form-control form-control-sm"  style="width: 130px;" path="mobile"/></td>
+								<td colspan="1"><input type="text" class="form-control form-control-sm"  style="width: 130px;" path="mobile_tel"/></td>
 							</tr>
 							<tr>
 								<th class="table-secondary text-end">회사이메일</th>
@@ -164,43 +166,42 @@
 							</tr>
 							<tr>
 								<th class="table-secondary text-end">외부이메일</th>
-								<td colspan="5"><input type="text" class="form-control form-control-sm"  style="width: 600px;" path="email"/></td>
+								<td colspan="5"><input type="text" class="form-control form-control-sm"  style="width: 600px;" path="ext_email"/></td>
 							</tr>
 							
 							<tr>
 								<th class="table-secondary text-end" rowspan="3">주소</th>
 								<td colspan="5">
-									<input type="text" class="form-control form-control-sm d-inline-block"  style="width: 130px;" name="postcode" readonly="readonly" disabled/>
+									<input type="text" class="form-control form-control-sm d-inline-block"  style="width: 130px;" path="zipcode" name="postcode" readonly="readonly" disabled/>
 									<button type="button" class="btn btn-primary btn-sm" id="btn-search-postcode" >주소찾기</button>
 								</td>
 							</tr>
 							<tr>
-								<td colspan="5"><input type="text" class="form-control form-control-sm" name="address1" readonly="readonly" disabled /></td>
+								<td colspan="5"><input type="text" class="form-control form-control-sm" name="address1" path="basicAddress" readonly="readonly" disabled /></td>
 							</tr>
 							<tr>
-								<td colspan="5"><input type="text" class="form-control form-control-sm" name="address2"  /></td>
+								<td colspan="5"><input type="text" class="form-control form-control-sm" name="address2" path="detailAddress"  /></td>
 							</tr>
 							
 							
 							<tr>
-								<th  class="table-secondary text-end">사업장</th>
-								<td><select style="width: 130px;"/>
-									<option>사업장1</option>
-									<option>사업장2</option>
-									<option>사업장3</option>
-									<option>사업장4</option>
-								</select></td>
+								
 								<th class="table-secondary text-end">재직구분</th>
-								<td colspan="3"><select style="width: 130px;"/>
+								<td><select style="width: 130px;" path="employeeStatus"/>
 									<option>재직</option>
 									<option>휴직</option>
 								</select></td>
+								<th class="table-secondary text-end">보유권한</th>
+								<td colspan="3"><input class="form-check-input" type="radio" name="flexRadioDefault2" id="flexRadioDefault2" checked>
+								<label class="form-check-label" for="flexRadioDefault2">관리자</label>
+								<input class="form-check-input" type="radio" name="flexRadioDefault2" id="flexRadioDefault2" >
+  								<label class="form-check-label" for="flexRadioDefault2">직원</label></td>
 							</tr>
 							<tr>
 								<th class="table-secondary text-end">부서</th>
-								<td><input type="text" class="form-control form-control-sm"  style="width: 130px;"/></td>
+								<td><input type="text" class="form-control form-control-sm"  style="width: 130px;" path="deptNo" /></td>
 								<th class="table-secondary text-end">입사일자</th>
-								<td colspan="3"><input type="date" id="start-date" name="" value="2023-02-03" style="text-align:center; width:130px"/></td>	
+								<td colspan="3"><input type="date" id="start-date" name="" value="2023-02-03" style="text-align:center; width:130px" path="hireDate"/></td>	
 							</tr>
 							<tr>
 								<th class="table-secondary text-end">직급</th>
@@ -210,7 +211,7 @@
 							</tr>
 							<tr>
 								<th class="table-secondary text-end">직책</th>
-								<td><input type="text" class="form-control form-control-sm"  style="width: 130px;"/></td>
+								<td><input type="text" class="form-control form-control-sm"  style="width: 130px;" path="positionName" /></td>
 								<th class="table-secondary text-end">급여계약기준</th>
 								<td colspan="3"><select style="width: 130px;"/>
 									<option>연봉제</option>
@@ -219,7 +220,7 @@
 							</tr>
 							<tr>
 								<th  class="table-secondary text-end">호봉</th>
-									<td><select style="width: 130px;"/>
+									<td><select style="width: 130px;" path="hobong"/>
 										<option>사업장1</option>
 										<option>사업장2</option>
 										<option>사업장3</option>
@@ -235,6 +236,7 @@
 					</table>
 				</div>
 			</div>
+			</form:form>
 		</div>
 	</div>
 </div>
