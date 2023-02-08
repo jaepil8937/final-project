@@ -20,8 +20,6 @@ public interface VacationMapper {
 
 	void insertItem(VacationItem item);
   
-  void updateItem(VacationItem item);
-
 	// 모든 근속연수별 조회
 	List<VacationDay> getYearVacationDay();
 	
