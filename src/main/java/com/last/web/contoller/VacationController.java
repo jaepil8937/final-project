@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.last.service.VacationService;
+import com.last.vo.VacationDay;
 import com.last.vo.VacationItem;
 import com.last.web.request.VacationItemRequest;
 
@@ -58,8 +59,13 @@ public class VacationController {
 		return "vacation/item-apply";
 	}	
 	
+	// 근속일수별 휴가설정
 	@GetMapping("/year")
-	public String yearVacationDay() {
+	public String yearVacationDay(Model model) {
+		List<VacationDay> vacationDays = vacationService.getYearVacationDay();
+		model.addAttribute("vacationDays", vacationDays);
+		
 		return "vacation/year-vacation";
 	}
+	
 }

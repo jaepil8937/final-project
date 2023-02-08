@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.last.mapper.VacationMapper;
+import com.last.vo.VacationDay;
 import com.last.vo.VacationItem;
 import com.last.web.request.VacationItemRequest;
 
@@ -30,7 +31,13 @@ public class VacationService {
 
 	public void updateItem(VacationItemRequest form) {
 		vacationMapper.updateItem();
-		
 	}
+	
+	// 모든 근속연수별 휴가일수 조회
+	public List<VacationDay> getYearVacationDay() {
+		return vacationMapper.getYearVacationDay();
+	}
+	
+	
 
 }
