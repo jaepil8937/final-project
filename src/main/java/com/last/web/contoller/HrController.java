@@ -30,7 +30,7 @@ public class HrController {
 	public String info(Model model) {
 		List<EmployeeDto> employees = employeeService.getAllEmployees();
 		model.addAttribute("employees", employees);
-		return "hr/employeelist";
+		return "hr/employee-list";
 	}
 	
 	@GetMapping("/personnel")	// 인사발령등록
