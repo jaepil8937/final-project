@@ -1,4 +1,5 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" trimDirectiveWhitespaces="true" %>
+<%@ include file="../common/tags.jsp" %>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -12,12 +13,24 @@
     table th, table td {
 		border: 1px solid #c0c0c0;
 		text-align: center;
+		height: 35px;
 	}	
+	
 	thead, tfoot {
 		background-color: lightgray;
 	}
-	#auto-calculate, #btn-save {
-		width:80px;
+	
+	#table-salaries tbody {
+		display: block;
+		height: 225px;
+		max-height: 225px;
+		overflow-y: scroll; 
+	}
+	
+	#table-salaries thead, #table-salaries tfoot, #table-salaries tbody tr {
+		display: table;
+		width: 100%;
+		table-layout: fixed;
 	}
 </style>
 <c:set var="menu" value="pay" />
@@ -36,7 +49,7 @@
 					<li>월별 급여내역을 확인할 수 있습니다.</li>
 				</div>
 			</div>
-		<hr>
+			<hr>
 			<div class="row mt-3">
 				<div class="col-12">
 					<form class="row row-cols-sm-auto g-3 align-items-center float-end" method="get" action="list">
@@ -57,27 +70,18 @@
 					</form>	
 				</div>	
 			</div>	
-			<div class="row mt-4">
+			<div class="row mt-3">
 			<h6><strong>급여목록</strong></h6>
 				<div class="col-12 text-end">
-			        <table class="table" border="3">
-			        	<colgroup>  
-							<col width="16%">
-							<col width="12%">
-							<col width="12%">
-							<col width="12%">		
-							<col width="16%">		
-							<col width="16%">		
-							<col width="16%">		
-						</colgroup>
+			        <table class="table" border="3" id="table-salaries">
 						<thead>
 							<tr>
-								<th>급여지급일</th>
-								<th>사원번호</th>
-								<th>성 명</th>
-								<th>부 서</th>
-								<th>지급총액</th>
-								<th>공제총액</th>
+								<th style="width:150.51px">급여지급일</th>
+								<th style="width:150.51px">사원번호</th>
+								<th style="width:150.51px">성 명</th>
+								<th style="width:150.51px">부 서</th>
+								<th style="width:150.51px">지급총액</th>
+								<th style="width:150.51px">공제총액</th>
 								<th>실지급액</th>
 							</tr>
 						</thead>  
@@ -109,42 +113,56 @@
 								<td>200,000</td>
 								<td>4,800,000</td>
 							</tr>
+							<tr>
+								<td>2023.03.25</td>
+								<td>1000</td>
+								<td>홍길동</td>
+								<td>개발팀</td>
+								<td>5,000,000</td>
+								<td>200,000</td>
+								<td>4,800,000</td>
+							</tr>
+							<tr>
+								<td>2023.03.25</td>
+								<td>1000</td>
+								<td>홍길동</td>
+								<td>개발팀</td>
+								<td>5,000,000</td>
+								<td>200,000</td>
+								<td>4,800,000</td>
+							</tr>
+							<tr>
+								<td>2023.03.25</td>
+								<td>1000</td>
+								<td>홍길동</td>
+								<td>개발팀</td>
+								<td>5,000,000</td>
+								<td>200,000</td>
+								<td>4,800,000</td>
+							</tr>
 						</tbody>
-					</table>
-				</div>
-				<div class="col-12 text-end">
-			       	<table class="table" border="3">
-			       		<colgroup>  
-							<col width="16%">
-							<col width="12%">
-							<col width="12%">
-							<col width="12%">		
-							<col width="16%">		
-							<col width="16%">		
-							<col width="16%">		
-						</colgroup>
 						<tfoot>
 							<tr>
-								<th colspan="4">합&emsp;&emsp;&emsp;계</th>
-								<th>35,000,000</th>
-								<th>1,400,000</th>
+								<th colspan="4" style="width:602.04px">합 &emsp;&emsp;&emsp;계</th>
+								<th style="width:150.51px">35,000,000</th>
+								<th style="width:150.51px">1,400,000</th>
 								<th>33,600,000</th>
 							</tr>
 						</tfoot>	
 					</table>
 				</div>
 			</div>	
-			<div class="row mt-4">
+			<div class="row mt-3">
 				<h6><strong>급여명세서</strong></h6>
 				<div class="col-12">
-					<table class="table" border="3">
+					<table class="table" border="3" id="salary-check">
 						<colgroup>  
 								<col width="10%">
 								<col width="22%">
 								<col width="23%">
 								<col width="22%">		
 								<col width="23%">		
-							</colgroup>
+						</colgroup>
 						<thead>
 							<tr>
 								<th>no</th>
@@ -198,7 +216,7 @@
 						</tbody>
 						<tfoot>
 							<tr>
-								<th>합&emsp;계</th>
+								<th>합 &emsp;계</th>
 								<th>지급총액</th>
 								<th></th>
 								<th>공제총액</th>
