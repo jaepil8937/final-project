@@ -6,6 +6,7 @@ import java.util.Map;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
+import com.last.dto.VacationCalculateDto;
 import com.last.dto.VacationRequestDto;
 import com.last.mapper.VacationMapper;
 import com.last.vo.VacationDay;
@@ -59,6 +60,38 @@ public class VacationService {
 			} else {
 				insertItem(item);
 			}
+		}
+	}
+
+	public List<VacationCalculateDto> calculatedVacation(Map<String, Object> param) {
+		// 데이터가 존재하는지 확인 
+		List<VacationCalculateDto> dto = vacationMapper.getCalculatedDays(param);
+		if (dto != null) {
+			return dto;
+		} else {
+		// 근속년수 계산
+		int workedYears = vacationMapper.getWorkedYears(param);
+		param.put("workedYears", workedYears);
+		// 연차개수 계산
+		int vacationDays;
+		if (workedYears == 0) {
+			vacationDays = vacationMapper.getVacationCountBy0(param);
+		} else if (workedYears == 1) {
+			vacationDays = vacationMapper.getVacationCountBy1(param);
+		} else {
+			vacationDays = vacationMapper.getVacationCount(param);
+		}
+		param.put("vacationDays", vacationDays);
+		// 사용일수 계산
+		int usedDays = vacationMapper.getYearVacationUsedDays((int) param.get("empNo"));
+		param.put("usedDays", usedDays);
+		// 잔여일수 계산
+		int remainedDays = vacationDays - usedDays;
+		param.put("remainedDays", remainedDays);
+		// 휴가일수 데이터 생성
+		vacationMapper.insertCalculatedDays(param);
+		// 조회
+		return vacationMapper.getCalculatedDays(param);
 		}
 	}
 }

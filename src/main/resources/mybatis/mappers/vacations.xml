@@ -122,6 +122,85 @@
 		where
 		   worked_year = #{workedYear}
 	 </delete>
-
-
+	 
+	 <!-- 근속년수 계산 -->
+	<select id="getWorkedYears" parameterType="map" resultType="int">
+		select 
+			trunc(months_between(#{baseDate}, hire_date)/12) as workedYears
+		from
+			employees
+		where
+			employee_no = #{empNo}
+	</select>
+	<!-- 연차개수 0년차 -->
+	<select id="getVacationCountBy0" parameterType="map" resultType="int">
+		select 
+			trunc(mod(months_between(#{baseDate}, hire_date)/12,1)*12) as vacationDays
+		from
+			employees
+		where
+			employee_no = #{empNo}
+	</select>
+	<!-- 연차개수 1년차 -->
+	<select id="getVacationCountBy1" parameterType="map" resultType="int">
+		select 
+			trunc(mod(months_between(#{baseDate}, hire_date)/12,1)*12)/12 * 15 as vacationDays
+		from
+			employees
+		where
+			employee_no = #{empNo}
+	</select>
+	<!-- 연차개수 2년차 이상 -->
+	<select id="getVacationCount" parameterType="map" resultType="int">
+		select 
+			vacation_days as vacationDays
+		from
+		 	year_vacation_days
+		where
+			worked_year = #{workedYears}
+	</select>
+	<!-- 연차 사용일수 계산 -->
+	<select id="getYearVacationUsedDays" parameterType="map" resultType="int">
+		select 
+			sum(A.days) as usedDays
+		from 
+			vacation_request_histories A, vacation_items B
+		where
+			A.employee_no = #{empNo}
+			and A.item_code = B.item_code
+			and B.year_vacation_used = 'Y'
+	</select>
+	
+	<!-- 휴가일수조회 테이블 생성 -->
+	<insert id="insertCalculatedDays" parameterType="VacationCalculateDto">
+		insert into vacation_used_summary
+			(employee_no, base_year, base_date, worked_years, total_vacation_count, used_vacation_count, remaining_vacation_count)
+		values
+			(#{empNo}, #{baseYear}, #{baseDate}, #{workedYears}, #{vacationDays}, #{usedDays}, #{remainedDays})
+	</insert>
+	
+	<!-- 휴가일수조회 -->
+	<select id="getCalculatedDays" parameterType="map" resultType="VacationCalculateDto">
+		select 
+			A.employee_no as empNo,
+			D.base_year as baseYear,
+			A.employee_name as empName,
+			B.position_name as positionName,
+			C.dept_name as deptName,
+			to_char(A.hire_date, 'yyyy-MM-dd') as hireDate,
+			to_char(D.base_date, 'yyyy-MM-dd') as baseDate,
+			D.worked_years as workedYears,
+			D.total_vacation_count as vacationDays,
+			D.used_vacation_count as usedDays,
+			D.remaining_vacation_count as remainedDays
+		from 
+			employees A, positions B, departments C, vacation_used_summary D
+		where
+			A.employee_no = D.employee_no
+			and A.position_no = B.position_no
+			and A.dept_no = C.dept_no
+			and A.employee_no = #{empNo}
+			and D.base_year = #{baseYear}
+	</select>
+	
 </mapper>

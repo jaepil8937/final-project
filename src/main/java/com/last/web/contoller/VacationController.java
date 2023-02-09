@@ -1,5 +1,7 @@
 package com.last.web.contoller;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.last.dto.VacationCalculateDto;
 import com.last.dto.VacationRequestDto;
 import com.last.service.VacationService;
 import com.last.vo.VacationDay;
@@ -65,9 +68,27 @@ public class VacationController {
 		return vacationService.getUsedVacations(param);
 	}	
 	
-	@GetMapping("/calculation")
-	public String calculation() {
+	@GetMapping("/calculate")
+	public String calculate() {
 		return "vacation/item-calculation";
+	}
+	
+	@GetMapping("/calculate-days")
+	@ResponseBody
+	public List<VacationCalculateDto> calculatedVacation(@RequestParam("baseYear") int baseYear,
+			@RequestParam("opt") String opt, @RequestParam("keyword") int keyword) {
+		Calendar c1 = Calendar.getInstance();
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		c1.set(baseYear, 11, 31);
+		String baseDate = sdf.format(c1.getTime());
+		
+		Map<String, Object> param = new HashMap<>();
+		param.put("baseYear", baseYear);
+		param.put("empNo", keyword);
+		param.put("baseDate", baseDate);
+		
+		return (List<VacationCalculateDto>) vacationService.calculatedVacation(param);
+		
 	}
 
 	@GetMapping("/apply")
