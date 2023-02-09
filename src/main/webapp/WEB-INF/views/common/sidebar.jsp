@@ -28,7 +28,7 @@
 				<ul class="dropdown-menu dropdown-menu-dark" id="sub-menu">
 					<li><a class="dropdown-item  ${side eq '5' ? 'text-light fw-bold' : '' }" href="/vacation/year">근속연수별 휴가 설정</a></li>
 					<li><a class="dropdown-item  ${side eq 'item-setting' ? 'text-light fw-bold' : '' }" href="/vacation/setting">휴가항목설정</a></li>
-					<li><a class="dropdown-item  ${side eq 'item-calculation' ? 'text-light fw-bold' : '' }" href="/vacation/calculation">휴가일수조회</a></li>
+					<li><a class="dropdown-item  ${side eq 'item-calculation' ? 'text-light fw-bold' : '' }" href="/vacation/calculate">휴가일수조회</a></li>
 					<li><a class="dropdown-item  ${side eq 'item-apply' ? 'text-light fw-bold' : '' }" href="/vacation/apply">휴가신청/취소</a></li>
 					<li><a class="dropdown-item  ${side eq 'item-used' ? 'text-light fw-bold' : '' }" href="/vacation/used">휴가사용현황</a></li>
 				</ul>
