@@ -17,11 +17,11 @@ public class Employees {
 	private String name;				 // 이름
 	private String gender;				 // 성별
 	private String birthday;			 // 생일
-	private String com_tel;				 // 회사번호
-	private String home_tel;			 // 자택번호
-	private String mobile_tel;  		 // 휴대폰번호
-	private String com_email;   		 // 회사이메일
-	private String ext_email;   		 // 외부이메일
+	private String comTel;				 // 회사번호
+	private String homeTel;				 // 자택번호
+	private String mobileTel;  			 // 휴대폰번호
+	private String comEmail;   			 // 회사이메일
+	private String extEmail;   			 // 외부이메일
 	private String zipcode; 			 // 우편번호
 	private String basicAddress; 		 // 기본주소
 	private String detailAddress; 		 // 상세주소
@@ -35,5 +35,6 @@ public class Employees {
 	private int deptNo; 				 // 부서번호
 	private int positionNo;				 // 직책번호
 	private int hobong; 				 // 호봉
+	private String photo;				 // 사진
 
 }

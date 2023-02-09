@@ -22,4 +22,36 @@
 			E.employee_status = 'N'
 	</select>
 
+
+	<select id="getAllPosition" resultType="Position">
+		select	
+			position_no 		as no, 
+			position_name 		as name
+		from positions
+	</select>
+
+
+	<select id="getAllDepartment" resultType="Department">
+		select	
+			dept_no 		as no, 
+			dept_name 		as name
+		from departments
+	</select>
+	
+	<select id="getAllGrade" resultType="Grades">
+		select	
+			hobong_grade		as grade, 
+			hobong_amount 		as amount
+		from grades
+	</select>
+
+	<insert id="insertEmployees" parameterType="Employee">
+			insert into Employees
+				(employee_no, employee_password, employee_name, employee_gender, employee_birthday, company_tel, home_tel, mobile_tel, company_email, external_email, home_zipcode, home_basic_address, home_detail_address, hire_date, retirement_date, employee_status, employee_role_name, memo, dept_no, position_no, hobong_grade, photo)
+			values
+				(#{employeeNo}, #{password}, #{name}, #{gender}, #{birthday}, #{comTel}, #{homeTel}, #{mobileTel}, #{comEmail}, #{extEmail}, #{zipcode}, #{basicAddress}, #{detailAddress}, #{hireDate}, #{retirementDate}, #{employeeStatus}, #{employeeRoleName}, #{memo}, #{deptNo}, #{positionNo}, #{hobong}, #{photo})
+	</insert>
+
+
+
 </mapper>

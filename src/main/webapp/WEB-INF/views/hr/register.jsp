@@ -23,7 +23,6 @@
 					<h2><p class="fw-bold">인사정보등록</p></h2>
 				</div>
 			</div>
-			
 			<div class="row mb-3">
 				<div class="col-12 text-end">
 					<form class="row row-cols-lg-auto g-3 align-items-center">
@@ -34,16 +33,14 @@
 								<option>부서</option>
 							</select>
 	  					</div>
-	  					<div class="col-12">
-	   						<input type="text" class="form-control">
-	  					</div>
-	  					<div class="col-12">
-	   						<button class="btn btn-primary float-end">검색</button>
-	  					</div>
-	  				
+	  				<div class="col-12">
+	   					<input type="text" class="form-control">
+	  				</div>
+	  				<div class="col-12">
+	   					<button class="btn btn-primary float-end">검색</button>
+	  				</div>
 				</div>
 			</div>
-			
 			<div class="row mb-3">
 				<div class="col-3">
 					<i class="bi bi-arrow-right-square-fill text-danger"></i> <strong>기본정보</strong>
@@ -92,14 +89,11 @@
 					</table>
 				</div>
 			</div>
-		
 			<div class="row mb-3">
 				<div class="col-3">
 					<i class="bi bi-arrow-right-square-fill text-danger"></i> <strong>상세정보</strong>
 				</div>
 			</div>
-			
-			
 			<div class="row mb-3">
 				<div class="col-12">
 					<div class="btn-group" >
@@ -110,8 +104,7 @@
 					</div>
 				</div>
 			</div>
-			
-			<form:form modelAttribute="userRegisterForm" id="form-register" class="border bg-light p-3" method="post" action="register">
+		<form id="form-register" class="border bg-light p-3" method="post" action="register" enctype="multipart/form-data">
 			<div class="row mb-3">
 				<div class="col-12">
 					<table class="table table-bordered">
@@ -123,132 +116,139 @@
 							<col width="16%"/>
 							<col width="16%"/>
 						</colgroup>
-						<tbody>
-							<tr>
-								<td rowspan="4">
-									<img id="dest-image" src="/resources/images/employee/default.jpg" class="img-fluid" alt="...">
-									<input type="file" class="form-control form-control-sm" name="file1">	
-								</td>	
-								<th class="table-secondary text-end">사원번호</th>
-								<td><input type="text" class="form-control form-control-sm"  style="width: 130px;" path="employeeNo"/></td>
-								<th class="table-secondary text-end">비밀번호</th>
-								<td colspan="2"><input type="text" class="form-control form-control-sm"  style="width: 130px;" path="password"/></td>	
-							</tr>
-							<tr>
-								<th class="table-secondary text-end">성명</th>
-								<td><input type="text" class="form-control form-control-sm"  style="width: 130px;" path="name"/></td>
-								<th class="table-secondary text-end">생년월일</th>
-								<td colspan="2"><input type="text" class="form-control form-control-sm"  style="width: 130px;" path="birthday"/></td>
-							</tr>
-							<tr>
-								<th class="table-secondary text-end">성별</th>
-								<td><input class="form-check-input" type="radio" name="flexRadioDefault1" path="gender" id="flexRadioDefault1" checked >
-								<label class="form-check-label" for="flexRadioDefault1">남</label>
-								<input class="form-check-input" type="radio" path="gender" name="flexRadioDefault1" id="flexRadioDefault1" >
-  								<label class="form-check-label" for="flexRadioDefault2">여</label>
-								</td>	
+							<tbody>
+								<tr>
+									<td rowspan="4">
+										<img id="dest-image" src="/resources/images/employee/default.jpg" class="img-fluid" alt="...">
+										<input type="file" class="form-control form-control-sm" name="file1">	
+									</td>	
+									<th class="table-secondary text-end">사원번호</th>
+									<td><input type="text" class="form-control form-control-sm"  style="width: 130px;" name="employeeNo"/></td>
+									<th class="table-secondary text-end">비밀번호</th>
+									<td colspan="2"><input type="text" class="form-control form-control-sm"  style="width: 130px;" name="password"/></td>	
+								</tr>
+								<tr>
+									<th class="table-secondary text-end">성명</th>
+									<td><input type="text" class="form-control form-control-sm"  style="width: 130px;" name="name"/></td>
+									<th class="table-secondary text-end">생년월일</th>
+									<td colspan="2"><input type="text" class="form-control form-control-sm"  style="width: 130px;" name="birthday"/></td>
+								</tr>
+								<tr>
+									<th class="table-secondary text-end">성별</th>
+									<td><input class="form-check-input" type="radio" name="gender"  id="flexRadioDefault1" checked >
+									<label class="form-check-label" for="flexRadioDefault1">남</label>
+									<input class="form-check-input" type="radio" name="gender" id="flexRadioDefault1" >
+	  								<label class="form-check-label" for="flexRadioDefault2">여</label>
+									</td>	
+									
+								<tr>
+									<th class="table-secondary text-end">메모</th>
+									<td colspan="4"><textarea class="form-control" rows="3" name="memo" ></textarea></td>
+								</tr>
+								<tr>
+									<th class="table-secondary text-end">회사전화</th>
+									<td colspan="1"><input type="text" class="form-control form-control-sm"  style="width: 130px;" name="comTel"/></td>
+									<th class="table-secondary text-end">자택전화</th>
+									<td colspan="1"><input type="text" class="form-control form-control-sm"  style="width: 130px;" name="homeTel"/></td>
+									<th class="table-secondary text-end">핸드폰</th>
+									<td colspan="1"><input type="text" class="form-control form-control-sm"  style="width: 130px;" name="mobileTel"/></td>
+								</tr>
+								<tr>
+									<th class="table-secondary text-end">회사이메일</th>
+									<td colspan="5"><input type="text" class="form-control form-control-sm"  style="width: 600px;" name="comEmail"/></td>
+								</tr>
+								<tr>
+									<th class="table-secondary text-end">외부이메일</th>
+									<td colspan="5"><input type="text" class="form-control form-control-sm"  style="width: 600px;" name="extEmail"/></td>
+								</tr>
 								
-							<tr>
-								<th class="table-secondary text-end">메모</th>
-								<td colspan="4"><textarea class="form-control" rows="3" name="memo" path="memo"></textarea></td>
-							</tr>
-							<tr>
-								<th class="table-secondary text-end">회사전화</th>
-								<td colspan="1"><input type="text" class="form-control form-control-sm"  style="width: 130px;" path="com_tel"/></td>
-								<th class="table-secondary text-end">자택전화</th>
-								<td colspan="1"><input type="text" class="form-control form-control-sm"  style="width: 130px;" path="home_tel"/></td>
-								<th class="table-secondary text-end">핸드폰</th>
-								<td colspan="1"><input type="text" class="form-control form-control-sm"  style="width: 130px;" path="mobile_tel"/></td>
-							</tr>
-							<tr>
-								<th class="table-secondary text-end">회사이메일</th>
-								<td colspan="5"><input type="text" class="form-control form-control-sm"  style="width: 600px;" path="com-email"/></td>
-							</tr>
-							<tr>
-								<th class="table-secondary text-end">외부이메일</th>
-								<td colspan="5"><input type="text" class="form-control form-control-sm"  style="width: 600px;" path="ext_email"/></td>
-							</tr>
-							
-							<tr>
-								<th class="table-secondary text-end" rowspan="3">주소</th>
-								<td colspan="5">
-									<input type="text" class="form-control form-control-sm d-inline-block"  style="width: 130px;" path="zipcode" name="postcode" readonly="readonly" disabled/>
-									<button type="button" class="btn btn-primary btn-sm" id="btn-search-postcode" >주소찾기</button>
-								</td>
-							</tr>
-							<tr>
-								<td colspan="5"><input type="text" class="form-control form-control-sm" name="address1" path="basicAddress" readonly="readonly" disabled /></td>
-							</tr>
-							<tr>
-								<td colspan="5"><input type="text" class="form-control form-control-sm" name="address2" path="detailAddress"  /></td>
-							</tr>
-							
-							
-							<tr>
-								
-								<th class="table-secondary text-end">재직구분</th>
-								<td><select style="width: 130px;" path="employeeStatus"/>
-									<option>재직</option>
-									<option>휴직</option>
-								</select></td>
-								<th class="table-secondary text-end">보유권한</th>
-								<td colspan="3"><input class="form-check-input" type="radio" name="flexRadioDefault2" id="flexRadioDefault2" checked>
-								<label class="form-check-label" for="flexRadioDefault2">관리자</label>
-								<input class="form-check-input" type="radio" name="flexRadioDefault2" id="flexRadioDefault2" >
-  								<label class="form-check-label" for="flexRadioDefault2">직원</label></td>
-							</tr>
-							<tr>
-								<th class="table-secondary text-end">부서</th>
-								<td><input type="text" class="form-control form-control-sm"  style="width: 130px;" path="deptNo" /></td>
-								<th class="table-secondary text-end">입사일자</th>
-								<td colspan="3"><input type="date" id="start-date" name="" value="2023-02-03" style="text-align:center; width:130px" path="hireDate"/></td>	
-							</tr>
-							<tr>
-								<th class="table-secondary text-end">직급</th>
-								<td><input type="text" class="form-control form-control-sm"  style="width: 130px;"/></td>
-								<th class="table-secondary text-end">퇴사일자</th>
-								<td colspan="3"><input type="date" id="end-date" name="" value="2023-02-03" style="text-align:center; width:130px"/></td>
-							</tr>
-							<tr>
-								<th class="table-secondary text-end">직책</th>
-								<td><input type="text" class="form-control form-control-sm"  style="width: 130px;" path="positionName" /></td>
-								<th class="table-secondary text-end">급여계약기준</th>
-								<td colspan="3"><select style="width: 130px;"/>
-									<option>연봉제</option>
-									<option>호봉제</option>
-								</select></td>	
-							</tr>
-							<tr>
-								<th  class="table-secondary text-end">호봉</th>
-									<td><select style="width: 130px;" path="hobong"/>
-										<option>사업장1</option>
-										<option>사업장2</option>
-										<option>사업장3</option>
-										<option>사업장4</option>
-									</select></td>	
-								<th class="table-secondary text-end">연차생성기준</th>
-								<td colspan="3"><input class="form-check-input" type="radio" name="flexRadioDefault5" id="flexRadioDefault5" checked>
-								<label class="form-check-label" for="flexRadioDefault5">입사일</label>
-								<input class="form-check-input" type="radio" name="flexRadioDefault5" id="flexRadioDefault5" >
-  								<label class="form-check-label" for="flexRadioDefault5">연차기준일</label></td>
-							</tr>
-						</tbody>
-					</table>
+								<tr>
+									<th class="table-secondary text-end" rowspan="3">주소</th>
+									<td colspan="5">
+										<input type="text" class="form-control form-control-sm d-inline-block"  style="width: 130px;" path="zipcode" name="postcode" readonly="readonly" disabled/>
+										<button type="button" class="btn btn-primary btn-sm" id="btn-search-postcode" >주소찾기</button>
+									</td>
+								</tr>
+								<tr>
+									<td colspan="5"><input type="text" class="form-control form-control-sm" name="address1" path="basicAddress" readonly="readonly" disabled /></td>
+								</tr>
+								<tr>
+									<td colspan="5"><input type="text" class="form-control form-control-sm" name="address2" path="detailAddress" /></td>
+								</tr>			
+								<tr>
+									
+									<th class="table-secondary text-end">재직구분</th>
+									<td><select style="width: 130px;" name="employeeStatus"/>
+											<option>재직</option>
+											<option>휴직</option>
+										</select>
+									</td>
+									<th class="table-secondary text-end">보유권한</th>
+									<td colspan="3"><input class="form-check-input" type="radio" name="employeeRoleName" id="flexRadioDefault2" checked>
+									<label class="form-check-label" for="flexRadioDefault2">관리자</label>
+									<input class="form-check-input" type="radio" name="employeeRoleName" id="flexRadioDefault2" >
+	  								<label class="form-check-label" for="flexRadioDefault2">직원</label></td>
+								</tr>
+								<tr>
+									<th class="table-secondary text-end">부서</th>
+									<td>
+										<select style="width: 130px;" name="deptNo"/>
+											<c:forEach var="departments" items="${dept}">
+												<option value="${dept.no}"> ${dept.name}</option>
+											</c:forEach>
+												<option value="100">개발팀</option>
+												<option value="101">디자인팀</option>
+												<option value="102">테스트팀</option>
+												<option value="103">기획팀</option>
+										</select>
+									</td>
+									<th class="table-secondary text-end">입사일자</th>
+									<td colspan="3"><input type="date" id="start-date" name="hireDate" value="2023-02-03" style="text-align:center; width:130px" /></td>	
+								</tr>
+								<tr>
+									<th class="table-secondary text-end">직급</th>
+									<td>
+										<select style="width: 130px;" name="positionNo"/>
+											<c:forEach var="positions" items="${position}">
+												<option value="${position.no}"> ${position.name}</option>
+											</c:forEach>
+												<option value="1">사원</option>
+												<option value="2">대리</option>
+												<option value="3">과장</option>
+												<option value="4">차장</option>
+										</select>
+									</td>
+									<th class="table-secondary text-end">퇴사일자</th>
+									<td colspan="3"><input type="date" id="end-date" name="retirementDate" value="2023-02-03" style="text-align:center; width:130px"/></td>
+								</tr>
+								<tr>
+									<th class="table-secondary text-end">호봉</th>
+									<td>
+										<select style="width: 130px;" name="hobong"/>
+											<option>1호봉</option>
+											<option>2호봉</option>
+											<option>3호봉</option>
+											<option>4호봉</option>
+										</select>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
 				</div>
-			</div>
-			</form:form>
+					<div class="row p-3">
+						<div class="col">
+							<button type="submit" class="btn btn-dark" style="float:right;" >저장</button>
+								<a href="register" class="btn btn-outline-dark" style="float:right; margin-right: 4px;" >삭제</a>
+								<a href="" class="btn btn-outline-dark" style="float:right; margin-right: 4px;" >엑셀업로드</a>
+						</div>
+					</div>
+			</form>
 		</div>
 	</div>
 </div>
 		
-			<div class="row p-3">
-				<div class="col">
-					<button type="submit" class="btn btn-dark" style="float:right;" id="">저장</button>
-					<a href="" class="btn btn-outline-dark" style="float:right; margin-right: 4px;" id="">삭제</a>
-					<a href="" class="btn btn-outline-dark" style="float:right; margin-right: 4px;" id="">엑셀업로드</a>
-				</div>
-			</div>
-			</form>
+			
 		
 				
 				
