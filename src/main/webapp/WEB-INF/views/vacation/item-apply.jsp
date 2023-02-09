@@ -203,14 +203,16 @@
 						<td>휴가신청일 <input type="date" id="currentDate" name="" value="2023-02-03" style="text-align:center; width:130px" disabled/></td>
 						<td>휴가기간 <input type="date" id="vacation-start-date" name="" value="2023-02-03" style="text-align:center; width:130px"/>~
 								<input type="date" id="vacation-end-date" name="" value="2023-02-03"style="text-align:center; width:130px"/>
-								(일수: <input type="text" id="day-count"name="" value="" style="text-align:center; width:40px" disabled/>일)</td>
+								(일수: <input type="text" id="day-count"name="" value="" style="text-align:center; width:40px" disabled/>일)
 						</td>
-						<td>휴가구분 <select style="width: 80px">
+						<td>휴가구분 
+							<select style="width: 80px">
 							<option>연차</option>
 							<option>병가</option>
 							<option>출산휴가</option>
 							<option>반차</option>
-						</select></td>
+							</select>
+						</td>
 						<td>결재상태 <input type="text" value="대기" style="text-align:center; width:70px" disabled/></td>
 					</tr>
 				</table>

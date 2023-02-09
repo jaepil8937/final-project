@@ -4,8 +4,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,13 +19,15 @@ import com.last.vo.VacationDay;
 import com.last.vo.VacationItem;
 import com.last.web.request.VacationItemRequest;
 
+import lombok.RequiredArgsConstructor;
+
 
 @Controller
+@RequiredArgsConstructor
 @RequestMapping("/vacation")
 public class VacationController {
 	
-	@Autowired
-	private VacationService vacationService;
+	private final VacationService vacationService;
 
 	@GetMapping("/setting")
 	public String setting(Model model) {
@@ -39,25 +39,13 @@ public class VacationController {
 	
 	@PostMapping("/setting")
 	@ResponseBody
-	public Map<String, Object> insert(@RequestBody List<VacationItemRequest> forms) {
-		for (VacationItemRequest form : forms) {
-			VacationItem checkItem = vacationService.getItemCode(form.getCode());
-			
-			if(checkItem != null) {
-				VacationItem item = new VacationItem();
-				BeanUtils.copyProperties(form, item);	
-				vacationService.updateItem(item);
-			} else {
-				VacationItem item = new VacationItem();
-				BeanUtils.copyProperties(form, item);	
-				vacationService.insertItem(item);
-			}
-		}
-		Map<String, Object> map = new HashMap<String, Object>();
+	public Map<String, Object> savedItem(@RequestBody List<VacationItemRequest> forms) {
+		vacationService.savedItem(forms);
+		
+		Map<String, Object> map = new HashMap<>();
 		map.put("result", "ok");
 		return map;
-
-	};
+	}
 	
 	@GetMapping("/used")
 	public String used() {
@@ -67,10 +55,10 @@ public class VacationController {
 	
 	@GetMapping("/used-search")
 	@ResponseBody
-	public List<VacationRequestDto> usedSearch(@RequestParam("baseYear") int baseYear,
+	public List<VacationRequestDto> searchUsed(@RequestParam("baseYear") int baseYear,
 			@RequestParam("opt") String opt, @RequestParam("keyword") String keyword) {
 		
-		Map<String, Object> param = new HashMap<String, Object>();
+		Map<String, Object> param = new HashMap<>();
 		param.put(opt, keyword);
 		param.put("year", baseYear);
 		
