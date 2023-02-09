@@ -27,7 +27,7 @@
 				<div class="row mb-3 bg-light p-4">
 					<div>
 						<label class="form-label"><strong>기준년도</strong></label>
-							<select id="year" name="baseYear" style="width: 100px">
+							<select id="search-year" name="baseYear" style="width: 100px">
 							</select>
 						<label class="form-label"><strong>검색어</strong></label>
 						<select name="opt">
@@ -35,7 +35,7 @@
 							<option value="empName">성명</option>
 							<option value="dept">부서명</option>
 						</select>
-						<input type="text" name="keyword" value=""/>
+						<input type="text" id="search-keyword" name="keyword" value=""/>
 						<button type="button" class="btn btn-danger" style="float:right;" id="btn-search">검색</button>
 					</div>
 				</div>
@@ -103,23 +103,20 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
 <script>
 $(function() {
-	// 엔터키 눌러도 넘어가지 않도록 이벤트 걸기
-	$('input[type="text"]').keydown(function() {
-		if (event.keyCode === 13) {
-			event.preventDefault();
-		};
-	});
-	
-	let now = new Date();
-	let now_year = now.getFullYear();
-	
-	$("#year").append("<option value=''>선택</option>");
-	// i는 창립년도
-	for (let i = 2010; i <= now_year; i++) {
-		$("#year").append("<option value='"+ i +"'>"+ i +"</option>");
+	function check() {
+		let $year = $("#search-year").val();
+		let $keyword = $("#search-keyword").val();
+		if (!$year) {
+			alert("기준년도를 선택하세요.");
+			return false;
+		}
+		if (!$keyword) {
+			alert("검색어를 입력하세요.");
+			return false;
+		}
 	}
 	
-	$("#btn-search").click(function() {
+	function searh() {
 		$.ajax({
 			type: 'GET',
 			url : '/vacation/used-search',
@@ -156,6 +153,29 @@ $(function() {
 				}
 			}
 		})
+	}
+	
+	// 엔터키 눌러도 넘어가지 않도록 이벤트 걸기
+	$('input[type="text"]').keydown(function() {
+		if (event.keyCode === 13) {
+			event.preventDefault();
+			check();
+			searh();
+		}
+	});
+	
+	let now = new Date();
+	let now_year = now.getFullYear();
+	
+	$("#search-year").append("<option value=''>선택</option>");
+	// i는 창립년도
+	for (let i = 2010; i <= now_year; i++) {
+		$("#search-year").append("<option value='"+ i +"'>"+ i +"</option>");
+	}
+	
+	$("#btn-search").click(function() {
+		check();
+		searh();
 	});
 	
 });

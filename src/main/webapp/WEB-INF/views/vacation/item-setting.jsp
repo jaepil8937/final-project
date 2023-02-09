@@ -191,7 +191,7 @@ $(function() {
 	    		var items_payed = thisRow.find('td:eq(6)').find('input').is(':checked') ? 'Y' : 'N';
 	    		
 	    		// 명칭 입력하지 않으면 알림창.
-	    		if (items_name == "") {
+	    		if (!items_name) {
 	    			alert("명칭을 입력하세요.");
 	    			return false;
 	    		}

@@ -3,7 +3,7 @@ package com.last.service;
 import java.util.List;
 import java.util.Map;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 
 import com.last.dto.VacationRequestDto;
@@ -12,11 +12,13 @@ import com.last.vo.VacationDay;
 import com.last.vo.VacationItem;
 import com.last.web.request.VacationItemRequest;
 
+import lombok.RequiredArgsConstructor;
+
 @Service
+@RequiredArgsConstructor
 public class VacationService {
 	
-	@Autowired
-	private VacationMapper vacationMapper;
+	private final VacationMapper vacationMapper;
 
 	// 모든 휴가항목을 조회하는 서비스 메소드를 정의한다.
 	public List<VacationItem> getAllItems() {
@@ -28,7 +30,6 @@ public class VacationService {
 	}
 
 	public void insertItem(VacationItem item) {
-		System.out.println("서비스클래스: " + item.getName());
 		vacationMapper.insertItem(item);
 	}
   
@@ -44,8 +45,20 @@ public class VacationService {
 	
 
 	public List<VacationRequestDto> getUsedVacations(Map<String, Object> param) {
-		System.out.println("서비스클래스: " + param.get("year"));
 		return vacationMapper.getUsedVacations(param);
 	}
-
+	
+	public void savedItem(List<VacationItemRequest> forms) {
+		for (VacationItemRequest form : forms) {
+			VacationItem checkItem = getItemCode(form.getCode());
+			
+			VacationItem item = new VacationItem();
+			BeanUtils.copyProperties(form, item);	
+			if(checkItem != null) {
+				updateItem(item);
+			} else {
+				insertItem(item);
+			}
+		}
+	}
 }
