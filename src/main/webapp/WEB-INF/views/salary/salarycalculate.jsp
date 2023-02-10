@@ -83,93 +83,32 @@
 								</tr>
 							</thead>  
 							<tbody>
-								<tr>
-									<td>1000</td>
-									<td>홍길동</td>
-									<td>개발팀</td>
-									<td>5,000,000</td>
-									<td>200,000</td>
-									<td>4,800,000</td>
-								</tr>
-								<tr>
-									<td>1000</td>
-									<td>홍길동</td>
-									<td>개발팀</td>
-									<td>5,000,000</td>
-									<td>200,000</td>
-									<td>4,800,000</td>
-								</tr>
-								<tr>
-									<td>1000</td>
-									<td>홍길동</td>
-									<td>개발팀</td>
-									<td>5,000,000</td>
-									<td>200,000</td>
-									<td>4,800,000</td>
-								</tr>
-								<tr>
-									<td>1000</td>
-									<td>홍길동</td>
-									<td>개발팀</td>
-									<td>5,000,000</td>
-									<td>200,000</td>
-									<td>4,800,000</td>
-								</tr>
-								<tr>
-									<td>1000</td>
-									<td>홍길동</td>
-									<td>개발팀</td>
-									<td>5,000,000</td>
-									<td>200,000</td>
-									<td>4,800,000</td>
-								</tr>
-								<tr>
-									<td>1000</td>
-									<td>홍길동</td>
-									<td>개발팀</td>
-									<td>5,000,000</td>
-									<td>200,000</td>
-									<td>4,800,000</td>
-								</tr>
-								<tr>
-									<td>1000</td>
-									<td>홍길동</td>
-									<td>개발팀</td>
-									<td>5,000,000</td>
-									<td>200,000</td>
-									<td>4,800,000</td>
-								</tr>
-								<tr>
-									<td>1000</td>
-									<td>홍길동</td>
-									<td>개발팀</td>
-									<td>5,000,000</td>
-									<td>200,000</td>
-									<td>4,800,000</td>
-								</tr>
-							    <tr>
-									<td>1000</td>
-									<td>홍길동</td>
-									<td>개발팀</td>
-									<td>5,000,000</td>
-									<td>200,000</td>
-									<td>4,800,000</td>
-								</tr>
-								<tr>
-									<td>1000</td>
-									<td>홍길동</td>
-									<td>개발팀</td>
-									<td>5,000,000</td>
-									<td>200,000</td>
-									<td>4,800,000</td>
-								</tr>
+								<c:choose>
+									<c:when test="${empty TableDto }">
+										<tr>
+											<td colspan="6" class="text-center">급여 내역이 존재하지 않습니다.</td>
+										</tr>
+									</c:when>
+									<c:otherwise>
+										<c:forEach var="salaryDto" items="${TableDto.salaryDtoLists }">
+											<tr>
+												<td>${salaryDto.employeeNo }</td>
+												<td><a href="" data-user-id="${salaryDto.employeeNo }" class="text-decoration-none"> ${salaryDto.name }</a></td>
+												<td>${salaryDto.deptName }</td>
+												<td><fmt:formatNumber value="${salaryDto.totalSalary }" /></td>
+												<td><fmt:formatNumber value="${salaryDto.deductionSalary }" /></td>
+												<td><fmt:formatNumber value="${salaryDto.realSalary }" /></td>
+											</tr>
+										</c:forEach>
+									</c:otherwise>	
+								</c:choose>	
 							</tbody>
 							<tfoot>
 								<tr>
 									<th colspan="3" style="width:292.98px">합&emsp;&emsp;&emsp;계</th>
-									<th style="width:97.66px">5,000,000,000</th>
-									<th style="width:97.66px">1,400,000</th>
-									<th>33,600,000</th>
+									<th style="width:97.66px"><fmt:formatNumber value="${TableDto.totalSalary }" /></th>
+									<th style="width:97.66px"><fmt:formatNumber value="${TableDto.deductionSalary }" /></th>
+									<th><fmt:formatNumber value="${TableDto.realSalary }" /></th>
 								</tr>
 							</tfoot>	
 						</table>
@@ -246,17 +185,18 @@
 						</table>
 						<button type="button" class="btn btn-warning btn-sm" id="auto-calculate">자동계산</button>
 						&emsp;&emsp;&nbsp;
-							<button class="btn btn-primary btn-sm" id="btn-save">저장</button>
-							<button type="button" class="btn btn-secondary btn-sm" id="btn-delete">내용지우기</button>
-						</div>
+						<button class="btn btn-primary btn-sm" id="btn-save">저장</button>
+						<button type="button" class="btn btn-secondary btn-sm" id="btn-delete">내용지우기</button>
 					</div>
 				</div>
 			</div>	
 		</div>
 	</div>
 </div>			
-
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+<script>
+
+</script>
 </body>
 </html>

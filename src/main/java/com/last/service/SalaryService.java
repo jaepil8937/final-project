@@ -1,23 +1,23 @@
 package com.last.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
-import com.last.vo.PayHistories;
+import com.last.dto.SalaryDto;
+import com.last.mapper.SalaryMapper;
 
+@Service
 public class SalaryService {
 	
-	/*
 	@Autowired
 	private SalaryMapper salaryMapper;
 
-	public PayHistories getPayList(int employeeNo) {
-
-		PayHistories payHistories = salaryMapper.getPayHistoriesByNo(employeeNo);
-		if (payHistories == null) {
-			throw new ApplicationException("급여 정보가 존재하지 않습니다.");
-		}
+	public List<SalaryDto> getSalaryDtoLists() {
+		List<SalaryDto> salaryDtoLists = salaryMapper.getSalaryLists();
 		
-		return payHistories;
+		return salaryDtoLists;
 	}
-	*/
+	
 }
