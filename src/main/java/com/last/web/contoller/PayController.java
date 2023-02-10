@@ -7,8 +7,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
-import com.last.service.PayService;
+import com.last.dto.HobongDto;
+import com.last.dto.PayBankDto;
+import com.last.dto.PaybaseDto;
+import com.last.service.PayService;import com.last.vo.PayBankInfo;
 import com.last.vo.PayInsurance;
 import com.last.vo.PaySalaryTax;
 
@@ -20,17 +24,23 @@ public class PayController {
 	private PayService payServiece;
 	
 	@GetMapping("/paybank")
-	public String paybank() {
+	public String getPaybank(@RequestParam("employeeNo") int employeeNo,  Model model) {
+		PayBankDto payBankDto = payServiece.getPaybank(employeeNo);
+		model.addAttribute("paybank", payBankDto);
 		return "pay/paybank";
 	}
 	
 	@GetMapping("/paybankinfo")
-	public String paybankinfo() {
+	public String getPaybankInfo(@RequestParam("employeeNo") int employeeNo, Model model) {
+		PayBankInfo payBankInfo = payServiece.getPaybankInfo(employeeNo);
+		model.addAttribute("paybankinfo", payBankInfo);
 		return "pay/paybankinfo";
 	}
 	
 	@GetMapping("/paybase")
-	public String paybase() {
+	public String getPaybase(Model model) {
+		List<PaybaseDto> paybase = payServiece.getPaybase();
+		model.addAttribute("paybase", paybase);
 		return "/pay/paybase";
 	}
 	
@@ -40,7 +50,9 @@ public class PayController {
 	}
 
 	@GetMapping("/grade")
-	public String grade() {
+	public String getHobong(Model model) {
+		List<HobongDto> hobongs = payServiece.getHobong();
+		model.addAttribute("hobongs", hobongs);
 		return "/pay/grade";
 	}
 	

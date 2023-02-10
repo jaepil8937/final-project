@@ -14,12 +14,12 @@
 <body>
 <c:set var="menu" value="pay" />
 <%@ include file="../common/navbar.jsp" %>
-<div class="container mb-3">
-	<div class="row mb-3">
-		<div class="col-3">
-<%@ include file="../common/sidebar.jsp" %>
+<div class="container">
+	<div class="row">
+		<div class="col-2 bg-dark mr-3">
+			<%@ include file="../common/sidebar.jsp" %>
 		</div>
-		<div class="col-9 mb-3">
+		<div class="col-10 mb-3">
 			<div class="row mb-3">
 				<div class="col">
 					<h1>급여기본정보관리</h1>
@@ -28,11 +28,11 @@
 			<h4>상세정보</h4>
 				<div class="col-12 mb-2">
 					<div class="btn-group" >
-						<a href="paybank" class="btn btn-light px-4">급여기본</a>
-						<a href="paybankinfo" class="btn active btn-light px-4">급여지급</a>
+						<a href="paybank?employeeNo=${paybankinfo.employeeNo }" class="btn btn-light  px-4">급여기본</a>
+						<a href="paybankinfo?employeeNo=${paybankinfo.employeeNo }" class="btn btn-light active px-4">급여지급</a>
 					</div>
 				</div>
-				<table class="table table-sm" id="PayBase">
+				<table class="table table-sm">
 				<colgroup>
 					<col width="12%">
 					<col width="13%">
@@ -57,23 +57,17 @@
 				</thead>
 				<tbody>
 					<tr>
-						<td>10001</td>
-						<td>4,800,000</td>
-						<td>0</td>
-						<td>0</td>
-						<td>0</td>
-						<td>2022/11</td>
-						<td>2022/11</td>
-						<td>없음</td>
+						<td>${paybankinfo.employeeNo }</td>
+						<td><fmt:formatNumber value="${paybankinfo.baseSalary }" /></td>
+						<td>${paybankinfo.overtimeSalary }</td>
+						<td>${paybankinfo.nightSalary }</td>
+						<td>${paybankinfo.holidaySalary }</td>
+						<td>${paybankinfo.startDate }</td>
+						<td>${paybankinfo.endDate }</td>
+						<td>${paybankinfo.note }</td>
 					</tr>
 				</tbody>
 			</table>
-				<div class="row mb-2">
-					<div class="col">
-						<button class="btn btn-outline-dark btn-xs" style="float:right;">등록</button>
-						<button class="btn btn-outline-dark btn-xs" style="float:right;">수정</button>
-					</div>
-				</div>				
 		</div>
 	</div>
 </div>

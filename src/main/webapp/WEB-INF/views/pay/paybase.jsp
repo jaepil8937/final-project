@@ -14,14 +14,12 @@
 <body>
 <c:set var="menu" value="pay" />
 <%@ include file="../common/navbar.jsp" %>
-<div class="container mb-3">
-	<div class="row mb-3">
-	
-		<div class="col-3">
-<%@ include file="../common/sidebar.jsp" %> 
+<div class="container">
+	<div class="row">
+		<div class="col-2 bg-dark mr-3">
+			<%@ include file="../common/sidebar.jsp" %>
 		</div>
-		
-		<div class="col-9 mb-3">
+		<div class="col-10 mb-3">
 			<div class="row mb-3">
 				<div class="col">
 					<h1>급여기본정보관리</h1>
@@ -50,15 +48,17 @@
 					</tr>
 				</thead>
 				<tbody>
+					<c:forEach var="paybase" items="${paybase }">
 					<tr>
-						<td>10001</td>
-						<td><a href="paybank">홍길동</a></td>
-						<td>사원</td>
-						<td>개발부</td>
-						<td>2020/11/20</td>
-						<td>010-1111-1111</td>
-						<td>hong@naver.com</td>
+						<td>${paybase.no }</td>
+						<td><a href="paybank?employeeNo=${paybase.no }" class="text-decoration-none">${paybase.name }</a></td>
+						<td>${paybase.positionName }</td>
+						<td>${paybase.deptName }</td>
+						<td><fmt:formatDate value="${paybase.hireDate}" /></td>
+						<td>${paybase.tel }</td>
+						<td>${paybase.email }</td>
 					</tr>
+					</c:forEach>
 				</tbody>
 			</table>			
 		</div>

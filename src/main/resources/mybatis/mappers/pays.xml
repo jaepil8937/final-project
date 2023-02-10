@@ -11,7 +11,7 @@
 			care_salary_tax			as careSalaryTax,
 			reward_salary_tax		as rewardSalaryTax,
 			meal_tax				as mealTax,
-			business_salary_tax		as businessSalaryTax
+			business_salary_tax		as businessSalaryTaxgetHobong
 		from
 			salary_tax
 	</select>
@@ -34,4 +34,77 @@
 			INSURANCE_CONTRIBUTIONS
 	</select>
 	
+	<select id="getHobong" resultType="HobongDto">
+		select 
+		    a.position_no as positionNo,
+		    a.position_name as positionName,
+			a.position_base_salary as positionSalary,
+		    b.hobong_grade as grade,
+		    b.hobong_amount as amount
+		from 
+		    positions a, grades b
+	</select>
+	
+	<select id="getPaybankInfo" parameterType="int" resultType="BankInfo">
+		select
+			employee_no		as employeeNo,
+			base_salry		as baseSalary,
+			overtime_salary	as overtimeSalary,
+			night_salary	as nightSalary,
+			holiday_salary	as holidaySalary,
+			start_date		as startDate,
+			end_date		as endDate,
+			note			as note
+		from
+			salary_basic_item_info
+		where
+			employee_no = ${value}
+  	</select>
+  	
+  	<select id="getPaybank" parameterType="int" resultType="PayBankDto">
+  		select
+  			a.employee_no				as employeeNo,
+  			a.bank_name				    as bankName,
+  			a.bank_account			    as bankAccount,
+  			a.bank_owner				as bankOwner,
+  			a.pension_base_salary		as pensionBaseSalary,
+  			a.health_base_salary		as healthBaseSalary,
+  			a.employment_base_salary	as employmentBaseSalary,
+  			b.hire_date                 as hireDate,
+            b.retirement_date           as retirementDate
+  		from
+  			salary_basic a, employees b
+  		where 
+  			a.employee_no = b.employee_no
+  			and a.employee_no = #{value}
+  	</select>
+  	
+  	<select id="getPaybase" resultType="PaybaseDto">
+  		select
+  			a.employee_no		as no,
+  			a.employee_name		as name,
+            a.position_no	    as positionNo,
+  			b.position_name		as positionName,
+            a.dept_no			as deptNo,
+  			c.dept_name			as deptName,
+  			a.hire_date			as hireDate,
+  			a.mobile_tel		as tel,
+  			a.company_email		as email
+  		from
+            (select
+                employee_no,
+                employee_name,
+                dept_no,
+                position_no,
+                hire_date,
+                mobile_tel,
+                company_email
+            from
+                employees
+                ) a, positions b, departments c
+            where
+                a.position_no = b.position_no
+                and a.dept_no = c.dept_no
+  			
+  	</select>
 </mapper>
