@@ -63,9 +63,9 @@ public class VacationService {
 		}
 	}
 
-	public List<VacationCalculateDto> calculatedVacation(Map<String, Object> param) {
+	public VacationCalculateDto calculatedVacation(Map<String, Object> param) {
 		// 데이터가 존재하는지 확인 
-		List<VacationCalculateDto> dto = vacationMapper.getCalculatedDays(param);
+		VacationCalculateDto dto = getCalculatedDays(param);
 		if (dto != null) {
 			return dto;
 		} else {
@@ -91,7 +91,12 @@ public class VacationService {
 		// 휴가일수 데이터 생성
 		vacationMapper.insertCalculatedDays(param);
 		// 조회
-		return vacationMapper.getCalculatedDays(param);
+		return getCalculatedDays(param);
 		}
+		
+	}
+
+	public VacationCalculateDto getCalculatedDays(Map<String, Object> param) {
+		return vacationMapper.getCalculatedDays(param);
 	}
 }

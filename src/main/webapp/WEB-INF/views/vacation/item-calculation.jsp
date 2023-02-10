@@ -120,32 +120,22 @@ $(function() {
 			type: 'GET',
 			url : '/vacation/calculate-days',
 			data : $("form[name=form-search]").serialize(),
-			success : function(result) {
+			success : function(item) {
 				$('#calculate-table > tbody').empty();
-				if (result.length >= 1) {
-					result.forEach(function(item) {
-						let innerHtml = "";
-						innerHtml += '<tr class="text-center" name="index">';
-						innerHtml += "<td>" + item.empNo + "</td>";
-						innerHtml += "<td>" + item.empName + "</td>";
-						innerHtml += "<td>" + item.positionName + "</td>";
-						innerHtml += "<td>" + item.deptName + "</td>";
-						innerHtml += "<td>" + item.hireDate + "</td>";
-						innerHtml += "<td>" + item.baseDate + "</td>";
-						innerHtml += "<td>" + item.workedYears + "</td>";
-						innerHtml += "<td>" + item.vacationDays + "</td>";
-						innerHtml += "<td>" + item.usedDays + "</td>";
-						innerHtml += "<td>" + item.remainedDays + "</td>";
-						innerHtml += '</tr>';
-						$('#calculate-table > tbody').append(innerHtml);
-					})
-				} else {
 					let innerHtml = "";
-					innerHtml += '<tr>';
-					innerHtml += '<td id="item-noting" colspan="12" class="text-center">해당 년도에 대한 휴가 일수 정보가 없습니다.</td>'
+					innerHtml += '<tr class="text-center" name="index">';
+					innerHtml += "<td>" + item.empNo + "</td>";
+					innerHtml += "<td>" + item.empName + "</td>";
+					innerHtml += "<td>" + item.positionName + "</td>";
+					innerHtml += "<td>" + item.deptName + "</td>";
+					innerHtml += "<td>" + item.hireDate + "</td>";
+					innerHtml += "<td>" + item.baseDate + "</td>";
+					innerHtml += "<td>" + item.workedYears + "</td>";
+					innerHtml += "<td>" + item.vacationDays + "</td>";
+					innerHtml += "<td>" + item.usedDays + "</td>";
+					innerHtml += "<td>" + item.remainedDays + "</td>";
 					innerHtml += '</tr>';
 					$('#calculate-table > tbody').append(innerHtml);
-				}
 			}
 		})
 	}

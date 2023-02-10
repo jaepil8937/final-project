@@ -43,7 +43,7 @@
 						</select>
 						<label class="form-label"><strong>결재상태</strong></label>
 						<select id="search-status" name="status" style="width: 100px">
-							<option value="전체">전체</option>
+							<option >전체</option>
 							<option value="대기">대기</option>
 							<option value="승인">승인</option>
 							<option value="반려">반려</option>
@@ -74,13 +74,13 @@
 						<thead>
 							<tr class="text-center">
 								<th>사원번호</th>
-								<th>사용일수</th>
+								<th>사용연차</th>
 							</tr>
 						</thead>
 						<tbody>
 							<tr>
-								<td><input type="text" value="1001" style="text-align:center; width:100px" disabled/></td>
-								<td><input type="text" value="1" style="text-align:center; width:100px" disabled/></td>
+								<td><input type="text" name="input-empNo" value="1001" style="text-align:center; width:100px" disabled/></td>
+								<td><input type="text" name="input-used-days" value="1" style="text-align:center; width:100px" disabled/></td>
 							</tr>
 						</tbody>
 					</table>
@@ -90,13 +90,13 @@
 						<thead>
 							<tr class="text-center">
 								<th>성명</th>
-								<th>잔여일수</th>
+								<th>잔여연차</th>
 							</tr>
 						</thead>
 						<tbody>
 							<tr>
-								<td><input type="text" value="홍길동" style="text-align:center; width:100px" disabled/></td>
-								<td><input type="text" value="10" style="text-align:center; width:100px" disabled/></td>
+								<td><input type="text" name="input-empName" value="홍길동" style="text-align:center; width:100px" disabled/></td>
+								<td><input type="text" name="input-remained-days" value="10" style="text-align:center; width:100px" disabled/></td>
 							</tr>
 						</tbody>
 					</table>	
@@ -110,8 +110,8 @@
 						</thead>
 						<tbody>
 							<tr>
-								<td><input type="text" value="2021-01-01" style="text-align:center; width:100px" disabled/>~
-								<input type="text" value="2021-12-31" style="text-align:center; width:100px" disabled/>
+								<td><input type="text" name="input-start-day" value="2021-01-01" style="text-align:center; width:100px" disabled/>~
+								<input type="text" name="input-last-day" value="2021-12-31" style="text-align:center; width:100px" disabled/>
 								</td>
 							</tr>
 						</tbody>
@@ -127,7 +127,7 @@
 				</div>
 			</div>
 			<div class="row">
-				<table class="table table-bordered table-hover table-striped table-sm">
+				<table class="table table-bordered table-hover table-striped table-sm" id="used-table">
 					<colgroup>
 						<col width="5%">
 						<col width="10%">
@@ -171,16 +171,6 @@
 							<td>승인</td>
 							<td>개인사유</td>
 						</tr>	
-						<tr class="text-center">
-							<td>1</td>
-							<td>2022-01-31</td>
-							<td>연차</td>
-							<td>2022-02-02</td>
-							<td>2022-02-03</td>
-							<td>2</td>
-							<td>승인</td>
-							<td>개인사유</td>
-						</tr>																				
 					</tbody>
 				</table>
 			</div>
@@ -272,6 +262,50 @@ $(function() {
 		}
 	}
 	
+	function searh() {
+		$.ajax({
+			type: 'GET',
+			url : '/vacation/apply-list',
+			data : $("form[name=form-search]").serialize(),
+			success : function(data) {
+				let dataArr = new Array();
+				dataArr = data.usedVacationsList;
+				console.log(dataArr);
+				
+				let innerHtml = "";
+				let length = data.usedVacationsList.length;
+				$('#used-table > tbody').empty();
+				
+				$("input[name=input-empNo]").val(data.calculatedDays.empNo);
+				$("input[name=input-empName]").val(data.calculatedDays.empName);
+				$("input[name=input-used-days]").val(data.calculatedDays.usedDays);
+				$("input[name=input-remained-days]").val(data.calculatedDays.remainedDays);
+				$("input[name=input-last-day]").val(data.calculatedDays.baseDate);
+				$("input[name=input-start-day]").val(data.calculatedDays.baseYear +"-01-01");
+				if (!data.usedVacationsList) {
+					innerHtml += '<tr>';
+					innerHtml += '<td id="item-noting" colspan="12" class="text-center">해당 년도에 대한 휴가 신청 내역이 없습니다.</td>'
+					innerHtml += '</tr>';
+					$('#used-table > tbody').append(innerHtml);
+				} else {
+					for (let i in dataArr) {
+						innerHtml += '<tr class="text-center" name="index">';
+						innerHtml += "<td>" + i + "</td>";
+						innerHtml += "<td>" + dataArr[i].requestDate + "</td>";
+						innerHtml += "<td>" + dataArr[i].itemName + "</td>";
+						innerHtml += "<td>" + dataArr[i].startDate + "</td>";
+						innerHtml += "<td>" + dataArr[i].endDate + "</td>";
+						innerHtml += "<td>" + dataArr[i].days + "</td>";
+						innerHtml += "<td>" + dataArr[i].status + "</td>";
+						innerHtml += "<td>" + dataArr[i].reason + "</td>";
+						innerHtml += '</tr>';
+					}
+						$('#used-table > tbody').append(innerHtml);
+				}
+			}
+		})
+	}
+	
 	let now = new Date();
 	let now_year = now.getFullYear();
 	
@@ -286,11 +320,13 @@ $(function() {
 		if (event.keyCode === 13) {
 			event.preventDefault();
 			check();
+			searh();
 		}
 	});
 	
 	$("#btn-search").click(function() {
 		check();
+		searh();
 	});
 	
 	$('#currentDate').val(new Date().toISOString().substring(0, 10));

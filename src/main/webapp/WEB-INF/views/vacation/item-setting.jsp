@@ -85,7 +85,7 @@
 										<td><input type="checkbox" name="used" ${item.used eq 'Y' ? "checked" : ""} value="${item.used eq 'Y' ? 'Y' : 'N' }"></td>
 										<td><input type="checkbox" name="deleted" ${item.deleted eq 'Y' ? "checked" : ""} value="${item.deleted eq 'Y' ? 'Y' : 'N' } "></td>
 										<td><input type="checkbox" name="payed" ${item.payed eq 'Y' ? "checked" : ""} value="${item.payed eq 'Y' ? 'Y' : 'N' }"></td>
-										<td><input type="text" class="form-control form-control-xs w-100"></td>									
+										<td><input type="text" name="note" value="${item.note }" class="form-control form-control-xs w-100"></td>									
 									</tr>
 								</c:forEach>
 							</c:otherwise>

@@ -62,8 +62,10 @@ public class VacationController {
 			@RequestParam("opt") String opt, @RequestParam("keyword") String keyword) {
 		
 		Map<String, Object> param = new HashMap<>();
+		String status = "승인";
 		param.put(opt, keyword);
-		param.put("year", baseYear);
+		param.put("baseYear", baseYear);
+		param.put("status", status);
 		
 		return vacationService.getUsedVacations(param);
 	}	
@@ -75,7 +77,7 @@ public class VacationController {
 	
 	@GetMapping("/calculate-days")
 	@ResponseBody
-	public List<VacationCalculateDto> calculatedVacation(@RequestParam("baseYear") int baseYear,
+	public VacationCalculateDto calculatedVacation(@RequestParam("baseYear") int baseYear,
 			@RequestParam("opt") String opt, @RequestParam("keyword") int keyword) {
 		Calendar c1 = Calendar.getInstance();
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
@@ -95,6 +97,29 @@ public class VacationController {
 	public String apply() {
 		return "vacation/item-apply";
 	}	
+	
+	@GetMapping("/apply-list")
+	@ResponseBody
+	public Map<String, Object> listVacationRequest(@RequestParam("baseYear") int baseYear,
+			@RequestParam("status") String status, @RequestParam("empNo") int empNo) {
+		
+		Map<String, Object> param = new HashMap<>();
+		param.put("baseYear", baseYear);
+		param.put("empNo", empNo);
+		param.put("status", status);
+		
+		VacationCalculateDto calculatedDays = vacationService.getCalculatedDays(param);
+		
+		List<VacationRequestDto> usedVacationsList = vacationService.getUsedVacations(param);
+		
+		Map<String, Object> result = new HashMap<>();
+		
+		result.put("calculatedDays", calculatedDays);
+		result.put("usedVacationsList", usedVacationsList);
+		
+		return result;
+	}
+	
 	
 	// 근속일수별 휴가설정
 	@GetMapping("/year")
