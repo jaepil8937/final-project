@@ -22,5 +22,6 @@ public interface EmployeeMapper {
 	List<Employees> getAllEmployee();
 	List<Grades> getAllGrade();
 	
+	void insertEmployees(Employees employees);
 }
 

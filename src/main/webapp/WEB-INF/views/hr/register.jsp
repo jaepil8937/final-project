@@ -25,7 +25,7 @@
 			</div>
 			<div class="row mb-3">
 				<div class="col-12 text-end">
-					<form class="row row-cols-lg-auto g-3 align-items-center">
+					<form class="row row-cols-lg-auto g-3 align-items-center" >
 	  					<div class="col-12">
 	   						<select class="form-select">
 								<option>성명</option>
@@ -33,12 +33,13 @@
 								<option>부서</option>
 							</select>
 	  					</div>
-	  				<div class="col-12">
-	   					<input type="text" class="form-control">
-	  				</div>
-	  				<div class="col-12">
-	   					<button class="btn btn-primary float-end">검색</button>
-	  				</div>
+		  				<div class="col-12">
+		   					<input type="text" class="form-control">
+		  				</div>
+		  				<div class="col-12">
+		   					<button class="btn btn-primary float-end">검색</button>
+		  				</div>
+		  			</form>
 				</div>
 			</div>
 			<div class="row mb-3">
@@ -131,13 +132,13 @@
 									<th class="table-secondary text-end">성명</th>
 									<td><input type="text" class="form-control form-control-sm"  style="width: 130px;" name="name"/></td>
 									<th class="table-secondary text-end">생년월일</th>
-									<td colspan="2"><input type="text" class="form-control form-control-sm"  style="width: 130px;" name="birthday"/></td>
+									<td colspan="2"><input type="date" class="form-control form-control-sm"  style="width: 130px;" name="birthday"/></td>
 								</tr>
 								<tr>
 									<th class="table-secondary text-end">성별</th>
-									<td><input class="form-check-input" type="radio" name="gender"  id="flexRadioDefault1" checked >
+									<td><input class="form-check-input" type="radio" name="gender" value="M"  id="flexRadioDefault1" checked >
 									<label class="form-check-label" for="flexRadioDefault1">남</label>
-									<input class="form-check-input" type="radio" name="gender" id="flexRadioDefault1" >
+									<input class="form-check-input" type="radio" name="gender" value="F" id="flexRadioDefault1" >
 	  								<label class="form-check-label" for="flexRadioDefault2">여</label>
 									</td>	
 									
@@ -165,15 +166,15 @@
 								<tr>
 									<th class="table-secondary text-end" rowspan="3">주소</th>
 									<td colspan="5">
-										<input type="text" class="form-control form-control-sm d-inline-block"  style="width: 130px;" path="zipcode" name="postcode" readonly="readonly" disabled/>
+										<input type="text" class="form-control form-control-sm d-inline-block"  style="width: 130px;" name="zipcode" readonly="readonly" />
 										<button type="button" class="btn btn-primary btn-sm" id="btn-search-postcode" >주소찾기</button>
 									</td>
 								</tr>
 								<tr>
-									<td colspan="5"><input type="text" class="form-control form-control-sm" name="address1" path="basicAddress" readonly="readonly" disabled /></td>
+									<td colspan="5"><input type="text" class="form-control form-control-sm" name="basicAddress" readonly="readonly" /></td>
 								</tr>
 								<tr>
-									<td colspan="5"><input type="text" class="form-control form-control-sm" name="address2" path="detailAddress" /></td>
+									<td colspan="5"><input type="text" class="form-control form-control-sm" name="detailAddress"  /></td>
 								</tr>			
 								<tr>
 									
@@ -193,42 +194,34 @@
 									<th class="table-secondary text-end">부서</th>
 									<td>
 										<select style="width: 130px;" name="deptNo"/>
-											<c:forEach var="departments" items="${dept}">
-												<option value="${dept.no}"> ${dept.name}</option>
+											<c:forEach var="dept" items="${departments}">
+												<option value="${dept.deptNo}"> ${dept.deptName}</option>
 											</c:forEach>
-												<option value="100">개발팀</option>
-												<option value="101">디자인팀</option>
-												<option value="102">테스트팀</option>
-												<option value="103">기획팀</option>
 										</select>
 									</td>
 									<th class="table-secondary text-end">입사일자</th>
-									<td colspan="3"><input type="date" id="start-date" name="hireDate" value="2023-02-03" style="text-align:center; width:130px" /></td>	
+									<td colspan="3"><input type="date" id="start-date" name="hireDate"  style="text-align:center; width:130px" /></td>	
 								</tr>
 								<tr>
 									<th class="table-secondary text-end">직급</th>
 									<td>
 										<select style="width: 130px;" name="positionNo"/>
-											<c:forEach var="positions" items="${position}">
-												<option value="${position.no}"> ${position.name}</option>
+											<c:forEach var="position" items="${positions}">
+												<option value="${position.positionNo}"> ${position.positionName}</option>
 											</c:forEach>
-												<option value="1">사원</option>
-												<option value="2">대리</option>
-												<option value="3">과장</option>
-												<option value="4">차장</option>
 										</select>
 									</td>
 									<th class="table-secondary text-end">퇴사일자</th>
-									<td colspan="3"><input type="date" id="end-date" name="retirementDate" value="2023-02-03" style="text-align:center; width:130px"/></td>
+									<td colspan="3"><input type="date" id="end-date" name="retirementDate"  style="text-align:center; width:130px"/></td>
 								</tr>
 								<tr>
 									<th class="table-secondary text-end">호봉</th>
 									<td>
 										<select style="width: 130px;" name="hobong"/>
-											<option>1호봉</option>
-											<option>2호봉</option>
-											<option>3호봉</option>
-											<option>4호봉</option>
+											<c:forEach var="grade" items="${grade}">
+												<option value="${grade.hobongGrade}"> ${grade.hobongGrade}</option>
+											</c:forEach>
+											
 										</select>
 									</td>
 								</tr>
@@ -284,11 +277,11 @@ $(function() {
 	        }
 					
 	        // 우편번호 입력필드와 기본주소 입력필드에 값을 입력한다.
-	        $(":input[name=postcode]").val(data.zonecode);
-	        $(":input[name=address1]").val(address);
+	        $(":input[name=zipcode]").val(data.zonecode);
+	        $(":input[name=basicAddress]").val(address);
 				
 	        // 상세주소 입력필드에 포커스를 위치시킨다.
-	        $(":input[name=address2]").focus();
+	        $(":input[name=detailAddress]").focus();
 	      }
 	    }).open();
 	  });

@@ -40,6 +40,11 @@ public class EmployeeService {
 		return employeeMapper.getAllGrade();
 	}
 	
-	
+	public void saveEmployee(EmployeeRegisterForm form) {
+		Employees employees = new Employees();
+		BeanUtils.copyProperties(form, employees);
+		
+		employeeMapper.insertEmployees(employees);
+	}
 	
 }
