@@ -1,7 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -37,21 +35,21 @@
 					<h2>휴가신청/취소</h2>
 				</div>
 				<hr>
-			<form>
+			<form name="form-search">
 				<div class="row mb-3 bg-light p-4">
 					<div>
 						<label class="form-label"><strong>기준년도</strong></label>
-						<select id="year" style="width: 100px">
+						<select id="search-year" name="baseYear" style="width: 100px">
 						</select>
 						<label class="form-label"><strong>결재상태</strong></label>
-						<select style="width: 100px">
-							<option>전체</option>
-							<option>대기</option>
-							<option>승인</option>
-							<option>반려</option>
+						<select id="search-status" name="status" style="width: 100px">
+							<option value="전체">전체</option>
+							<option value="대기">대기</option>
+							<option value="승인">승인</option>
+							<option value="반려">반려</option>
 						</select>
 						<label class="form-label"><strong>사원번호</strong></label>
-						<input type="text" style="text-align:center; width:100px" />
+						<input type="text" id="text-empNo" name="empNo" value="" style="text-align:center; width:100px" />
 						<button type="button" class="btn btn-danger" style="float:right;" id="btn-search">검색</button>
 					</div>
 				</div>
@@ -261,14 +259,39 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
 <script>
 $(function() {
+	function check() {
+		let $year = $("#search-year").val();
+		let $empNo = $("#text-empNo").val();
+		if (!$year) {
+			alert("기준년도를 선택하세요.");
+			return false;
+		}
+		if (!$empNo) {
+			alert("사원번호를 입력하세요.");
+			return false;
+		}
+	}
+	
 	let now = new Date();
 	let now_year = now.getFullYear();
 	
-	$("#year").append("<option value=''>선택</option>");
+	$("#search-year").append("<option value=''>선택</option>");
 	// i는 창립년도
 	for (let i = 2010; i <= now_year; i++) {
-		$("#year").append("<option value='"+ i +"'>"+ i +"</option>");
+		$("#search-year").append("<option value='"+ i +"'>"+ i +"</option>");
 	}
+	
+	// 엔터키 눌러도 넘어가지 않도록 이벤트 걸기
+	$('input[type="text"]').keydown(function() {
+		if (event.keyCode === 13) {
+			event.preventDefault();
+			check();
+		}
+	});
+	
+	$("#btn-search").click(function() {
+		check();
+	});
 	
 	$('#currentDate').val(new Date().toISOString().substring(0, 10));
 });

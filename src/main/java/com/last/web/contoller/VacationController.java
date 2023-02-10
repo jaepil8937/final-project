@@ -87,7 +87,7 @@ public class VacationController {
 		param.put("empNo", keyword);
 		param.put("baseDate", baseDate);
 		
-		return (List<VacationCalculateDto>) vacationService.calculatedVacation(param);
+		return vacationService.calculatedVacation(param);
 		
 	}
 
