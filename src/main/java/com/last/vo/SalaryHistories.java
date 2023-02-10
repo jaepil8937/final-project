@@ -1,14 +1,14 @@
 package com.last.vo;
 
-import org.apache.ibatis.type.Alias;
+import org.apache.ibatis.type.Alias; 
 
 import lombok.Getter;
 import lombok.Setter;
 
-@Alias("PayHistories")
+@Alias("salaryHistories")
 @Setter
 @Getter
-public class PayHistories {
+public class SalaryHistories {
 
 	private int employeeNo;
 	private String baseYearMonth;

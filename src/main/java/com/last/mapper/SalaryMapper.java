@@ -1,13 +1,15 @@
 package com.last.mapper;
 
+import java.util.List;
+
 import org.apache.ibatis.annotations.Mapper;
 
-import com.last.vo.PayHistories;
+import com.last.dto.SalaryDto;
 
 @Mapper
 public interface SalaryMapper {
 	
-	PayHistories getPayHistoriesByNo(int employeeNo);
-	
+	List<SalaryDto> getSalaryLists();
+
 	
 }
