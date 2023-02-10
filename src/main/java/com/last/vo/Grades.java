@@ -12,7 +12,7 @@ import lombok.Setter;
 @Alias("grades")
 public class Grades {
 	
-	private int hobong_grade;
-	private int hobong_amount;
+	private int hobongGrade;
+	private int hobongAmount;
 
 }

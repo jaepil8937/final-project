@@ -1,6 +1,6 @@
 package com.last.vo;
 
-import java.sql.Date;
+import java.util.Date;
 
 import org.apache.ibatis.type.Alias;
 
@@ -16,7 +16,7 @@ public class Employees {
 	private String password;			 // 비밀번호
 	private String name;				 // 이름
 	private String gender;				 // 성별
-	private String birthday;			 // 생일
+	private Date birthday;			 // 생일
 	private String comTel;				 // 회사번호
 	private String homeTel;				 // 자택번호
 	private String mobileTel;  			 // 휴대폰번호

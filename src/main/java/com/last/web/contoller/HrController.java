@@ -1,5 +1,7 @@
 package com.last.web.contoller;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -7,12 +9,13 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.FileCopyUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-
+import org.springframework.web.multipart.MultipartFile;
 
 import com.last.dto.EmployeeDto;
 import com.last.service.EmployeeService;
@@ -26,6 +29,8 @@ import com.last.web.request.EmployeeRegisterForm;
 @Controller
 @RequestMapping("/hr")
 public class HrController {
+	
+	private String directory = "C:\\app\\eGovFrameDev-4.0.0-64bit\\workspace\\final-project\\src\\main\\webapp\\resources\\images\\employee";
 
 	@Autowired
 	private EmployeeService employeeService;
@@ -49,11 +54,6 @@ public class HrController {
 		return "hr/certificate";
 	}
 
-	@GetMapping("/register")     // 인사정보등록
-	public String register() {
-		return "hr/register";
-	}
-
 	@GetMapping("/re-register")		// 인사정보재등록
 	public String reregister() {
 		return "hr/re-register";
@@ -74,20 +74,35 @@ public class HrController {
 		return "hr/order";
 	}
 
-
-
-
-	@PostMapping("/registered")
-	public String registerform(Model model) {
-		List<Position> position = employeeService.getAllPosition();
-		List<Department> department = employeeService.getAllDepartment();
+	
+	@GetMapping("/register")     // 인사정보등록
+	public String register(Model model) {
+		List<Position> positions = employeeService.getAllPosition();
+		List<Department> departments = employeeService.getAllDepartment();
 		List<Employees> employees = employeeService.getAllEmployee();
-		List<Grades> grade = employeeService.getAllGrade();
+		List<Grades> grades = employeeService.getAllGrade();
 
-		model.addAttribute("position", position);
-		model.addAttribute("department", department);
+		model.addAttribute("positions", positions);
+		model.addAttribute("departments", departments);
 		model.addAttribute("employees", employees);
-		model.addAttribute("grade", grade);
+		model.addAttribute("grade", grades);
+		return "hr/register";
+	}
+
+
+
+	@PostMapping("/register")
+	public String registerform(EmployeeRegisterForm employeeRegisterForm) throws IOException {
+		
+		MultipartFile upfile = employeeRegisterForm.getFile1();
+		if (!upfile.isEmpty()) {
+			String filename = upfile.getOriginalFilename();
+			employeeRegisterForm.setPhoto(filename);
+			
+			FileCopyUtils.copy(upfile.getBytes(), new File(directory, filename));
+		
+		}
+		employeeService.saveEmployee(employeeRegisterForm);
 
 		return "hr/register";
 	}

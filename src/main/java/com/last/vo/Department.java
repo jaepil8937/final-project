@@ -9,7 +9,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-@Alias("department")
+@Alias("Department")
 public class Department {
 	
 	private int deptNo;			// 부서번호
