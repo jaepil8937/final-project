@@ -55,7 +55,8 @@
 	
 	<select id="getUsedVacations" parameterType="map" resultType="VacationRequestDto">
 		select
-	   		 B.employee_no as empNo,
+		 	  A.request_no as no,
+	   		  B.employee_no as empNo,
 	  		  B.employee_name as empName,
 	  		  C.position_name as positionName,
 	  		  D.dept_name as deptName,
@@ -63,8 +64,9 @@
 	 		  E.item_name as itemName,
 	 		  to_char(A.request_date, 'yyyy-MM-dd') as requestDate,
 	  		  to_char(A.start_date, 'yyyy-MM-dd') as startDate,
-	    	  to_char(A.end_date, 'yyyy_MM-dd') as endDate,
-	    	  A.request_status as status
+	    	  to_char(A.end_date, 'yyyy-MM-dd') as endDate,
+	    	  A.request_status as status,
+	    	  A.reason as reason
 		from
 			 vacation_request_histories A, employees B, positions C, departments D, vacation_items E
 		where 
@@ -202,6 +204,23 @@
 			and A.dept_no = C.dept_no
 			and A.employee_no = #{empNo}
 			and D.base_year = #{baseYear}
+	</select>
+	
+	<!-- 휴가신청내역조회 -->
+	<select id="getVacationRequestInfoByNo" parameterType="int" resultType="VacationRequestDto">
+		select
+	 		to_char(B.request_date, 'yyyy-MM-dd') as requestDate,
+	  		to_char(B.start_date, 'yyyy-MM-dd') as startDate,
+	    	to_char(B.end_date, 'yyyy-MM-dd') as endDate,
+			B.days as days,
+			B.request_status as status,
+			B.reason as reason,
+			A.item_name as itemName
+		from
+			vacation_items A, vacation_Request_histories B
+		where
+			A.item_code = B.item_code
+			and request_no = #{value}					
 	</select>
 	
 </mapper>

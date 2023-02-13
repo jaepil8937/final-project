@@ -99,4 +99,8 @@ public class VacationService {
 	public VacationCalculateDto getCalculatedDays(Map<String, Object> param) {
 		return vacationMapper.getCalculatedDays(param);
 	}
+
+	public VacationRequestDto getVacationRequestInfoByNo(int no) {
+		return vacationMapper.getVacationRequestInfoByNo(no);
+	}
 }
