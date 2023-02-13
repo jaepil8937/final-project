@@ -25,7 +25,7 @@
 			</div>
 			<div class="row mb-3">
 				<div class="col-12 text-end">
-					<form class="row row-cols-lg-auto g-3 align-items-center" >
+					<form class="row row-cols-lg-auto g-3 align-items-center" action="register">
 	  					<div class="col-12">
 	   						<select class="form-select">
 								<option>성명</option>
@@ -34,7 +34,7 @@
 							</select>
 	  					</div>
 		  				<div class="col-12">
-		   					<input type="text" class="form-control">
+		   					<input type="text" class="form-control" name="keyword">
 		  				</div>
 		  				<div class="col-12">
 		   					<button class="btn btn-primary float-end">검색</button>
@@ -65,7 +65,7 @@
 							<tr>
 								<th  class="table-primary">사원번호</th>
 								<th>성명</th>
-								<th>직책</th>
+								<th>직급</th>
 								<th>부서</th>
 								<th>입사일자</th>
 								<th>퇴사일자</th>
@@ -76,16 +76,18 @@
 							</tr>
 						</thead>
 						<tbody>
-							<td>1000</td>
-							<td>홍길동</td>
-							<td>사원</td>
-							<td>개발팀</td>
-							<td>20220101</td>
-							<td>20220102</td>
-							<td>010-1234-1234</td>
-							<td>hong@gmail.com</td>
-							<td>서울시 종로구</td>
-							<td>안녕하세요</td>
+							<c:forEach var="emp" items="${emp }">
+								<td>emp.no</td>
+								<td>emp.name</td>
+								<td>emp.positionNo</td>
+								<td>emp.deptNo</td>
+								<td>emp.hireDate</td>
+								<td>emp.retirementDate</td>
+								<td>emp.mobileTel</td>
+								<td>emp.extEmail</td>
+								<td>emp.zipcode</td>
+								<td>emp.memo</td>
+							</c:forEach>
 						</tbody>
 					</table>
 				</div>
