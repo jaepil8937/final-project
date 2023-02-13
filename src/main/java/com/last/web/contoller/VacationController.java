@@ -100,7 +100,7 @@ public class VacationController {
 	
 	@GetMapping("/apply-list")
 	@ResponseBody
-	public Map<String, Object> listVacationRequest(@RequestParam("baseYear") int baseYear,
+	public Map<String, Object> getVacationRequestList(@RequestParam("baseYear") int baseYear,
 			@RequestParam("status") String status, @RequestParam("empNo") int empNo) {
 		
 		Map<String, Object> param = new HashMap<>();
@@ -118,6 +118,14 @@ public class VacationController {
 		result.put("usedVacationsList", usedVacationsList);
 		
 		return result;
+	}
+	
+	@GetMapping("/apply-request-info")
+	@ResponseBody
+	public VacationRequestDto getVacationRequestInfo(@RequestParam("no") int no) {
+		System.out.println(no);
+		
+		return vacationService.getVacationRequestInfoByNo(no);
 	}
 	
 	

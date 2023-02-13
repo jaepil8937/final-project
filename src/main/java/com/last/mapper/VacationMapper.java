@@ -51,6 +51,8 @@ public interface VacationMapper {
 	void insertCalculatedDays(Map<String, Object> param);
 	// 휴가일수 조회
 	VacationCalculateDto getCalculatedDays(Map<String, Object> param);
+
+	VacationRequestDto getVacationRequestInfoByNo(int no);
 }
 	
 

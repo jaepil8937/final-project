@@ -10,6 +10,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class VacationRequestDto {
+	private int no;
 	private int empNo;
 	private int year;
 	private String empName;
@@ -21,4 +22,5 @@ public class VacationRequestDto {
 	private String startDate;
 	private String endDate;
 	private String status;
+	private String reason;
 }
