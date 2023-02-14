@@ -4,11 +4,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -56,7 +59,7 @@ public class VacationController {
 		map.put("result", "ok");
 		return map;
 
-	};
+	}
 	
 	@GetMapping("/used")
 	public String used() {
@@ -73,7 +76,7 @@ public class VacationController {
 		return "vacation/item-apply";
 	}	
 	
-	// 근속일수별 휴가설정
+	// 근속일수별 휴가일수 조회
 	@GetMapping("/year")
 	public String yearVacationDay(Model model) {
 		List<VacationDay> vacationDays = vacationService.getYearVacationDay();
@@ -81,5 +84,48 @@ public class VacationController {
 		
 		return "vacation/year-vacation";
 	}
+	
+	// 모든 근속연수별 휴가일수 행추가 
+	@PostMapping("/add")
+	@ResponseBody
+	public VacationDay addVacationDay(@RequestParam("workedYear") int workedYear, @RequestParam("vacationDays") int vacationDays ) {
+		VacationDay vacationDay = vacationService.addVacationDay(workedYear, vacationDays);
+		
+		return vacationDay;
+	}
+	
+	// 모든 근속연수별 휴가일수 행삭제
+	@GetMapping("/delete")
+	public String removeVacationDay(@RequestParam("workedYear") List<Integer> years) {
+		vacationService.removeVacationDay(years);
+		
+		return "redirect:/vacation/year";
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 }

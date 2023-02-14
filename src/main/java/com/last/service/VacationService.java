@@ -1,5 +1,6 @@
 package com.last.service;
 
+import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,9 +37,26 @@ public class VacationService {
 	
 	// 모든 근속연수별 휴가일수 조회
 	public List<VacationDay> getYearVacationDay() {
-		return vacationMapper.getYearVacationDay();
+		List<VacationDay> vacationDays = vacationMapper.getYearVacationDay();
+		
+		return vacationDays;
 	}
 	
-	
+	// 근속연수별 휴가일수 행추가 
+	public VacationDay addVacationDay(int workedYear, int vacationDays) {
+		VacationDay vacationDay = new VacationDay();
+		vacationDay.setWorkedYear(workedYear);
+		vacationDay.setVacationDays(vacationDays);
+		
+		vacationMapper.insertYearVacationDay(vacationDay);
+		
+		return vacationDay;
+	}
 
+	// 근속연수별 휴가일수 행삭제
+	public void removeVacationDay(List<Integer> years) {
+		for (int year : years) {
+			vacationMapper.deleteYearVacationDay(year);
+		}
+	}
 }
