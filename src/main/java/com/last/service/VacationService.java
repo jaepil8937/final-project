@@ -1,5 +1,6 @@
 package com.last.service;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -37,13 +38,6 @@ public class VacationService {
 	public void updateItem(VacationItem item) {
 		vacationMapper.updateItem(item);
 	}
-	
-	// 모든 근속연수별 휴가일수 조회
-	public List<VacationDay> getYearVacationDay() {
-		return vacationMapper.getYearVacationDay();
-	}
-	
-	
 
 	public List<VacationRequestDto> getUsedVacations(Map<String, Object> param) {
 		return vacationMapper.getUsedVacations(param);
@@ -103,4 +97,29 @@ public class VacationService {
 	public VacationRequestDto getVacationRequestInfoByNo(int no) {
 		return vacationMapper.getVacationRequestInfoByNo(no);
 	}
+  
+  // 모든 근속연수별 휴가일수 조회
+	public List<VacationDay> getYearVacationDay() {
+		List<VacationDay> vacationDays = vacationMapper.getYearVacationDay();
+		
+		return vacationDays;
+	}
+	
+	// 근속연수별 휴가일수 행추가 
+	public VacationDay addVacationDay(int workedYear, int vacationDays) {
+		VacationDay vacationDay = new VacationDay();
+		vacationDay.setWorkedYear(workedYear);
+		vacationDay.setVacationDays(vacationDays);
+		
+		vacationMapper.insertYearVacationDay(vacationDay);
+		
+		return vacationDay;
+	}
+
+	// 근속연수별 휴가일수 행삭제
+	public void removeVacationDay(List<Integer> years) {
+		for (int year : years) {
+			vacationMapper.deleteYearVacationDay(year);
+	}
+  
 }

@@ -107,19 +107,9 @@
 			(#{workedYear}, #{vacationDays})
 	 </insert>
 	 
-	 <!-- 근속연수별 휴가설정 수정 -->
-	 <update id="updateYearVacationDay" parameterType="VacationDay">
-	 	update
-	 		year_vacation_days
-	 	set  
-		    worked_year 	= #{workedYear},
-		    vacation_days 	= #{vacationDays}
-		where 
-			worked_year = #{workedYear}
-	 </update>
 	 
-	 <!-- 근속연수별 휴가 삭제 -->
-	 <delete id="deleteYearVacationDay" parameterType="VacationDay">
+	 <!-- 근속연수별 휴가설정 행삭제  -->
+	 <delete id="deleteYearVacationDay" parameterType="int">
 	 	delete from 
 		    year_vacation_days
 		where

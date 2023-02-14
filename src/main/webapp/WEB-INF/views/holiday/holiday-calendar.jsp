@@ -66,13 +66,13 @@
 					<div class="row" style="padding-right: 0px;">
 						<table class="table table-bordered" style="margin-top: 16px;">
 							<colgroup>
-								<col width="5%">
-								<col width="5%">
-								<col width="5%">
-								<col width="5%">
-								<col width="5%">
-								<col width="5%">
-								<col width="5%">
+								<col width="14%">
+								<col width="14%">
+								<col width="14%">
+								<col width="14%">
+								<col width="14%">
+								<col width="14%">
+								<col width="14%">
 							</colgroup>
 							<thead>
 								<tr class="bg-light text-center">

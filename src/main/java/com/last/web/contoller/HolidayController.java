@@ -14,12 +14,12 @@ public class HolidayController {
 	}
 	
 	@GetMapping("/holiday-setting")
-	public String Setting() {
+	public String setting() {
 		return "holiday/holiday-setting";
 	}
 	
 	@GetMapping("/calendar")
-	public String Calendar() {
+	public String calendar() {
 		return "holiday/holiday-calendar";
 	}
 	

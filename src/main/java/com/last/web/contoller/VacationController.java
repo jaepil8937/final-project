@@ -9,6 +9,7 @@ import java.util.Map;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -137,5 +138,50 @@ public class VacationController {
 		
 		return "vacation/year-vacation";
 	}
+	
+	// 모든 근속연수별 휴가일수 행추가 
+	@PostMapping("/add")
+	@ResponseBody
+	public VacationDay addVacationDay(@RequestParam("workedYear") int workedYear, @RequestParam("vacationDays") int vacationDays ) {
+		VacationDay vacationDay = vacationService.addVacationDay(workedYear, vacationDays);
+		
+		return vacationDay;
+	}
+	
+	// 모든 근속연수별 휴가일수 행삭제
+	@GetMapping("/delete")
+	public String removeVacationDay(@RequestParam("workedYear") List<Integer> years) {
+		vacationService.removeVacationDay(years);
+		
+		return "redirect:/vacation/year";
+	}
+  
+}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 }
