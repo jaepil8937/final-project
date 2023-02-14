@@ -1,13 +1,11 @@
 package com.last.web.contoller;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
-
-import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,18 +16,22 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.last.dto.VacationCalculateDto;
+import com.last.dto.VacationRequestDto;
 import com.last.service.VacationService;
 import com.last.vo.VacationDay;
 import com.last.vo.VacationItem;
 import com.last.web.request.VacationItemRequest;
 
+import lombok.RequiredArgsConstructor;
+
 
 @Controller
+@RequiredArgsConstructor
 @RequestMapping("/vacation")
 public class VacationController {
 	
-	@Autowired
-	private VacationService vacationService;
+	private final VacationService vacationService;
 
 	@GetMapping("/setting")
 	public String setting(Model model) {
@@ -41,34 +43,55 @@ public class VacationController {
 	
 	@PostMapping("/setting")
 	@ResponseBody
-	public Map insert(@RequestBody List<VacationItemRequest> forms) {
-		for (VacationItemRequest form : forms) {
-			VacationItem checkItem = vacationService.getItemCode(form.getCode());
-			
-			if(checkItem != null) {
-				VacationItem item = new VacationItem();
-				BeanUtils.copyProperties(form, item);	
-				vacationService.updateItem(item);
-			} else {
-				VacationItem item = new VacationItem();
-				BeanUtils.copyProperties(form, item);	
-				vacationService.insertItem(item);
-			}
-		}
-		Map<String, Object> map = new HashMap<String, Object>();
+	public Map<String, Object> savedItem(@RequestBody List<VacationItemRequest> forms) {
+		vacationService.savedItem(forms);
+		
+		Map<String, Object> map = new HashMap<>();
 		map.put("result", "ok");
 		return map;
-
 	}
 	
 	@GetMapping("/used")
 	public String used() {
+		
 		return "vacation/item-used";
 	}	
 	
-	@GetMapping("/calculation")
-	public String calculation() {
+	@GetMapping("/used-search")
+	@ResponseBody
+	public List<VacationRequestDto> searchUsed(@RequestParam("baseYear") int baseYear,
+			@RequestParam("opt") String opt, @RequestParam("keyword") String keyword) {
+		
+		Map<String, Object> param = new HashMap<>();
+		String status = "승인";
+		param.put(opt, keyword);
+		param.put("baseYear", baseYear);
+		param.put("status", status);
+		
+		return vacationService.getUsedVacations(param);
+	}	
+	
+	@GetMapping("/calculate")
+	public String calculate() {
 		return "vacation/item-calculation";
+	}
+	
+	@GetMapping("/calculate-days")
+	@ResponseBody
+	public VacationCalculateDto calculatedVacation(@RequestParam("baseYear") int baseYear,
+			@RequestParam("opt") String opt, @RequestParam("keyword") int keyword) {
+		Calendar c1 = Calendar.getInstance();
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		c1.set(baseYear, 11, 31);
+		String baseDate = sdf.format(c1.getTime());
+		
+		Map<String, Object> param = new HashMap<>();
+		param.put("baseYear", baseYear);
+		param.put("empNo", keyword);
+		param.put("baseDate", baseDate);
+		
+		return vacationService.calculatedVacation(param);
+		
 	}
 
 	@GetMapping("/apply")
@@ -76,7 +99,38 @@ public class VacationController {
 		return "vacation/item-apply";
 	}	
 	
-	// 근속일수별 휴가일수 조회
+	@GetMapping("/apply-list")
+	@ResponseBody
+	public Map<String, Object> getVacationRequestList(@RequestParam("baseYear") int baseYear,
+			@RequestParam("status") String status, @RequestParam("empNo") int empNo) {
+		
+		Map<String, Object> param = new HashMap<>();
+		param.put("baseYear", baseYear);
+		param.put("empNo", empNo);
+		param.put("status", status);
+		
+		VacationCalculateDto calculatedDays = vacationService.getCalculatedDays(param);
+		
+		List<VacationRequestDto> usedVacationsList = vacationService.getUsedVacations(param);
+		
+		Map<String, Object> result = new HashMap<>();
+		
+		result.put("calculatedDays", calculatedDays);
+		result.put("usedVacationsList", usedVacationsList);
+		
+		return result;
+	}
+	
+	@GetMapping("/apply-request-info")
+	@ResponseBody
+	public VacationRequestDto getVacationRequestInfo(@RequestParam("no") int no) {
+		System.out.println(no);
+		
+		return vacationService.getVacationRequestInfoByNo(no);
+	}
+	
+	
+	// 근속일수별 휴가설정
 	@GetMapping("/year")
 	public String yearVacationDay(Model model) {
 		List<VacationDay> vacationDays = vacationService.getYearVacationDay();
@@ -101,6 +155,8 @@ public class VacationController {
 		
 		return "redirect:/vacation/year";
 	}
+  
+}
 	
 	
 	

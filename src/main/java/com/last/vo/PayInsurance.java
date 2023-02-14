@@ -13,12 +13,15 @@ import lombok.Setter;
 public class PayInsurance {
 	
 	private int year;
-	private int pensionInsurance;
-	private int healthInsurance;
-	private int longTermInsurance;
-	private int employementInsurance;
-	private int employeeContribution;
-	private int companyContribution;
+	private double pensionEmployeeInsurance;
+	private double pensionCompanyInsurance;
+	private double healthEmployeeInsurance;
+	private double healthCompanyInsurance;
+	private double longtermEmployeeInsurance;
+	private double longtermCompanyInsurance;
+	private double employmentEmployeeInsurance;
+	private double employmentCompanyInsurance;
+	private double industrialCompanyInsurance;
 	private int minSalary;
 	private int maxSalary;
 }

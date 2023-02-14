@@ -23,10 +23,9 @@
 					<h2><p class="fw-bold">인사정보등록</p></h2>
 				</div>
 			</div>
-			
 			<div class="row mb-3">
 				<div class="col-12 text-end">
-					<form class="row row-cols-lg-auto g-3 align-items-center">
+					<form class="row row-cols-lg-auto g-3 align-items-center" action="register">
 	  					<div class="col-12">
 	   						<select class="form-select">
 								<option>성명</option>
@@ -34,16 +33,15 @@
 								<option>부서</option>
 							</select>
 	  					</div>
-	  					<div class="col-12">
-	   						<input type="text" class="form-control">
-	  					</div>
-	  					<div class="col-12">
-	   						<button class="btn btn-primary float-end">검색</button>
-	  					</div>
-	  				
+		  				<div class="col-12">
+		   					<input type="text" class="form-control" name="keyword">
+		  				</div>
+		  				<div class="col-12">
+		   					<button class="btn btn-primary float-end">검색</button>
+		  				</div>
+		  			</form>
 				</div>
 			</div>
-			
 			<div class="row mb-3">
 				<div class="col-3">
 					<i class="bi bi-arrow-right-square-fill text-danger"></i> <strong>기본정보</strong>
@@ -67,7 +65,7 @@
 							<tr>
 								<th  class="table-primary">사원번호</th>
 								<th>성명</th>
-								<th>직책</th>
+								<th>직급</th>
 								<th>부서</th>
 								<th>입사일자</th>
 								<th>퇴사일자</th>
@@ -78,27 +76,27 @@
 							</tr>
 						</thead>
 						<tbody>
-							<td>1000</td>
-							<td>홍길동</td>
-							<td>사원</td>
-							<td>개발팀</td>
-							<td>20220101</td>
-							<td>20220102</td>
-							<td>010-1234-1234</td>
-							<td>hong@gmail.com</td>
-							<td>서울시 종로구</td>
-							<td>안녕하세요</td>
+							<c:forEach var="emp" items="${emp }">
+								<td>emp.no</td>
+								<td>emp.name</td>
+								<td>emp.positionNo</td>
+								<td>emp.deptNo</td>
+								<td>emp.hireDate</td>
+								<td>emp.retirementDate</td>
+								<td>emp.mobileTel</td>
+								<td>emp.extEmail</td>
+								<td>emp.zipcode</td>
+								<td>emp.memo</td>
+							</c:forEach>
 						</tbody>
 					</table>
 				</div>
 			</div>
-		
 			<div class="row mb-3">
 				<div class="col-3">
 					<i class="bi bi-arrow-right-square-fill text-danger"></i> <strong>상세정보</strong>
 				</div>
 			</div>
-			
 			<div class="row mb-3">
 				<div class="col-12">
 					<div class="btn-group" >
@@ -109,7 +107,7 @@
 					</div>
 				</div>
 			</div>
-			
+		<form id="form-register" class="border bg-light p-3" method="post" action="register" enctype="multipart/form-data">
 			<div class="row mb-3">
 				<div class="col-12">
 					<table class="table table-bordered">
@@ -121,132 +119,131 @@
 							<col width="16%"/>
 							<col width="16%"/>
 						</colgroup>
-						<tbody>
-							<tr>
-								<td rowspan="4">
-									<img id="dest-image" src="/resources/images/employee/default.jpg" class="img-fluid" alt="...">
-									<input type="file" class="form-control form-control-sm" name="file1">	
-								</td>	
-								<th class="table-secondary text-end">사원번호</th>
-								<td><input type="text" class="form-control form-control-sm"  style="width: 130px;" path="empNo"/></td>
-								<th class="table-secondary text-end">비밀번호</th>
-								<td colspan="2"><input type="text" class="form-control form-control-sm"  style="width: 130px;" path="password"/></td>	
-							</tr>
-							<tr>
-								<th class="table-secondary text-end">성명</th>
-								<td><input type="text" class="form-control form-control-sm"  style="width: 130px;" path="name"/></td>
-								<th class="table-secondary text-end">생년월일</th>
-								<td colspan="2"><input type="text" class="form-control form-control-sm"  style="width: 130px;" path="birth"/></td>
-							</tr>
-							<tr>
-								<th class="table-secondary text-end">성별</th>
-								<td><input class="form-check-input" type="radio" name="flexRadioDefault1" id="flexRadioDefault1" checked >
-								<label class="form-check-label" for="flexRadioDefault1">남</label>
-								<input class="form-check-input" type="radio" name="flexRadioDefault1" id="flexRadioDefault1" >
-  								<label class="form-check-label" for="flexRadioDefault2">여</label>
-								</td>	
+							<tbody>
+								<tr>
+									<td rowspan="4">
+										<img id="dest-image" src="/resources/images/employee/default.jpg" class="img-fluid" alt="...">
+										<input type="file" class="form-control form-control-sm" name="file1">	
+									</td>	
+									<th class="table-secondary text-end">사원번호</th>
+									<td><input type="text" class="form-control form-control-sm"  style="width: 130px;" name="employeeNo"/></td>
+									<th class="table-secondary text-end">비밀번호</th>
+									<td colspan="2"><input type="text" class="form-control form-control-sm"  style="width: 130px;" name="password"/></td>	
+								</tr>
+								<tr>
+									<th class="table-secondary text-end">성명</th>
+									<td><input type="text" class="form-control form-control-sm"  style="width: 130px;" name="name"/></td>
+									<th class="table-secondary text-end">생년월일</th>
+									<td colspan="2"><input type="date" class="form-control form-control-sm"  style="width: 130px;" name="birthday"/></td>
+								</tr>
+								<tr>
+									<th class="table-secondary text-end">성별</th>
+									<td><input class="form-check-input" type="radio" name="gender" value="M"  id="flexRadioDefault1" checked >
+									<label class="form-check-label" for="flexRadioDefault1">남</label>
+									<input class="form-check-input" type="radio" name="gender" value="F" id="flexRadioDefault1" >
+	  								<label class="form-check-label" for="flexRadioDefault2">여</label>
+									</td>	
+									
+								<tr>
+									<th class="table-secondary text-end">메모</th>
+									<td colspan="4"><textarea class="form-control" rows="3" name="memo" ></textarea></td>
+								</tr>
+								<tr>
+									<th class="table-secondary text-end">회사전화</th>
+									<td colspan="1"><input type="text" class="form-control form-control-sm"  style="width: 130px;" name="comTel"/></td>
+									<th class="table-secondary text-end">자택전화</th>
+									<td colspan="1"><input type="text" class="form-control form-control-sm"  style="width: 130px;" name="homeTel"/></td>
+									<th class="table-secondary text-end">핸드폰</th>
+									<td colspan="1"><input type="text" class="form-control form-control-sm"  style="width: 130px;" name="mobileTel"/></td>
+								</tr>
+								<tr>
+									<th class="table-secondary text-end">회사이메일</th>
+									<td colspan="5"><input type="text" class="form-control form-control-sm"  style="width: 600px;" name="comEmail"/></td>
+								</tr>
+								<tr>
+									<th class="table-secondary text-end">외부이메일</th>
+									<td colspan="5"><input type="text" class="form-control form-control-sm"  style="width: 600px;" name="extEmail"/></td>
+								</tr>
 								
-							<tr>
-								<th class="table-secondary text-end">메모</th>
-								<td colspan="4"><textarea class="form-control" rows="3" name="memo" path="memo"></textarea></td>
-							</tr>
-							<tr>
-								<th class="table-secondary text-end">회사전화</th>
-								<td colspan="1"><input type="text" class="form-control form-control-sm"  style="width: 130px;" path="com-tel"/></td>
-								<th class="table-secondary text-end">자택전화</th>
-								<td colspan="1"><input type="text" class="form-control form-control-sm"  style="width: 130px;" path="tel"/></td>
-								<th class="table-secondary text-end">핸드폰</th>
-								<td colspan="1"><input type="text" class="form-control form-control-sm"  style="width: 130px;" path="mobile"/></td>
-							</tr>
-							<tr>
-								<th class="table-secondary text-end">회사이메일</th>
-								<td colspan="5"><input type="text" class="form-control form-control-sm"  style="width: 600px;" path="com-email"/></td>
-							</tr>
-							<tr>
-								<th class="table-secondary text-end">외부이메일</th>
-								<td colspan="5"><input type="text" class="form-control form-control-sm"  style="width: 600px;" path="email"/></td>
-							</tr>
-							
-							<tr>
-								<th class="table-secondary text-end" rowspan="3">주소</th>
-								<td colspan="5">
-									<input type="text" class="form-control form-control-sm d-inline-block"  style="width: 130px;" name="postcode" readonly="readonly" disabled/>
-									<button type="button" class="btn btn-primary btn-sm" id="btn-search-postcode" >주소찾기</button>
-								</td>
-							</tr>
-							<tr>
-								<td colspan="5"><input type="text" class="form-control form-control-sm" name="address1" readonly="readonly" disabled /></td>
-							</tr>
-							<tr>
-								<td colspan="5"><input type="text" class="form-control form-control-sm" name="address2"  /></td>
-							</tr>
-							
-							
-							<tr>
-								<th  class="table-secondary text-end">사업장</th>
-								<td><select style="width: 130px;"/>
-									<option>사업장1</option>
-									<option>사업장2</option>
-									<option>사업장3</option>
-									<option>사업장4</option>
-								</select></td>
-								<th class="table-secondary text-end">재직구분</th>
-								<td colspan="3"><select style="width: 130px;"/>
-									<option>재직</option>
-									<option>휴직</option>
-								</select></td>
-							</tr>
-							<tr>
-								<th class="table-secondary text-end">부서</th>
-								<td><input type="text" class="form-control form-control-sm"  style="width: 130px;"/></td>
-								<th class="table-secondary text-end">입사일자</th>
-								<td colspan="3"><input type="date" id="start-date" name="" value="2023-02-03" style="text-align:center; width:130px"/></td>	
-							</tr>
-							<tr>
-								<th class="table-secondary text-end">직급</th>
-								<td><input type="text" class="form-control form-control-sm"  style="width: 130px;"/></td>
-								<th class="table-secondary text-end">퇴사일자</th>
-								<td colspan="3"><input type="date" id="end-date" name="" value="2023-02-03" style="text-align:center; width:130px"/></td>
-							</tr>
-							<tr>
-								<th class="table-secondary text-end">직책</th>
-								<td><input type="text" class="form-control form-control-sm"  style="width: 130px;"/></td>
-								<th class="table-secondary text-end">급여계약기준</th>
-								<td colspan="3"><select style="width: 130px;"/>
-									<option>연봉제</option>
-									<option>호봉제</option>
-								</select></td>	
-							</tr>
-							<tr>
-								<th  class="table-secondary text-end">호봉</th>
-									<td><select style="width: 130px;"/>
-										<option>사업장1</option>
-										<option>사업장2</option>
-										<option>사업장3</option>
-										<option>사업장4</option>
-									</select></td>	
-								<th class="table-secondary text-end">연차생성기준</th>
-								<td colspan="3"><input class="form-check-input" type="radio" name="flexRadioDefault5" id="flexRadioDefault5" checked>
-								<label class="form-check-label" for="flexRadioDefault5">입사일</label>
-								<input class="form-check-input" type="radio" name="flexRadioDefault5" id="flexRadioDefault5" >
-  								<label class="form-check-label" for="flexRadioDefault5">연차기준일</label></td>
-							</tr>
-						</tbody>
-					</table>
+								<tr>
+									<th class="table-secondary text-end" rowspan="3">주소</th>
+									<td colspan="5">
+										<input type="text" class="form-control form-control-sm d-inline-block"  style="width: 130px;" name="zipcode" readonly="readonly" />
+										<button type="button" class="btn btn-primary btn-sm" id="btn-search-postcode" >주소찾기</button>
+									</td>
+								</tr>
+								<tr>
+									<td colspan="5"><input type="text" class="form-control form-control-sm" name="basicAddress" readonly="readonly" /></td>
+								</tr>
+								<tr>
+									<td colspan="5"><input type="text" class="form-control form-control-sm" name="detailAddress"  /></td>
+								</tr>			
+								<tr>
+									
+									<th class="table-secondary text-end">재직구분</th>
+									<td><select style="width: 130px;" name="employeeStatus"/>
+											<option>재직</option>
+											<option>휴직</option>
+										</select>
+									</td>
+									<th class="table-secondary text-end">보유권한</th>
+									<td colspan="3"><input class="form-check-input" type="radio" name="employeeRoleName" id="flexRadioDefault2" checked>
+									<label class="form-check-label" for="flexRadioDefault2">관리자</label>
+									<input class="form-check-input" type="radio" name="employeeRoleName" id="flexRadioDefault2" >
+	  								<label class="form-check-label" for="flexRadioDefault2">직원</label></td>
+								</tr>
+								<tr>
+									<th class="table-secondary text-end">부서</th>
+									<td>
+										<select style="width: 130px;" name="deptNo"/>
+											<c:forEach var="dept" items="${departments}">
+												<option value="${dept.deptNo}"> ${dept.deptName}</option>
+											</c:forEach>
+										</select>
+									</td>
+									<th class="table-secondary text-end">입사일자</th>
+									<td colspan="3"><input type="date" id="start-date" name="hireDate"  style="text-align:center; width:130px" /></td>	
+								</tr>
+								<tr>
+									<th class="table-secondary text-end">직급</th>
+									<td>
+										<select style="width: 130px;" name="positionNo"/>
+											<c:forEach var="position" items="${positions}">
+												<option value="${position.positionNo}"> ${position.positionName}</option>
+											</c:forEach>
+										</select>
+									</td>
+									<th class="table-secondary text-end">퇴사일자</th>
+									<td colspan="3"><input type="date" id="end-date" name="retirementDate"  style="text-align:center; width:130px"/></td>
+								</tr>
+								<tr>
+									<th class="table-secondary text-end">호봉</th>
+									<td>
+										<select style="width: 130px;" name="hobong"/>
+											<c:forEach var="grade" items="${grade}">
+												<option value="${grade.hobongGrade}"> ${grade.hobongGrade}</option>
+											</c:forEach>
+											
+										</select>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
 				</div>
-			</div>
+					<div class="row p-3">
+						<div class="col">
+							<button type="submit" class="btn btn-dark" style="float:right;" >저장</button>
+								<a href="register" class="btn btn-outline-dark" style="float:right; margin-right: 4px;" >삭제</a>
+								<a href="" class="btn btn-outline-dark" style="float:right; margin-right: 4px;" >엑셀업로드</a>
+						</div>
+					</div>
+			</form>
 		</div>
 	</div>
 </div>
 		
-			<div class="row p-3">
-				<div class="col">
-					<button type="submit" class="btn btn-dark" style="float:right;" id="">저장</button>
-					<a href="" class="btn btn-outline-dark" style="float:right; margin-right: 4px;" id="">삭제</a>
-					<a href="" class="btn btn-outline-dark" style="float:right; margin-right: 4px;" id="">엑셀업로드</a>
-				</div>
-			</div>
-			</form>
+			
 		
 				
 				
@@ -282,11 +279,11 @@ $(function() {
 	        }
 					
 	        // 우편번호 입력필드와 기본주소 입력필드에 값을 입력한다.
-	        $(":input[name=postcode]").val(data.zonecode);
-	        $(":input[name=address1]").val(address);
+	        $(":input[name=zipcode]").val(data.zonecode);
+	        $(":input[name=basicAddress]").val(address);
 				
 	        // 상세주소 입력필드에 포커스를 위치시킨다.
-	        $(":input[name=address2]").focus();
+	        $(":input[name=detailAddress]").focus();
 	      }
 	    }).open();
 	  });

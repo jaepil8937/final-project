@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.last.mapper.EmployeeMapper">
+
 	<select id="getAllEmployees" resultType="EmployeeDto">
 		select
 			E.employee_no			as no,
@@ -21,5 +22,67 @@
 		and
 			E.employee_status = 'N'
 	</select>
+
+	
+
+	<select id="getAllPosition" resultType="Position">
+		select	
+			position_no 		as positionNo, 
+			position_name 		as positionName
+		from positions
+	</select>
+
+
+	<select id="getAllDepartment" resultType="Department">
+		select	
+			dept_no 		as deptNo, 
+			dept_name 		as deptName
+		from departments
+	</select>
+	
+	<select id="getAllGrade" resultType="Grades">
+		select	
+			hobong_grade		as hobongGrade, 
+			hobong_amount 		as hobongAmount
+		from grades
+	</select>
+
+	<select id="getAllEmployee" resultType="Employee">
+		select
+			employee_no			as employeeNo,
+			employee_password	as password,
+			employee_name		as name,
+			employee_gender		as gender,
+			employee_birthday	as birthday,
+			company_tel			as comTel,
+			home_tel			as homeTel,
+			mobile_tel			as mobileTel,
+			company_email		as comEmail,
+			external_email		as extEmail,
+			home_zipcode		as zipcode,
+			home_basic_address	as basicAddress,
+			home_detail_address	as detailAddress,
+			hire_date			as hireDate,
+			retirement_date		as retirementDate,
+			employee_status		as employeeStatus,
+			employee_role_name	as employeeRoleName,
+			memo				as memo,
+			dept_no				as deptNo,
+			position_no			as positionNo,
+			hobong_grade		as hobong,
+			photo				as photo
+		from
+			employees
+	</select>
+	
+
+	<insert id="insertEmployees" parameterType="Employee">
+			insert into Employees
+				(employee_no, employee_password, employee_name, employee_gender, employee_birthday, company_tel, home_tel, mobile_tel, company_email, external_email, home_zipcode, home_basic_address, home_detail_address, hire_date, retirement_date, employee_status, employee_role_name, memo, dept_no, position_no, hobong_grade, photo)
+			values
+				(#{employeeNo}, #{password}, #{name}, #{gender}, #{birthday}, #{comTel}, #{homeTel}, #{mobileTel}, #{comEmail}, #{extEmail}, #{zipcode}, #{basicAddress}, #{detailAddress}, #{hireDate}, #{retirementDate}, #{employeeStatus}, #{employeeRoleName}, #{memo}, #{deptNo}, #{positionNo}, #{hobong}, #{photo})
+	</insert>
+
+
 
 </mapper>

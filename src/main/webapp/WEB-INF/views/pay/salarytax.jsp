@@ -14,21 +14,19 @@
 <body>
 <c:set var="menu" value="pay" />
 <%@ include file="../common/navbar.jsp" %>
-<div class="container mb-3">
-	<div class="row mb-3">
-	
-		<div class="col-3">
-<%@ include file="../common/sidebar.jsp" %> 
+<div class="container">
+	<div class="row">
+		<div class="col-2 bg-dark mr-3">
+			<%@ include file="../common/sidebar.jsp" %>
 		</div>
-		
-		<div class="col-9 mb-3">
+		<div class="col-10 mb-3">
 			<div class="row mb-3">
 				<div class="col">
 					<h1>급여비과세표</h1>
 				</div>
 			</div>		
 			<h4>항목정보</h4>
-			<table class="table table-sm">
+			<table class="table table-sm col-12 text-center">
 				<thead>
 					<tr class="bg-light">
 						<th></th>
@@ -45,14 +43,16 @@
 				<tbody>
 					<tr>
 						<th class="bg-light">비과세</th>
-						<td>0</td>
-						<td>0</td>
-						<td>0</td>
-						<td>0</td>
-						<td>0</td>
-						<td>0</td>
-						<td>200,000</td>
-						<td>0</td>
+					<c:forEach var="tax" items="${taxs }">
+						<td>${tax.baseSalaryTax} 원</td>
+						<td>${tax.overtimeSalaryTax} 원</td>
+						<td>${tax.nightSalaryTax} 원</td>
+						<td>${tax.holidaySalaryTax} 원</td>
+						<td>${tax.careSalaryTax} 원</td>
+						<td>${tax.rewardSalaryTax} 원</td>
+						<td><fmt:formatNumber value="${tax.mealTax}" /> 원</td>
+						<td>${tax.businessSalaryTax} 원</td>
+					</c:forEach>
 					</tr>
 				</tbody>
 			</table>			

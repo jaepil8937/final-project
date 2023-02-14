@@ -1,7 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -39,7 +37,7 @@
 					</p>
 				</div>
 			</div>
-			<form id="form-setting" method="post" action="setting">
+			<form id="form-setting" method="post" action="/setting">
 				<div class="row">
 					<div class="col text-end mb-3">
 						<button type="button" class="btn btn-outline-dark btn-sm" style="float:right;" id="btn-add-row">행추가</button>
@@ -82,12 +80,12 @@
 									<tr class="text-center">
 										<td><input type="checkbox" name="chk"></td>
 										<td>휴가</td>
-										<td><input type="number" name="code" value="${item.code }" style="text-align:center; width:50px; border:0 solid black;"></td>
+										<td><input type="number" name="code" value="${item.code }" style="text-align:center; width:50px; border:0 solid black;" readOnly></td>
 										<td><input type="text" id="item-name" name="name" value="${item.name }" style="text-align:center; width:100px; border:0 solid black;"></td>
 										<td><input type="checkbox" name="used" ${item.used eq 'Y' ? "checked" : ""} value="${item.used eq 'Y' ? 'Y' : 'N' }"></td>
 										<td><input type="checkbox" name="deleted" ${item.deleted eq 'Y' ? "checked" : ""} value="${item.deleted eq 'Y' ? 'Y' : 'N' } "></td>
 										<td><input type="checkbox" name="payed" ${item.payed eq 'Y' ? "checked" : ""} value="${item.payed eq 'Y' ? 'Y' : 'N' }"></td>
-										<td><input type="text" class="form-control form-control-xs w-100"></td>									
+										<td><input type="text" name="note" value="${item.note }" class="form-control form-control-xs w-100"></td>									
 									</tr>
 								</c:forEach>
 							</c:otherwise>
@@ -100,7 +98,7 @@
 						<div class="col">
 						<p>
 							<i class="bi bi-exclamation-circle-fill"></i>
-							코드는 휴가신청시 사용하는 항목을 등록합니다. 코드를 설정하셔야 휴가신청을 진행할 수 있습니다.<br>
+							코드는 휴가신청시 사용하는 항목을 등록합니다. 코드는 자동으로 설정됩니다.<br>
 							&nbsp;&nbsp;&nbsp;&nbsp;예)연차(년차), 병가, 경조휴가 등
 						</p>
 						<p>
@@ -145,8 +143,8 @@ $(function() {
 		innerHtml += '<tr class="text-center">';
 		innerHtml += '	<td><input type="checkbox" name="chk"></td>';
 		innerHtml += '	<td>휴가</td>';
-		innerHtml += '	<td><input type="number" name="code" value="' + row_index + '" style="text-align:center; width:50px; border:0 solid black;"></td>';
-		innerHtml += '	<td><input type="text" id="item-name" name="name" value="" style="text-align:center; width:100%; border:0 solid black;"></td>';
+		innerHtml += '	<td><input type="number" name="code" value="' + row_index + '" style="text-align:center; width:50px; border:0 solid black;" readOnly></td>';
+		innerHtml += '	<td><input type="text" name="name" value="" style="text-align:center; width:100%; border:0 solid black;"></td>';
 		innerHtml += '	<td><input type="checkbox" name="used" value="" class="is_check"></td>';
 		innerHtml += '	<td><input type="checkbox" name="deleted" value="" class="is_check"></td>';
 		innerHtml += '	<td><input type="checkbox" name="payed" value="" class="is_check"></td>';
@@ -183,12 +181,20 @@ $(function() {
     	} else {
     		var itemArr = [];
     		$("input[name=chk]:checked").each(function(){
-    			 var thisRow = $(this).closest('tr');
+    			var thisRow = $(this).closest('tr');
 	    		var items_code = thisRow.find('td:eq(2)').find('input').val();
 	    		var items_name = thisRow.find('td:eq(3)').find('input').val();
 	    		var items_used = thisRow.find('td:eq(4)').find('input').is(':checked') ? 'Y' : 'N';
 	    		var items_deleted = thisRow.find('td:eq(5)').find('input').is(':checked') ? 'Y' : 'N';
 	    		var items_payed = thisRow.find('td:eq(6)').find('input').is(':checked') ? 'Y' : 'N';
+	    		
+	    		// 명칭 입력하지 않으면 알림창.
+	    		if (!items_name) {
+	    			alert("명칭을 입력하세요.");
+	    			return false;
+	    		}
+	    			
+	    			
 	    		var data = {
 	    				"code" : items_code,
 	    				"name" : items_name,

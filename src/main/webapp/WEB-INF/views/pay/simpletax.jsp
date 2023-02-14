@@ -14,22 +14,24 @@
 <body>
 <c:set var="menu" value="pay" />
 <%@ include file="../common/navbar.jsp" %>
-<div class="container mb-3">
-	<div class="row mb-3">
-		<div class="col-3">
-<%@ include file="../common/sidebar.jsp" %>
+<div class="container">
+	<div class="row">
+		<div class="col-2 bg-dark mr-3">
+			<%@ include file="../common/sidebar.jsp" %>
 		</div>
-		
-		<div class="col-9 mb-3">
+		<div class="col-10 mb-3">
 			<div class="row mb-3">
 				<div class="col">
 					<h1>간이세액조견표</h1>
 				</div>
 			</div>	
 				
-			<div class="col-12 border ">
-				<div class="border p-2 bg-light fs-6" >검색년월
-				<input type="month"/>
+			<div class="col-12 border" >
+				<div class="border p-2 bg-light" >기준년도
+				<select>	
+					<option>2023</option>
+					<option>2022</option>
+				</select>
 				<button class="btn btn-danger btn-xm">검색</button>
 				</div>
 			</div>
