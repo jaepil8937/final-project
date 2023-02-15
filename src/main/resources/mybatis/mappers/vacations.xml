@@ -53,9 +53,10 @@
 	</update>	 
 
 	
-	<select id="getUsedVacations" parameterType="hashmap" resultType="VacationRequestDto">
+	<select id="getUsedVacations" parameterType="map" resultType="VacationRequestDto">
 		select
-	   		 B.employee_no as empNo,
+		 	  A.request_no as no,
+	   		  B.employee_no as empNo,
 	  		  B.employee_name as empName,
 	  		  C.position_name as positionName,
 	  		  D.dept_name as deptName,
@@ -63,7 +64,9 @@
 	 		  E.item_name as itemName,
 	 		  to_char(A.request_date, 'yyyy-MM-dd') as requestDate,
 	  		  to_char(A.start_date, 'yyyy-MM-dd') as startDate,
-	    	  to_char(A.end_date, 'yyyy_MM-dd') as endDate
+	    	  to_char(A.end_date, 'yyyy-MM-dd') as endDate,
+	    	  A.request_status as status,
+	    	  A.reason as reason
 		from
 			 vacation_request_histories A, employees B, positions C, departments D, vacation_items E
 		where 
@@ -71,11 +74,11 @@
 	     	 and A.employee_no = B.employee_no
 	     	 and B.dept_no = D.dept_no
 	     	 and B.position_no = C.position_no
-	     	 and A.request_status = '승인'
-	    	 and to_char(A.end_date, 'yyyy') = #{year}	
+	    	 and to_char(A.end_date, 'yyyy') = #{baseYear}	
               <if test="empNo != null"> and A.employee_no = #{empNo}</if>
               <if test="empName != null"> and B.employee_name = #{empName}</if>
               <if test="dept != null"> and D.dept_name = #{dept}</if>
+              <if test="status != null and !status.equals('전체')">and A.request_status = #{status}</if>
 	    order by 
             A.end_date desc
 	</select>
@@ -104,24 +107,110 @@
 			(#{workedYear}, #{vacationDays})
 	 </insert>
 	 
-	 <!-- 근속연수별 휴가설정 수정 -->
-	 <update id="updateYearVacationDay" parameterType="VacationDay">
-	 	update
-	 		year_vacation_days
-	 	set  
-		    worked_year 	= #{workedYear},
-		    vacation_days 	= #{vacationDays}
-		where 
-			worked_year = #{workedYear}
-	 </update>
 	 
-	 <!-- 근속연수별 휴가 삭제 -->
-	 <delete id="deleteYearVacationDay" parameterType="VacationDay">
+	 <!-- 근속연수별 휴가설정 행삭제  -->
+	 <delete id="deleteYearVacationDay" parameterType="int">
 	 	delete from 
 		    year_vacation_days
 		where
 		   worked_year = #{workedYear}
 	 </delete>
-
-
+	 
+	 <!-- 근속년수 계산 -->
+	<select id="getWorkedYears" parameterType="map" resultType="int">
+		select 
+			trunc(months_between(#{baseDate}, hire_date)/12) as workedYears
+		from
+			employees
+		where
+			employee_no = #{empNo}
+	</select>
+	<!-- 연차개수 0년차 -->
+	<select id="getVacationCountBy0" parameterType="map" resultType="int">
+		select 
+			trunc(mod(months_between(#{baseDate}, hire_date)/12,1)*12) as vacationDays
+		from
+			employees
+		where
+			employee_no = #{empNo}
+	</select>
+	<!-- 연차개수 1년차 -->
+	<select id="getVacationCountBy1" parameterType="map" resultType="int">
+		select 
+			trunc(mod(months_between(#{baseDate}, hire_date)/12,1)*12)/12 * 15 as vacationDays
+		from
+			employees
+		where
+			employee_no = #{empNo}
+	</select>
+	<!-- 연차개수 2년차 이상 -->
+	<select id="getVacationCount" parameterType="map" resultType="int">
+		select 
+			vacation_days as vacationDays
+		from
+		 	year_vacation_days
+		where
+			worked_year = #{workedYears}
+	</select>
+	<!-- 연차 사용일수 계산 -->
+	<select id="getYearVacationUsedDays" parameterType="map" resultType="int">
+		select 
+			sum(A.days) as usedDays
+		from 
+			vacation_request_histories A, vacation_items B
+		where
+			A.employee_no = #{empNo}
+			and A.item_code = B.item_code
+			and B.year_vacation_used = 'Y'
+	</select>
+	
+	<!-- 휴가일수조회 테이블 생성 -->
+	<insert id="insertCalculatedDays" parameterType="VacationCalculateDto">
+		insert into vacation_used_summary
+			(employee_no, base_year, base_date, worked_years, total_vacation_count, used_vacation_count, remaining_vacation_count)
+		values
+			(#{empNo}, #{baseYear}, #{baseDate}, #{workedYears}, #{vacationDays}, #{usedDays}, #{remainedDays})
+	</insert>
+	
+	<!-- 휴가일수조회 -->
+	<select id="getCalculatedDays" parameterType="map" resultType="VacationCalculateDto">
+		select 
+			A.employee_no as empNo,
+			D.base_year as baseYear,
+			A.employee_name as empName,
+			B.position_name as positionName,
+			C.dept_name as deptName,
+			to_char(A.hire_date, 'yyyy-MM-dd') as hireDate,
+			to_char(D.base_date, 'yyyy-MM-dd') as baseDate,
+			D.worked_years as workedYears,
+			D.total_vacation_count as vacationDays,
+			D.used_vacation_count as usedDays,
+			D.remaining_vacation_count as remainedDays
+		from 
+			employees A, positions B, departments C, vacation_used_summary D
+		where
+			A.employee_no = D.employee_no
+			and A.position_no = B.position_no
+			and A.dept_no = C.dept_no
+			and A.employee_no = #{empNo}
+			and D.base_year = #{baseYear}
+	</select>
+	
+	<!-- 휴가신청내역조회 -->
+	<select id="getVacationRequestInfoByNo" parameterType="int" resultType="VacationRequestDto">
+		select
+	 		to_char(B.request_date, 'yyyy-MM-dd') as requestDate,
+	  		to_char(B.start_date, 'yyyy-MM-dd') as startDate,
+	    	to_char(B.end_date, 'yyyy-MM-dd') as endDate,
+			B.days as days,
+			B.request_status as status,
+			B.reason as reason,
+			A.item_name as itemName
+		from
+			vacation_items A, vacation_Request_histories B
+		where
+			A.item_code = B.item_code
+			and request_no = #{value}					
+	</select>
+	
 </mapper>

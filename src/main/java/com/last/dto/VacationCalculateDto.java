@@ -1,26 +1,27 @@
 package com.last.dto;
 
 
+
 import org.apache.ibatis.type.Alias;
 
 import lombok.Getter;
 import lombok.Setter;
 
-@Alias("VacationRequestDto")
+@Alias("VacationCalculateDto")
 @Getter
 @Setter
-public class VacationRequestDto {
-	private int no;
+public class VacationCalculateDto {
 	private int empNo;
-	private int year;
+	private int baseYear;
 	private String empName;
 	private String positionName;
 	private String deptName;
-	private int days;
-	private String itemName;
-	private String requestDate;
+	private String hireDate;
+	private String baseDate;
 	private String startDate;
-	private String endDate;
-	private String status;
-	private String reason;
+	private int workedYears;
+	private int vacationDays;
+	private int usedDays;
+	private int remainedDays;
+
 }

@@ -21,6 +21,6 @@ public class VacationRequest {
 	private String reason;			//휴가사유
 	private String status;			//결재상태
 	private Date createdDate;		//휴가신청정보일
-	private Date updateddDate;		//휴가신청최종수정일
+	private Date updatedDate;		//휴가신청최종수정일
 	
 }

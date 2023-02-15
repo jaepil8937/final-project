@@ -1,7 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -87,7 +85,7 @@
 										<td><input type="checkbox" name="used" ${item.used eq 'Y' ? "checked" : ""} value="${item.used eq 'Y' ? 'Y' : 'N' }"></td>
 										<td><input type="checkbox" name="deleted" ${item.deleted eq 'Y' ? "checked" : ""} value="${item.deleted eq 'Y' ? 'Y' : 'N' } "></td>
 										<td><input type="checkbox" name="payed" ${item.payed eq 'Y' ? "checked" : ""} value="${item.payed eq 'Y' ? 'Y' : 'N' }"></td>
-										<td><input type="text" class="form-control form-control-xs w-100"></td>									
+										<td><input type="text" name="note" value="${item.note }" class="form-control form-control-xs w-100"></td>									
 									</tr>
 								</c:forEach>
 							</c:otherwise>
@@ -191,7 +189,7 @@ $(function() {
 	    		var items_payed = thisRow.find('td:eq(6)').find('input').is(':checked') ? 'Y' : 'N';
 	    		
 	    		// 명칭 입력하지 않으면 알림창.
-	    		if (items_name == "") {
+	    		if (!items_name) {
 	    			alert("명칭을 입력하세요.");
 	    			return false;
 	    		}

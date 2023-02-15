@@ -14,34 +14,35 @@
 <body>
 <c:set var="menu" value="pay" />
 <%@ include file="../common/navbar.jsp" %>
-<div class="container mb-3">
-	<div class="row mb-3">
-		<div class="col-3">
-<%@ include file="../common/sidebar.jsp" %>
+<div class="container">
+	<div class="row">
+		<div class="col-2 bg-dark mr-3">
+			<%@ include file="../common/sidebar.jsp" %>
 		</div>
-		
-		<div class="col-9 mb-3">
+		<div class="col-10 mb-3">
 			<div class="row mb-3">
 				<div class="col">
 					<h1>급호 테이블</h1>
 				</div>
 			</div>			
 			<div class="row mb-3">
-				<div class="col-4">
+				<div class="col-6">
 					<div class="card">
-						<div class="card-header">기본정보</div>
+						<div class="card-header">직급정보</div>
 						<div class="card-body">
 							<table class="table">
 								<thead>
 									<tr>
 										<th>No</th>
-										<th>직급</th>
+										<th>직책</th>
+										<th>직책기본급</th>
 									</tr>
 								</thead>
 								<tbody>
 									<tr>
 										<td>1</td>
-										<td>인턴</td>
+										<td>과장</td>
+										<td>3,000,000원</td>
 									</tr>
 								</tbody>
 							</table>
@@ -50,7 +51,7 @@
 						</div>
 					</div>
 				</div>
-				<div class="col-8">
+				<div class="col-6">
 					<div class="card">
 						<div class="card-header">호봉별 항목정보</div>
 						<div class="card-body">
@@ -62,21 +63,11 @@
 										<th>항목금액</th>
 									</tr>
 								</thead>
-								</tbody>
+								<tbody>
 									<tr>
 										<td>1</td>
 										<td>기본급</td>
-										<td>50,000</td>
-									</tr>
-									<tr>
-										<td>2</td>
-										<td>기본급</td>
-										<td>100,000</td>
-									</tr>
-									<tr>
-										<td>3</td>
-										<td>기본급</td>
-										<td>150,000</td>
+										<td>500000</td>
 									</tr>
 								</tbody>
 							</table>
