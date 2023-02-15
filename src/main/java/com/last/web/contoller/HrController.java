@@ -1,6 +1,8 @@
 package com.last.web.contoller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.validation.Valid;
 
@@ -12,9 +14,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.last.dto.EmployeeDto;
+import com.last.dto.PersonnelDto;
 import com.last.service.EmployeeService;
 import com.last.web.request.EmployeeRegisterForm;
 
@@ -27,16 +30,52 @@ public class HrController {
 	private EmployeeService employeeService;
 	
 	@GetMapping("/info")		// 사원명부,인사기록카드
-	public String info(Model model) {
-		List<EmployeeDto> employees = employeeService.getAllEmployees();
+	public String info(@RequestParam(name="sort", required = false, defaultValue="") String sort,
+			@RequestParam(name = "keyword", required = false, defaultValue="") String keyword,
+			@RequestParam(name = "status", required = false) String status,
+			Model model) {
+		
+		Map<String, Object> param = new HashMap<String, Object>();
+		if (!sort.isEmpty() && !keyword.isEmpty()) {
+			param.put("sort", sort);
+			param.put("keyword", keyword);
+		}
+		
+		if ("Y".equals(status)) {
+			param.put("status", status);
+		}
+		
+		List<EmployeeDto> employees = employeeService.getAllEmployees(param);
 		model.addAttribute("employees", employees);
 		return "hr/employee-list";
 	}
 	
 	@GetMapping("/personnel")	// 인사발령등록
-	public String personnel() {
+	public String personnel(@RequestParam(name = "sort", required = false, defaultValue = "") String sort,
+							@RequestParam(name = "startDate", required = false, defaultValue = "") String startDate, 
+							@RequestParam(name = "endDate", required = false, defaultValue = "") String endDate,
+							Model model) {
 		
+		Map<String, Object> param = new HashMap<String, Object>();
+		if(!sort.isBlank()) {
+			param.put("sort", sort);
+		}
+		if(!startDate.isBlank()) {
+			param.put("startDate", startDate);
+		}
+		if(!endDate.isBlank()) {
+			param.put("endDate", endDate);
+		}
+		
+		List<PersonnelDto> personnel = employeeService.getAllPersonnel(param);
+		model.addAttribute("personnels", personnel);
 		return "hr/personnel";
+	}
+	
+	@GetMapping("/personnel-register")		// 인사발령등록 폼에서 인사발령조회
+	public String personnelRegister() {
+		
+		return "hr/personnel-register";
 	}
 	
 	@GetMapping("/issue")		// 증명서발급
@@ -80,7 +119,7 @@ public class HrController {
 		public String success() {
 			return "success";
 		}
-	
+		
 }
 			
   
