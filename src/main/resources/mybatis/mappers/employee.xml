@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.last.mapper.EmployeeMapper">
-
-	<select id="getAllEmployees" resultType="EmployeeDto">
+	<select id="getAllEmployees" parameterType="map" resultType="EmployeeDto">
 		select
 			E.employee_no			as no,
 			E.employee_name			as name,
@@ -19,8 +18,72 @@
 			E.dept_no = D.dept_no
 		and
 			E.position_no = P.position_no
+		
+		<if test="sort != null">
+			<choose>
+				<when test="sort == 'name'">
+					and E.employee_name = #{keyword}
+				</when>
+				<when test="sort == 'position'">
+					and E.position_no in (select position_no from positions where position_name = #{keyword})
+				</when>
+				<when test="sort == 'dept'">
+					and E.dept_no in (select dept_no from departments where dept_name = #{keyword})
+				</when>
+			</choose>
+		</if>
+		<if test="status == null">
+			and E.employee_status = 'N'
+		</if>
+		<if test="keyword != null">
+			and (E.employee_name like '%' || #{keyword} || '%'
+			or E.home_basic_address like '%' || #{keyword} || '%')
+		</if>
+		order by
+			E.employee_no asc
+	</select>
+	
+	<select id="getAllPersonnel" parameterType="map" resultType="PersonnelDto">
+		select
+			E.employee_no			as no,
+			A.appointment_type		as type,
+			A.appointment_date		as appointmentDate,			<!-- date는 오라클 예약어이므로 에러남 -->
+			A.appointment_content	as content,
+			A.appointment_note		as note,
+			E.employee_name			as name,
+			E.employee_status		as status
+		from
+			employees E, employee_appointment_histories A
+		where
+			E.employee_no = A.employee_no
+			
+		<if test="sort != null">
+			<choose>
+				<when test="sort == 'join'">
+					and A.appointment_type = '입사'
+				</when>
+				<when test="sort == 'promotion'">
+					and A.appointment_type = '승진'
+				</when>
+				<when test="sort == 'transfer'">
+					and A.appointment_type = '전보'
+				</when>
+				<when test="sort == 'leave'">
+					and A.appointment_type = '휴직'
+				</when>
+				<when test="sort == 'retirement'">
+					and A.appointment_type = '퇴직'
+				</when>
+			</choose>
+		</if>
+		<if test="startDate != null">
+			and A.appointment_date >= #{startDate}
+		</if>
+		<if test="endDate != null">
+			and A.appointment_date &lt;= #{endDate}
+		</if>
 		and
-			E.employee_status = 'N'
+			E.employee_status = 'N'								<!-- 인사발령등록에서는 퇴직자는 안나오게 함 -->
 	</select>
 
 	
