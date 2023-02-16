@@ -1,13 +1,14 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"
 	trimDirectiveWhitespaces="true"%>
-<%@ include file="../common/tags.jsp" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@ include file="../common/tags.jsp"%>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.1/font/bootstrap-icons.css"> -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
 <script type="text/javascript"
 	src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
 <script type="text/javascript"
@@ -68,30 +69,28 @@
 					<div class="row" style="padding-right: 0px;">
 						<table class="table" style="margin-top: 16px;">
 							<thead>
-								<colgroup>
-									<col width="1%">
-									<col width="8%">
-									<col width="8%">
-									<col width="20%">
-									<col width="20%">
-							    </colgroup>
-								<tr class="bg-light text-center">
-									<th></th>
-									<th>기준일자</th>
-									<th>휴일명</th>
-									<th>일자구분</th>
-									<th>휴일구분</th>
-								</tr>
+							<colgroup>
+								<col width="5%">
+								<col width="5%">
+								<col width="10%">
+								<col width="40%">
+								<col width="40%">
+							</colgroup>
+							<tr class="bg-light text-center">
+								<th></th>
+								<th>기준일자</th>
+								<th>휴일명</th>
+								<th>일자구분</th>
+								<th>휴일구분</th>
+							</tr>
 							</thead>
 							<tbody>
 								<tr class="text-center">
 									<th><input type="checkbox"></th>
-									<td><label for="start"><input
-										type="date" id="" name="" value="" min="2023-01-01"
-										max="2023-12-31" style="padding-left: 50px; padding-right: 50px;">
-									</label></td>
-									<td><input
-										type="name" id="text" value="" size="21"></td>
+									<td><label for="start"><input type="date" id=""
+											name="" value="" min="2023-01-01" max="2023-12-31"
+											style="padding-left: 50px; padding-right: 50px;"> </label></td>
+									<td><input type="name" id="text" value="" size="21"></td>
 									<td><select class="form-select form-select-sm"
 										aria-label=".form-select-sm example">
 											<option selected>일자구분</option>
@@ -121,11 +120,9 @@
 				</div>
 			</div>
 		</div>
-		<!-- <script
-src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
-crossorigin="anonymous"></script> -->
-		<!-- <script
-src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script> -->
+		<script
+			src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
+			crossorigin="anonymous"></script>
 		<script>
 			$(function() {
 				$('input[name="daterange"]').daterangepicker(

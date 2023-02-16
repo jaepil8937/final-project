@@ -19,19 +19,6 @@ public interface VacationMapper {
 	VacationItem getItemByCode(int code);
 
 	void insertItem(VacationItem item);
-  
-	// 모든 근속연수별 조회
-	List<VacationDay> getYearVacationDay();
-	
-	// 근속연수별 행 추가 
-	void insertYearVacationDay(VacationDay vacationDay);
-	
-	// 근속연수별 행 수정
-	void updateYearVacationDay(VacationDay vacationDay);
-	
-	// 근속연수별 행 삭제
-	void deleteYearVacationDay(int workedYear);
-
 
 	void updateItem(VacationItem item);
 
@@ -54,7 +41,17 @@ public interface VacationMapper {
 
 	VacationRequestDto getVacationRequestInfoByNo(int no);
 
+
 	void updateStatus(VacationRequestDto requestList);
+
+	// 모든 근속연수별 조회
+	List<VacationDay> getYearVacationDay();
+	
+	// 근속연수별 행 추가 
+	void insertYearVacationDay(VacationDay vacationDay);
+	
+	// 근속연수별 행 삭제
+	void deleteYearVacationDay(int workedYear);
 
 }
 	
