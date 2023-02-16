@@ -18,10 +18,9 @@ import com.last.web.request.VacationRequestForm;
 import lombok.RequiredArgsConstructor;
 
 @Service
-@RequiredArgsConstructor
 public class VacationService {
-	
-	private final VacationMapper vacationMapper;
+	@Autowired
+	private VacationMapper vacationMapper;
 
 	// 모든 휴가항목을 조회하는 서비스 메소드를 정의한다.
 	public List<VacationItem> getAllItems() {
@@ -116,7 +115,7 @@ public class VacationService {
 		return dto;
 	}
   
-  // 모든 근속연수별 휴가일수 조회
+    // 모든 근속연수별 휴가일수 조회
 	public List<VacationDay> getYearVacationDay() {
 		List<VacationDay> vacationDays = vacationMapper.getYearVacationDay();
 		
@@ -144,3 +143,8 @@ public class VacationService {
 	public void insertVacationRequest(VacationRequestForm form) {
 	}	
 }
+
+  
+	}
+  
+}	

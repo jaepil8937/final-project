@@ -25,15 +25,12 @@ import com.last.vo.VacationRequest;
 import com.last.web.request.VacationItemRequest;
 import com.last.web.request.VacationRequestForm;
 
-import lombok.RequiredArgsConstructor;
-
-
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/vacation")
 public class VacationController {
-	
-	private final VacationService vacationService;
+	@Autowired
+	private VacationService vacationService;
 
 	@GetMapping("/setting")
 	public String setting(Model model) {
@@ -185,33 +182,6 @@ public class VacationController {
 		vacationService.removeVacationDay(years);
 		
 		return "redirect:/vacation/year";
-	}
-  
+  }
+
 }
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	

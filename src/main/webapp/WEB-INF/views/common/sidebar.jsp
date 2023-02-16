@@ -17,11 +17,15 @@
 		<ul id="main-menu" class="navbar-nav">
 			<li class="nav-item dropdown"><a class="nav-link dropdown-toggle text-light" href="#" data-bs-toggle="dropdown" data-bs-auto-close="false" aria-expanded="false">근태관리</a>
 				<ul class="dropdown-menu dropdown-menu-dark" id="sub-menu">
-					<li><a class="dropdown-item ${side eq '1' ? 'text-light fw-bold' : '' }" href="#">일일근태등록</a></li>
-					<li><a class="dropdown-item ${side eq '2' ? 'text-light fw-bold' : '' }" href="#">월근태생성/마감</a></li>
+
+					<li><a class="dropdown-item ${side eq 'daily-attendance' ? 'text-light fw-bold' : '' }" href="/work/day">일일근태등록</a></li>
+					<li><a class="dropdown-item ${side eq 'daily-manage' ? 'text-light fw-bold' : '' }" href="/work/dayadmin">일일근태관리</a></li>
+					<li><a class="dropdown-item ${side eq 'monthly-manage' ? 'text-light fw-bold' : '' }" href="/work/month">월간근태관리</a></li>
+					<li><a class="dropdown-item ${side eq 'monthly-status' ? 'text-light fw-bold' : '' }" href="/work/monthstatus">월근태현황</a></li>
 					<li><a class="dropdown-item ${side eq '3' ? 'text-light fw-bold' : '' }" href="/holiday/calendar">휴일달력</a></li>
 					<li><a class="dropdown-item ${side eq '3' ? 'text-light fw-bold' : '' }" href="/holiday/holiday-setting">휴일일괄설정</a></li>
 					<li><a class="dropdown-item ${side eq '4' ? 'text-light fw-bold' : '' }" href="/holiday/overtime-history">휴일/연장/야간근무조회</a></li>
+
 				</ul>
 			</li>
 			<li class="nav-item dropdown"><a class="nav-link dropdown-toggle text-light " href="#" role="button" data-bs-toggle="dropdown" data-bs-auto-close="false" aria-expanded="false">휴가관리</a>
@@ -51,12 +55,12 @@
 					<li><a class="dropdown-item ${side eq '3' ? 'text-light fw-bold' : '' }" href="/pay/grade">급호테이블</a></li>
 					<li><a class="dropdown-item ${side eq '4' ? 'text-light fw-bold' : '' }" href="/pay/simpletax">간이세액조견표</a></li>
 					<li><a class="dropdown-item ${side eq '4' ? 'text-light fw-bold' : '' }" href="/pay/insurance">4대보험요율표</a></li>
-					<li><a class="dropdown-item ${side eq '4' ? 'text-light fw-bold' : '' }" href="/salary/salarycalculate">급여계산</a></li>
-					<li><a class="dropdown-item ${side eq '4' ? 'text-light fw-bold' : '' }" href="/salary/salarycheck">급여조회</a></li>
-					<li><a class="dropdown-item ${side eq '4' ? 'text-light fw-bold' : '' }" href="/salary/salarybook">급여대장/기간별 급여현황</a></li>
-					<li><a class="dropdown-item ${side eq '4' ? 'text-light fw-bold' : '' }" href="/salary/salarycheck">국민연금</a></li>
-					<li><a class="dropdown-item ${side eq '4' ? 'text-light fw-bold' : '' }" href="/salary/salarycheck">건강보험</a></li>
-					<li><a class="dropdown-item ${side eq '4' ? 'text-light fw-bold' : '' }" href="/salary/salarycheck">고용보험</a></li>
+					<li><a class="dropdown-item ${side eq 'salary-calculate' ? 'text-light fw-bold' : '' }" href="/salary/salarycalculate">급여계산</a></li>
+					<li><a class="dropdown-item ${side eq 'salary-check' ? 'text-light fw-bold' : '' }" href="/salary/salarycheck">급여조회</a></li>
+					<li><a class="dropdown-item ${side eq 'salary-book' ? 'text-light fw-bold' : '' }" href="/salary/salarybook">급여대장/기간별 급여현황</a></li>
+					<li><a class="dropdown-item ${side eq '7' ? 'text-light fw-bold' : '' }" href="/salary/salarycheck">국민연금</a></li>
+					<li><a class="dropdown-item ${side eq '7' ? 'text-light fw-bold' : '' }" href="/salary/salarycheck">건강보험</a></li>
+					<li><a class="dropdown-item ${side eq '7' ? 'text-light fw-bold' : '' }" href="/salary/salarycheck">고용보험</a></li>
 				</ul>
 			</li>	
 		</ul>
