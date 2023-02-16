@@ -119,7 +119,10 @@ public class VacationController {
 		Map<String, Object> result = new HashMap<>();
 		
 		result.put("calculatedDays", calculatedDays);
-		result.put("usedVacationsList", usedVacationsList);
+		
+		if (!usedVacationsList.isEmpty()) {
+			result.put("usedVacationsList", usedVacationsList);
+		}
 		
 		return result;
 	}
@@ -134,6 +137,7 @@ public class VacationController {
 	@GetMapping("/approve")
 	@ResponseBody
 	public VacationRequestDto updateApprovalByNo(@RequestParam("no") int no) {
+		System.out.println(no);
 		return vacationService.updateStatusToApproval(no);
 	}
 	
@@ -148,14 +152,8 @@ public class VacationController {
 		VacationRequest request = new VacationRequest();
 		BeanUtils.copyProperties(form, request);
 		
-		System.out.println("form: " + form.getRequestDate());
-		System.out.println("form: " + form.getStartDate());
-		System.out.println("form: " + form.getEndDate());
-		System.out.println("form: " + form.getDays());
-		System.out.println("form: " + form.getItemCode());
-		System.out.println("form: " + form.getItemCode());
-		System.out.println("form: " + form.getStatus());
-		System.out.println("form: " + form.getStatus());
+		vacationService.insertVacationRequest(request);
+		
 		return "redirect:apply";
 	}
 	

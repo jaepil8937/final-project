@@ -30,14 +30,11 @@
 			item_code = #{value}
 	</select>
 	
-	<!-- 
-		void insertPost()
-	 -->
 	 <insert id="insertItem" parameterType="VacationItem">
 	 	insert into vacation_items
-	 		(item_code, item_name, year_vacation_used, item_used, salary_payed)
+	 		(item_code, item_name, year_vacation_used, item_used, salary_payed, note)
 	 	values
-	 		(#{code}, #{name}, #{used}, #{deleted}, #{payed})
+	 		(#{code}, #{name}, #{used}, #{deleted}, #{payed}, #{note})
 	 </insert>
    
    <update id="updateItem" parameterType="VacationItem">
@@ -47,7 +44,8 @@
 			item_name = #{name},
 			year_vacation_used = #{used},
 			item_used = #{deleted},
-			salary_payed = #{payed}
+			salary_payed = #{payed},
+			note = #{note}
 		where
 			item_code = #{code}
 	</update>	 
@@ -155,13 +153,15 @@
 	<!-- 연차 사용일수 계산 -->
 	<select id="getYearVacationUsedDays" parameterType="map" resultType="int">
 		select 
-			sum(A.days) as usedDays
+			nvl(sum(A.days), 0) as usedDays
 		from 
 			vacation_request_histories A, vacation_items B
 		where
 			A.employee_no = #{empNo}
 			and A.item_code = B.item_code
 			and B.year_vacation_used = 'Y'
+            and A.request_status = '승인'
+            and to_number(to_char(A.end_date, 'yyyy')) = #{baseYear}		
 	</select>
 	
 	<!-- 휴가일수조회 테이블 생성 -->
@@ -171,6 +171,17 @@
 		values
 			(#{empNo}, #{baseYear}, #{baseDate}, #{workedYears}, #{vacationDays}, #{usedDays}, #{remainedDays})
 	</insert>
+	
+	<!-- 휴가일수조회 테이블 업데이트 -->
+	<update id="updateCalculatedDays" parameterType="map">
+		update 
+			vacation_used_summary
+		set
+			used_vacation_count = #{usedDays}
+		where
+			employee_no = #{empNo}
+			and base_year = #{baseYear}
+	</update>
 	
 	<!-- 휴가일수조회 -->
 	<select id="getCalculatedDays" parameterType="map" resultType="VacationCalculateDto">

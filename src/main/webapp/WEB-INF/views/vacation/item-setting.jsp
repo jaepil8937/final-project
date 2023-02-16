@@ -147,7 +147,7 @@ $(function() {
 		innerHtml += '	<td><input type="checkbox" name="used" value="" class="is_check"></td>';
 		innerHtml += '	<td><input type="checkbox" name="deleted" value="" class="is_check"></td>';
 		innerHtml += '	<td><input type="checkbox" name="payed" value="" class="is_check"></td>';
-		innerHtml += '	<td><input type="text" class="form-control form-control-xs w-100"></td>';
+		innerHtml += '	<td><input type="text" name="note" class="form-control form-control-xs w-100"></td>';
 		innerHtml += '</tr>';
 		$("#item-noting").addClass("d-none");
 	    $('#table-item > tbody:last').append(innerHtml);
@@ -186,6 +186,7 @@ $(function() {
 	    		var items_used = thisRow.find('td:eq(4)').find('input').is(':checked') ? 'Y' : 'N';
 	    		var items_deleted = thisRow.find('td:eq(5)').find('input').is(':checked') ? 'Y' : 'N';
 	    		var items_payed = thisRow.find('td:eq(6)').find('input').is(':checked') ? 'Y' : 'N';
+	    		var items_note = thisRow.find('td:eq(7)').find('input').val();
 	    		
 	    		// 명칭 입력하지 않으면 알림창.
 	    		if (!items_name) {
@@ -199,7 +200,8 @@ $(function() {
 	    				"name" : items_name,
 	    				"used" : items_used,
 	    				"deleted" : items_deleted,
-	    				"payed" : items_payed
+	    				"payed" : items_payed,
+	    				"note" : items_note
 	    		};
 	    		
 	    		itemArr.push(data);

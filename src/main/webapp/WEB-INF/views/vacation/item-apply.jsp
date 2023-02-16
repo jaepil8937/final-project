@@ -47,6 +47,7 @@
 							<option value="대기">대기</option>
 							<option value="승인">승인</option>
 							<option value="반려">반려</option>
+							<option value="취소">취소</option>
 						</select>
 						<label class="form-label"><strong>사원번호</strong></label>
 						<input type="text" id="text-empNo" name="empNo" value="" style="text-align:center; width:100px" />
@@ -79,8 +80,8 @@
 						</thead>
 						<tbody>
 							<tr>
-								<td><input type="text" name="input-empNo" value="1001" style="text-align:center; width:100px" disabled/></td>
-								<td><input type="text" name="input-used-days" value="1" style="text-align:center; width:100px" disabled/></td>
+								<td><input type="text" name="input-empNo" style="text-align:center; width:100px" disabled/></td>
+								<td><input type="text" name="input-used-days" style="text-align:center; width:100px" disabled/></td>
 							</tr>
 						</tbody>
 					</table>
@@ -166,10 +167,10 @@
 					</p>
 				</div>
 				<div class="col-6 mb-1">
-						<a href="" class="btn btn-outline-dark btn-sm" style="float:right; margin-right: 4px;" id="">양식다운로드</a>
+						<button type="button" id="clean-form" class="btn btn-success btn-sm" style="float:right;" id="">신규/초기화</button>
 				</div>
 			</div>
-			<form method="post" enctype="multipart/form-data" action="insert-request">
+			<form method="post" action="insert-request" id="form-register">
 				<table class="table">
 					<tr class="fw-bold">
 						<td>휴가신청일 <input type="date" id="currentDate" name="requestDate"  style="text-align:center; width:130px" readOnly/></td>
@@ -178,10 +179,10 @@
 								(일수: <input type="text" id="day-count" name="days" style="text-align:center; width:40px" readOnly/>일)
 						</td>
 						<td>휴가구분 
-							<select name="code" style="width: 80px">
+							<select name="itemCode" style="width: 80px">
 							<c:forEach var="item" items="${items }">
 								<c:if test="${item.deleted eq 'Y' }">
-									<option value="${item.code }">${item.name }</option>
+									<option value=${item.code }>${item.name }</option>
 								</c:if>
 							</c:forEach>
 							</select>
@@ -192,7 +193,6 @@
 				<table class="table">
 					<tr class="fw-bold">
 						<td>휴가사유 <input type="text" name="reason" id="vacation-reason" style="width:500px;"></td>
-						<td>첨부파일 <input type="file" id="fileUpload" /></td>
 					</tr>
 				</table>
 				<div class="row mb-2">
@@ -221,7 +221,7 @@
 			</div>
 			<div class="row p-3">
 				<div class="col">
-					<button type="submit" id="register-vacation-info" class="btn btn-dark" style="float:right;" id="">신청</button>
+					<button type="button" id="register-vacation-info" class="btn btn-dark" style="float:right;" id="">신청</button>
 					<button type="button" id="cancel-vacation-info" class="btn btn-danger d-none" style="float:right; margin-right: 4px;">취소</button>
 					<button type="button" id="modify-vacation-info" class="btn btn-dark d-none" style="float:right; margin-right: 4px;">수정</button>
 				</div>
@@ -329,11 +329,14 @@ $(function() {
 	
 	$('#currentDate').val(new Date().toISOString().substring(0, 10));
 	
+	let reqNo;
+	
 	$(document).on('click', '#click_event', function(event){
 		// 동적 이벤트 중복 방지
 		event.stopImmediatePropagation();
-		var $thisRow = $(this).closest('tr'); 
-		var $no = $thisRow.find('td:eq(7)').find('input[name=request-no]').val();
+		let $thisRow = $(this).closest('tr'); 
+		let $no = $thisRow.find('td:eq(7)').find('input[name=request-no]').val();
+		reqNo = $no;
 		
 		$.ajax({
 			type: 'GET',
@@ -357,48 +360,81 @@ $(function() {
 	});
 	
 	$("#update-status-approval").click(function() {
-		let $no = $("input[type=hidden]").val();
 		let $status = $("#vacation-status").val();
 		
 		if ($status === "승인") {
 			alert("이미 승인처리된 휴가신청내역입니다.");
 			return false;
 		}
-
 		$.ajax({
 			type: 'GET',
 			url : '/vacation/approve',
-		    data: {no: $no}, 
+		    data: {no: reqNo}, 
 		    dataType: "json",
 		    success: function(data) {
 		    	alert("승인 처리 되었습니다.");
+		    	searh();
 		    	$("#vacation-status").val(data.status);
-		    	$("#td-status").val(data.status);
 		    }
 		})
 	});
 	
 	$("#update-status-refusal").click(function() {
-		let $no = $("input[type=hidden]").val();
 		let $status = $("#vacation-status").val();
 		
 		if ($status === "반려") {
 			alert("이미 반려처리된 휴가신청내역입니다.");
 			return false;
 		}
-
 		$.ajax({
 			type: 'GET',
 			url : '/vacation/refusal',
-		    data: {no: $no}, 
+		    data: {no: reqNo}, 
 		    dataType: "json",
 		    success: function(data) {
 		    	alert("반려 처리 되었습니다.");
+		    	searh();
 		    	$("#vacation-status").val(data.status);
-		    	$("#td-status").val(data.status);
 		    }
 		})
 	});
+	
+	$("#clean-form").click(function() {
+		$('#currentDate').val(new Date().toISOString().substring(0, 10));
+    	$("#vacation-start-date").val("");
+    	$("#vacation-end-date").val("");
+    	$("#day-count").val("");
+    	$("select[name=vacation-item-name]").val("");
+    	$("#vacation-status").val("대기");
+    	$("#vacation-reason").val("");
+    	
+    	$("#modify-vacation-info").addClass("d-none");
+    	$("#cancel-vacation-info").addClass("d-none");
+    	$("#register-vacation-info").removeClass("d-none");
+	})
+	
+	$("#register-vacation-info").click(function() {
+		let $startDate = $("#vacation-start-date").val();
+		let $endDate = $("#vacation-end-date").val();
+		let $reason = $("#vacation-reason").val();
+		
+		if (!$startDate) {
+			alert("휴가 시작일을 입력하세요.");
+			return false;
+		}
+		
+		if (!$endDate) {
+			alert("휴가 종료일을 입력하세요.");
+			return false;
+		}
+		
+		if (!$reason) {
+			alert("휴가 사유를 입력하세요.");
+			return false;
+		}		
+		
+		$("#form-register").trigger("submit");
+	})
 });
 </script>
 </body>
