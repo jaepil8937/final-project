@@ -161,38 +161,11 @@ public class VacationController {
 		vacationService.removeVacationDay(years);
 		
 		return "redirect:/vacation/year";
-<<<<<<< HEAD
+
 	}
   
 }
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-=======
-  }
 
->>>>>>> branch 'main' of https://github.com/jaepil8937/final-project.git
-}
-	
-	
-	
-	
 	
 	

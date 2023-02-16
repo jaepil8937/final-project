@@ -137,12 +137,7 @@ public class VacationService {
 		for (int year : years) {
 			vacationMapper.deleteYearVacationDay(year);
 		}
-<<<<<<< HEAD
+
 	}	
 }
-=======
-  
-	}
-  
-}	
->>>>>>> branch 'main' of https://github.com/jaepil8937/final-project.git
+
