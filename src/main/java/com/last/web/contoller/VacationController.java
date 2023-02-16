@@ -164,33 +164,6 @@ public class VacationController {
 		vacationService.removeVacationDay(years);
 		
 		return "redirect:/vacation/year";
-	}
-  
+  }
+
 }
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	

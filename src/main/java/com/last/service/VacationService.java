@@ -114,7 +114,7 @@ public class VacationService {
 		return dto;
 	}
   
-  // 모든 근속연수별 휴가일수 조회
+    // 모든 근속연수별 휴가일수 조회
 	public List<VacationDay> getYearVacationDay() {
 		List<VacationDay> vacationDays = vacationMapper.getYearVacationDay();
 		
@@ -137,5 +137,7 @@ public class VacationService {
 		for (int year : years) {
 			vacationMapper.deleteYearVacationDay(year);
 		}
-	}	
-}
+  
+	}
+  
+}	
