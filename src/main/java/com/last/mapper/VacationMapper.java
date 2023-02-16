@@ -10,6 +10,7 @@ import com.last.dto.VacationRequestDto;
 import com.last.vo.VacationDay;
 
 import com.last.vo.VacationItem;
+import com.last.vo.VacationRequest;
 
 @Mapper
 public interface VacationMapper {
@@ -52,6 +53,8 @@ public interface VacationMapper {
 	
 	// 근속연수별 행 삭제
 	void deleteYearVacationDay(int workedYear);
+
+	void insertVacationRequest(VacationRequest request);
 
 }
 	

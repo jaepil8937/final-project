@@ -169,23 +169,24 @@
 						<a href="" class="btn btn-outline-dark btn-sm" style="float:right; margin-right: 4px;" id="">양식다운로드</a>
 				</div>
 			</div>
-			<form method="post" enctype="multipart/form-data">
+			<form method="post" enctype="multipart/form-data" action="insert-request">
 				<table class="table">
 					<tr class="fw-bold">
-						<td>휴가신청일 <input type="date" id="currentDate" name="requestDate" value="2023-02-03" style="text-align:center; width:130px" disabled/></td>
-						<td>휴가기간 <input type="date" id="vacation-start-date" name="startDate" value="2023-02-03" style="text-align:center; width:130px"/>~
-								<input type="date" id="vacation-end-date" name="endDate" value="" style="text-align:center; width:130px"/>
-								(일수: <input type="text" id="day-count"name="days" value="" style="text-align:center; width:40px" disabled/>일)
+						<td>휴가신청일 <input type="date" id="currentDate" name="requestDate"  style="text-align:center; width:130px" readOnly/></td>
+						<td>휴가기간 <input type="date" id="vacation-start-date" name="startDate" style="text-align:center; width:130px"/>~
+								<input type="date" id="vacation-end-date" name="endDate" style="text-align:center; width:130px"/>
+								(일수: <input type="text" id="day-count" name="days" style="text-align:center; width:40px" readOnly/>일)
 						</td>
 						<td>휴가구분 
-							<select name="vacation-item-name" style="width: 80px">
-							<option value="연차">연차</option>
-							<option value="병가">병가</option>
-							<option value="출산휴가">출산휴가</option>
-							<option value="반차">반차</option>
+							<select name="code" style="width: 80px">
+							<c:forEach var="item" items="${items }">
+								<c:if test="${item.deleted eq 'Y' }">
+									<option value="${item.code }">${item.name }</option>
+								</c:if>
+							</c:forEach>
 							</select>
 						</td>
-						<td>결재상태 <input type="text" id="vacation-status" name="status" value="대기" style="text-align:center; width:70px" disabled/></td>
+						<td>결재상태 <input type="text" id="vacation-status" name="status" value="대기" style="text-align:center; width:70px" readOnly/></td>
 					</tr>
 				</table>
 				<table class="table">
@@ -221,8 +222,8 @@
 			<div class="row p-3">
 				<div class="col">
 					<button type="submit" id="register-vacation-info" class="btn btn-dark" style="float:right;" id="">신청</button>
-					<a href="" id="cancel-vacation-info" class="btn btn-danger d-none" style="float:right; margin-right: 4px;" id="">취소</a>
-					<a href="" id="modify-vacation-info" class="btn btn-dark d-none" style="float:right; margin-right: 4px;" id="">수정</a>
+					<button type="button" id="cancel-vacation-info" class="btn btn-danger d-none" style="float:right; margin-right: 4px;">취소</button>
+					<button type="button" id="modify-vacation-info" class="btn btn-dark d-none" style="float:right; margin-right: 4px;">수정</button>
 				</div>
 			</div>
 			</form>
@@ -372,6 +373,7 @@ $(function() {
 		    success: function(data) {
 		    	alert("승인 처리 되었습니다.");
 		    	$("#vacation-status").val(data.status);
+		    	$("#td-status").val(data.status);
 		    }
 		})
 	});
@@ -393,6 +395,7 @@ $(function() {
 		    success: function(data) {
 		    	alert("반려 처리 되었습니다.");
 		    	$("#vacation-status").val(data.status);
+		    	$("#td-status").val(data.status);
 		    }
 		})
 	});
