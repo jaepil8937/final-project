@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.last.mapper.EmployeeMapper">
+	<select id="getAllEmployees" parameterType="map" resultType="EmployeeDto">
+		select
+			E.employee_no			as no,
+			E.employee_name			as name,
+			E.hire_date				as hire,
+			E.mobile_tel			as mobileTel,
+			E.company_email			as companyEmail,
+			E.home_basic_address	as basicAddress,
+			E.employee_status		as status,
+			D.dept_name				as deptName,
+			P.position_name			as positionName
+		from
+			employees E, departments D, positions P
+		where
+			E.dept_no = D.dept_no
+		and
+			E.position_no = P.position_no
+		
+		<if test="sort != null">
+			<choose>
+				<when test="sort == 'name'">
+					and E.employee_name = #{keyword}
+				</when>
+				<when test="sort == 'position'">
+					and E.position_no in (select position_no from positions where position_name = #{keyword})
+				</when>
+				<when test="sort == 'dept'">
+					and E.dept_no in (select dept_no from departments where dept_name = #{keyword})
+				</when>
+			</choose>
+		</if>
+		<if test="status == null">
+			and E.employee_status = 'N'
+		</if>
+		<if test="keyword != null">
+			and (E.employee_name like '%' || #{keyword} || '%'
+			or E.home_basic_address like '%' || #{keyword} || '%')
+		</if>
+		order by
+			E.employee_no asc
+	</select>
+	
+	<select id="getAllPersonnel" parameterType="map" resultType="PersonnelDto">
+		select
+			E.employee_no			as no,
+			A.appointment_type		as type,
+			A.appointment_date		as appointmentDate,			<!-- date는 오라클 예약어이므로 에러남 -->
+			A.appointment_content	as content,
+			A.appointment_note		as note,
+			E.employee_name			as name,
+			E.employee_status		as status
+		from
+			employees E, employee_appointment_histories A
+		where
+			E.employee_no = A.employee_no
+			
+		<if test="sort != null">
+			<choose>
+				<when test="sort == 'join'">
+					and A.appointment_type = '입사'
+				</when>
+				<when test="sort == 'promotion'">
+					and A.appointment_type = '승진'
+				</when>
+				<when test="sort == 'transfer'">
+					and A.appointment_type = '전보'
+				</when>
+				<when test="sort == 'leave'">
+					and A.appointment_type = '휴직'
+				</when>
+				<when test="sort == 'retirement'">
+					and A.appointment_type = '퇴직'
+				</when>
+			</choose>
+		</if>
+		<if test="startDate != null">
+			and A.appointment_date >= #{startDate}
+		</if>
+		<if test="endDate != null">
+			and A.appointment_date &lt;= #{endDate}
+		</if>
+		and
+			E.employee_status = 'N'								<!-- 인사발령등록에서는 퇴직자는 안나오게 함 -->
+	</select>
+
+	
+
+	<select id="getAllPosition" resultType="Position">
+		select	
+			position_no 		as positionNo, 
+			position_name 		as positionName
+		from positions
+	</select>
+
+
+	<select id="getAllDepartment" resultType="Department">
+		select	
+			dept_no 		as deptNo, 
+			dept_name 		as deptName
+		from departments
+	</select>
+	
+	<select id="getAllGrade" resultType="Grades">
+		select	
+			hobong_grade		as hobongGrade, 
+			hobong_amount 		as hobongAmount
+		from grades
+	</select>
+
+	<select id="getAllEmployee" resultType="Employee">
+		select
+			employee_no			as employeeNo,
+			employee_password	as password,
+			employee_name		as name,
+			employee_gender		as gender,
+			employee_birthday	as birthday,
+			company_tel			as comTel,
+			home_tel			as homeTel,
+			mobile_tel			as mobileTel,
+			company_email		as comEmail,
+			external_email		as extEmail,
+			home_zipcode		as zipcode,
+			home_basic_address	as basicAddress,
+			home_detail_address	as detailAddress,
+			hire_date			as hireDate,
+			retirement_date		as retirementDate,
+			employee_status		as employeeStatus,
+			employee_role_name	as employeeRoleName,
+			memo				as memo,
+			dept_no				as deptNo,
+			position_no			as positionNo,
+			hobong_grade		as hobong,
+			photo				as photo
+		from
+			employees
+	</select>
+	
+
+	<insert id="insertEmployees" parameterType="Employee">
+			insert into Employees
+				(employee_no, employee_password, employee_name, employee_gender, employee_birthday, company_tel, home_tel, mobile_tel, company_email, external_email, home_zipcode, home_basic_address, home_detail_address, hire_date, retirement_date, employee_status, employee_role_name, memo, dept_no, position_no, hobong_grade, photo)
+			values
+				(#{employeeNo}, #{password}, #{name}, #{gender}, #{birthday}, #{comTel}, #{homeTel}, #{mobileTel}, #{comEmail}, #{extEmail}, #{zipcode}, #{basicAddress}, #{detailAddress}, #{hireDate}, #{retirementDate}, #{employeeStatus}, #{employeeRoleName}, #{memo}, #{deptNo}, #{positionNo}, #{hobong}, #{photo})
+	</insert>
+
+
+
+</mapper>

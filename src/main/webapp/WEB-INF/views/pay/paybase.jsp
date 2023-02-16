@@ -9,19 +9,17 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css">
-<title>애플리케이션</title>
+<title>인사관리시스템</title>
 </head>
 <body>
 <c:set var="menu" value="pay" />
 <%@ include file="../common/navbar.jsp" %>
-<div class="container mb-3">
-	<div class="row mb-3">
-	
-		<div class="col-3">
-<%@ include file="../common/sidebar.jsp" %> 
+<div class="container">
+	<div class="row">
+		<div class="col-2 bg-dark mr-3">
+			<%@ include file="../common/sidebar.jsp" %>
 		</div>
-		
-		<div class="col-9 mb-3">
+		<div class="col-10 mb-3">
 			<div class="row mb-3">
 				<div class="col">
 					<h1>급여기본정보관리</h1>
@@ -39,9 +37,9 @@
 					<col width="15%">			
 				</colgroup>
 				<thead>
-					<tr>
-						<th >사원번호</th>
-						<th >성명</th>
+					<tr class="bg-light">
+						<th>사원번호</th>
+						<th>성명</th>
 						<th>직급</th>
 						<th>부서</th>
 						<th>입사일자</th>
@@ -50,15 +48,17 @@
 					</tr>
 				</thead>
 				<tbody>
+					<c:forEach var="paybase" items="${paybase }">
 					<tr>
-						<td>10001</td>
-						<td><a href="paybank">홍길동</a></td>
-						<td>사원</td>
-						<td>개발부</td>
-						<td>2020/11/20</td>
-						<td>010-1111-1111</td>
-						<td>hong@naver.com</td>
+						<td>${paybase.no }</td>
+						<td><a href="paybank?employeeNo=${paybase.no }" class="text-decoration-none">${paybase.name }</a></td>
+						<td>${paybase.positionName }</td>
+						<td>${paybase.deptName }</td>
+						<td><fmt:formatDate value="${paybase.hireDate}" /></td>
+						<td>${paybase.tel }</td>
+						<td>${paybase.email }</td>
 					</tr>
+					</c:forEach>
 				</tbody>
 			</table>			
 		</div>

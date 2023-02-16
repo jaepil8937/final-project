@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.last.mapper.SalaryMapper">
+
+	<select id="getSalaryLists" parameterType="map" resultType="salaryDto">
+	 	select
+	 		A.BASE_YEAR_MONTH     		as baseYearMonth,
+	 		A.BASE_SALARY_TTL     		as baseSalary,
+	 		A.OVERTIME_SALARY_TTL		as overtimeSalary,
+	 		A.NIGHT_SALARY_TTL			as nightSalary,
+	 		A.HOLIDAY_SALARY			as holidaySalary,
+	 		A.CARE_SALARY_TTL			as careSalary,
+	 		A.REWARD_SALARY_TTL			as rewardSalary,
+	 		A.MEAL_TTL					as mealSalary,
+	 		A.BUSINESS_SALARY_TTL		as businessSalary,
+	 		A.INCOME_TAX_TTL			as incomeTax,
+	 		A.RESIDENCE_TAX_TTL			as residenceTax,
+	 		A.PENSION_TTL				as pension,
+	 		A.HEALTH_INSURANCE_TTL		as healthInsurance,
+	 		A.LONGTERM_INSURANCE_TTL	as longtermInsurance,
+	 		A.EMPLOYMENT_INSURANCE_TTL	as employmentInsurance,
+	 		A.START_DATE				as startDate,
+	 		A.END_DATE					as endDate,
+	 		A.PAY_DATE					as payDate,
+	 		B.EMPLOYEE_NO				as employeeNo,
+	 		B.EMPLOYEE_NAME				as name,
+	 		B.HIRE_DATE					as hireDate,
+	 		B.RETIREMENT_DATE			as retirementDate,
+	 		C.DEPT_NAME					as deptName,
+	 		D.POSITION_NAME				as positionName
+	 	from
+	 		(select * 
+		     from SALARY_HISTORIES 
+		     <if test="basemonth != null">
+		     where BASE_YEAR_MONTH = #{basemonth}
+		     </if>
+		     ) A, EMPLOYEES B, DEPARTMENTS C, POSITIONS D
+	 	<where>
+				A.EMPLOYEE_NO(+) = B.EMPLOYEE_NO 
+			and
+			    B.DEPT_NO = C.DEPT_NO	
+			and
+			    B.POSITION_NO = D.POSITION_NO	
+	 		<if test="startdate != null">
+		 		and	A.START_DATE = #{startdate}
+	 		</if>
+	 		<if test="enddate != null">
+		 		and	A.END_DATE = #{enddate}
+	 		</if>
+	 		<if test="paydate != null">
+		 		and	A.PAY_DATE = #{paydate}
+	 		</if>
+			<if test="opt != null and keyword != null">		
+		 	<choose>
+		 		<when test="opt == 'empNo'">
+		 			and A.EMPLOYEE_NO like '%' || #{keyword} || '%'
+		 		</when>
+		 		<when test="opt == 'empName'">
+		 			and B.EMPLOYEE_NAME	like '%' || #{keyword} || '%'
+		 		</when>
+		 		<when test="opt == 'dept'">
+		 			and C.DEPT_NAME	like '%' || #{keyword} || '%'
+		 		</when>
+		 	</choose>
+		 	</if>	
+	 	</where>
+	</select>
+	
+
+	<select id="getCalculatedSalaryDto" parameterType="map" resultType="salaryDto">
+	 	select
+	 		A.EMPLOYEE_NO				as employeeNo,
+	 		A.BASE_YEAR_MONTH     		as baseYearMonth,
+	 		A.BASE_SALARY_TTL     		as baseSalary,
+	 		A.OVERTIME_SALARY_TTL		as overtimeSalary,
+	 		A.NIGHT_SALARY_TTL			as nightSalary,
+	 		A.HOLIDAY_SALARY			as holidaySalary,
+	 		A.CARE_SALARY_TTL			as careSalary,
+	 		A.REWARD_SALARY_TTL			as rewardSalary,
+	 		A.MEAL_TTL					as mealSalary,
+	 		A.BUSINESS_SALARY_TTL		as businessSalary,
+	 		A.INCOME_TAX_TTL			as incomeTax,
+	 		A.RESIDENCE_TAX_TTL			as residenceTax,
+	 		A.PENSION_TTL				as pension,
+	 		A.HEALTH_INSURANCE_TTL		as healthInsurance,
+	 		A.LONGTERM_INSURANCE_TTL	as longtermInsurance,
+	 		A.EMPLOYMENT_INSURANCE_TTL	as employmentInsurance,
+	 		A.START_DATE				as startDate,
+	 		A.END_DATE					as endDate,
+	 		A.PAY_DATE					as payDate,
+	 		B.EMPLOYEE_NAME				as name,
+	 		B.HIRE_DATE					as hireDate,
+	 		B.RETIREMENT_DATE			as retirementDate,
+	 		C.DEPT_NAME					as deptName
+	 	from
+	 		SALARY_HISTORIES A, EMPLOYEES B, DEPARTMENTS C
+	 	where
+	 		A.EMPLOYEE_NO = #{empNo}	
+	 	and
+	 		A.BASE_YEAR_MONTH = #{basemonth}	
+	 	and 
+	 		A.EMPLOYEE_NO = B.EMPLOYEE_NO
+	 	and
+	 		B.DEPT_NO = C.DEPT_NO		
+	</select>
+	
+	<select id="getSalaryDetailDto" parameterType="map" resultType="salaryDto">
+	 	select
+	 		A.EMPLOYEE_NO				as employeeNo,
+	 		A.BASE_YEAR_MONTH     		as baseYearMonth,
+	 		A.BASE_SALARY_TTL     		as baseSalary,
+	 		A.OVERTIME_SALARY_TTL		as overtimeSalary,
+	 		A.NIGHT_SALARY_TTL			as nightSalary,
+	 		A.HOLIDAY_SALARY			as holidaySalary,
+	 		A.CARE_SALARY_TTL			as careSalary,
+	 		A.REWARD_SALARY_TTL			as rewardSalary,
+	 		A.MEAL_TTL					as mealSalary,
+	 		A.BUSINESS_SALARY_TTL		as businessSalary,
+	 		A.INCOME_TAX_TTL			as incomeTax,
+	 		A.RESIDENCE_TAX_TTL			as residenceTax,
+	 		A.PENSION_TTL				as pension,
+	 		A.HEALTH_INSURANCE_TTL		as healthInsurance,
+	 		A.LONGTERM_INSURANCE_TTL	as longtermInsurance,
+	 		A.EMPLOYMENT_INSURANCE_TTL	as employmentInsurance,
+	 		A.START_DATE				as startDate,
+	 		A.END_DATE					as endDate,
+	 		A.PAY_DATE					as payDate,
+	 		B.EMPLOYEE_NAME				as name,
+	 		B.HIRE_DATE					as hireDate,
+	 		B.RETIREMENT_DATE			as retirementDate,
+	 		C.DEPT_NAME					as deptName
+	 	from
+	 		SALARY_HISTORIES A, EMPLOYEES B, DEPARTMENTS C
+	 	where
+	 		A.EMPLOYEE_NO = #{empNo}	
+	 	and
+	 		A.PAY_DATE = #{paydate}	
+	 	and 
+	 		A.EMPLOYEE_NO = B.EMPLOYEE_NO
+	 	and
+	 		B.DEPT_NO = C.DEPT_NO		
+	</select>
+	
+	<select id="getBasicSalaryInfo" parameterType="int" resultType="BankInfo">
+		select
+			employee_no		as employeeNo,
+			base_salary		as baseSalary,
+			overtime_salary	as overtimeSalary,
+			night_salary	as nightSalary,
+			holiday_salary	as holidaySalary,
+			start_date		as startDate,
+			end_date		as endDate,
+			note			as note
+		from
+			salary_basic_item_info
+		where
+			employee_no = ${value}
+	</select>
+	
+</mapper>
