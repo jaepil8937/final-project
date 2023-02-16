@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.last.mapper.WorkMapper">
+
+	<insert id="addAttendance" parameterType="int">
+		insert into employee_attendances
+			(attendance_no, employee_no, working_date, start_work_time, attendances_type)
+		values
+			(attendances_seq.nextval, #{value}, sysdate, to_char(sysdate, 'hh24:mi'), '출근')
+	</insert>
+	
+	<select id="getWeeklyAttendancesByEmpNo" parameterType="int" resultType="Attendance">
+		select
+			attendance_no		as no,
+			employee_no 		as empNo, 
+			working_date 		as workingDate, 
+			start_work_time 	as startWorkTime,
+			end_work_time 		as endWorkTime,
+			worked_times		as workedTimes
+		from
+			employee_attendances
+		where
+			employee_no = #{value}
+			and working_date between trunc(sysdate - 7)  and trunc(sysdate + 1) <!-- trunc(sysdate + 1) : 오늘 밤 12시 -->
+		order by
+			working_date desc
+	</select>
+	
+	<select id="getTodayStartAttendancedByEmpNo" parameterType="int" resultType="Attendance">
+		select
+			attendance_no		as no,
+			employee_no 		as empNo, 
+			working_date 		as workingDate, 
+			start_work_time 	as startWorkTime,
+			end_work_time 		as endWorkTime,
+			worked_times		as workedTimes
+		from
+			employee_attendances
+		where
+			employee_no = #{value}
+			and working_date between trunc(sysdate)  and trunc(sysdate + 1) <!-- trunc(sysdate + 1) : 오늘 밤 12시 -->
+	</select>
+	
+	<select id="getTodayEndAttendancedByEmpNo" parameterType="int" resultType="Attendance">
+		select
+			attendance_no		as no,
+			employee_no 		as empNo, 
+			working_date 		as workingDate, 
+			start_work_time 	as startWorkTime,
+			end_work_time 		as endWorkTime,
+			worked_times		as workedTimes
+		from
+			employee_attendances
+		where
+			employee_no = #{value}
+			and end_work_time is not null
+			and working_date between trunc(sysdate)  and trunc(sysdate + 1) <!-- trunc(sysdate + 1) : 오늘 밤 12시 -->
+	</select>
+	
+	
+	<!-- 
+		List<WorkAttendance> getAllAttendancesByDateRange(@Param("empNo") int empNo, 
+		@Param("startDate") String startDate, @Param("endDate") String endDate);
+		@Param을 적으면 parameterType을 적으면 안됨
+	 -->
+	<select id="getAllAttendancesByDateRange" resultType="Attendance">
+		select
+			attendance_no		as no,
+			employee_no 		as empNo, 
+			working_date 		as workingDate, 
+			start_work_time 	as startWorkTime,
+			end_work_time 		as endWorkTime
+		from
+			employee_attendances
+		where
+			employee_no = #{empNo}
+			and working_date between #{startDate} and to_date(#{endDate}, 'yyyy-mm-dd') + 1
+		order by
+			working_date desc
+		
+	</select>
+	
+	<update id="endAttendance" parameterType="int">
+		update 
+			employee_attendances
+		set
+			end_work_time = to_char(sysdate, 'hh24:mi')
+		where
+			working_date = (select max(working_date) from employee_attendances where employee_no = #{value})
+	</update>
+	
+	<select id="getAdminAttendancesByEmpNo" parameterType="int" resultType="AdminAttendanceDto">
+		select
+			A.attendance_no		as no,
+			A.working_date		as workingDate,
+			A.start_work_time 	as startWorkTime,
+			A.end_work_time 	as endWorkTime,
+			B.employee_name 	as empName,
+			B.employee_no		as empNo,
+			C.dept_name 		as deptName,
+			D.position_name 	as positionName
+		from
+			employee_attendances A,
+			employees B,
+			departments C,
+			positions D
+		where
+			A.employee_no = #{empNo}	
+			and A.working_date between trunc(sysdate - 1)  and trunc(sysdate + 1)
+			and A.employee_no = B.employee_no
+			and B.dept_no = C.dept_no
+			and B.position_no = D.position_no
+	</select>
+	
+	<select id="getAdminAttendanceByNo" parameterType="int" resultType="AdminAttendanceDto">
+		select
+			A.attendance_no		as no,
+			A.working_date		as workingDate,
+			A.start_work_time 	as startWorkTime,
+			A.end_work_time 	as endWorkTime,
+			B.employee_name 	as empName,
+			B.employee_no		as empNo,
+			C.dept_name 		as deptName,
+			D.position_name 	as positionName
+		from
+			employee_attendances A,
+			employees B,
+			departments C,
+			positions D
+		where
+			A.attendance_no = #{value}	
+			and A.employee_no = B.employee_no
+			and B.dept_no = C.dept_no
+			and B.position_no = D.position_no
+	</select>
+	
+	<!-- 
+		List<WorkAdminAttendanceDto> getAllAdminAttendancesByOptions
+			(int empNo, @Param("startDate") String startDate, @Param("endDate") String endDate, 
+						@Param("position") String  position, @Param("dept") String dept);
+	 -->
+	 
+	 <select id="getAllAdminAttendancesByOptions" parameterType="map" resultType="AdminAttendanceDto">
+		select
+			A.attendance_no		as no,
+			A.working_date		as workingDate,
+			A.start_work_time 	as startWorkTime,
+			A.end_work_time 	as endWorkTime,
+			B.employee_name 	as empName,
+			B.employee_no		as empNo,
+			C.dept_name 		as deptName,
+			D.position_name 	as positionName
+		from
+			employee_attendances A,
+			employees B,
+			departments C,
+			positions D
+		where
+			A.employee_no = B.employee_no
+			and B.dept_no = C.dept_no
+			and B.position_no = D.position_no
+			<if test="empNo == null and deptNo == null and positionNo == null and startDate == null and endDate == null">
+				and A.working_date between trunc(sysdate) and trunc(sysdate + 1)
+			</if>
+			<if test="empNo != null">
+				and A.employee_no = #{empNo}			
+			</if>
+				<!--  
+				and A.working_date between #{startDate} and to_date(#{endDate}, 'yyyy-mm-dd') + 1
+				-->
+				
+			<if test="deptNo != null">
+				and C.dept_no = #{deptNo}
+			</if>
+			
+			<if test="positionNo != null">
+				and D.position_no = #{positionNo}
+			</if>
+			
+			<if test="startDate != null">
+				and working_date >= #{startDate} 		
+			</if>
+			
+			<if test="endDate != null">
+				and working_date &lt; to_date(#{endDate}) + 1 	
+			</if>
+		order by
+			working_date desc
+		
+	</select>
+	
+	<update id="updateAttendances" parameterType="Attendance">
+		update
+			employee_attendances
+		set
+			start_work_time = #{startWorkTime}
+			end_work_time = #{endWorkTime}
+		where
+			attendance_no = #{value}
+	</update>
+</mapper>
