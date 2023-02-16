@@ -155,33 +155,5 @@ public class VacationController {
 		
 		return "redirect:/vacation/year";
 	}
-  
-}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
 }
