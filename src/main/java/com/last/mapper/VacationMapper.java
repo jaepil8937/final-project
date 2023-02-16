@@ -34,7 +34,7 @@ public interface VacationMapper {
 	// 연차개수 2년차 이상
 	int getVacationCount(Map<String, Object> param);
 	// 연차사용일수 계산
-	int getYearVacationUsedDays(int usedDays);
+	int getYearVacationUsedDays(Map<String, Object> param);
 	// 휴가일수 계산
 	void insertCalculatedDays(Map<String, Object> param);
 	// 휴가일수 조회
@@ -55,6 +55,8 @@ public interface VacationMapper {
 	void deleteYearVacationDay(int workedYear);
 
 	void insertVacationRequest(VacationRequest request);
+
+	void updateCalculatedDays(Map<String, Object> param);
 
 }
 	

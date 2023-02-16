@@ -113,7 +113,10 @@ public class VacationController {
 		Map<String, Object> result = new HashMap<>();
 		
 		result.put("calculatedDays", calculatedDays);
-		result.put("usedVacationsList", usedVacationsList);
+		
+		if (!usedVacationsList.isEmpty()) {
+			result.put("usedVacationsList", usedVacationsList);
+		}
 		
 		return result;
 	}
@@ -128,6 +131,7 @@ public class VacationController {
 	@GetMapping("/approve")
 	@ResponseBody
 	public VacationRequestDto updateApprovalByNo(@RequestParam("no") int no) {
+		System.out.println(no);
 		return vacationService.updateStatusToApproval(no);
 	}
 	
@@ -135,6 +139,17 @@ public class VacationController {
 	@ResponseBody
 	public VacationRequestDto updateRefusalByNo(@RequestParam("no") int no) {
 		return vacationService.updateStatusToRefusal(no);
+	}
+	
+
+	@PostMapping("/insert-request")
+	public String insertVacationRequest(VacationRequestForm form) {
+		VacationRequest request = new VacationRequest();
+		BeanUtils.copyProperties(form, request);
+		
+		vacationService.insertVacationRequest(request);
+		
+		return "redirect:apply";
 	}
 	
 	

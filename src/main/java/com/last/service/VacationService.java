@@ -11,8 +11,8 @@ import com.last.dto.VacationRequestDto;
 import com.last.mapper.VacationMapper;
 import com.last.vo.VacationDay;
 import com.last.vo.VacationItem;
+import com.last.vo.VacationRequest;
 import com.last.web.request.VacationItemRequest;
-import com.last.web.request.VacationRequestForm;
 
 import lombok.RequiredArgsConstructor;
 
@@ -58,11 +58,6 @@ public class VacationService {
 	}
 
 	public VacationCalculateDto calculatedVacation(Map<String, Object> param) {
-		// 데이터가 존재하는지 확인 
-		VacationCalculateDto dto = getCalculatedDays(param);
-		if (dto != null) {
-			return dto;
-		} else {
 		// 근속년수 계산
 		int workedYears = vacationMapper.getWorkedYears(param);
 		param.put("workedYears", workedYears);
@@ -77,16 +72,22 @@ public class VacationService {
 		}
 		param.put("vacationDays", vacationDays);
 		// 사용일수 계산
-		int usedDays = vacationMapper.getYearVacationUsedDays((int) param.get("empNo"));
+		int usedDays = vacationMapper.getYearVacationUsedDays(param);
 		param.put("usedDays", usedDays);
 		// 잔여일수 계산
 		int remainedDays = vacationDays - usedDays;
 		param.put("remainedDays", remainedDays);
+		
+		// 데이터가 존재하는지 확인 
+		VacationCalculateDto dto = getCalculatedDays(param);
+		if (dto != null) {
+			vacationMapper.updateCalculatedDays(param);
+		} else {
 		// 휴가일수 데이터 생성
 		vacationMapper.insertCalculatedDays(param);
 		// 조회
-		return getCalculatedDays(param);
 		}
+		return getCalculatedDays(param);
 		
 	}
 
@@ -114,6 +115,10 @@ public class VacationService {
 		
 		return dto;
 	}
+	
+	public void insertVacationRequest(VacationRequest request) {
+		vacationMapper.insertVacationRequest(request);
+	}	
   
     // 모든 근속연수별 휴가일수 조회
 	public List<VacationDay> getYearVacationDay() {
@@ -143,8 +148,6 @@ public class VacationService {
 	}	
 
 
-	public void insertVacationRequest(VacationRequestForm form) {
-	}	
 
 }	
 
