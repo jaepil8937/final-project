@@ -25,12 +25,14 @@ import com.last.vo.VacationRequest;
 import com.last.web.request.VacationItemRequest;
 import com.last.web.request.VacationRequestForm;
 
+import lombok.RequiredArgsConstructor;
+
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/vacation")
 public class VacationController {
-	@Autowired
-	private VacationService vacationService;
+	
+	private final VacationService vacationService;
 
 	@GetMapping("/setting")
 	public String setting(Model model) {

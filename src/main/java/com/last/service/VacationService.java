@@ -11,16 +11,16 @@ import com.last.dto.VacationRequestDto;
 import com.last.mapper.VacationMapper;
 import com.last.vo.VacationDay;
 import com.last.vo.VacationItem;
-import com.last.vo.VacationRequest;
 import com.last.web.request.VacationItemRequest;
 import com.last.web.request.VacationRequestForm;
 
 import lombok.RequiredArgsConstructor;
 
 @Service
+@RequiredArgsConstructor
 public class VacationService {
-	@Autowired
-	private VacationMapper vacationMapper;
+	
+	private final VacationMapper vacationMapper;
 
 	// 모든 휴가항목을 조회하는 서비스 메소드를 정의한다.
 	public List<VacationItem> getAllItems() {
@@ -142,9 +142,5 @@ public class VacationService {
 
 	public void insertVacationRequest(VacationRequestForm form) {
 	}	
-}
 
-  
-	}
-  
 }	
