@@ -24,6 +24,7 @@ import com.last.vo.VacationItem;
 import com.last.web.request.VacationItemRequest;
 
 @Controller
+
 @RequestMapping("/vacation")
 public class VacationController {
 	@Autowired
@@ -166,6 +167,6 @@ public class VacationController {
   
 }
 	
-
+	
 	
 	

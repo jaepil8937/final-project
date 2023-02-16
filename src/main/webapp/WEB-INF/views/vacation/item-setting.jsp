@@ -67,7 +67,6 @@
 							</tr>
 						</thead>
 						<tbody>
-						<!-- 등록된 게시글이 없으면 아래 내용을 출력한다. -->
 						<c:choose>
 							<c:when test="${empty items }">
 								<tr>
@@ -90,7 +89,7 @@
 								</c:forEach>
 							</c:otherwise>
 						</c:choose>											
-							</tbody>
+						</tbody>
 					</table>
 				</div>
 				<div class="row mb-2 bg-light m-2">

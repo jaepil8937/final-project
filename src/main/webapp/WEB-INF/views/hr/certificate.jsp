@@ -46,14 +46,14 @@
 						<div class="border p-3 bg-white">
 							<label>증명서구분</label>
 							<select name="sort">
-								<option value="proof">재직증명서</option>
-								<option value="career">경력증명서</option>
-								<option value="withholding">원천징수영수증</option>
-								<option value="income">각종근로소득증명서</option>
-								<option value="payslip">급여명세서</option>
+								<option value="proof" ${param.sort eq 'proof' ? 'selected' : '' }>재직증명서</option>
+								<option value="career" ${param.sort eq 'career' ? 'selected' : '' }>경력증명서</option>
+								<option value="withholding" ${param.sort eq 'withholding' ? 'selected' : '' }>원천징수영수증</option>
+								<option value="income" ${param.sort eq 'income' ? 'selected' : '' }>각종근로소득증명서</option>
+								<option value="payslip" ${param.sort eq 'payslip' ? 'selected' : '' }>급여명세서</option>
 							</select>
 							<label>신청일자</label>
-							<input type="date" value="">~<input type="date" value="">
+							<input type="date" name="startDate" value="${param.startDate }">~<input type="date" name="endDate" value="${param.endDate }">
 							<button type="submit" class="btn btn-dark float-end">검색</button>
 						</div>
 					</form>
@@ -82,127 +82,28 @@
 							</tr>
 						</thead>
 						<tbody>
-							<tr class="text-center">
-								<td><input type="checkbox" /></td>
-								<td>1</td>
-								<td>재직증명서</td>
-								<td>2022.01.26</td>
-								<td>1000</td>
-								<td>홍길동</td>
-								<td>발행완료</td>
-								<td>2022.01.30</td>
-								<td>용도</td>
-							</tr>
-							<tr class="text-center">
-								<td><input type="checkbox" /></td>
-								<td>1</td>
-								<td>재직증명서</td>
-								<td>2022.01.26</td>
-								<td>1000</td>
-								<td>홍길동</td>
-								<td>발행완료</td>
-								<td>2022.01.30</td>
-								<td>용도</td>
-							</tr>
-							<tr class="text-center">
-								<td><input type="checkbox" /></td>
-								<td>1</td>
-								<td>재직증명서</td>
-								<td>2022.01.26</td>
-								<td>1000</td>
-								<td>홍길동</td>
-								<td>발행완료</td>
-								<td>2022.01.30</td>
-								<td>용도</td>
-							</tr>
-							<tr class="text-center">
-								<td><input type="checkbox" /></td>
-								<td>1</td>
-								<td>재직증명서</td>
-								<td>2022.01.26</td>
-								<td>1000</td>
-								<td>홍길동</td>
-								<td>발행완료</td>
-								<td>2022.01.30</td>
-								<td>용도</td>
-							</tr>
-							<tr class="text-center">
-								<td><input type="checkbox" /></td>
-								<td>1</td>
-								<td>재직증명서</td>
-								<td>2022.01.26</td>
-								<td>1000</td>
-								<td>홍길동</td>
-								<td>발행완료</td>
-								<td>2022.01.30</td>
-								<td>용도</td>
-							</tr>
-							<tr class="text-center">
-								<td><input type="checkbox" /></td>
-								<td>1</td>
-								<td>재직증명서</td>
-								<td>2022.01.26</td>
-								<td>1000</td>
-								<td>홍길동</td>
-								<td>발행완료</td>
-								<td>2022.01.30</td>
-								<td>용도</td>
-							</tr>
-							<tr class="text-center">
-								<td><input type="checkbox" /></td>
-								<td>1</td>
-								<td>재직증명서</td>
-								<td>2022.01.26</td>
-								<td>1000</td>
-								<td>홍길동</td>
-								<td>발행완료</td>
-								<td>2022.01.30</td>
-								<td>용도</td>
-							</tr>
-							<tr class="text-center">
-								<td><input type="checkbox" /></td>
-								<td>1</td>
-								<td>재직증명서</td>
-								<td>2022.01.26</td>
-								<td>1000</td>
-								<td>홍길동</td>
-								<td>발행완료</td>
-								<td>2022.01.30</td>
-								<td>용도</td>
-							</tr>
-							<tr class="text-center">
-								<td><input type="checkbox" /></td>
-								<td>1</td>
-								<td>재직증명서</td>
-								<td>2022.01.26</td>
-								<td>1000</td>
-								<td>홍길동</td>
-								<td>발행완료</td>
-								<td>2022.01.30</td>
-								<td>용도</td>
-							</tr>
-							<tr class="text-center">
-								<td><input type="checkbox" /></td>
-								<td>1</td>
-								<td>재직증명서</td>
-								<td>2022.01.26</td>
-								<td>1000</td>
-								<td>홍길동</td>
-								<td>발행완료</td>
-								<td>2022.01.30</td>
-								<td>용도</td>
-							</tr>
-							<tr class="text-center">
-								<td><input type="checkbox" /></td>
-								<td>1</td>
-								<td>재직증명서</td>
-								<td>2022.01.26</td>
-								<td>1000</td>
-								<td>홍길동</td>
-								<td>발행완료</td>
-								<td>2022.01.30</td>
-								<td>용도</td>
-							</tr>
+							<c:choose>
+								<c:when test="${empty items }">
+									<tr>
+										<td id="item-nothing" colspan="12" class="text-center">목록이 없습니다.</td>
+									</tr>
+								</c:when>
+								<c:otherwise>
+									<c:forEach var="certificate" items="${certificates }">
+										<tr class="text-center">
+											<td><input type="checkbox" /></td>
+											<td>${certificate.requestNo }</td>
+											<td>${certificate.type }</td>
+											<td>${certificate.requestDate }</td>
+											<td>${certificate.no }</td>
+											<td>${certificate.name }</td>
+											<td>${certificate.requestStatus }</td>
+											<td>${certificate.publishDate }</td>
+											<td>${certificate.purpose }</td>
+										</tr>
+									</c:forEach>
+								</c:otherwise>
+							</c:choose>
 						</tbody>
 					</table>
 				</div>

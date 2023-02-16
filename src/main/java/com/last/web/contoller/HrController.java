@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.last.dto.CertificateDto;
 import com.last.dto.EmployeeDto;
 import com.last.dto.PersonnelDto;
 import com.last.service.EmployeeService;
@@ -89,8 +90,9 @@ public class HrController {
 	}
 	
 	@GetMapping("/issue")		// 증명서발급
-	public String issue() {
-
+	public String issue(Model model) {
+		List<CertificateDto> certificate = employeeService.getAllcertificate();
+		model.addAttribute("certificates", certificate);
 		return "hr/certificate";
 	}
 

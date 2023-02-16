@@ -16,7 +16,7 @@ public class VacationRequestForm {
 	private String startDate;
 	private String endDate;
 	private int days;
-	private String itemName;
+	private String itemCode;
 	private String status;
 	private String reason;
 	private File uploadFile;

@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.last.dto.VacationCalculateDto;
@@ -13,13 +12,15 @@ import com.last.mapper.VacationMapper;
 import com.last.vo.VacationDay;
 import com.last.vo.VacationItem;
 import com.last.web.request.VacationItemRequest;
+import com.last.web.request.VacationRequestForm;
 
 import lombok.RequiredArgsConstructor;
 
 @Service
+@RequiredArgsConstructor
 public class VacationService {
-	@Autowired
-	private VacationMapper vacationMapper;
+	
+	private final VacationMapper vacationMapper;
 
 	// 모든 휴가항목을 조회하는 서비스 메소드를 정의한다.
 	public List<VacationItem> getAllItems() {
@@ -138,6 +139,12 @@ public class VacationService {
 			vacationMapper.deleteYearVacationDay(year);
 		}
 
+
 	}	
-}
+
+
+	public void insertVacationRequest(VacationRequestForm form) {
+	}	
+
+}	
 
