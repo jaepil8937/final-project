@@ -17,8 +17,10 @@
 		<ul id="main-menu" class="navbar-nav">
 			<li class="nav-item dropdown"><a class="nav-link dropdown-toggle text-light" href="#" data-bs-toggle="dropdown" data-bs-auto-close="false" aria-expanded="false">근태관리</a>
 				<ul class="dropdown-menu dropdown-menu-dark" id="sub-menu">
-					<li><a class="dropdown-item ${side eq '1' ? 'text-light fw-bold' : '' }" href="#">일일근태등록</a></li>
-					<li><a class="dropdown-item ${side eq '2' ? 'text-light fw-bold' : '' }" href="#">월근태생성/마감</a></li>
+					<li><a class="dropdown-item ${side eq 'daily-attendance' ? 'text-light fw-bold' : '' }" href="/work/day">일일근태등록</a></li>
+					<li><a class="dropdown-item ${side eq 'daily-manage' ? 'text-light fw-bold' : '' }" href="/work/dayadmin">일일근태관리</a></li>
+					<li><a class="dropdown-item ${side eq 'monthly-manage' ? 'text-light fw-bold' : '' }" href="/work/month">월간근태관리</a></li>
+					<li><a class="dropdown-item ${side eq 'monthly-status' ? 'text-light fw-bold' : '' }" href="/work/monthstatus">월근태현황</a></li>
 					<li><a class="dropdown-item ${side eq '3' ? 'text-light fw-bold' : '' }" href="#">휴일설정</a></li>
 					<li><a class="dropdown-item ${side eq '4' ? 'text-light fw-bold' : '' }" href="#">휴일/연장/야간근무</a></li>
 				</ul>
