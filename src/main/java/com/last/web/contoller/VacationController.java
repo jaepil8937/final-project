@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,7 +22,9 @@ import com.last.dto.VacationRequestDto;
 import com.last.service.VacationService;
 import com.last.vo.VacationDay;
 import com.last.vo.VacationItem;
+import com.last.vo.VacationRequest;
 import com.last.web.request.VacationItemRequest;
+import com.last.web.request.VacationRequestForm;
 
 @Controller
 
