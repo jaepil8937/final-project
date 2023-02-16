@@ -9,7 +9,6 @@ import java.util.Map;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -124,9 +123,20 @@ public class VacationController {
 	@GetMapping("/apply-request-info")
 	@ResponseBody
 	public VacationRequestDto getVacationRequestInfo(@RequestParam("no") int no) {
-		System.out.println(no);
 		
 		return vacationService.getVacationRequestInfoByNo(no);
+	}
+	
+	@GetMapping("/approve")
+	@ResponseBody
+	public VacationRequestDto updateApprovalByNo(@RequestParam("no") int no) {
+		return vacationService.updateStatusToApproval(no);
+	}
+	
+	@GetMapping("/refusal")
+	@ResponseBody
+	public VacationRequestDto updateRefusalByNo(@RequestParam("no") int no) {
+		return vacationService.updateStatusToRefusal(no);
 	}
 	
 	
@@ -154,6 +164,6 @@ public class VacationController {
 		vacationService.removeVacationDay(years);
 		
 		return "redirect:/vacation/year";
-	}
+  }
 
 }

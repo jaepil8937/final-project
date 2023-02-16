@@ -46,30 +46,26 @@
 						<div class="border p-3 bg-white">
 							<label>발령구분</label>
 							<select name="sort">
-								<option>선택</option>
-								<option value="join" ${param.sort eq 'join' ? 'selected' : '' }>입사</option>
-								<option value="promotion" ${param.sort eq 'promotion' ? 'selected' : '' }>승진</option>
-								<option value="transfer" ${param.sort eq 'transfer' ? 'selected' : '' }>전보</option>
-								<option value="leave" ${param.sort eq 'leave' ? 'selected' : '' }>휴직</option>
-								<option value="retirement" ${param.sort eq 'retirement' ? 'selected' : '' }>퇴직</option>
+								<option value="join">입사</option>
+								<option value="promotion">승진</option>
+								<option value="transfer">전보</option>
+								<option value="leave">휴직</option>
+								<option value="retirement">퇴직</option>
 							</select>
 							<label>발령일자</label>
-							<input type="date" name="startDate" value="${param.startDate }">~<input type="date" name="endDate" value="${param.endDate }">
+							<input type="date" value=""/>
+							<label>발령직급</label>
+							<select name="sort">
+								<option value="">대리</option>
+								<option value="">과장</option>
+								<option value="">차장</option>
+								<option value="">부장</option>
+							</select>
 							<button type="submit" class="btn btn-dark float-end">검색</button>
 						</div>
 					</form>
 				</div>
 				<div class="row">
-					<div class="col-12 d-flex justify-content-between align-items-center mb-3">
-						<h6>
-							<strong>인사발령조회</strong>
-						</h6>
-						<div class="float-end">
-							<form>
-								<button type="submit" class="btn btn-dark float-end">발령취소</button>
-							</form>
-						</div>	
-					</div>
 					<div class="row">	
 						<div class="col-12">
 							<table class="table table-light table-scroll">
@@ -86,28 +82,20 @@
 								<thead>
 									<tr class="table-primary text-center">
 										<th></th>
-										<th>No</th>
-										<th>발령구분</th>
-										<th>발령일자</th>
 										<th>사원번호</th>
 										<th>성명</th>
-										<th>발령내용</th>
-										<th>비고</th>
+										<th>직급</th>
+										<th>부서</th>
 									</tr>
 								</thead>
 								<tbody>
-									<c:forEach var="personnel" items="${personnels }">
 										<tr class="text-center">
 											<td><input type="checkbox" /></td>
-											<td>1</td>
-											<td>${personnel.type }</td>
-											<td><fmt:formatDate value="${personnel.appointmentDate }" pattern="yyyy-MM-dd"/></td>
-											<td>${personnel.no }</td>
-											<td>${personnel.name }</td>
-											<td>${personnel.content }</td>
-											<td>${personnel.note }</td>
+											<td>1000</td>
+											<td>홍길동</td>
+											<td>사원</td>
+											<td>개발팀</td>
 										</tr>
-									</c:forEach>
 								</tbody>
 							</table>
 						</div>
@@ -116,7 +104,8 @@
 				<div class="row">
 					<div class="col-12 text-end">
 						<form>
-							<a href="personnel-register" class="btn btn-dark float-end">발령등록</a>
+							<button type="button" class="btn btn-dark float-end">발령처리</button>
+							<a href="personnel" class="btn btn-dark float-end" style="width:90px;">취소</a>
 						</form>
 					</div>		
 				</div>			

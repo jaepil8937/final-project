@@ -10,6 +10,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 public class VacationRequestForm {
+	private int no;
 	private int empNo;
 	private String requestDate;
 	private String startDate;

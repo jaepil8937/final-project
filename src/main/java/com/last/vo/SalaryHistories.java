@@ -26,5 +26,8 @@ public class SalaryHistories {
 	private int healthInsurance;
 	private int longtermInsurance;
 	private int employmentInsurance;
+	private String startDate;
+	private String endDate;
+	private String payDate;
 	
 }
