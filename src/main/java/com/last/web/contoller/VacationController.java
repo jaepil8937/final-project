@@ -124,9 +124,20 @@ public class VacationController {
 	@GetMapping("/apply-request-info")
 	@ResponseBody
 	public VacationRequestDto getVacationRequestInfo(@RequestParam("no") int no) {
-		System.out.println(no);
 		
 		return vacationService.getVacationRequestInfoByNo(no);
+	}
+	
+	@GetMapping("/approve")
+	@ResponseBody
+	public VacationRequestDto updateApprovalByNo(@RequestParam("no") int no) {
+		return vacationService.updateStatusToApproval(no);
+	}
+	
+	@GetMapping("/refusal")
+	@ResponseBody
+	public VacationRequestDto updateRefusalByNo(@RequestParam("no") int no) {
+		return vacationService.updateStatusToRefusal(no);
 	}
 	
 	

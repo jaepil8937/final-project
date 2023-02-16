@@ -199,6 +199,7 @@
 	<!-- 휴가신청내역조회 -->
 	<select id="getVacationRequestInfoByNo" parameterType="int" resultType="VacationRequestDto">
 		select
+			B.request_no as no,
 	 		to_char(B.request_date, 'yyyy-MM-dd') as requestDate,
 	  		to_char(B.start_date, 'yyyy-MM-dd') as startDate,
 	    	to_char(B.end_date, 'yyyy-MM-dd') as endDate,
@@ -207,10 +208,20 @@
 			B.reason as reason,
 			A.item_name as itemName
 		from
-			vacation_items A, vacation_Request_histories B
+			vacation_items A, vacation_request_histories B
 		where
 			A.item_code = B.item_code
 			and request_no = #{value}					
 	</select>
+	
+	<!-- 결재상태 업데이트하기 -->
+	<update id="updateStatus" parameterType="VacationRequestDto">
+		update 
+			vacation_request_histories
+		set
+			request_status = #{status}
+		where
+			request_no = #{no}
+	</update>
 	
 </mapper>
