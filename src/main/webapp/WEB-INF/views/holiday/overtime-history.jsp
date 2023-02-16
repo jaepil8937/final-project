@@ -35,13 +35,13 @@
 							<form id="" method="get" action="/holiday/overtime-history">
 								<div class="row">
 									<div class="col-3">
-										<label for="start" style="padding-top: 12px;">근무년월: 
-										<input 	type="month" name="month" value="${param.month }">
+										<label for="start" style="padding-top: 12px;">근무년월: <input
+											type="month" name="month" value="${param.month }">
 										</label>
 									</div>
 									<div class="col-4">
-										<label for="name" style="padding-top: 14px;">사원번호: </label> 
-										<input type="text" name="empNo" value="${param.empNo }">
+										<label for="name" style="padding-top: 14px;">사원번호: </label> <input
+											type="text" name="empNo" value="${param.empNo }" style="text-align:center; width:100px; height:30px;">
 									</div>
 									<div class="col">
 										<p style="padding-top: 7px;">
@@ -53,8 +53,8 @@
 						</div>
 					</div>
 				</div>
-				<div class="row" style="margin-top: 60px;">
-					<div class="col-6">
+				<div class="row" style="margin-top: 25px;">
+					<div class="col-6" style="padding-bottom: 15px;">
 						<p>
 							<i class="bi bi-arrow-right-square-fill text-danger"></i>
 							휴일/연장/야간 근무조회
@@ -87,7 +87,8 @@
 										</tr>
 									</c:when>
 									<c:otherwise>
-										<c:forEach var="OvertimeDto" items="${histories }" varStatus="loop">
+										<c:forEach var="OvertimeDto" items="${histories }"
+											varStatus="loop">
 											<tr class="text-center">
 												<th scope="row">${loop.count }</th>
 												<td>${OvertimeDto.employeeNo }</td>
@@ -96,7 +97,8 @@
 												<td>${OvertimeDto.deptName }</td>
 												<td>${OvertimeDto.attendancesType }</td>
 												<td>${OvertimeDto.endWorkTime }</td>
-												<td><fmt:formatDate pattern="yyyy-MM-dd" value="${OvertimeDto.workingDate }" /></td>
+												<td><fmt:formatDate pattern="yyyy-MM-dd"
+														value="${OvertimeDto.workingDate }" /></td>
 											</tr>
 										</c:forEach>
 									</c:otherwise>
@@ -104,6 +106,19 @@
 							</tbody>
 						</table>
 					</div>
+					<nav class="pagination pagination-sm justify-content-center" style="margin-top: 10px;">
+						<ul class="pagination">
+							<li class="page-item"><a class="page-link" href="#"
+								aria-label="Previous"> <span aria-hidden="true">&laquo;</span>
+							</a></li>
+							<li class="page-item"><a class="page-link" href="#">1</a></li>
+							<li class="page-item"><a class="page-link" href="#">2</a></li>
+							<li class="page-item"><a class="page-link" href="#">3</a></li>
+							<li class="page-item"><a class="page-link" href="#"
+								aria-label="Next"> <span aria-hidden="true">&raquo;</span>
+							</a></li>
+						</ul>
+					</nav>
 					<div class="row mb-2 bg-light m-2">
 						<hr>
 						<div class="col">
@@ -117,10 +132,19 @@
 			</div>
 		</div>
 	</div>
-	<script
-		src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
-		crossorigin="anonymous"></script>
-	<script
-		src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+<script
+	src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
+	crossorigin="anonymous"></script>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+<script src="https://momentjs.com/downloads/moment.js"
+	type="text/javascript"></script>
+<script type="text/javascript">
+	//근무년월에 당일 날짜 선택
+	$(function() {
+		let startDate = moment().format("YYYY-MM")
+		$(":input[name=month]").val(startDate);
+	})
+</script>
 </body>
 </html>
