@@ -86,7 +86,24 @@
 			E.employee_status = 'N'								<!-- 인사발령등록에서는 퇴직자는 안나오게 함 -->
 	</select>
 
-	
+	<select id="getAllCertificate" resultType="CertificateDto">
+		select
+			C.request_no		as requestNo,
+			C.certificate_type	as type,
+			C.request_date		as requestDate,
+			E.employee_no		as no,
+			E.employee_name		as name,
+			C.request_status	as requestStatus,
+			C.publish_date		as publishDate,
+			C.purpose			as purpose,
+			E.employee_status	as status
+		from
+			employees E, certificate_request_histories C
+		where
+			E.employee_no = C.employee_no
+		and
+			E.employee_status = 'N'
+	</select>
 
 	<select id="getAllPosition" resultType="Position">
 		select	
