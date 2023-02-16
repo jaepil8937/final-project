@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.last.dto.VacationCalculateDto;
@@ -16,10 +17,9 @@ import com.last.web.request.VacationItemRequest;
 import lombok.RequiredArgsConstructor;
 
 @Service
-
 public class VacationService {
-	
-	private final VacationMapper vacationMapper;
+	@Autowired
+	private VacationMapper vacationMapper;
 
 	// 모든 휴가항목을 조회하는 서비스 메소드를 정의한다.
 	public List<VacationItem> getAllItems() {
@@ -114,7 +114,7 @@ public class VacationService {
 		return dto;
 	}
   
-  // 모든 근속연수별 휴가일수 조회
+    // 모든 근속연수별 휴가일수 조회
 	public List<VacationDay> getYearVacationDay() {
 		List<VacationDay> vacationDays = vacationMapper.getYearVacationDay();
 		
@@ -137,5 +137,12 @@ public class VacationService {
 		for (int year : years) {
 			vacationMapper.deleteYearVacationDay(year);
 		}
+<<<<<<< HEAD
 	}	
 }
+=======
+  
+	}
+  
+}	
+>>>>>>> branch 'main' of https://github.com/jaepil8937/final-project.git

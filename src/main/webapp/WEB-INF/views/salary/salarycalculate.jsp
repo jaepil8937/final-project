@@ -10,45 +10,44 @@
 </head>
 <body>
 <style>
- 	table th, table td {
-		border: 1px solid #c0c0c0;
-		text-align: center;
-		height: 35px;
-		font-size: 13px;
-	}	
-	  
-	thead, tfoot {
+	.table {
+		display: block;
+		max-height: 420px; 
+		overflow-y: scroll;
+		white-space: nowrap;   <%-- 자식 엘리먼트가 한줄로 정렬되게 하는 요소 --%>
+	}
+	
+	table {
+		width: 100%;
+	}
+	
+	thead th {
+		position: sticky; top:0;
 		background-color: lightgray;
+	}
+	
+	tfoot th {
+		position: sticky; bottom:0;
+		background-color: lightgray;
+	}
+	
+	table th, table td {
+		border: 1px solid #c0c0c0; 
+		padding: 5px;
+		text-align: center;
+	}	
+	
+	#table-calcuration input {
+		height: 24px;
 	}
 	
 	#auto-calculate, #btn-save {
 		width:80px;
 	}
-	
-	#table-salaries {
-		width: 610px;
-	}
-	
-	#table-salaries tbody {
-		display: block;
-		height: 325px;
-		max-height: 325px;
-		overflow-y: scroll; 
-	}
-	
-	#table-salaries thead, #table-salaries tfoot, #table-salaries tbody tr {
-		display: table;
-		width: 100%;
-		table-layout: fixed;
-	}
-	
-	#table-calcuration input {
-		height: 24px;
-	}
 </style>
 <c:set var="menu" value="pay" />
 <%@ include file="../common/navbar.jsp" %>
-<c:set var="side" value="" />
+<c:set var="side" value="salary-calculate" />
 <div class="container">
 	<div class="row">
 		<div class="col-2 bg-dark mr-3">
@@ -63,139 +62,254 @@
 				</div>
 			</div>
 			<hr>
-			<div class="row mt-3">
-				<div class="col-12">
-					<label>귀속연월</label> <input type="month" /> &nbsp; 
-					<label>정산기간</label> <input type="date" /> ~ <input type="date" /> &nbsp; 
-					<label>급여지급일</label> <input type="date" />
-				</div>	
-				<div class="row mt-4">
-					<div class="col-7">
-				        <table class="table" border="3" id="table-salaries">
-							<thead>
-								<tr>
-									<th style="width:97.66px">사원번호</th>
-									<th style="width:97.66px">성 명</th>
-									<th style="width:97.66px">부 서</th>
-									<th style="width:97.66px">지급총액</th>
-									<th style="width:97.66px">공제총액</th>
-									<th>실지급액</th>
-								</tr>
-							</thead>  
-							<tbody>
-								<c:choose>
-									<c:when test="${empty TableDto }">
+			<form id="form-salary" action="/salary/salarycalculate">
+				<div class="row mt-3">
+					<div class="col-12">
+							<label>귀속연월</label> <input type="month" name="basemonth" value="${param.basemonth }"/> &nbsp; 
+							<label>정산기간</label> <input type="date" name="startdate" value="${param.startdate }"/> ~ <input type="date" name="enddate" value="${param.enddate }"/> &nbsp; 
+							<label>급여지급일</label> <input type="date" name="paydate" value="${param.paydate }"/> &nbsp; 
+					</div>	
+					<div class="row mt-4">
+						<div class="col-7">
+					        <div class="table" border="3" id="table-salaries">
+					        	<table>
+									<thead>
 										<tr>
-											<td colspan="6" class="text-center">급여 내역이 존재하지 않습니다.</td>
+											<th>사원번호</th>
+											<th>성 명</th>
+											<th>부 서</th>
+											<th>지급총액</th>
+											<th>공제총액</th>
+											<th>실지급액</th>
 										</tr>
-									</c:when>
-									<c:otherwise>
-										<c:forEach var="salaryDto" items="${TableDto.salaryDtoLists }">
-											<tr>
-												<td>${salaryDto.employeeNo }</td>
-												<td><a href="" data-user-id="${salaryDto.employeeNo }" class="text-decoration-none"> ${salaryDto.name }</a></td>
-												<td>${salaryDto.deptName }</td>
-												<td><fmt:formatNumber value="${salaryDto.totalSalary }" /></td>
-												<td><fmt:formatNumber value="${salaryDto.deductionSalary }" /></td>
-												<td><fmt:formatNumber value="${salaryDto.realSalary }" /></td>
-											</tr>
-										</c:forEach>
-									</c:otherwise>	
-								</c:choose>	
-							</tbody>
-							<tfoot>
-								<tr>
-									<th colspan="3" style="width:292.98px">합&emsp;&emsp;&emsp;계</th>
-									<th style="width:97.66px"><fmt:formatNumber value="${TableDto.totalSalary }" /></th>
-									<th style="width:97.66px"><fmt:formatNumber value="${TableDto.deductionSalary }" /></th>
-									<th><fmt:formatNumber value="${TableDto.realSalary }" /></th>
-								</tr>
-							</tfoot>	
-						</table>
+									</thead>  
+									<tbody>
+										<c:choose>
+											<c:when test="${empty TableDto }">
+												<tr>
+													<td colspan="6" class="text-center">급여 내역이 존재하지 않습니다.</td>
+												</tr>
+											</c:when>
+											<c:otherwise>
+												<c:forEach var="salaryDto" items="${TableDto.salaryDtoLists }">
+													<tr>
+														<td>${salaryDto.employeeNo }</td>
+														<td><a href="" data-employee-no="${salaryDto.employeeNo }" data-salary-calculated="${salaryDto.totalSalary gt 0 ? 'Y' : 'N'}" 
+														class="text-decoration-none"> ${salaryDto.name }</a></td>
+														<td>${salaryDto.deptName }</td>
+														<td><fmt:formatNumber value="${salaryDto.totalSalary }" /></td>
+														<td><fmt:formatNumber value="${salaryDto.deductionSalary }" /></td>
+														<td><fmt:formatNumber value="${salaryDto.realSalary }" /></td>
+													</tr>
+												</c:forEach>
+											</c:otherwise>	
+										</c:choose>	
+									</tbody>
+									<tfoot>
+										<tr>
+											<th colspan="3">합&emsp;&emsp;&emsp;계</th>
+											<th><fmt:formatNumber value="${TableDto.totalSalary }" /></th>
+											<th><fmt:formatNumber value="${TableDto.deductionSalary }" /></th>
+											<th><fmt:formatNumber value="${TableDto.realSalary }" /></th>
+										</tr>
+									</tfoot>	
+								</table>	
+							</div>
+						</div>
+					
+						<div class="col-5">
+							<div class="table" border="3" id="table-calcuration">
+							<table>
+								<colgroup>  
+									<col width="25%">
+									<col width="25%">
+									<col width="25%">
+									<col width="25%">		
+								</colgroup>
+								<thead>
+									<tr>
+										<th colspan="2">지급항목</th>
+										<th colspan="2">공제항목</th>
+									</tr>
+								</thead>  
+								<tbody>
+									<tr>
+										<td>기본급</td>
+										<td><input type="text" size="6" id="base-salary"/></td>
+										<td>소득세</td>
+										<td><input type="text" size="6" id="income-tax"/></td>
+									</tr>
+									<tr>
+										<td>식대</td>
+										<td><input type="text" size="6" id="meal-salary"/></td>
+										<td>주민세</td>
+										<td><input type="text" size="6" id="residence-tax"/></td>
+									</tr>
+									<tr>
+										<td>연장수당</td>
+										<td><input type="text" size="6" id="overtime-salary"/></td>
+										<td>국민연금</td>
+										<td><input type="text" size="6" id="national-pension"/></td>
+									</tr>
+									<tr>
+										<td>야간수당</td>
+										<td><input type="text" size="6" id="night-salary"/></td>
+										<td>건강보험</td>
+										<td><input type="text" size="6" id="health-insurance"/></td>
+									</tr>
+									<tr>
+										<td>휴일근무수당</td>
+										<td><input type="text" size="6" id="holiday-salary"/></td>
+										<td>장기요양보험</td>
+										<td><input type="text" size="6" id="longterm-insurance"/></td>
+									</tr>
+									<tr>
+										<td>출장비</td>
+										<td><input type="text" size="6" id="business-salary"/></td>
+										<td>고용보험</td>
+										<td><input type="text" size="6" id="employment-insurance"/></td>
+									</tr>
+									<tr>
+										<td>상여금</td>
+										<td><input type="text" size="6" id="reward-salary"/></td>
+										<td></td>
+										<td></td>
+									</tr>
+									<tr>
+										<th>지급총액</th>
+										<th><input type="text" size="6" id="total-salary"/></th>
+										<th>공제총액</th>
+										<th><input type="text" size="6" id="deduction-salary"/></th>
+									</tr>
+								</tbody>	
+								<tfoot>
+									<tr>
+										<th colspan="4"><span>실지급액:</span><span id="real-salary"></span>원</th>
+									</tr>
+								</tfoot>
+							</table>
+							</div>
+							<button type="button" class="btn btn-warning btn-sm" id="auto-calculate">자동계산</button>
+							&emsp;&emsp;&nbsp;
+							<button class="btn btn-primary btn-sm" id="btn-save">저장</button>
+							<button type="button" class="btn btn-secondary btn-sm" id="btn-delete">내용지우기</button>
+						</div>
 					</div>
-					<div class="col-5">
-						<table class="table" border="3" id="table-calcuration">
-							<colgroup>  
-								<col width="25%">
-								<col width="25%">
-								<col width="25%">
-								<col width="25%">		
-							</colgroup>
-							<thead>
-								<tr>
-									<th colspan="2">지급항목</th>
-									<th colspan="2">공제항목</th>
-								</tr>
-							</thead>  
-							<tbody>
-								<tr>
-									<td>기본급</td>
-									<td><input type="text" name="base-salary" size="10"/></td>
-									<td>소득세</td>
-									<td><input type="text" name="income-tax" size="10"/></td>
-								</tr>
-								<tr>
-									<td>식대</td>
-									<td><input type="text" name="" size="10"/></td>
-									<td>주민세</td>
-									<td><input type="text" name="" size="10"/></td>
-								</tr>
-								<tr>
-									<td>연장수당</td>
-									<td><input type="text" name="" size="10"/></td>
-									<td>국민연금</td>
-									<td><input type="text" name="" size="10"/></td>
-								</tr>
-								<tr>
-									<td>야간수당</td>
-									<td><input type="text" name="" size="10"/></td>
-									<td>건강보험</td>
-									<td><input type="text" name="" size="10"/></td>
-								</tr>
-								<tr>
-									<td>휴일근무수당</td>
-									<td><input type="text" name="" size="10"/></td>
-									<td>장기요양보험</td>
-									<td><input type="text" name="" size="10"/></td>
-								</tr>
-								<tr>
-									<td>출장비</td>
-									<td><input type="text" name="" size="10"/></td>
-									<td>고용보험</td>
-									<td><input type="text" name="" size="10"/></td>
-								</tr>
-								<tr>
-									<td>상여금</td>
-									<td><input type="text" name="" size="10"/></td>
-									<td></td>
-									<td></td>
-								</tr>
-								<tr>
-									<th>지급총액</th>
-									<th><input type="text" name="" size="10"/></th>
-									<th>공제총액</th>
-									<th><input type="text" name="" size="10"/></th>
-								</tr>
-							</tbody>	
-							<tfoot>
-								<tr>
-									<th colspan="4">실지급액: 원</th>
-								</tr>
-							</tfoot>
-						</table>
-						<button type="button" class="btn btn-warning btn-sm" id="auto-calculate">자동계산</button>
-						&emsp;&emsp;&nbsp;
-						<button class="btn btn-primary btn-sm" id="btn-save">저장</button>
-						<button type="button" class="btn btn-secondary btn-sm" id="btn-delete">내용지우기</button>
-					</div>
-				</div>
-			</div>	
+				</div>	
+			</form>
 		</div>
 	</div>
 </div>			
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
 <script>
+$(function() {
+	$("input[name=basemonth]").change(function() {
+		$("#form-salary").trigger("submit")
+	})
+	$("input[name=paydate]").change(function() {
+		$("#form-salary").trigger("submit")
+	})
+	$("input[name=startdate]").change(function() {
+		$("#form-salary").trigger("submit")
+	})
+	$("input[name=enddate]").change(function() {
+		$("#form-salary").trigger("submit")
+	})
+	
+	$("#table-salaries a[data-employee-no]").click(function(event) {
+		clearTable();
+		event.preventDefault();
+		$(this).closest("tr").addClass("table-primary")
+    	 	   .siblings().removeClass("table-primary");
+		let no = $(this).attr('data-employee-no');
+		let month = $("input[name=basemonth]").val();
+		let completed = $(this).attr('data-salary-calculated');
+		
+		if (completed == "Y") {
+			setSalaryHistory(no, month);
+		} else if (completed == "N") {
+			setSalaryBasicInfo(no);
+		}
+	})
+	
+	function setSalaryHistory(no, month) {
+		$.ajax({
+			type: 'GET',
+			url: '/salary/calculateDetail.json',
+			data: {empNo : no, basemonth : month},
+			dataType: 'json',
+			success: function(salary) {
+				let baseSalary = new Number(salary.baseSalary).toLocaleString();
+				$("#base-salary").val(baseSalary);
+				let incomeTax = new Number(salary.incomeTax).toLocaleString();
+				$("#income-tax").val(incomeTax);
+				let mealSalary = new Number(salary.mealSalary).toLocaleString();
+				$("#meal-salary").val(mealSalary);
+				let residenceTax = new Number(salary.residenceTax).toLocaleString();
+				$("#residence-tax").val(residenceTax);
+				let overtimeSalary = new Number(salary.overtimeSalary).toLocaleString();
+				$("#overtime-salary").val(overtimeSalary);
+				let pension = new Number(salary.pension).toLocaleString();
+				$("#national-pension").val(pension);
+				let nightSalary = new Number(salary.nightSalary).toLocaleString();
+				$("#night-salary").val(nightSalary);
+				let healthInsurance = new Number(salary.healthInsurance).toLocaleString();
+				$("#health-insurance").val(healthInsurance);
+				let holidaySalary = new Number(salary.holidaySalary).toLocaleString();
+				$("#holiday-salary").val(holidaySalary);
+				let longtermInsurance = new Number(salary.longtermInsurance).toLocaleString();
+				$("#longterm-insurance").val(longtermInsurance);
+				let businessSalary = new Number(salary.businessSalary).toLocaleString();
+				$("#business-salary").val(businessSalary);
+				let employmentInsurance = new Number(salary.employmentInsurance).toLocaleString();
+				$("#employment-insurance").val(employmentInsurance);
+				let rewardSalary = new Number(salary.rewardSalary).toLocaleString();
+				$("#reward-salary").val(rewardSalary);
+				let totalSalary = new Number(salary.totalSalary).toLocaleString();
+				$("#total-salary").val(totalSalary);
+				let deductionSalary = new Number(salary.deductionSalary).toLocaleString();
+				$("#deduction-salary").val(deductionSalary);
+				let realSalary = new Number(salary.realSalary).toLocaleString();
+				$("#real-salary").text(realSalary);
+			}
+		})
+	}
+	
+	function setSalaryBasicInfo(no) {
+		$.ajax({
+			type: 'GET',
+			url: '/salary/basicInfo.json',
+			data: {empNo : no},
+			dataType: 'json',
+			success: function(salaryInfo) {
+				let baseSalary = new Number(salaryInfo.baseSalary).toLocaleString();
+				$("#base-salary").val(baseSalary);
+			}
+		})
+	}
+	
+	function clearTable() {
+		$("#base-salary").val(0);
+		$("#income-tax").val(0);
+		$("#meal-salary").val(0);
+		$("#residence-tax").val(0);
+		$("#overtime-salary").val(0);
+		$("#national-pension").val(0);
+		$("#night-salary").val(0);
+		$("#health-insurance").val(0);
+		$("#holiday-salary").val(0);
+		$("#longterm-insurance").val(0);
+		$("#business-salary").val(0);
+		$("#employment-insurance").val(0);
+		$("#reward-salary").val(0);
+		$("#total-salary").val(0);
+		$("#deduction-salary").val(0);
+		$("#real-salary").text(0);
+	}
+	
+
+})
 
 </script>
 </body>

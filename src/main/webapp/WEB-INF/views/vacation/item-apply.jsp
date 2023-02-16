@@ -172,10 +172,10 @@
 			<form method="post" enctype="multipart/form-data">
 				<table class="table">
 					<tr class="fw-bold">
-						<td>휴가신청일 <input type="date" id="currentDate" name="" value="2023-02-03" style="text-align:center; width:130px" disabled/></td>
-						<td>휴가기간 <input type="date" id="vacation-start-date" name="" value="2023-02-03" style="text-align:center; width:130px"/>~
-								<input type="date" id="vacation-end-date" name="" value=""style="text-align:center; width:130px"/>
-								(일수: <input type="text" id="day-count"name="" value="" style="text-align:center; width:40px" disabled/>일)
+						<td>휴가신청일 <input type="date" id="currentDate" name="requestDate" value="2023-02-03" style="text-align:center; width:130px" disabled/></td>
+						<td>휴가기간 <input type="date" id="vacation-start-date" name="startDate" value="2023-02-03" style="text-align:center; width:130px"/>~
+								<input type="date" id="vacation-end-date" name="endDate" value="" style="text-align:center; width:130px"/>
+								(일수: <input type="text" id="day-count"name="days" value="" style="text-align:center; width:40px" disabled/>일)
 						</td>
 						<td>휴가구분 
 							<select name="vacation-item-name" style="width: 80px">
@@ -185,19 +185,19 @@
 							<option value="반차">반차</option>
 							</select>
 						</td>
-						<td>결재상태 <input type="text" id="vacation-status" value="대기" style="text-align:center; width:70px" disabled/></td>
+						<td>결재상태 <input type="text" id="vacation-status" name="status" value="대기" style="text-align:center; width:70px" disabled/></td>
 					</tr>
 				</table>
 				<table class="table">
 					<tr class="fw-bold">
-						<td>휴가사유 <input type="text" id="vacation-reason" style="width:500px;"></td>
+						<td>휴가사유 <input type="text" name="reason" id="vacation-reason" style="width:500px;"></td>
 						<td>첨부파일 <input type="file" id="fileUpload" /></td>
 					</tr>
 				</table>
 				<div class="row mb-2">
 					<div class="col">
-						<a href="" class="btn btn-outline-dark btn-sm" style="float:right; margin-right: 4px;" id="">반려</a>
-						<a href="" class="btn btn-outline-dark btn-sm" style="float:right; margin-right: 4px;" id="">승인</a>
+						<button type="button" id="update-status-refusal" class="btn btn-outline-dark btn-sm" style="float:right; margin-right: 4px;">반려</button>
+						<button type="button" id="update-status-approval" class="btn btn-outline-dark btn-sm" style="float:right; margin-right: 4px;">승인</button>
 					</div>
 				</div>
 				<div class="row mb-2 bg-light m-2">
@@ -351,7 +351,48 @@ $(function() {
 		    	$("#modify-vacation-info").removeClass("d-none");
 		    	$("#cancel-vacation-info").removeClass("d-none");
 		    	$("#register-vacation-info").addClass("d-none");
-		    	
+		    }
+		})
+	});
+	
+	$("#update-status-approval").click(function() {
+		let $no = $("input[type=hidden]").val();
+		let $status = $("#vacation-status").val();
+		
+		if ($status === "승인") {
+			alert("이미 승인처리된 휴가신청내역입니다.");
+			return false;
+		}
+
+		$.ajax({
+			type: 'GET',
+			url : '/vacation/approve',
+		    data: {no: $no}, 
+		    dataType: "json",
+		    success: function(data) {
+		    	alert("승인 처리 되었습니다.");
+		    	$("#vacation-status").val(data.status);
+		    }
+		})
+	});
+	
+	$("#update-status-refusal").click(function() {
+		let $no = $("input[type=hidden]").val();
+		let $status = $("#vacation-status").val();
+		
+		if ($status === "반려") {
+			alert("이미 반려처리된 휴가신청내역입니다.");
+			return false;
+		}
+
+		$.ajax({
+			type: 'GET',
+			url : '/vacation/refusal',
+		    data: {no: $no}, 
+		    dataType: "json",
+		    success: function(data) {
+		    	alert("반려 처리 되었습니다.");
+		    	$("#vacation-status").val(data.status);
 		    }
 		})
 	});

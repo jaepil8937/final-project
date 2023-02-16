@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,15 +23,11 @@ import com.last.vo.VacationDay;
 import com.last.vo.VacationItem;
 import com.last.web.request.VacationItemRequest;
 
-import lombok.RequiredArgsConstructor;
-
-
 @Controller
-
 @RequestMapping("/vacation")
 public class VacationController {
-	
-	private final VacationService vacationService;
+	@Autowired
+	private VacationService vacationService;
 
 	@GetMapping("/setting")
 	public String setting(Model model) {
@@ -164,6 +161,7 @@ public class VacationController {
 		vacationService.removeVacationDay(years);
 		
 		return "redirect:/vacation/year";
+<<<<<<< HEAD
 	}
   
 }
@@ -187,6 +185,10 @@ public class VacationController {
 	
 	
 	
+=======
+  }
+
+>>>>>>> branch 'main' of https://github.com/jaepil8937/final-project.git
 }
 	
 	

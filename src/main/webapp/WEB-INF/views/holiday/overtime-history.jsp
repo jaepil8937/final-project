@@ -1,6 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"
 	trimDirectiveWhitespaces="true"%>
-<%@ include file="../common/tags.jsp" %>
+<%@ include file="../common/tags.jsp"%>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -32,17 +32,16 @@
 				<div class="row" style="margin-top: 24px;">
 					<div class="shadow-none p-3 mb-5 bg-light rounded">
 						<div class="container text-center">
-							<form id="" method="post" action="" enctype="">
+							<form id="" method="get" action="/holiday/overtime-history">
 								<div class="row">
 									<div class="col-3">
-										<label for="start" style="padding-top: 12px;">근무년월: <input
-											type="date" id="" name="" value="" min="2023-01-01"
-											max="2023-12-31">
+										<label for="start" style="padding-top: 12px;">근무년월: 
+										<input 	type="month" name="month" value="${param.month }">
 										</label>
 									</div>
 									<div class="col-4">
-										<label for="name" style="padding-top: 14px;">사원번호: </label> <input
-											type="name" id="text" value="111111">
+										<label for="name" style="padding-top: 14px;">사원번호: </label> 
+										<input type="text" name="empNo" value="${param.empNo }">
 									</div>
 									<div class="col">
 										<p style="padding-top: 7px;">
@@ -81,26 +80,27 @@
 								</tr>
 							</thead>
 							<tbody>
-								<tr class="text-center">
-									<th scope="row">1</th>
-									<td>111111</td>
-									<td>홍길동</td>
-									<td>사원</td>
-									<td>강남고객본부</td>
-									<td>야간근무</td>
-									<td>01:00</td>
-									<td>2023.2.3</td>
-								</tr>
-								<tr class="text-center">
-									<th scope="row">2</th>
-									<td>222222</td>
-									<td>이순신</td>
-									<td>상무</td>
-									<td>강남고객본부</td>
-									<td>연장근무</td>
-									<td>03:00</td>
-									<td>2023.2.3</td>
-								</tr>
+								<c:choose>
+									<c:when test="${empty histories }">
+										<tr>
+											<td colspan="10" class="text-center">해당 내역이 없습니다.</td>
+										</tr>
+									</c:when>
+									<c:otherwise>
+										<c:forEach var="OvertimeDto" items="${histories }" varStatus="loop">
+											<tr class="text-center">
+												<th scope="row">${loop.count }</th>
+												<td>${OvertimeDto.employeeNo }</td>
+												<td>${OvertimeDto.employeeName }</td>
+												<td>${OvertimeDto.positionName }</td>
+												<td>${OvertimeDto.deptName }</td>
+												<td>${OvertimeDto.attendancesType }</td>
+												<td>${OvertimeDto.endWorkTime }</td>
+												<td><fmt:formatDate pattern="yyyy-MM-dd" value="${OvertimeDto.workingDate }" /></td>
+											</tr>
+										</c:forEach>
+									</c:otherwise>
+								</c:choose>
 							</tbody>
 						</table>
 					</div>
@@ -117,10 +117,10 @@
 			</div>
 		</div>
 	</div>
-<script
-	src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
-	crossorigin="anonymous"></script>
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+	<script
+		src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
+		crossorigin="anonymous"></script>
+	<script
+		src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
 </body>
 </html>

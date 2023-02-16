@@ -41,6 +41,9 @@ public interface VacationMapper {
 
 	VacationRequestDto getVacationRequestInfoByNo(int no);
 
+
+	void updateStatus(VacationRequestDto requestList);
+
 	// 모든 근속연수별 조회
 	List<VacationDay> getYearVacationDay();
 	
@@ -49,6 +52,7 @@ public interface VacationMapper {
 	
 	// 근속연수별 행 삭제
 	void deleteYearVacationDay(int workedYear);
+
 }
 	
 
