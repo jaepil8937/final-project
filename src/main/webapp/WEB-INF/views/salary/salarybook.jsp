@@ -10,30 +10,34 @@
 <style>
 	.table {
 		display: block;
-		height: 420px;
-		max-height: 420px; 
-		overflow: scroll;
+		max-height: 430px; 
+		overflow-y: scroll;
 		white-space: nowrap;   <%-- 자식 엘리먼트가 한줄로 정렬되게 하는 요소 --%>
-	}
-
-	table {
 		border-collapse: collapse; 
 		border-spacing: 0; 
-		width:100%;
+		width: 100%;
 	}
 	
-	thead th {
-		position: sticky; top:0;
-		background-color: lightgray;
+	th:first-child, td:first-child {
+		position: sticky; left:0;
 	}
 	
-	tfoot th {
+	th:nth-child(2), td:nth-child(2) {
+		position: sticky; left:74px;
+	}
+	
+	thead {
+		position: sticky; top:0; z-index: 1;
+		background-color: lightgray; 
+	}
+	
+	tfoot {
 		position: sticky; bottom:0;
 		background-color: lightgray;
 	}
 	
 	table th, table td {
-		border: 1px solid #c0c0c0; 
+		border: 1px solid black; 
 		padding: 5px;
 		text-align: center;
 	}	
@@ -43,7 +47,7 @@
 <body>
 <c:set var="menu" value="pay" />
 <%@ include file="../common/navbar.jsp" %>
-<c:set var="side" value="" />
+<c:set var="side" value="salary-book" />
 <div class="container">
 	<div class="row">
 		<div class="col-2 bg-dark mr-3">
@@ -68,249 +72,114 @@
 					</ul>
 				</div>
 			</div>
-			<div class="row mt-3 text-end">
-				<div class="col-12">
-					<label>급여년월</label> <input type="month" /> &nbsp; 
-				</div>
-			</div>
-			<div class="row mt-3">
-				<div class="col-12">
-					<div class="table" border="3" id="salary-book">
-						<table>
-							<thead>
-								<tr>
-									<th>사원번호</th>
-									<th>성명</th>
-									<th>부서</th>
-									<th>직책</th>
-									<th>입사일</th>
-									<th>퇴사일</th>
-									<th>기본급</th>
-									<th>식대</th>
-									<th>연장수당</th>
-									<th>야간수당</th>
-									<th>휴일근무수당</th>
-									<th>보육수당</th>
-									<th>출장비</th>
-									<th>상여금</th>
-									<th>소득세</th>
-									<th>주민세</th>
-									<th>국민연금</th>
-									<th>건강보험</th>
-									<th>장기요양</th>
-									<th>고용보험</th>
-								</tr>
-							</thead>
-							<tbody>
-								<tr>
-									<td>1000</td>
-									<td>홍길동</td>
-									<td>개발팀</td>
-									<td>부장</td>
-									<td>2023.04.25</td>
-									<td></td>
-									<td></td>
-									<td></td>
-									<td></td>
-									<td></td>
-									<td></td>
-									<td></td>
-									<td></td>
-									<td></td>
-									<td></td>
-									<td></td>
-									<td></td>
-									<td></td>
-									<td></td>
-									<td></td>
-								</tr>
-								<tr>
-									<td>1000</td>
-									<td>홍길동</td>
-									<td>개발팀</td>
-									<td>부장</td>
-									<td>2023.04.25</td>
-									<td></td>
-									<td></td>
-									<td></td>
-									<td></td>
-									<td></td>
-									<td></td>
-									<td></td>
-									<td></td>
-									<td></td>
-									<td></td>
-									<td></td>
-									<td></td>
-									<td></td>
-									<td></td>
-									<td></td>
-								</tr>
-								<tr>
-									<td>1000</td>
-									<td>홍길동</td>
-									<td>개발팀</td>
-									<td>부장</td>
-									<td>2023.04.25</td>
-									<td></td>
-									<td></td>
-									<td></td>
-									<td></td>
-									<td></td>
-									<td></td>
-									<td></td>
-									<td></td>
-									<td></td>
-									<td></td>
-									<td></td>
-									<td></td>
-									<td></td>
-									<td></td>
-									<td></td>
-								</tr>
-								<tr>
-									<td>1000</td>
-									<td>홍길동</td>
-									<td>개발팀</td>
-									<td>부장</td>
-									<td>2023.04.25</td>
-									<td></td>
-									<td></td>
-									<td></td>
-									<td></td>
-									<td></td>
-									<td></td>
-									<td></td>
-									<td></td>
-									<td></td>
-									<td></td>
-									<td></td>
-									<td></td>
-									<td></td>
-									<td></td>
-									<td></td>
-								</tr>
-								<tr>
-									<td>1000</td>
-									<td>홍길동</td>
-									<td>개발팀</td>
-									<td>부장</td>
-									<td>2023.04.25</td>
-									<td></td>
-									<td></td>
-									<td></td>
-									<td></td>
-									<td></td>
-									<td></td>
-									<td></td>
-									<td></td>
-									<td></td>
-									<td></td>
-									<td></td>
-									<td></td>
-									<td></td>
-									<td></td>
-									<td></td>
-								</tr>
-								<tr>
-									<td>1000</td>
-									<td>홍길동</td>
-									<td>개발팀</td>
-									<td>부장</td>
-									<td>2023.04.25</td>
-									<td></td>
-									<td></td>
-									<td></td>
-									<td></td>
-									<td></td>
-									<td></td>
-									<td></td>
-									<td></td>
-									<td></td>
-									<td></td>
-									<td></td>
-									<td></td>
-									<td></td>
-									<td></td>
-									<td></td>
-								</tr>
-								<tr>
-									<td>1000</td>
-									<td>홍길동</td>
-									<td>개발팀</td>
-									<td>부장</td>
-									<td>2023.04.25</td>
-									<td></td>
-									<td></td>
-									<td></td>
-									<td></td>
-									<td></td>
-									<td></td>
-									<td></td>
-									<td></td>
-									<td></td>
-									<td></td>
-									<td></td>
-									<td></td>
-									<td></td>
-									<td></td>
-									<td></td>
-								</tr>
-								<tr>
-									<td>1000</td>
-									<td>홍길동</td>
-									<td>개발팀</td>
-									<td>부장</td>
-									<td>2023.04.25</td>
-									<td></td>
-									<td></td>
-									<td></td>
-									<td></td>
-									<td></td>
-									<td></td>
-									<td></td>
-									<td></td>
-									<td></td>
-									<td></td>
-									<td></td>
-									<td></td>
-									<td></td>
-									<td></td>
-									<td></td>
-								</tr>
-							</tbody>	
-							<tfoot>
-								<tr>
-									<th>합계</th>
-									<th>지급총액</th>
-									<th></th>
-									<th>공제총액</th>
-									<th></th>
-									<th></th>
-									<th></th>
-									<th></th>
-									<th></th>
-									<th></th>
-									<th></th>
-									<th></th>
-									<th></th>
-									<th></th>
-									<th></th>
-									<th></th>
-									<th></th>
-									<th></th>
-									<th></th>
-									<th></th>
-								</tr>
-							</tfoot>		
-						</table>
+			<form id="salary-table" action="/salary/salarybook">
+				<div class="row mt-3 text-end">
+					<div class="col-12">
+						<label>급여년월</label> <input type="month" name="basemonth" value="${param.basemonth }"/> &nbsp; 
 					</div>
 				</div>
-			</div>
+				<div class="row mt-3">
+					<div class="col-12">
+						<div class="table" border="3" id="salary-book">
+							<table>
+								<thead>
+									<tr>
+										<th style="background-color: #c0c0c0">사원번호</th>
+										<th style="background-color: #c0c0c0">성명</th>
+										<th>부서</th>
+										<th>직책</th>
+										<th>입사일</th>
+										<th>퇴사일</th>
+										<th>기본급</th>
+										<th>식대</th>
+										<th>연장수당</th>
+										<th>야간수당</th>
+										<th>휴일근무수당</th>
+										<th>보육수당</th>
+										<th>출장비</th>
+										<th>상여금</th>
+										<th>소득세</th>
+										<th>주민세</th>
+										<th>국민연금</th>
+										<th>건강보험</th>
+										<th>장기요양</th>
+										<th>고용보험</th>
+									</tr>
+								</thead>
+								<tbody>
+									<c:choose>
+										<c:when test="${empty SalaryBookDto }">
+											<tr>
+												<td colspan="20" class="text-center">급여 내역이 존재하지 않습니다.</td>
+											</tr>
+										</c:when>
+										<c:otherwise>
+											<c:forEach var="salaryDto" items="${SalaryBookDto.salaryDtoLists }">	
+												<tr>
+													<td style="background-color: #c0c0c0; font-weight: bold">${salaryDto.employeeNo }</td>
+													<td style="background-color: #c0c0c0; font-weight: bold">${salaryDto.name }</td>
+													<td>${salaryDto.deptName }</td>
+													<td>${salaryDto.positionName }</td>
+													<td>${salaryDto.hireDate }</td>
+													<td>${salaryDto.retirementDate }</td>
+													<td><fmt:formatNumber value="${salaryDto.baseSalary }"/></td>
+													<td><fmt:formatNumber value="${salaryDto.mealSalary }"/></td>
+													<td><fmt:formatNumber value="${salaryDto.overtimeSalary }"/></td>
+													<td><fmt:formatNumber value="${salaryDto.nightSalary }"/></td>
+													<td><fmt:formatNumber value="${salaryDto.holidaySalary }"/></td>
+													<td><fmt:formatNumber value="${salaryDto.careSalary }"/></td>
+													<td><fmt:formatNumber value="${salaryDto.businessSalary }"/></td>
+													<td><fmt:formatNumber value="${salaryDto.rewardSalary }"/></td>
+													<td><fmt:formatNumber value="${salaryDto.incomeTax }"/></td>
+													<td><fmt:formatNumber value="${salaryDto.residenceTax }"/></td>
+													<td><fmt:formatNumber value="${salaryDto.pension }"/></td>
+													<td><fmt:formatNumber value="${salaryDto.healthInsurance }"/></td>
+													<td><fmt:formatNumber value="${salaryDto.longtermInsurance }"/></td>
+													<td><fmt:formatNumber value="${salaryDto.employmentInsurance }"/></td>
+												</tr>
+											</c:forEach>
+										</c:otherwise>
+									</c:choose>
+								</tbody>	
+								<tfoot>
+									<tr>
+										<th colspan="2" style="background-color: #c0c0c0">합 계</th>
+										<th></th>
+										<th></th>
+										<th></th>
+										<th></th>
+										<th><fmt:formatNumber value="${SalaryBookDto.baseSalaryTtl }"/></th>
+										<th><fmt:formatNumber value="${SalaryBookDto.mealSalaryTtl }"/></th>
+										<th><fmt:formatNumber value="${SalaryBookDto.overtimeSalaryTtl }"/></th>
+										<th><fmt:formatNumber value="${SalaryBookDto.nightSalaryTtl }"/></th>
+										<th><fmt:formatNumber value="${SalaryBookDto.holidaySalaryTtl }"/></th>
+										<th><fmt:formatNumber value="${SalaryBookDto.careSalaryTtl }"/></th>
+										<th><fmt:formatNumber value="${SalaryBookDto.businessSalaryTtl }"/></th>
+										<th><fmt:formatNumber value="${SalaryBookDto.rewardSalaryTtl }"/></th>
+										<th><fmt:formatNumber value="${SalaryBookDto.incomeTaxTtl }"/></th>
+										<th><fmt:formatNumber value="${SalaryBookDto.residenceTaxTtl }"/></th>
+										<th><fmt:formatNumber value="${SalaryBookDto.pensionTtl }"/></th>
+										<th><fmt:formatNumber value="${SalaryBookDto.healthInsuranceTtl }"/></th>
+										<th><fmt:formatNumber value="${SalaryBookDto.longtermInsuranceTtl }"/></th>
+										<th><fmt:formatNumber value="${SalaryBookDto.employmentInsuranceTtl }"/></th>
+									</tr>
+								</tfoot>		
+							</table>
+						</div>
+					</div>
+				</div>
+			</form>
 		</div>
    </div>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+<script>
+$(function() {
+	$("input[name=basemonth]").change(function() {
+		$("#salary-table").trigger("submit")
+	})
+})
+</script>
 </body>
 </html>
