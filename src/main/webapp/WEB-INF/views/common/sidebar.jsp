@@ -51,12 +51,12 @@
 					<li><a class="dropdown-item ${side eq '3' ? 'text-light fw-bold' : '' }" href="/pay/grade">급호테이블</a></li>
 					<li><a class="dropdown-item ${side eq '4' ? 'text-light fw-bold' : '' }" href="/pay/simpletax">간이세액조견표</a></li>
 					<li><a class="dropdown-item ${side eq '4' ? 'text-light fw-bold' : '' }" href="/pay/insurance">4대보험요율표</a></li>
-					<li><a class="dropdown-item ${side eq '4' ? 'text-light fw-bold' : '' }" href="/salary/salarycalculate">급여계산</a></li>
-					<li><a class="dropdown-item ${side eq '4' ? 'text-light fw-bold' : '' }" href="/salary/salarycheck">급여조회</a></li>
-					<li><a class="dropdown-item ${side eq '4' ? 'text-light fw-bold' : '' }" href="/salary/salarybook">급여대장/기간별 급여현황</a></li>
-					<li><a class="dropdown-item ${side eq '4' ? 'text-light fw-bold' : '' }" href="/salary/salarycheck">국민연금</a></li>
-					<li><a class="dropdown-item ${side eq '4' ? 'text-light fw-bold' : '' }" href="/salary/salarycheck">건강보험</a></li>
-					<li><a class="dropdown-item ${side eq '4' ? 'text-light fw-bold' : '' }" href="/salary/salarycheck">고용보험</a></li>
+					<li><a class="dropdown-item ${side eq 'salary-calculate' ? 'text-light fw-bold' : '' }" href="/salary/salarycalculate">급여계산</a></li>
+					<li><a class="dropdown-item ${side eq 'salary-check' ? 'text-light fw-bold' : '' }" href="/salary/salarycheck">급여조회</a></li>
+					<li><a class="dropdown-item ${side eq 'salary-book' ? 'text-light fw-bold' : '' }" href="/salary/salarybook">급여대장/기간별 급여현황</a></li>
+					<li><a class="dropdown-item ${side eq '7' ? 'text-light fw-bold' : '' }" href="/salary/salarycheck">국민연금</a></li>
+					<li><a class="dropdown-item ${side eq '7' ? 'text-light fw-bold' : '' }" href="/salary/salarycheck">건강보험</a></li>
+					<li><a class="dropdown-item ${side eq '7' ? 'text-light fw-bold' : '' }" href="/salary/salarycheck">고용보험</a></li>
 				</ul>
 			</li>	
 		</ul>
