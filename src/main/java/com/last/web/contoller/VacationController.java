@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,7 +21,9 @@ import com.last.dto.VacationRequestDto;
 import com.last.service.VacationService;
 import com.last.vo.VacationDay;
 import com.last.vo.VacationItem;
+import com.last.vo.VacationRequest;
 import com.last.web.request.VacationItemRequest;
+import com.last.web.request.VacationRequestForm;
 
 import lombok.RequiredArgsConstructor;
 
@@ -94,7 +97,9 @@ public class VacationController {
 	}
 
 	@GetMapping("/apply")
-	public String apply() {
+	public String apply(Model model) {
+		List<VacationItem> items = vacationService.getAllItems();
+		model.addAttribute("items", items);
 		return "vacation/item-apply";
 	}	
 	
@@ -137,6 +142,22 @@ public class VacationController {
 	@ResponseBody
 	public VacationRequestDto updateRefusalByNo(@RequestParam("no") int no) {
 		return vacationService.updateStatusToRefusal(no);
+	}
+	
+	@PostMapping("/insert-request")
+	public String insertVacationRequest(VacationRequestForm form) {
+		VacationRequest request = new VacationRequest();
+		BeanUtils.copyProperties(form, request);
+		
+		System.out.println("form: " + form.getRequestDate());
+		System.out.println("form: " + form.getStartDate());
+		System.out.println("form: " + form.getEndDate());
+		System.out.println("form: " + form.getDays());
+		System.out.println("form: " + form.getItemCode());
+		System.out.println("form: " + form.getItemCode());
+		System.out.println("form: " + form.getStatus());
+		System.out.println("form: " + form.getStatus());
+		return "redirect:apply";
 	}
 	
 	

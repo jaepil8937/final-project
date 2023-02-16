@@ -11,7 +11,9 @@ import com.last.dto.VacationRequestDto;
 import com.last.mapper.VacationMapper;
 import com.last.vo.VacationDay;
 import com.last.vo.VacationItem;
+import com.last.vo.VacationRequest;
 import com.last.web.request.VacationItemRequest;
+import com.last.web.request.VacationRequestForm;
 
 import lombok.RequiredArgsConstructor;
 
@@ -137,5 +139,8 @@ public class VacationService {
 		for (int year : years) {
 			vacationMapper.deleteYearVacationDay(year);
 		}
+	}
+
+	public void insertVacationRequest(VacationRequestForm form) {
 	}	
 }

@@ -224,4 +224,11 @@
 			request_no = #{no}
 	</update>
 	
+	<!-- 휴가 신청 -->
+	<insert id="insertVacationRequest" parameterType="VacationRequest">
+		insert into vacation_request_histories
+			(request_no, request_date, start_date, end_date, days, reason, request_status, item_code, employee_no)
+		values
+			(vacation_request_histories_seq.nextval, sysdate, to_date(#{startDate}, 'YYYY-MM-DD'), to_date(#{endDate}, 'YYYY-MM-DD'), #{days}, #{reason}, #{status}, #{itemCode} , 1002)
+	</insert>
 </mapper>
