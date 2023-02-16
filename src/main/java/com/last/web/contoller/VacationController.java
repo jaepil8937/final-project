@@ -22,15 +22,12 @@ import com.last.vo.VacationDay;
 import com.last.vo.VacationItem;
 import com.last.web.request.VacationItemRequest;
 
-import lombok.RequiredArgsConstructor;
-
-
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/vacation")
 public class VacationController {
-	
-	private final VacationService vacationService;
+	@Autowired
+	private VacationService vacationService;
 
 	@GetMapping("/setting")
 	public String setting(Model model) {
