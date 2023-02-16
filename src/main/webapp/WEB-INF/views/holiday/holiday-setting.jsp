@@ -38,7 +38,7 @@
 				<div class="row" style="margin-top: 24px;">
 					<div class="shadow-none p-3 mb-5 bg-light rounded">
 						<div class="container text-center">
-							<form id="" method="post" action="" enctype="">
+							<form id="" method="get" action="/holiday/holiday-setting">
 								<div class="row">
 									<div class="col-4">
 										<label for="start" style="padding-top: 12px;">기간: <input
@@ -57,8 +57,7 @@
 				<div class="row" style="margin-top: 60px;">
 					<div class="col-6">
 						<p>
-							<button type="button" class="btn btn-light" style="float: left;">엑셀파일
-								불러오기</button>
+							<button type="button" class="btn btn-light" style="float: left;">엑셀파일 불러오기</button>
 						</p>
 					</div>
 					<div class="col-6">

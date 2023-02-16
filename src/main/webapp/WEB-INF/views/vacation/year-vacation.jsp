@@ -172,14 +172,14 @@
 	
 	// 행삭제
 	$("#btn-open-delete-row").on("click", function () {
+		var $checked = $("table :checkbox:checked");		
+		if ($checked.length < 1) {
+			alert("삭제할 데이터를 선택해주세요.");
+			return false;
+		}
+		
 		var answer = confirm("삭제하시겠습니까?");
 		if (answer) {
-			var $checked = $("table input[type=checkbox]:checked");
-			
-			if ($checked.length < 1) {
-				alert("삭제할 데이터를 선택해주세요.");
-				return false;
-			}
 			
 			$("form[name=deleteform]").trigger("submit");
 		}
