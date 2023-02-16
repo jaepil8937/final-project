@@ -103,4 +103,20 @@ public class VacationService {
 	public VacationRequestDto getVacationRequestInfoByNo(int no) {
 		return vacationMapper.getVacationRequestInfoByNo(no);
 	}
+	
+	public VacationRequestDto updateStatusToApproval(int no) {
+		VacationRequestDto dto = getVacationRequestInfoByNo(no);
+		dto.setStatus("승인");
+		vacationMapper.updateStatus(dto);
+		
+		return dto;
+	}	
+
+	public VacationRequestDto updateStatusToRefusal(int no) {
+		VacationRequestDto dto = getVacationRequestInfoByNo(no);
+		dto.setStatus("반려");
+		vacationMapper.updateStatus(dto);
+		
+		return dto;
+	}
 }

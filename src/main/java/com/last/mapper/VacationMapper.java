@@ -53,6 +53,9 @@ public interface VacationMapper {
 	VacationCalculateDto getCalculatedDays(Map<String, Object> param);
 
 	VacationRequestDto getVacationRequestInfoByNo(int no);
+
+	void updateStatus(VacationRequestDto requestList);
+
 }
 	
 
