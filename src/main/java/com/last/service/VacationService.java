@@ -16,10 +16,9 @@ import com.last.web.request.VacationItemRequest;
 import lombok.RequiredArgsConstructor;
 
 @Service
-@RequiredArgsConstructor
 public class VacationService {
-	
-	private final VacationMapper vacationMapper;
+	@Autowired
+	private VacationMapper vacationMapper;
 
 	// 모든 휴가항목을 조회하는 서비스 메소드를 정의한다.
 	public List<VacationItem> getAllItems() {
