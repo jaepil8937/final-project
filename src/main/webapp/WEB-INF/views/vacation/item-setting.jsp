@@ -171,7 +171,6 @@ $(function() {
     
     checkAll();
 	
-	
     $("#item-add").click(function() {
     	// 체크된 체크박스가 없으면 알림창.
     	if($("input[name=chk]:checked").length == 0) {
@@ -215,7 +214,7 @@ $(function() {
 	    			dataType: 'json',
 	    			success: function(data) {
 	    				if (data.result == "ok") {
-	    					$("input[name=chk]").prop("checked",false);
+	    					location.reload();
 	    				}
 	    			}
 	    		});

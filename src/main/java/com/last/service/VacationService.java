@@ -61,6 +61,9 @@ public class VacationService {
 	public VacationCalculateDto calculatedVacation(Map<String, Object> param) {
 		// 근속년수 계산
 		int workedYears = vacationMapper.getWorkedYears(param);
+		if (workedYears < 0) {
+			return null;
+		}
 		param.put("workedYears", workedYears);
 		// 연차개수 계산
 		int vacationDays;
@@ -165,13 +168,6 @@ public class VacationService {
 		for (int year : years) {
 			vacationMapper.deleteYearVacationDay(year);
 		}
-
-
 	}
-
-
-
-
-
 }	
 
