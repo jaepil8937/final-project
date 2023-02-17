@@ -136,7 +136,6 @@ public class VacationController {
 	@GetMapping("/approve")
 	@ResponseBody
 	public VacationRequestDto updateApprovalByNo(@RequestParam("no") int no) {
-		System.out.println(no);
 		return vacationService.updateStatusToApproval(no);
 	}
 	
