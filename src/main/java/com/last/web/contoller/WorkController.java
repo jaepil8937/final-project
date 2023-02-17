@@ -117,23 +117,26 @@ public class WorkController {
 		return "work/daily-manage";
 	}
 	
-	@GetMapping("/modify")
-	public String modifyAttendanceForm(@RequestParam("no") int attendanceNo, Model model) {
-		
-		WorkAdminAttendanceDto dto = workService.getAdminAttendance(attendanceNo);
-		WorkModifyForm form = new WorkModifyForm();
-		BeanUtils.copyProperties(dto, form);
-		model.addAttribute("modifyAttendance", form);
-		
-		return "work/modify-attendance";
-	}
+//	@GetMapping("/modify")
+//	public String modifyAttendanceForm(@RequestParam("no") int attendanceNo, Model model) {
+//		
+//		WorkAdminAttendanceDto dto = workService.getAdminAttendance(attendanceNo);
+//		WorkModifyForm form = new WorkModifyForm();
+//		BeanUtils.copyProperties(dto, form);
+//		model.addAttribute("modifyAttendance", form);
+//		
+//		return "work/modify-attendance";
+//	}
 	
-	@PostMapping("/modify")
-	public String modifyAttendance(@ModelAttribute("modifyAttendance") WorkModifyForm workModifyForm) {
-		workService.updateAttendance(workModifyForm);
-		
-		return "redirect:/work/dayadmin?no=" + workModifyForm.getNo();
-	}
+//	@PostMapping("/modify")
+//	public String modifyAttendance(@RequestParam("no") int attendanceNo, 
+//			@RequestParam("startWorkTime") String startTime,
+//			@RequestParam("endWorkTime") String endTime) {
+//		
+//		workService.updateAttendance(attendanceNo, startTime, endTime);
+//		
+//		return "redirect:/work/dayadmin";
+//	}
 	
 	// 월근태현황
 	@GetMapping("/monthstatus")

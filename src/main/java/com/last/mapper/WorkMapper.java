@@ -15,7 +15,7 @@ public interface WorkMapper {
 	// 출근시간등록
 	void addAttendance(int empNo);
 	// 퇴근시간등록
-	void endAttendance(int empNo);
+	void endAttendance(WorkAttendance attendance);
 	
 	// 일일출근등록
 	WorkAttendance getTodayStartAttendancedByEmpNo(int empNo);
@@ -34,6 +34,7 @@ public interface WorkMapper {
 	
 	List<WorkAdminAttendanceDto> getAllAdminAttendancesByOptions(Map<String, Object> param);
 	
-	void updateAttendance(WorkAttendance workAttendance);
+//	void updateAttendance(WorkAttendance workAttendance);
+	WorkAdminAttendanceDto updateAttendanceByNo(int attendanceNo);
 	
 }

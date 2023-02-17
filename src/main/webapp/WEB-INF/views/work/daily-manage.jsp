@@ -32,11 +32,11 @@
 				<div class="col-12">
 					<form mehod="get" action="/work/dayadmin">
 					   	<b>근무일자: </b>
-						<input type="text" name="startDate" id="start-cal" value="${param.startDate }"> 
-						~ <input type="text" name="endDate" id="end-cal" value="${param.endDate }"><p></p><p>
+						<input autocomplete="off" type="text" name="startDate" id="start-cal" value="${param.startDate }"> 
+						~ <input autocomplete="off" type="text" name="endDate" id="end-cal" value="${param.endDate }"><p></p><p>
 						<th>
 						<b>사원번호:</b>
-						<input type="number" name="empNo" min="1000"/></th>&nbsp;&nbsp;
+						<input autocomplete="off" type="number" name="empNo" min="1000"/></th>&nbsp;&nbsp;
 						
 						<th>
 							<b>직급:</b>
@@ -126,13 +126,13 @@
 				      <td>${adminAttendance.empName }</td>
 				      <td>${adminAttendance.positionName }</td>
 				      <td>${adminAttendance.deptName }</td>
-				      <td>${adminAttendance.workedTimes }</td>
+				      <td>${adminAttendance.workedTimes }시간</td>
 				      <td>${adminAttendance.startWorkTime }</td>
 				      <td>${adminAttendance.endWorkTime }</td>
 				      <td>${adminAttendance.workedTimes }</td>
-				      <td>${adminAttendance.holidayWorkTime }일</td>
-				      <td>${adminAttendance.overtimeWorkedTimes }일</td>
-				      <td>${adminAttendance.nightWorkedTimes }일</td>
+				      <td>${adminAttendance.holidayWorkTime }시간</td>
+				      <td>${adminAttendance.overtimeWorkedTimes }시간</td>
+				      <td>${adminAttendance.nightWorkedTimes }시간</td>
 				      <td><button type="button" class="btn btn-secondary btn-sm" data-att-no="${adminAttendance.no }" >수정</button></td>
 				    </tr>
 				   </c:forEach>
@@ -152,13 +152,13 @@
 	      </div>
 	      <div class="modal-body">
 	       	<form id="form-hour" method="post" action="modify">
-	       		<input type="hidden" name="no" value="" />
+	       		<input type="hidden" name="no" value="${modifyAttendance.no }" />
 	       		<div class="mb-2">
 	       			<label class="form-label">출근시간</label>
 	       			<input type="text" class="form-control" name="startTime">
 	       		</div>
 	       		<div class="mb-2">
-	       			<label class="form-label">출근시간</label>
+	       			<label class="form-label">퇴근시간</label>
 	       			<input type="text" class="form-control" name="endTime">
 	       		</div>
 	       	</form>

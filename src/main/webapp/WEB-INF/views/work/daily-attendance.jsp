@@ -39,10 +39,10 @@
 					<b>근무일자:</b>
 				</div>
 				<div class="col-6" text-align:"end" >
-					<form method="get" action="/work/searchAttendances">
+					<form method="get" action="/work/searchAttendances" name="calform">
 								<!-- value="${param.startDate } param으로 전송된 값을 달력폼에 입력시켜줌 -->
-						<input type="text" name="startDate" id="start-cal" value="${param.startDate }">
-						~ <input type="text" name="endDate" id="end-cal" value="${param.endDate }">
+						<input autocomplete="off" type="text" name="startDate" id="start-cal" value="${param.startDate }">
+						~ <input autocomplete="off" type="text" name="endDate" id="end-cal" value="${param.endDate }">
 						<button type="submit" class="btn btn-danger btn-sm">조회</button>
 					</form>
 				</div>
@@ -91,10 +91,10 @@
 					      <td>${attendance.empNo }</td>
 					      <td>${attendance.startWorkTime }</td>
 					      <td>${attendance.endWorkTime }</td>
-					      <td>${attendance.workedTimes }</td>
-					      <td>${attendance.holidayWorkTime }일</td>
-					      <td>${attendance.overtimeWorkedTimes }일</td>
-					      <td>${attendance.nightWorkedTimes }일</td>
+					      <td>${attendance.workedTimes }시간</td>
+					      <td>${attendance.holidayWorkTime }시간</td>
+					      <td>${attendance.overtimeWorkedTimes }시간</td>
+					      <td>${attendance.nightWorkedTimes }시간</td>
 					    </tr>
 					</c:forEach>
 			  </tbody>
@@ -113,11 +113,13 @@
 function btnStart(){
     alert('출근완료');
 }
+
 function btnEnd(){
 	if (confirm("퇴근하시겠습니까?")) {
 		alert("퇴근완료");
 	}
 }
+
 // datepicker 적용
 $("#start-cal").datepicker();
 $("#end-cal").datepicker();
