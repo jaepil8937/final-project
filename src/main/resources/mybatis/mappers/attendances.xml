@@ -4,9 +4,9 @@
 
 	<insert id="addAttendance" parameterType="int">
 		insert into employee_attendances
-			(attendance_no, employee_no, working_date, start_work_time, attendances_type)
+			(attendance_no, employee_no, working_date, start_work_time)
 		values
-			(attendances_seq.nextval, #{value}, sysdate, to_char(sysdate, 'hh24:mi'), '출근')
+			(attendances_seq.nextval, #{value}, sysdate, to_char(sysdate, 'hh24:mi'))
 	</insert>
 	
 	<select id="getWeeklyAttendancesByEmpNo" parameterType="int" resultType="Attendance">
@@ -80,13 +80,17 @@
 		
 	</select>
 	
-	<update id="endAttendance" parameterType="int">
+	<update id="endAttendance" parameterType="Attendance">
 		update 
 			employee_attendances
 		set
-			end_work_time = to_char(sysdate, 'hh24:mi')
+			attendances_type = #{attendancesType},
+			end_work_time = to_char(sysdate, 'hh24:mi'),
+			worked_times = #{workedTimes},
+			overtime_worked_times = #{overtimeWorkedTimes},
+			night_worked_times = #{nightWorkedTimes}
 		where
-			working_date = (select max(working_date) from employee_attendances where employee_no = #{value})
+			attendance_no = #{no}
 	</update>
 	
 	<select id="getAdminAttendancesByEmpNo" parameterType="int" resultType="AdminAttendanceDto">

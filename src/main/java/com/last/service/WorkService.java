@@ -1,5 +1,7 @@
 package com.last.service;
 
+import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -25,7 +27,35 @@ public class WorkService {
 	
 	// 퇴근시간등록
 	public void endAttendance(int empNo) {
-		workMapper.endAttendance(empNo);
+		WorkAttendance attendance = workMapper.getTodayStartAttendancedByEmpNo(empNo);
+		
+		int workHour = 0;
+		int overHour = 0;
+		int nightHour = 0;
+		LocalDateTime now = LocalDateTime.now();
+		int hour = now.getHour();
+		if (hour < 18) {
+			workHour = hour - 9 - 1;
+			attendance.setAttendancesType("조퇴");
+		} else if (hour < 19) {
+			workHour = 8;
+			attendance.setAttendancesType("정상");
+		} else if (hour < 21) {
+			workHour = 8;
+			overHour = hour - 19;
+			attendance.setAttendancesType("연장");
+		} else {
+			workHour = 8;
+			overHour = 2;
+			nightHour = hour - 21;
+			attendance.setAttendancesType("야근");
+		}
+		
+		attendance.setWorkedTimes(workHour);
+		attendance.setOvertimeWorkedTimes(overHour);
+		attendance.setNightWorkedTimes(nightHour);
+		
+		workMapper.endAttendance(attendance);
 	}
 	
 	// 일일출근유무
@@ -64,12 +94,12 @@ public class WorkService {
 		return workMapper.getAllAdminAttendancesByOptions(param);
 	}
 
-	public void updateAttendance(WorkModifyForm workModifyForm) {
-		WorkAttendance workAttendance = new WorkAttendance();
-		BeanUtils.copyProperties(workModifyForm, workAttendance);
-		
-		workMapper.updateAttendance(workAttendance);
-		
-	}
+//	public void updateAttendance(WorkModifyForm workModifyForm) {
+//		WorkAttendance workAttendance = new WorkAttendance();
+//		BeanUtils.copyProperties(workModifyForm, workAttendance);
+//		
+//		workMapper.updateAttendance(workAttendance);
+//		
+//	}
 
 }
