@@ -1,6 +1,5 @@
 package com.last.web.request;
 
-import java.io.File;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -19,5 +18,4 @@ public class VacationRequestForm {
 	private int itemCode;
 	private String status;
 	private String reason;
-	private File uploadFile;
 }

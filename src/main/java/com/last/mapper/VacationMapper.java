@@ -58,6 +58,10 @@ public interface VacationMapper {
 
 	void updateCalculatedDays(Map<String, Object> param);
 
+	void updateVacationRequest(VacationRequest request);
+
+	void cancelVacationRequest(VacationRequest request);
+
 }
 	
 

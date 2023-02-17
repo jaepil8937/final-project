@@ -6,8 +6,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,16 +20,17 @@ import com.last.dto.VacationRequestDto;
 import com.last.service.VacationService;
 import com.last.vo.VacationDay;
 import com.last.vo.VacationItem;
-import com.last.vo.VacationRequest;
 import com.last.web.request.VacationItemRequest;
 import com.last.web.request.VacationRequestForm;
 
-@Controller
+import lombok.RequiredArgsConstructor;
 
+@Controller
+@RequiredArgsConstructor
 @RequestMapping("/vacation")
 public class VacationController {
-	@Autowired
-	private VacationService vacationService;
+	
+	private final VacationService vacationService;
 
 	@GetMapping("/setting")
 	public String setting(Model model) {
@@ -95,7 +94,10 @@ public class VacationController {
 	}
 
 	@GetMapping("/apply")
-	public String apply() {
+	public String apply(Model model) {
+		List<VacationItem> items = vacationService.getAllItems();
+		model.addAttribute("items", items);
+		
 		return "vacation/item-apply";
 	}	
 	
@@ -147,10 +149,21 @@ public class VacationController {
 
 	@PostMapping("/insert-request")
 	public String insertVacationRequest(VacationRequestForm form) {
-		VacationRequest request = new VacationRequest();
-		BeanUtils.copyProperties(form, request);
+		vacationService.insertVacationRequest(form);
 		
-		vacationService.insertVacationRequest(request);
+		return "redirect:apply";
+	}
+	
+	@PostMapping("/modify-request")
+	public String modifyVacationRequest(VacationRequestForm form) {
+		vacationService.updateVacationRequest(form);
+		
+		return "redirect:apply";
+	}
+	
+	@PostMapping("/cancel-request")
+	public String cancelVacationRequest(VacationRequestForm form) {
+		vacationService.cancelVacationRequest(form);
 		
 		return "redirect:apply";
 	}

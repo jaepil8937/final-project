@@ -13,6 +13,7 @@ import com.last.vo.VacationDay;
 import com.last.vo.VacationItem;
 import com.last.vo.VacationRequest;
 import com.last.web.request.VacationItemRequest;
+import com.last.web.request.VacationRequestForm;
 
 import lombok.RequiredArgsConstructor;
 
@@ -116,10 +117,31 @@ public class VacationService {
 		return dto;
 	}
 	
-	public void insertVacationRequest(VacationRequest request) {
+	public void insertVacationRequest(VacationRequestForm form) {
+		VacationRequest request = new VacationRequest();
+		BeanUtils.copyProperties(form, request);
+		
 		vacationMapper.insertVacationRequest(request);
 	}	
   
+	public void updateVacationRequest(VacationRequestForm form) {
+		VacationRequest request = new VacationRequest();
+		BeanUtils.copyProperties(form, request);
+		
+		request.setStatus("대기");
+		
+		vacationMapper.updateVacationRequest(request);
+	}	
+	
+	public void cancelVacationRequest(VacationRequestForm form) {
+		VacationRequest request = new VacationRequest();
+		BeanUtils.copyProperties(form, request);
+		
+		request.setStatus("취소");
+		
+		vacationMapper.cancelVacationRequest(request);
+	}
+	
     // 모든 근속연수별 휴가일수 조회
 	public List<VacationDay> getYearVacationDay() {
 		List<VacationDay> vacationDays = vacationMapper.getYearVacationDay();
@@ -145,7 +167,9 @@ public class VacationService {
 		}
 
 
-	}	
+	}
+
+
 
 
 
