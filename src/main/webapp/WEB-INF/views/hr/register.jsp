@@ -20,7 +20,14 @@
 		<div class="col-10">
 			<div class="row mb-3">
 				<div class="col-12">
-					<h2><p class="fw-bold">인사정보등록</p></h2>
+					<sec:authorize access="hasAnyRole('ROLE_ADMIN')">
+						<h2><p class="fw-bold">인사정보등록</p></h2>
+					</sec:authorize>
+				</div>
+				<div class="col-12">
+					<sec:authorize access="hasAnyRole('ROLE_EMPLOYEE')">
+						<h2><p class="fw-bold">인사정보</p></h2>
+					</sec:authorize>
 				</div>
 			</div>
 			<div class="row mb-3">
@@ -50,7 +57,7 @@
 			
 			<div class="row mb-3">
 				<div class="col-12">
-					<table class="table">
+					<table class="table" id="table-emp-list">
 						<colgroup>
 							<col width=""/>
 							<col width=""/>
@@ -63,31 +70,29 @@
 						</colgroup>
 						<thead>
 							<tr>
-								<th  class="table-primary">사원번호</th>
+								<th>사원번호</th>
 								<th>성명</th>
 								<th>직급</th>
 								<th>부서</th>
 								<th>입사일자</th>
-								<th>퇴사일자</th>
 								<th>핸드폰</th>
 								<th>회사이메일</th>
-								<th>주소</th>
-								<th>메모</th>
 							</tr>
 						</thead>
 						<tbody>
-							<c:forEach var="emp" items="${emp }">
-								<td>emp.no</td>
-								<td>emp.name</td>
-								<td>emp.positionNo</td>
-								<td>emp.deptNo</td>
-								<td>emp.hireDate</td>
-								<td>emp.retirementDate</td>
-								<td>emp.mobileTel</td>
-								<td>emp.extEmail</td>
-								<td>emp.zipcode</td>
-								<td>emp.memo</td>
+						<c:if test="${not empty employees }">
+							<c:forEach var="emp" items="${employees }">
+							<tr data-emp-no="${emp.employeeNo }">
+								<td>${emp.employeeNo} </td>
+								<td>${emp.name} </td>
+								<td>${emp.positionName} </td>
+								<td>${emp.deptName} </td>
+								<td><fmt:formatDate value="${emp.hireDate}" /> </td>
+								<td>${emp.mobileTel} </td>
+								<td>${emp.comEmail} </td>
+							</tr>
 							</c:forEach>
+						</c:if>
 						</tbody>
 					</table>
 				</div>
@@ -126,57 +131,57 @@
 										<input type="file" class="form-control form-control-sm" name="file1">	
 									</td>	
 									<th class="table-secondary text-end">사원번호</th>
-									<td><input type="text" class="form-control form-control-sm"  style="width: 130px;" name="employeeNo"/></td>
+									<td><input type="text" class="form-control form-control-sm"  style="width: 130px;" name="employeeNo" value="${emp.employeeNo }"/></td>
 									<th class="table-secondary text-end">비밀번호</th>
-									<td colspan="2"><input type="text" class="form-control form-control-sm"  style="width: 130px;" name="password"/></td>	
+									<td colspan="2"><input type="text" class="form-control form-control-sm"  style="width: 130px;" name="password" value="${emp.password }"/></td>	
 								</tr>
 								<tr>
 									<th class="table-secondary text-end">성명</th>
-									<td><input type="text" class="form-control form-control-sm"  style="width: 130px;" name="name"/></td>
+									<td><input type="text" class="form-control form-control-sm"  style="width: 130px;" name="name" value="${emp.name }" /></td>
 									<th class="table-secondary text-end">생년월일</th>
-									<td colspan="2"><input type="date" class="form-control form-control-sm"  style="width: 130px;" name="birthday"/></td>
+									<td colspan="2"><input type="date" class="form-control form-control-sm"  style="width: 130px;" name="birthday" value="${emp.birthday }"/></td>
 								</tr>
 								<tr>
 									<th class="table-secondary text-end">성별</th>
-									<td><input class="form-check-input" type="radio" name="gender" value="M"  id="flexRadioDefault1" checked >
+									<td><input class="form-check-input" type="radio" name="gender" value="M"  id="flexRadioDefault1" ${emp.employeeRoleName eq 'ROLE_ADMIN' ? 'checked' : '' } >
 									<label class="form-check-label" for="flexRadioDefault1">남</label>
-									<input class="form-check-input" type="radio" name="gender" value="F" id="flexRadioDefault1" >
+									<input class="form-check-input" type="radio" name="gender" value="F" id="flexRadioDefault1" ${emp.employeeRoleName eq 'ROLE_ADMIN' ? 'checked' : '' }>
 	  								<label class="form-check-label" for="flexRadioDefault2">여</label>
 									</td>	
 									
 								<tr>
 									<th class="table-secondary text-end">메모</th>
-									<td colspan="4"><textarea class="form-control" rows="3" name="memo" ></textarea></td>
+									<td colspan="4"><textarea class="form-control" rows="3" name="memo" value="${emp.memo }"></textarea></td>
 								</tr>
 								<tr>
 									<th class="table-secondary text-end">회사전화</th>
-									<td colspan="1"><input type="text" class="form-control form-control-sm"  style="width: 130px;" name="comTel"/></td>
+									<td colspan="1"><input type="text" class="form-control form-control-sm"  style="width: 130px;" name="comTel" value="${emp.comTel }"/></td>
 									<th class="table-secondary text-end">자택전화</th>
-									<td colspan="1"><input type="text" class="form-control form-control-sm"  style="width: 130px;" name="homeTel"/></td>
+									<td colspan="1"><input type="text" class="form-control form-control-sm"  style="width: 130px;" name="homeTel" value="${emp.homeTel }"/></td>
 									<th class="table-secondary text-end">핸드폰</th>
-									<td colspan="1"><input type="text" class="form-control form-control-sm"  style="width: 130px;" name="mobileTel"/></td>
+									<td colspan="1"><input type="text" class="form-control form-control-sm"  style="width: 130px;" name="mobileTel" value="${emp.mobileTel }"/></td>
 								</tr>
 								<tr>
 									<th class="table-secondary text-end">회사이메일</th>
-									<td colspan="5"><input type="text" class="form-control form-control-sm"  style="width: 600px;" name="comEmail"/></td>
+									<td colspan="5"><input type="text" class="form-control form-control-sm"  style="width: 600px;" name="comEmail" value="${emp.comEmail }"/></td>
 								</tr>
 								<tr>
 									<th class="table-secondary text-end">외부이메일</th>
-									<td colspan="5"><input type="text" class="form-control form-control-sm"  style="width: 600px;" name="extEmail"/></td>
+									<td colspan="5"><input type="text" class="form-control form-control-sm"  style="width: 600px;" name="extEmail" value="${emp.extEmail }"/></td>
 								</tr>
 								
 								<tr>
 									<th class="table-secondary text-end" rowspan="3">주소</th>
 									<td colspan="5">
-										<input type="text" class="form-control form-control-sm d-inline-block"  style="width: 130px;" name="zipcode" readonly="readonly" />
+										<input type="text" class="form-control form-control-sm d-inline-block"  style="width: 130px;" name="zipcode" readonly="readonly" value="${emp.zipcode }" />
 										<button type="button" class="btn btn-primary btn-sm" id="btn-search-postcode" >주소찾기</button>
 									</td>
 								</tr>
 								<tr>
-									<td colspan="5"><input type="text" class="form-control form-control-sm" name="basicAddress" readonly="readonly" /></td>
+									<td colspan="5"><input type="text" class="form-control form-control-sm" name="basicAddress" readonly="readonly" value="${emp.basicAddress }"/></td>
 								</tr>
 								<tr>
-									<td colspan="5"><input type="text" class="form-control form-control-sm" name="detailAddress"  /></td>
+									<td colspan="5"><input type="text" class="form-control form-control-sm" name="detailAddress" value="${emp.detailAddress }" /></td>
 								</tr>			
 								<tr>
 									
@@ -187,9 +192,10 @@
 										</select>
 									</td>
 									<th class="table-secondary text-end">보유권한</th>
-									<td colspan="3"><input class="form-check-input" type="radio" name="employeeRoleName" id="flexRadioDefault2" value="ROLE_ADMIN" checked>
+									<td colspan="3">
+									<input class="form-check-input" type="radio" name="employeeRoleName" id="flexRadioDefault2" value="ROLE_ADMIN" ${emp.employeeRoleName eq 'ROLE_ADMIN' ? 'checked' : '' }>
 									<label class="form-check-label" for="flexRadioDefault2">관리자</label>
-									<input class="form-check-input" type="radio" name="employeeRoleName" id="flexRadioDefault2" value="ROLE_EMPLOYEE" >
+									<input class="form-check-input" type="radio" name="employeeRoleName" id="flexRadioDefault2" value="ROLE_EMPLOYEE" ${emp.employeeRoleName eq 'ROLE_EMPLOYEE' ? 'checked' : '' }>
 	  								<label class="form-check-label" for="flexRadioDefault2">직원</label></td>
 								</tr>
 								<tr>
@@ -197,31 +203,45 @@
 									<td>
 										<select style="width: 130px;" name="deptNo"/>
 											<c:forEach var="dept" items="${departments}">
-												<option value="${dept.deptNo}"> ${dept.deptName}</option>
+												<option value="${dept.deptNo}" ${emp.deptNo eq dept.deptNo ? 'selected' : '' }> ${dept.deptName}</option>
 											</c:forEach>
 										</select>
 									</td>
 									<th class="table-secondary text-end">입사일자</th>
-									<td colspan="3"><input type="date" id="start-date" name="hireDate"  style="text-align:center; width:130px" /></td>	
+									<td colspan="3"><input type="date" id="start-date" name="hireDate"  style="text-align:center; width:130px" ${emp.employeeRoleName eq 'ROLE_EMPLOYEE' ? 'readOnly' : ''}/></td>	
 								</tr>
 								<tr>
 									<th class="table-secondary text-end">직급</th>
 									<td>
-										<select style="width: 130px;" name="positionNo"/>
+										<select style="width: 130px;" name="positionNo" />
 											<c:forEach var="position" items="${positions}">
-												<option value="${position.positionNo}"> ${position.positionName}</option>
+												<c:choose>
+													<c:when test="${emp.employeeRoleName eq 'ROLE_EMPLOYEE' and emp.positionNo ne position.positionNo }">
+														<option value="${position.positionNo}" disabled> ${position.positionName}</option>
+													</c:when>
+													<c:otherwise>
+														<option value="${position.positionNo}"> ${position.positionName}</option>
+													</c:otherwise>
+												</c:choose>
 											</c:forEach>
 										</select>
 									</td>
 									<th class="table-secondary text-end">퇴사일자</th>
-									<td colspan="3"><input type="date" id="end-date" name="retirementDate"  style="text-align:center; width:130px"/></td>
+									<td colspan="3"><input type="date" id="end-date" name="retirementDate"  style="text-align:center; width:130px" ${emp.employeeRoleName eq 'ROLE_EMPLOYEE' ? 'readOnly' : ''}/></td>
 								</tr>
 								<tr>
 									<th class="table-secondary text-end">호봉</th>
 									<td>
 										<select style="width: 130px;" name="hobong"/>
 											<c:forEach var="grade" items="${grade}">
-												<option value="${grade.hobongGrade}"> ${grade.hobongGrade}</option>
+												<c:choose>
+													<c:when test="${emp.employeeRoleName eq 'ROLE_EMPLOYEE' and emp.hobong ne grade.hobongGrade }">
+														<option value="${grade.hobongGrade}" disabled> ${grade.hobongGrade}</option>
+													</c:when>
+													<c:otherwise>
+														<option value="${grade.hobongGrade}"> ${grade.hobongGrade }</option>
+													</c:otherwise>
+												</c:choose>
 											</c:forEach>
 											
 										</select>
@@ -252,6 +272,12 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
 <script type="text/javascript">
 $(function() {
+	
+	$("#table-emp-list tbody tr").click(function() {
+		var empNo = $(this).attr("data-emp-no");
+		alert(empNo)
+	});
+	
 	// name이 file1이 파일선택 필드의 값이 변경되면 실행되는 콜백함수를 등록한다.
 	document.querySelector('[name=file1]').addEventListener('change', function(event) {
 		// FileReader객체를 생성한다.

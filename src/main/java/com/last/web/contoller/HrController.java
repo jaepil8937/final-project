@@ -22,7 +22,10 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.last.dto.CertificateDto;
 import com.last.dto.EmployeeDto;
+import com.last.dto.EmployeebasicDto;
 import com.last.dto.PersonnelDto;
+import com.last.security.AuthenticatedUser;
+import com.last.security.LoginEmployee;
 import com.last.service.EmployeeService;
 import com.last.vo.Department;
 import com.last.vo.Employees;
@@ -118,15 +121,23 @@ public class HrController {
 
 	
 	@GetMapping("/register")     // 인사정보등록
-	public String register(Model model) {
+	public String register(@AuthenticatedUser LoginEmployee LoginEmployee, Model model) {
+		
 		List<Position> positions = employeeService.getAllPosition();
 		List<Department> departments = employeeService.getAllDepartment();
-		List<Employees> employees = employeeService.getAllEmployee();
 		List<Grades> grades = employeeService.getAllGrade();
+
+		if ("ROLE_ADMIN".equals(LoginEmployee.getRoleName())) {
+			List<Employees> employees = employeeService.getAllEmployee();
+			model.addAttribute("employees", employees);
+		} else {
+			Employees employees = employeeService.getEmployeesByNo(LoginEmployee.getNo());
+			model.addAttribute("emp", employees);
+		}
+	
 
 		model.addAttribute("positions", positions);
 		model.addAttribute("departments", departments);
-		model.addAttribute("employees", employees);
 		model.addAttribute("grade", grades);
 		return "hr/register";
 	}
@@ -148,6 +159,8 @@ public class HrController {
 
 		return "hr/register";
 	}
+	
+
 
 }
 
