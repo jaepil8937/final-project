@@ -163,6 +163,16 @@
 				(#{employeeNo}, #{password}, #{name}, #{gender}, #{birthday}, #{comTel}, #{homeTel}, #{mobileTel}, #{comEmail}, #{extEmail}, #{zipcode}, #{basicAddress}, #{detailAddress}, #{hireDate}, #{retirementDate}, #{employeeStatus}, #{employeeRoleName}, #{memo}, #{deptNo}, #{positionNo}, #{hobong}, #{photo})
 	</insert>
 
-
+	<select id="getEmployeesByNo" parameterType="int" resultType="Employee">
+		select
+			employee_no as empNo,
+			employee_password as password,
+			employee_name as name,
+			employee_role_name as employeeRoleName
+		from
+			employees
+		where
+			employee_no = #{value}
+	</select>
 
 </mapper>

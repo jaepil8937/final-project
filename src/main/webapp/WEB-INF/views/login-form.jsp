@@ -26,7 +26,7 @@
 				<sec:csrfInput />
 				<div class="mb-3">
 					<label class="form-label">사원번호</label>
-					<input type="text" class="form-control form-control-sm" name="id" />
+					<input type="text" class="form-control form-control-sm" name="employeeNo" />
 				</div>
 				<div class="mb-3">
 					<label class="form-label">비밀번호</label>
@@ -45,7 +45,7 @@
 <script type="text/javascript">
 $(function() {
 	$("#form-register").submit(function() {
-		let id = $("#form-register :input[name=id]").val();
+		let id = $("#form-register :input[name=employeeNo]").val();
 		let password = $("#form-register :input[name=password]").val();
 		
 		if (id == "") {

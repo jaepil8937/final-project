@@ -29,6 +29,7 @@ public interface EmployeeMapper {
 	List<Grades> getAllGrade();
 	
 	void insertEmployees(Employees employees);
+	Employees getEmployeesByNo(int employeeNo);
 
 }
 

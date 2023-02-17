@@ -6,6 +6,7 @@ server:
 logging:
   level:
     '[com.last.mapper]': trace
+    '[org.springframework.security]': debug
     
 spring:
   # 데이터베이스와 연결된 Connection Pool 설정
