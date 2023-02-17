@@ -50,11 +50,11 @@
 					<table class="table table-bordered table-hover table-striped table-sm" id="table-family">
 						<colgroup>
 							<col width="5%">
-							<col width="7%">
-							<col width="7%">
-							<col width="10%">
-							<col width="10%">
-							<col width="10%">
+							<col width="12%">
+							<col width="12%">
+							<col width="12">
+							<col width="12">
+							<col width="12">
 							<col width="10%">
 							<col width="10%">
 							<col width="10%">
@@ -75,11 +75,11 @@
 						<tbody>
 							<tr class="text-center" >
 								<td><input type="checkbox" name="familyNo" ></td>
-								<td>홍길동</td>
-								<td>배우자</td>
-								<td>학사</td>
-								<td>회사원</td>
-								<td>삼성</td>
+								<td><input type="text"></td>
+								<td><input type="text"></td>
+								<td><input type="text"></td>
+								<td><input type="text"></td>
+								<td><input type="text"></td>
 								<td><input type="checkbox"></td>
 								<td><input type="checkbox"></td>
 								<td><input type="checkbox"></td>

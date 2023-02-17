@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.last.dto.CertificateDto;
 import com.last.dto.EmployeeDto;
+import com.last.dto.EmployeebasicDto;
 import com.last.dto.PersonnelDto;
 import com.last.mapper.EmployeeMapper;
 import com.last.vo.Department;
@@ -61,5 +62,11 @@ public class EmployeeService {
 		
 		employeeMapper.insertEmployees(employees);
 	}
+	
+	public Employees getEmployeesByNo(int empNo) {
+		return employeeMapper.getEmployeesByNo(empNo);
+	}
+
+	
 	
 }
