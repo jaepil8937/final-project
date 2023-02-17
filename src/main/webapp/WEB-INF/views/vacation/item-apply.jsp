@@ -170,7 +170,7 @@
 						<button type="button" id="clean-form" class="btn btn-success btn-sm" style="float:right;" id="">신규/초기화</button>
 				</div>
 			</div>
-			<form method="post" action="insert-request" id="form-register">
+			<form method="post" action="" id="form-register">
 				<table class="table">
 					<tr class="fw-bold">
 						<td>휴가신청일 <input type="date" id="currentDate" name="requestDate"  style="text-align:center; width:130px" readOnly/></td>
@@ -192,7 +192,9 @@
 				</table>
 				<table class="table">
 					<tr class="fw-bold">
-						<td>휴가사유 <input type="text" name="reason" id="vacation-reason" style="width:500px;"></td>
+						<td>휴가사유 <input type="text" name="reason" id="vacation-reason" style="width:500px;">
+							<input type="hidden" class="d-none" name="no" id="vacation-no">
+						</td>
 					</tr>
 				</table>
 				<div class="row mb-2">
@@ -351,6 +353,7 @@ $(function() {
 		    	$("select[name=vacation-item-name]").val(data.itemName);
 		    	$("#vacation-status").val(data.status);
 		    	$("#vacation-reason").val(data.reason);
+		    	$("#vacation-no").val(data.no);
 		    	
 		    	$("#modify-vacation-info").removeClass("d-none");
 		    	$("#cancel-vacation-info").removeClass("d-none");
@@ -411,7 +414,7 @@ $(function() {
     	$("#modify-vacation-info").addClass("d-none");
     	$("#cancel-vacation-info").addClass("d-none");
     	$("#register-vacation-info").removeClass("d-none");
-	})
+	});
 	
 	$("#register-vacation-info").click(function() {
 		let $startDate = $("#vacation-start-date").val();
@@ -431,10 +434,69 @@ $(function() {
 		if (!$reason) {
 			alert("휴가 사유를 입력하세요.");
 			return false;
-		}		
+		}
 		
+		let insConfirm = confirm("휴가를 신청하시겠습니까?")
+		if (insConfirm) {
+			alert("휴가신청이 완료되었습니다.");
+		} else {
+			alert("휴가신청이 취소되었습니다.");
+		}
+		
+		$("#form-register").attr("action", "insert-request");
 		$("#form-register").trigger("submit");
-	})
+	});
+	
+	$("#modify-vacation-info").click(function() {
+		let $startDate = $("#vacation-start-date").val();
+		let $endDate = $("#vacation-end-date").val();
+		let $reason = $("#vacation-reason").val();
+		
+		if (!$startDate) {
+			alert("휴가 시작일을 입력하세요.");
+			return false;
+		}
+		
+		if (!$endDate) {
+			alert("휴가 종료일을 입력하세요.");
+			return false;
+		}
+		
+		if (!$reason) {
+			alert("휴가 사유를 입력하세요.");
+			return false;
+		}
+		
+		let mdfConfirm = confirm("휴가 신청 내역을 수정하시겠습니까?")
+		if (mdfConfirm) {
+			alert("내역이 수정되었습니다. \n관리자가 '승인'시 휴가 사용이 가능합니다.");
+		}
+		
+		$("#form-register").attr("action", "modify-request");
+		$("#form-register").trigger("submit");
+	});
+	
+	$("#cancel-vacation-info").click(function() {
+		let $status = $("#vacation-status").val();
+		
+		if ($status === "취소") {
+			alert("이미 취소된 휴가 신청 내역입니다.");
+			return false;
+		}
+		
+		if ($status === "승인") {
+			alert("결재상태가 '대기', '반려'상태인 휴가신청만 삭제할 수 있습니다.");
+			return false;
+		}
+		
+		let delConfirm = confirm("휴가 신청을 취소하시겠습니까?")
+		if (mdfConfirm) {
+			alert("휴가신청내역이 취소되었습니다.");
+		}
+		
+		$("#form-register").attr("action", "cancel-request");
+		$("#form-register").trigger("submit");
+	});
 });
 </script>
 </body>

@@ -242,4 +242,32 @@
 		values
 			(vacation_request_histories_seq.nextval, sysdate, to_date(#{startDate}, 'YYYY-MM-DD'), to_date(#{endDate}, 'YYYY-MM-DD'), #{days}, #{reason}, #{status}, #{itemCode} , 1002)
 	</insert>
+	
+	<!-- 휴가 신청 수정 -->
+	<update id="updateVacationRequest" parameterType="VacationRequest">
+		update 
+			vacation_request_histories
+		set
+			request_date = sysdate,
+			start_date = #{startDate},
+			end_date = #{endDate},
+			days = #{days},
+			reason = #{reason},
+			request_status = #{status},
+			item_code = #{itemCode}
+		where
+			request_no = #{no}
+	</update>
+	
+	<!-- 휴가 신청 취소 -->
+	<update id="cancelVacationRequest" parameterType="VacationRequest">
+		update 
+			vacation_request_histories
+		set
+			request_date = sysdate,
+			reason = #{reason},
+			request_status = #{status}
+		where
+			request_no = #{no}
+	</update>
 </mapper>
