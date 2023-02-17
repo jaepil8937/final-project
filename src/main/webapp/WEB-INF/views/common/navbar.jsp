@@ -4,19 +4,19 @@
 		<ul class="navbar-nav me-auto">
 			<li class="nav-item"><a class="nav-link ${menu eq 'home' ? 'active' : '' }" href="/home">인사관리시스템</a></li>
      		&emsp;&emsp;&emsp;&emsp;&emsp;
-			<sec:authorize access="hasAnyRole('ROLE_ADMIN', 'ROLE_USER')">
+			<sec:authorize access="hasAnyRole('ROLE_ADMIN', 'ROLE_EMPLOYEE')">
 				<a class="nav-link ${menu eq 'employee' ? 'active' : '' }" href="/hr/info" role="button">
 					인사
 				</a>
 			</sec:authorize>	
 			&nbsp;
-			<sec:authorize access="hasAnyRole('ROLE_ADMIN', 'ROLE_USER')">	
+			<sec:authorize access="hasAnyRole('ROLE_ADMIN', 'ROLE_EMPLOYEE')">	
 				<a class="nav-link ${menu eq 'attendences' ? 'active' : '' }" href="/work/day" role="button">
 					근무
 				</a>
 			</sec:authorize>
 			&nbsp;
-			<sec:authorize access="hasAnyRole('ROLE_ADMIN')">
+			<sec:authorize access="hasAnyRole('ROLE_EMPLOYEE')">
 				<a class="nav-link ${menu eq 'pay' ? 'active' : '' }" href="#" role="button">
 					급여
 				</a>

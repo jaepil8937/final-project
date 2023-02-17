@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,6 +23,8 @@ import com.last.web.request.EmployeeRegisterForm;
 @Transactional
 public class EmployeeService {
 
+	@Autowired
+	private PasswordEncoder passwordEncoder;
 	
 	@Autowired
 	private EmployeeMapper employeeMapper;
@@ -54,6 +57,7 @@ public class EmployeeService {
 	public void saveEmployee(EmployeeRegisterForm form) {
 		Employees employees = new Employees();
 		BeanUtils.copyProperties(form, employees);
+		employees.setPassword(passwordEncoder.encode(employees.getPassword()));
 		
 		employeeMapper.insertEmployees(employees);
 	}

@@ -187,9 +187,9 @@
 										</select>
 									</td>
 									<th class="table-secondary text-end">보유권한</th>
-									<td colspan="3"><input class="form-check-input" type="radio" name="employeeRoleName" id="flexRadioDefault2" checked>
+									<td colspan="3"><input class="form-check-input" type="radio" name="employeeRoleName" id="flexRadioDefault2" value="ROLE_ADMIN" checked>
 									<label class="form-check-label" for="flexRadioDefault2">관리자</label>
-									<input class="form-check-input" type="radio" name="employeeRoleName" id="flexRadioDefault2" >
+									<input class="form-check-input" type="radio" name="employeeRoleName" id="flexRadioDefault2" value="ROLE_EMPLOYEE" >
 	  								<label class="form-check-label" for="flexRadioDefault2">직원</label></td>
 								</tr>
 								<tr>

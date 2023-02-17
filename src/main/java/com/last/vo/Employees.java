@@ -4,11 +4,13 @@ import java.util.Date;
 
 import org.apache.ibatis.type.Alias;
 
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
+@Data
 @Alias("employee")
 public class Employees {
 	
