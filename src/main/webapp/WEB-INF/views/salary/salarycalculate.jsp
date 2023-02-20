@@ -1,5 +1,4 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" trimDirectiveWhitespaces="true" %>
-<%@ include file="../common/tags.jsp" %>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -41,7 +40,7 @@
 		height: 24px;
 	}
 	
-	#auto-calculate, #btn-save {
+	#auto-calculate, #btn-save, #btn-delete {
 		width:80px;
 	}
 </style>
@@ -68,6 +67,7 @@
 							<label>귀속연월</label> <input type="month" name="basemonth" value="${param.basemonth }"/> &nbsp; 
 							<label>정산기간</label> <input type="date" name="startdate" value="${param.startdate }"/> ~ <input type="date" name="enddate" value="${param.enddate }"/> &nbsp; 
 							<label>급여지급일</label> <input type="date" name="paydate" value="${param.paydate }"/> &nbsp; 
+							<button type="submit" class="btn btn-danger btn-sm" id="btn-search">검색</button>
 					</div>	
 					<div class="row mt-4">
 						<div class="col-7">
@@ -191,8 +191,8 @@
 							</div>
 							<button type="button" class="btn btn-warning btn-sm" id="auto-calculate">자동계산</button>
 							&emsp;&emsp;&nbsp;
-							<button class="btn btn-primary btn-sm" id="btn-save">저장</button>
-							<button type="button" class="btn btn-secondary btn-sm" id="btn-delete">내용지우기</button>
+							<button type="button" class="btn btn-primary btn-sm" id="btn-save">저장</button>
+							<button type="button" class="btn btn-secondary btn-sm" id="btn-delete">삭제하기</button>
 						</div>
 					</div>
 				</div>	
@@ -203,43 +203,59 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
 <script>
-$(function() {
+$(function() {	
 	$("input[name=basemonth]").change(function() {
-		$("#form-salary").trigger("submit")
-	})
-	$("input[name=paydate]").change(function() {
-		$("#form-salary").trigger("submit")
-	})
-	$("input[name=startdate]").change(function() {
-		$("#form-salary").trigger("submit")
-	})
-	$("input[name=enddate]").change(function() {
-		$("#form-salary").trigger("submit")
+		$("input[name=startdate]").val("");
+		$("input[name=enddate]").val("");
+		$("input[name=paydate]").val("");
+		$("#form-salary").trigger("submit");
 	})
 	
+	let selectedEmployeeNo;
+	let selectedMonth;
+	let selectedTotalSalary;   
+	let selectedDeductionSalary;
+	let selectedRealSalary;
+	let selectedCompleted;
+	
+	// 급여정보 조회하기
 	$("#table-salaries a[data-employee-no]").click(function(event) {
 		clearTable();
 		event.preventDefault();
 		$(this).closest("tr").addClass("table-primary")
     	 	   .siblings().removeClass("table-primary");
-		let no = $(this).attr('data-employee-no');
+		let no = $(this).attr('data-employee-no');              
 		let month = $("input[name=basemonth]").val();
-		let completed = $(this).attr('data-salary-calculated');
+		let completed = $(this).attr('data-salary-calculated');    
+		let totalSalary = $(this).closest("tr").find("td:eq(3)");      // 선택된 지급총액
+		let deductionSalary = $(this).closest("tr").find("td:eq(4)");  // 선택된 공제총액
+		let realSalary = $(this).closest("tr").find("td:eq(5)");       // 선택된 실지급액
 		
 		if (completed == "Y") {
 			setSalaryHistory(no, month);
 		} else if (completed == "N") {
 			setSalaryBasicInfo(no);
 		}
+		selectedEmployeeNo = no;
+		selectedMonth = month;
+		selectedTotalSalary = totalSalary;  
+		selectedDeductionSalary = deductionSalary;
+		selectedRealSalary = realSalary;
+		selectedCompleted = completed;
 	})
 	
+	// 급여계산 - 사원 급여 정보 가져오기
 	function setSalaryHistory(no, month) {
 		$.ajax({
 			type: 'GET',
-			url: '/salary/calculateDetail.json',
+			url: 'http://localhost/salary/calculateDetail.json',
 			data: {empNo : no, basemonth : month},
 			dataType: 'json',
 			success: function(salary) {
+				$("input[name=basemonth]").val(salary.baseYearMonth);
+				$("input[name=startdate]").val(salary.startDate);
+				$("input[name=enddate]").val(salary.endDate);
+				$("input[name=paydate]").val(salary.payDate);
 				let baseSalary = new Number(salary.baseSalary).toLocaleString();
 				$("#base-salary").val(baseSalary);
 				let incomeTax = new Number(salary.incomeTax).toLocaleString();
@@ -276,10 +292,11 @@ $(function() {
 		})
 	}
 	
+	// 급여계산 - 급여내역 없는 사원의 기본정보 가져오기
 	function setSalaryBasicInfo(no) {
 		$.ajax({
 			type: 'GET',
-			url: '/salary/basicInfo.json',
+			url: 'http://localhost/salary/basicInfo.json',
 			data: {empNo : no},
 			dataType: 'json',
 			success: function(salaryInfo) {
@@ -308,7 +325,135 @@ $(function() {
 		$("#real-salary").text(0);
 	}
 	
-
+	// 급여정보 저장하기
+	$("#btn-save").click(function() {
+		
+		let baseYearMonth = $("input[name=basemonth]").val();
+		let startDate = $("input[name=startdate]").val();
+		let endDate = $("input[name=enddate]").val();
+		let payDate = $("input[name=paydate]").val();
+		if (baseYearMonth=="") {
+			alert("귀속연월을 선택하세요.");
+			return false;
+		}
+		if (startDate=="") {
+			alert("정산시작기간을 선택하세요.");
+			return false;
+		}
+		if (endDate=="") {
+			alert("정산마감기간을 선택하세요.");
+			return false;
+		}
+		if (payDate=="") {
+			alert("급여지급일을 선택하세요.");
+			return false;
+		}
+		let salary = {
+			employeeNo : selectedEmployeeNo,	
+			baseYearMonth : $("input[name=basemonth]").val(),
+			startDate : $("input[name=startdate]").val(),
+			endDate : $("input[name=enddate]").val(),
+			payDate : $("input[name=paydate]").val(),
+			baseSalary : $("#base-salary").val().replaceAll(",", ""),
+			overtimeSalary : $("#overtime-salary").val().replaceAll(",", ""),
+			nightSalary : $("#night-salary").val().replaceAll(",", ""),
+			holidaySalary : $("#holiday-salary").val().replaceAll(",", ""),
+			rewardSalary : $("#reward-salary").val().replaceAll(",", ""),
+			mealSalary : $("#meal-salary").val().replaceAll(",", ""),
+			businessSalary : $("#business-salary").val().replaceAll(",", ""),
+			incomeTax : $("#income-tax").val().replaceAll(",", ""),
+			residenceTax : $("#residence-tax").val().replaceAll(",", ""),
+			pension : $("#national-pension").val().replaceAll(",", ""),
+			healthInsurance : $("#health-insurance").val().replaceAll(",", ""),
+			longtermInsurance : $("#longterm-insurance").val().replaceAll(",", ""),
+			employmentInsurance : $("#employment-insurance").val().replaceAll(",", "")
+		}
+		
+		let saveSalary = JSON.stringify(salary);
+		
+		// 급여내역 없는 사원의 급여 저장하기와 급여내역 있는 사원의 급여 수정하기
+		if (selectedCompleted == "Y") {
+			updateSalary();
+		} else if (selectedCompleted == "N") {
+			storeSalary();
+		}
+		function storeSalary(){
+			$.ajax({
+				type : 'POST',
+				url : 'http://localhost/salary/saveSalary',
+				data : saveSalary,
+				contentType : 'application/json',
+				dataType : 'json',
+				success : function(savedSalary) {
+					let totalSalary = new Number(savedSalary.totalSalary).toLocaleString();
+					selectedTotalSalary.text(totalSalary);           
+					let deductionSalary = new Number(savedSalary.deductionSalary).toLocaleString();
+					selectedDeductionSalary.text(deductionSalary);
+					let realSalary = new Number(savedSalary.realSalary).toLocaleString();
+					selectedRealSalary.text(realSalary);
+				}
+			})
+		alert("저장되었습니다.");
+		}	
+		function updateSalary(){
+			$.ajax({
+				type : 'PUT',
+				url : 'http://localhost/salary/updateSalary',
+				data : saveSalary,
+				contentType : 'application/json',
+				dataType : 'json',
+				success : function(updatedSalary) {
+					let totalSalary = new Number(updatedSalary.totalSalary).toLocaleString();
+					selectedTotalSalary.text(totalSalary);         
+					let deductionSalary = new Number(updatedSalary.deductionSalary).toLocaleString();
+					selectedDeductionSalary.text(deductionSalary);
+					let realSalary = new Number(updatedSalary.realSalary).toLocaleString();
+					selectedRealSalary.text(realSalary);
+				}
+			})
+		alert("수정되었습니다.");	
+		}
+	})
+	
+	
+	// 급여내용 삭제하기
+	$("#btn-delete").click(function() {
+		let answer = confirm('삭제하시겠습니까?');
+		if (answer) {
+			$.ajax({
+				type: "GET",
+				url: "/salary/deleteSalary",
+				data: {empNo : selectedEmployeeNo, basemonth : selectedMonth},
+				dataType: 'json',
+				success: function(response) {
+					$("input[name=startdate]").val("");
+					$("input[name=enddate]").val("");
+					$("input[name=paydate]").val("");
+					$("#base-salary").val("");
+					$("#income-tax").val("");
+					$("#meal-salary").val("");
+					$("#residence-tax").val("");
+					$("#overtime-salary").val("");
+					$("#national-pension").val("");
+					$("#night-salary").val("");
+					$("#health-insurance").val("");
+					$("#holiday-salary").val("");
+					$("#longterm-insurance").val("");
+					$("#business-salary").val("");
+					$("#employment-insurance").val("");
+					$("#reward-salary").val("");
+					$("#total-salary").val("");
+					$("#deduction-salary").val("");
+					$("#real-salary").text("");
+					selectedTotalSalary.text("0"); 
+					selectedDeductionSalary.text("0");
+					selectedRealSalary.text("0");
+				}
+			})
+		}
+	})
+	
+	
 })
 
 </script>

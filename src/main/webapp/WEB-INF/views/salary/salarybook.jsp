@@ -1,5 +1,4 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" trimDirectiveWhitespaces="true"%>
-<%@ include file="../common/tags.jsp" %>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -9,9 +8,8 @@
 <title>급여대장</title>
 <style>
 	.table {
-		display: block;
-		max-height: 430px; 
-		overflow-y: scroll;
+		max-height: 500px; 
+		overflow: scroll;
 		white-space: nowrap;   <%-- 자식 엘리먼트가 한줄로 정렬되게 하는 요소 --%>
 		border-collapse: collapse; 
 		border-spacing: 0; 
@@ -67,7 +65,7 @@
 					    <a class="nav-link active" href="salarybook">급여대장</a>
 					  </li>
 					  <li class="nav-item">
-					    <a class="nav-link" href="#">기간별 급여현황조회</a>
+					    <a class="nav-link" href="salaryperiod">기간별 급여현황</a>
 					  </li>
 					</ul>
 				</div>

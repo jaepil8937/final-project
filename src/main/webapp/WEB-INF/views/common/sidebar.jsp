@@ -67,9 +67,7 @@
 					<li><a class="dropdown-item ${side eq 'salary-calculate' ? 'text-light fw-bold' : '' }" href="/salary/salarycalculate">급여계산</a></li>
 					<li><a class="dropdown-item ${side eq 'salary-check' ? 'text-light fw-bold' : '' }" href="/salary/salarycheck">급여조회</a></li>
 					<li><a class="dropdown-item ${side eq 'salary-book' ? 'text-light fw-bold' : '' }" href="/salary/salarybook">급여대장/기간별 급여현황</a></li>
-					<li><a class="dropdown-item ${side eq '7' ? 'text-light fw-bold' : '' }" href="/salary/salarycheck">국민연금</a></li>
-					<li><a class="dropdown-item ${side eq '7' ? 'text-light fw-bold' : '' }" href="/salary/salarycheck">건강보험</a></li>
-					<li><a class="dropdown-item ${side eq '7' ? 'text-light fw-bold' : '' }" href="/salary/salarycheck">고용보험</a></li>
+					<li><a class="dropdown-item ${side eq '7' ? 'text-light fw-bold' : '' }" href="/salary/national-pension">국민연금/건강보험/고용보험</a></li>
 				</ul>
 			</li>	
 		</ul>
