@@ -12,7 +12,7 @@ import lombok.Setter;
 @Setter
 public class EmployeeDto {
 
-	private String no;				// 사원번호
+	private int no;					// 사원번호
 	private String name;			// 성명
 	private Date hire;				// 입사일자
 	private String mobileTel;		// 핸드폰
@@ -20,6 +20,6 @@ public class EmployeeDto {
 	private String basicAddress;	// 주소
 	private String status;			// 재직상태
 	
-	private String deptName;		// 부서번호
-	private String positionName;	// 직책번호
+	private String deptName;		// 부서이름
+	private String positionName;	// 직책이름
 }

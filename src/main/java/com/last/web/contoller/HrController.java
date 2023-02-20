@@ -32,6 +32,7 @@ import com.last.vo.Employees;
 import com.last.vo.Grades;
 import com.last.vo.Position;
 import com.last.web.request.EmployeeRegisterForm;
+import com.last.web.request.EmployeeRequest;
 
 
 @Controller
@@ -87,14 +88,36 @@ public class HrController {
 	}
 	
 	@GetMapping("/personnel-register")		// 인사발령등록 폼에서 인사발령조회
-	public String personnelRegister() {
-		
+	public String personnelRegister(Model model) {
+		List<EmployeeDto> employee = employeeService.getEmployee();
+		model.addAttribute("employees", employee);
 		return "hr/personnel-register";
 	}
 	
+	@PostMapping("/personnel-register")		// 인사발령등록 업데이트
+	public String updatePersonnelRegister(EmployeeRequest form) {
+		employeeService.updatePersonnel(form);
+		return "redirect:personnel";
+	}
+	
 	@GetMapping("/issue")		// 증명서발급
-	public String issue(Model model) {
-		List<CertificateDto> certificate = employeeService.getAllcertificate();
+	public String issue(@RequestParam(name = "sort", required = false, defaultValue = "") String sort,
+						@RequestParam(name = "startDate", required = false, defaultValue = "") String startDate,
+						@RequestParam(name = "endDate", required = false, defaultValue = "") String endDate,
+						Model model) {
+		
+		Map<String, Object> param = new HashMap<String, Object>();
+		if(!sort.isBlank()) {
+			param.put("sort", sort);
+		}
+		if(!startDate.isBlank()) {
+			param.put("startDate", startDate);
+		}
+		if(!endDate.isBlank()) {
+			param.put("endDAte", endDate);
+		}
+		
+		List<CertificateDto> certificate = employeeService.getAllcertificate(param);
 		model.addAttribute("certificates", certificate);
 		return "hr/certificate";
 	}

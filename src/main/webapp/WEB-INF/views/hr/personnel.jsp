@@ -96,18 +96,27 @@
 									</tr>
 								</thead>
 								<tbody>
-									<c:forEach var="personnel" items="${personnels }">
-										<tr class="text-center">
-											<td><input type="checkbox" /></td>
-											<td>1</td>
-											<td>${personnel.type }</td>
-											<td><fmt:formatDate value="${personnel.appointmentDate }" pattern="yyyy-MM-dd"/></td>
-											<td>${personnel.no }</td>
-											<td>${personnel.name }</td>
-											<td>${personnel.content }</td>
-											<td>${personnel.note }</td>
-										</tr>
-									</c:forEach>
+									<c:choose>
+										<c:when test="${empty personnels }">
+											<tr>
+												<td id="item-nothing" colspan="12" class="text-center">목록이 없습니다.</td>
+											</tr>
+										</c:when> 
+										<c:otherwise>
+											<c:forEach var="personnel" items="${personnels }">
+												<tr class="text-center">
+													<td><input type="checkbox" /></td>
+													<td>1</td>
+													<td>${personnel.type }</td>
+													<td><fmt:formatDate value="${personnel.appointmentDate }" pattern="yyyy-MM-dd"/></td>
+													<td>${personnel.no }</td>
+													<td>${personnel.name }</td>
+													<td>${personnel.content }</td>
+													<td>${personnel.note }</td>
+												</tr>
+											</c:forEach>
+										</c:otherwise>
+									</c:choose>
 								</tbody>
 							</table>
 						</div>
@@ -122,58 +131,9 @@
 				</div>			
 			</div>
 		</div>
-		
-<!-- Modal -->
-	<div class="modal fade" id="personnelDetail" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-	  <div class="modal-dialog">
-	    <div class="modal-content">
-	      <div class="modal-header">
-	        <h5 class="modal-title" id="exampleModalLabel">인사상세정보</h5>
-	        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-	      </div>
-	      <div class="modal-body">
-	        <div class="row">
-	        	<div class="col-12">
-	        		<table class="table" id="table-user">
-						<thead>
-							<tr>
-								<th class="text-center">사원번호</th>
-								<th class="text-center">성명</th>
-								<th class="text-center">직책</th>
-							</tr>
-						</thead>
-						<tbody>
-							<c:forEach var="employee" items="${employees }">
-								<td class="text-center">${employee.no }</td>
-								<td class="text-center">${employee.name }</td>
-								<td class="text-center">${employee.positionName }</td>
-							</c:forEach>
-						</tbody>
-					</table>
-	        	</div>
-	        </div>
-	      </div>
-	      <div class="modal-footer">
-	        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">확인</button>
-	      </div>
-	    </div>
-	  </div>
-	</div>
 	</div>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
-<script type="text/javascript">
-$(function(){
-	let model = new bootstrap.Modal("#personnelDetail");
-
-	// 프로그램 목록 클릭시 상세정보 모달창이 나타난다.
-	$("#personnelDetail tbody").on('click', '.name', function(event) {
-	   event.preventDefault();
-	   
-	   model.show();
-	});
-})
-</script>
 </body>
 </html>

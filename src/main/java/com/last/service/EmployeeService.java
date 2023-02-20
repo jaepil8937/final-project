@@ -17,8 +17,10 @@ import com.last.mapper.EmployeeMapper;
 import com.last.vo.Department;
 import com.last.vo.Employees;
 import com.last.vo.Grades;
+import com.last.vo.HrAppointment;
 import com.last.vo.Position;
 import com.last.web.request.EmployeeRegisterForm;
+import com.last.web.request.EmployeeRequest;
 
 @Service
 @Transactional
@@ -38,10 +40,24 @@ public class EmployeeService {
 		return employeeMapper.getAllPersonnel(param);
 	}
 	
-	public List<CertificateDto> getAllcertificate() {
-		return employeeMapper.getAllCertificate();
+	public List<CertificateDto> getAllcertificate(Map<String, Object> param) {
+		return employeeMapper.getAllCertificate(param);
 	}
 	
+	public List<EmployeeDto> getEmployee() { 
+		return employeeMapper.getEmployee();
+	}
+	
+	public void updatePersonnel(EmployeeRequest form) {
+		Employees employee = employeeMapper.getAllEmployeebyNo(form.getEmployeeNo());
+		BeanUtils.copyProperties(form, employee);
+		employeeMapper.updateEmployees(employee);
+		
+		HrAppointment hrAppointment = employeeMapper.getAllAppointment(form.getEmployeeNo());
+		BeanUtils.copyProperties(form, hrAppointment);
+		employeeMapper.updateAppointment(hrAppointment);
+	}
+
 	public List<Position> getAllPosition() {
 		return employeeMapper.getAllPosition();
 	}
@@ -62,6 +78,9 @@ public class EmployeeService {
 		
 		employeeMapper.insertEmployees(employees);
 	}
+
+	
+	 
 	
 	public Employees getEmployeesByNo(int empNo) {
 		return employeeMapper.getEmployeesByNo(empNo);

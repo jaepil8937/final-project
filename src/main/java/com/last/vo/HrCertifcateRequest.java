@@ -1,4 +1,4 @@
-package com.last.dto;
+package com.last.vo;
 
 import java.util.Date;
 
@@ -7,19 +7,19 @@ import org.apache.ibatis.type.Alias;
 import lombok.Getter;
 import lombok.Setter;
 
-@Alias("CertificateDto")
+@Alias("HrCertifcateRequest")
 @Getter
 @Setter
-public class CertificateDto {
+public class HrCertifcateRequest {
 
 	private int requestNo;			// 신청번호
 	private String type;			// 증명서구분
 	private Date requestDate;		// 신청일자
-	private int no;					// 사원번호
-	private String name;			// 성명
-	private String requestStatus;	// 발행상태
 	private Date publishDate;		// 발행일자
+	private String status;			// 신청상태
 	private String purpose;			// 용도
-	private String status;			// 재직상태
-	
+	private String note;			// 비고
+	private Date createdDate; 		// 증명서신청정보등록일
+	private Date updatedDate; 		// 증명서신청정보최종수정일
+	private int no;					// 사원번호
 }

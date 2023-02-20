@@ -42,26 +42,41 @@
 					<h3><p class="fw-bold">인사발령등록</p></h3>
 				</div>	
 				<div class="col-12 mb-3">
-					<form method="get" action="">
+					<form method="post" action="personnel-register">
+						<input type="hidden" name="employeeNo" />
 						<div class="border p-3 bg-white">
 							<label>발령구분</label>
-							<select name="sort">
-								<option value="join">입사</option>
-								<option value="promotion">승진</option>
-								<option value="transfer">전보</option>
-								<option value="leave">휴직</option>
-								<option value="retirement">퇴직</option>
+							<select name="type">
+								<option>선택</option>
+								<option value="입사">입사</option>
+								<option value="승진">승진</option>
+								<option value="전보">전보</option>
+								<option value="휴직">휴직</option>
+								<option value="퇴직">퇴직</option>
 							</select>
 							<label>발령일자</label>
-							<input type="date" value=""/>
+							<input type="date" name="appointmentDate" />
 							<label>발령직급</label>
-							<select name="sort">
-								<option value="">대리</option>
-								<option value="">과장</option>
-								<option value="">차장</option>
-								<option value="">부장</option>
+							<select name="positionNo">
+								<option>선택</option>
+								<option value="100">대표</option>
+								<option value="101">전무</option>
+								<option value="102">상무</option>
+								<option value="103">이사</option>
 							</select>
-							<button type="submit" class="btn btn-dark float-end">검색</button>
+							<label>발령부서</label>
+							<select name="deptNo">
+								<option>선택</option>
+								<option value="100">개발팀</option>
+								<option value="101">인사팀</option>
+								<option value="102">관리팀</option>
+								<option value="103">홍보팀</option>
+							</select>
+							<label>발령내용</label>
+							<input type="text" name="content" style="width:100px;"/>
+							<label>비고</label>
+							<input type="text" name="note" style="width:100px;"/>
+							<button type="button" id="btn-appiontment-handle" class="btn btn-dark float-end">발령처리</button>
 						</div>
 					</form>
 				</div>
@@ -89,13 +104,15 @@
 									</tr>
 								</thead>
 								<tbody>
+									<c:forEach var="employee" items="${employees }">
 										<tr class="text-center">
-											<td><input type="checkbox" /></td>
-											<td>1000</td>
-											<td>홍길동</td>
-											<td>사원</td>
-											<td>개발팀</td>
+											<td><input type="checkbox" name="empNo" value="${employee.no }"/></td>
+											<td>${employee.no }</td>
+											<td>${employee.name }</td>
+											<td>${employee.positionName }</td>
+											<td>${employee.deptName }</td>
 										</tr>
+									</c:forEach>
 								</tbody>
 							</table>
 						</div>
@@ -103,64 +120,33 @@
 				</div>
 				<div class="row">
 					<div class="col-12 text-end">
-						<form>
-							<button type="button" class="btn btn-dark float-end">발령처리</button>
-							<a href="personnel" class="btn btn-dark float-end" style="width:90px;">취소</a>
-						</form>
+						<a href="personnel" class="btn btn-dark float-end" style="width:90px;">취소</a>
 					</div>		
 				</div>			
 			</div>
 		</div>
-		
-<!-- Modal -->
-	<div class="modal fade" id="personnelDetail" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-	  <div class="modal-dialog">
-	    <div class="modal-content">
-	      <div class="modal-header">
-	        <h5 class="modal-title" id="exampleModalLabel">인사상세정보</h5>
-	        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-	      </div>
-	      <div class="modal-body">
-	        <div class="row">
-	        	<div class="col-12">
-	        		<table class="table" id="table-user">
-						<thead>
-							<tr>
-								<th class="text-center">사원번호</th>
-								<th class="text-center">성명</th>
-								<th class="text-center">직책</th>
-							</tr>
-						</thead>
-						<tbody>
-							<c:forEach var="employee" items="${employees }">
-								<td class="text-center">${employee.no }</td>
-								<td class="text-center">${employee.name }</td>
-								<td class="text-center">${employee.positionName }</td>
-							</c:forEach>
-						</tbody>
-					</table>
-	        	</div>
-	        </div>
-	      </div>
-	      <div class="modal-footer">
-	        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">확인</button>
-	      </div>
-	    </div>
-	  </div>
-	</div>
 	</div>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
 <script type="text/javascript">
-$(function(){
-	let model = new bootstrap.Modal("#personnelDetail");
-
-	// 프로그램 목록 클릭시 상세정보 모달창이 나타난다.
-	$("#personnelDetail tbody").on('click', '.name', function(event) {
-	   event.preventDefault();
-	   
-	   model.show();
+$(function() {
+	$("#btn-appiontment-handle").click(function() {
+		let empNo = $("input[name=empNo]:checked").val();
+		$("input[name=employeeNo]").val(empNo);
+		let checkedLength =  $("input[name=empNo]:checked").length;
+		
+		if (checkedLength == 0) {
+			alert("발령처리 할 사원을 선택해주세요.");
+			return false;
+		}	
+		
+		if (checkedLength > 1) {
+			alert("발령처리는 하나씩 처리 가능합니다.");
+			return false;
+		}	
+		
+		$("form").trigger("submit");
 	});
 })
 </script>

@@ -7,11 +7,13 @@ import org.apache.ibatis.type.Alias;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 @Getter
 @Setter
 @Data
 @Alias("employee")
+@ToString
 public class Employees {
 	
 	private int employeeNo;				 // 사원번호

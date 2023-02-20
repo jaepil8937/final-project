@@ -46,6 +46,7 @@
 						<div class="border p-3 bg-white">
 							<label>증명서구분</label>
 							<select name="sort">
+								<option>선택</option>
 								<option value="proof" ${param.sort eq 'proof' ? 'selected' : '' }>재직증명서</option>
 								<option value="career" ${param.sort eq 'career' ? 'selected' : '' }>경력증명서</option>
 								<option value="withholding" ${param.sort eq 'withholding' ? 'selected' : '' }>원천징수영수증</option>
@@ -83,18 +84,18 @@
 						</thead>
 						<tbody>
 							<c:choose>
-								<c:when test="${empty items }">
+								<c:when test="${empty certificates }">
 									<tr>
 										<td id="item-nothing" colspan="12" class="text-center">목록이 없습니다.</td>
 									</tr>
-								</c:when>
+								</c:when> 
 								<c:otherwise>
 									<c:forEach var="certificate" items="${certificates }">
 										<tr class="text-center">
 											<td><input type="checkbox" /></td>
 											<td>${certificate.requestNo }</td>
 											<td>${certificate.type }</td>
-											<td>${certificate.requestDate }</td>
+											<td><fmt:formatDate value="${certificate.requestDate }" pattern="yyyy-MM-dd"/></td>
 											<td>${certificate.no }</td>
 											<td>${certificate.name }</td>
 											<td>${certificate.requestStatus }</td>
@@ -107,51 +108,76 @@
 						</tbody>
 					</table>
 				</div>
-				<div class="row">
-					<div class="col-12">
-						<h6 class="mt-3 mb-3">
-							<strong>증명서신청</strong>
-						</h6>
-					</div>	
-				</div>
 				<div id="box-register-form" class="row d-none">
 					<div class="col-12">
+						<div class="row">
+							<div class="col-12">
+								<h6 class="mt-3 mb-3">
+									<strong>증명서신청</strong>
+								</h6>
+							</div>	
+						</div>
 						<form id="register-form" class="border bg-light p-3">
 							<table class="table table-light text-center">
 									<tr>
-										<th class="table-primary">신청번호</td>
-										<td>20230101</td>
-										<th class="table-primary">증명서구분</td>
-										<td>재직증명서</td>
-										<th class="table-primary">신청일자</td>
-										<td>2020-02-10</td>
+										<th class="table-primary">신청번호</th>
+										<td><input type="text" class="" name=""/></td>
+										<th class="table-primary">증명서구분</th>
+										<td>
+											<select name="sort">
+												<option>선택</option>
+												<option value="proof">재직증명서</option>
+												<option value="career">경력증명서</option>
+												<option value="withholding">원천징수영수증</option>
+												<option value="income">각종근로소득증명서</option>
+												<option value="payslip">급여명세서</option>
+											</select>
+										</td>
+										<th class="table-primary">신청일자</th>
+										<td><input type="text" class="" name="" disabled/></td>
 									<tr>
 									<tr>
-										<th class="table-primary">사원번호</td>
-										<td>1000</td>
-										<th class="table-primary">성명</td>
-										<td>홍길동</td>
-										<th class="table-primary">발행일자</td>
-										<td>2020-02-11</td>
+										<th class="table-primary">사원번호</th>
+										<td><input type="text" class="" name=""/></td>
+										<th class="table-primary">성명</th>
+										<td><input type="text" class="" name=""/></td>
+										<th class="table-primary">발행일자</th>
+										<td><input type="date" class="" name=""/></td>
 									</tr>
 									<tr>
-										<th class="table-primary">부서</td>
-										<td>개발팀</td>
-										<th class="table-primary">직책</td>
-										<td>대리</td>
-										<th class="table-primary">호봉</td>
-										<td>1</td>
+										<th class="table-primary">부서</th>
+										<td>
+											<select name="dept">
+												<option>선택</option>
+												<option value="">개발팀</option>
+												<option value="">인사팀</option>
+												<option value="">관리팀</option>
+												<option value="">홍보팀</option>
+											</select>
+										</td>
+										<th class="table-primary">직책</th>
+										<td>
+											<select name="position">
+												<option>선택</option>
+												<option value="assistant">대리</option>
+												<option value="manager">과장</option>
+												<option value="seniorManager">차장</option>
+												<option value="executiveManager">부장</option>
+											</select>
+										</td>
+										<th class="table-primary">호봉</th>
+										<td><input type="text" class="" name=""/></td>
 									</tr>
 									<tr>
-										<th class="table-primary">용도</td>
-										<td></td>
+										<th class="table-primary">용도</th>
+										<td><input type="text" class="" name=""/></td>
 										<td></td>
 										<td></td>
 										<td></td>
 										<td></td>
 									</tr>
 									<tr>
-										<th class="table-primary">비고</td>
+										<th class="table-primary">비고</th>
 										<td></td>
 										<td></td>
 										<td></td>

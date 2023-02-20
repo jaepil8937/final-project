@@ -86,7 +86,7 @@
 			E.employee_status = 'N'								<!-- 인사발령등록에서는 퇴직자는 안나오게 함 -->
 	</select>
 
-	<select id="getAllCertificate" resultType="CertificateDto">
+	<select id="getAllCertificate" parameterType="map" resultType="CertificateDto">
 		select
 			C.request_no		as requestNo,
 			C.certificate_type	as type,
@@ -101,17 +101,200 @@
 			employees E, certificate_request_histories C
 		where
 			E.employee_no = C.employee_no
+		<if test="sort != null">
+			<choose>
+				<when test="sort == 'proof'">
+					and C.certificate_type = '재직증명서'
+				</when>
+				<when test="sort == 'career'">
+					and C.certificate_type = '경력증명서'
+				</when>
+				<when test="sort == 'withholding'">
+					and C.certificate_type = '원천징수영수증'
+				</when>
+				<when test="sort == 'income'">
+					and C.certificate_type = '각종근로소득증명서'
+				</when>
+				<when test="sort == 'payslip'">
+					and C.certificate_type = '급여명세서'
+				</when>
+			</choose>
+		</if>
+		<if test="startDate != null">
+			and C.request_date >= #{startDate}
+		</if>
+		<if test="endDate != null">
+			and C.request_date &lt;= #{endDate}
+		</if>
 		and
 			E.employee_status = 'N'
 	</select>
+	
+	<select id="getEmployee" resultType="EmployeeDto">		<!-- personnel-register에서 사원 목록 조회 -->
+		select
+			E.employee_no			as no,
+			E.employee_name			as name,
+			E.employee_status		as status,
+			D.dept_name				as deptName,
+			P.position_name			as positionName
+		from
+			employees E, departments D, positions P
+		where
+			E.dept_no = D.dept_no
+		and
+			E.position_no = P.position_no
+		and
+			E.employee_status = 'N'
+		order by
+			E.employee_no asc
+			
+	</select>
 
+	<select id="getAllEmployeebyNo" parameterType="int" resultType="employee">		<!-- 사원번호로 직원정보 조회 -->
+		select
+			employee_no			as employeeNo,
+			employee_password	as password,
+			employee_name		as name,
+			employee_gender		as gender,
+			employee_birthday	as birthday,
+			company_tel			as comTel,
+			home_tel			as homeTel,
+			mobile_tel			as mobileTel,
+			company_email		as comEmail,
+			external_email		as extEmail,
+			home_zipcode		as zipcode,
+			home_basic_address	as basicAddress,
+			home_detail_address	as detailAddress,
+			hire_date			as hireDate,
+			retirement_date		as retirementDate,
+			employee_status		as employeeStatus,
+			employee_role_name	as employeeRoleName,
+			memo				as memo,
+			dept_no				as deptNo,
+			position_no			as positionNo,
+			hobong_grade		as hobong,
+			photo				as photo
+		from
+			employees
+		where
+			employee_no = #{value}
+	</select>
+	
+	<select id="getAllAppointment" parameterType="int" resultType="Appointment">	<!-- 사원번호로 인사발령내역 조회 -->
+		select
+			employee_no				as employeeNo,
+			appointment_type		as type,
+			appointment_date		as appointmentDate,
+			appointment_content		as content,
+			appointment_note		as note
+		from
+			employee_appointment_histories
+		where
+			employee_no = #{value}
+	</select>
+	
+	<select id="getCertificateRequest" resultType="HrCertifcateRequest">		<!-- 증명서신청내역 조회 -->
+		select
+			request_no				as requestNo,
+			certificate_type		as type,
+			request_date			as requestDate,
+			publish_date			as publishDate,
+			request_status			as status,
+			purpose					as purpose,
+			note					as note,
+			request_created_date	as createdDate,
+			request_updated_date	as updatedDate,
+			employee_no				as no
+		from
+			certificate_request_histories
+	</select>
+
+	<update id="updateEmployees" parameterType="employee">		<!-- 직원 정보 업데이트 -->
+		update
+			employees
+		set
+			employee_password = #{password},
+			employee_name = #{name},
+			employee_gender = #{gender},
+			employee_birthday = #{birthday},
+			company_tel = #{comTel},
+			home_tel = #{homeTel},
+			mobile_tel = #{mobileTel},
+			company_email = #{comEmail},
+			external_email = #{extEmail},
+			home_zipcode = #{zipcode},
+			home_basic_address = #{basicAddress},
+			home_detail_address = #{detailAddress},
+			hire_date = #{hireDate},
+			retirement_date = #{retirementDate},
+			employee_status = #{employeeStatus},
+			employee_role_name = #{employeeRoleName},
+			memo = #{memo},
+			employee_updated_date = sysdate,
+			dept_no = #{deptNo},
+			position_no = #{positionNo},
+			hobong_grade = #{hobong},
+			photo = #{photo}
+		where
+			employee_no = #{employeeNo}
+	</update>
+	
+	<update id="updateDepartments" parameterType="Department">		<!-- 발령부서 업데이트 -->
+		update
+			departments
+		set
+			dept_name = #{deptName},
+		where
+			dept_no = #{deptNo}
+	</update>
+	
+	<update id="updatePositions" parameterType="Position">		<!-- 발령직급 업데이트 -->
+		update
+			positions
+		set
+			position_name = #{positionName},
+			position_base_salary = #{positionSalary}
+		where
+			position_no = #{positionNo}
+	</update>
+	
+	
+	<update id="updateAppointment" parameterType="appointment">		<!-- 발령구분, 발령일자, 발령내용, 비고 업데이트 -->
+		update
+			employee_appointment_histories
+		set
+			appointment_type = #{type},
+			appointment_date = #{appointmentDate},
+			appointment_content = #{content},
+			appointment_note = #{note}
+		where
+			employee_no = #{employeeNo}
+	</update>
+	
+	<!-- <update id="updateCertificateRequest" parameterType="HrCertifcateRequest">
+		update
+			certificate_request_histories
+		set
+			request_no
+			certificate_type
+			request_date
+			publish_date
+			request_status
+			purpose
+			note
+			request_created_date
+			request_updated_date
+			employee_no
+		where
+			
+	</update> -->
+	
 	<select id="getAllPosition" resultType="Position">
 		select	
 			position_no 		as positionNo, 
 			position_name 		as positionName
 		from positions
 	</select>
-
 
 	<select id="getAllDepartment" resultType="Department">
 		select	
