@@ -50,7 +50,11 @@
 							<option value="취소">취소</option>
 						</select>
 						<label class="form-label"><strong>사원번호</strong></label>
-						<input type="text" id="text-empNo" name="empNo" value="" style="text-align:center; width:100px" />
+						<sec:authentication property="principal" var="loginEmployee" />
+						<sec:authorize access="hasAnyRole('ROLE_ADMIN')">						
+						<input type="text" id="text-empNo" name="empNo" value="${loginEmployee.no }" style="text-align:center; width:100px" />
+						<sec:authorize access="hasAnyRole('ROLE_EMPLOYEE')">
+						<input type="text" id="text-empNo" name="empNo" value="${loginEmployee.no }" style="text-align:center; width:100px" readOnly />
 						<button type="button" class="btn btn-danger" style="float:right;" id="btn-search">검색</button>
 					</div>
 				</div>
@@ -80,7 +84,7 @@
 						</thead>
 						<tbody>
 							<tr>
-								<td><input type="text" name="input-empNo" style="text-align:center; width:100px" disabled/></td>
+								<td><input type="text" name="input-empNo" value="${loginEmployee.no }" style="text-align:center; width:100px" disabled/></td>
 								<td><input type="text" name="input-used-days" style="text-align:center; width:100px" disabled/></td>
 							</tr>
 						</tbody>
@@ -96,8 +100,8 @@
 						</thead>
 						<tbody>
 							<tr>
-								<td><input type="text" name="input-empName" value="홍길동" style="text-align:center; width:100px" disabled/></td>
-								<td><input type="text" name="input-remained-days" value="" style="text-align:center; width:100px" disabled/></td>
+								<td><input type="text" name="input-empName" value="${loginEmployee.name }" style="text-align:center; width:100px" disabled/></td>
+								<td><input type="text" name="input-remained-days" style="text-align:center; width:100px" disabled/></td>
 							</tr>
 						</tbody>
 					</table>	
@@ -111,8 +115,8 @@
 						</thead>
 						<tbody>
 							<tr>
-								<td><input type="text" name="input-start-day" value="2021-01-01" style="text-align:center; width:100px" disabled/>~
-								<input type="text" name="input-last-day" value="2021-12-31" style="text-align:center; width:100px" disabled/>
+								<td><input type="text" name="input-start-day" style="text-align:center; width:100px" disabled/>~
+								<input type="text" name="input-last-day" style="text-align:center; width:100px" disabled/>
 								</td>
 							</tr>
 						</tbody>
