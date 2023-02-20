@@ -38,5 +38,7 @@ public class Employees {
 	private int positionNo;				 // 직책번호
 	private int hobong; 				 // 호봉
 	private String photo;				 // 사진
+	private String deptName;
+	private String positionName;
 
 }

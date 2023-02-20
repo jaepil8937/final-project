@@ -49,7 +49,7 @@
 			</div>
 			<div class="row">
 				<div class="col-12">
-					<table class="table table-bordered table-hover table-striped table-sm" id="edu">
+					<table class="table table-bordered table-hover table-striped table-sm" id="edu-table">
 						<colgroup>
 							<col width="5%">
 							<col width="7%">
@@ -75,34 +75,14 @@
 						<tbody>
 							<tr class="text-center">
 								<td><input type="checkbox" name="skill"></td>
-								<td><input type="date" id="start-date" name="" value="2023-02-03" style="text-align:center; width:130px"/></td>
-								<td><input type="date" id="end-date" name="" value="2023-02-03" style="text-align:center; width:130px"/></td>
+								<td><input type="date" id="start-date"  value="2023-02-03" style="text-align:center; width:130px"/></td>
+								<td><input type="date" id="end-date" value="2023-02-03" style="text-align:center; width:130px"/></td>
 								<td>서울대</td>
 								<td>전산</td>
 								<td>학사</td>
 								<td>졸업</td>
 								<td>서울</td>
-							</tr>
-							<tr class="text-center">
-								<td><input type="checkbox" name="skill"></td>
-								<td><input type="date" id="start-date" name="" value="2023-02-03" style="text-align:center; width:130px"/></td>
-								<td><input type="date" id="end-date" name="" value="2023-02-03" style="text-align:center; width:130px"/></td>
-								<td>서울대</td>
-								<td>전산</td>
-								<td>학사</td>
-								<td>졸업</td>
-								<td>서울</td>
-							</tr>
-							<tr class="text-center">
-								<td><input type="checkbox" name="skill"></td>
-								<td><input type="date" id="start-date" name="" value="2023-02-03" style="text-align:center; width:130px"/></td>
-								<td><input type="date" id="end-date" name="" value="2023-02-03" style="text-align:center; width:130px"/></td>
-								<td>서울대</td>
-								<td>전산</td>
-								<td>학사</td>
-								<td>졸업</td>
-								<td>서울</td>
-							</tr>											
+							</tr>										
 						</tbody>
 					</table>
 				</div>
@@ -149,9 +129,9 @@ function uncheckAll() {
 	}
 }
 
-$("#edu tbody").on('change', ":checkbox[name=skill]", function() {
-	let checkboxLen = $("#edu tbody :checkbox[name=skill]").length;
-	let checkedCheckboxLen = $("#edu tbody :checkbox[name=skill]:checked").length;
+$("#edu-table tbody").on('change', ":checkbox[name=skill]", function() {
+	let checkboxLen = $("#edu-table tbody :checkbox[name=skill]").length;
+	let checkedCheckboxLen = $("#edu-table tbody :checkbox[name=skill]:checked").length;
 
 
 if (checkboxLen == checkedCheckboxLen) {
@@ -159,6 +139,40 @@ if (checkboxLen == checkedCheckboxLen) {
 	} else {
 		$("#checkbox-all-toggle").prop("checked", false);
 	}
+})
+
+$(function() {
+	$("#btn-add").click(function() {
+		
+		var familyRowsLength = $("#edu-table tbody tr").length;
+		if (familyRowsLength >= 10) {
+			alert("학력정보 입력필드는 최대 10개까지만 추가 가능합니다.");
+			return;
+		}
+		
+		var htmlContent = `
+			<tr class="text-center" >
+				<td><input type="checkbox" name="skill"></td>
+				<td><input type="date" id="start-date"  value="2023-02-03" style="text-align:center; width:130px"/></td>
+				<td><input type="date" id="end-date" value="2023-02-03" style="text-align:center; width:130px"/></td>
+				<td>서울대</td>
+				<td>전산</td>
+				<td>학사</td>
+				<td>졸업</td>
+				<td>서울</td>
+			</tr>		
+		`;
+		$("#edu-table tbody").append(htmlContent);
+	});
+	
+	// <div id="box-career"> 내부에 미래에 추가된 삭제버튼을 클릭했을 실행될 이벤트 핸들러 등록하기
+	$("#box-career").on("click", '.btn-danger', function() {
+		// this는 클릭이벤트가 발생할 엘리먼트다.
+		// $(this) 함수의 실행결과는 this를 포함하는 jQuery객체다.
+		
+		// .closest('선택자')는 조상 엘리먼트 중에서 지정한 선택자에 해당하는 가장 가까운 조상엘리먼트가 포함된 jQuery객체를 반환한다.
+		$(this).closest('.row').remove();
+	});
 })
 </script>
 </body>
