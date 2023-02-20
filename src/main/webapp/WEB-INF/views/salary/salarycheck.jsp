@@ -1,5 +1,4 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" trimDirectiveWhitespaces="true" %>
-<%@ include file="../common/tags.jsp" %>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -20,7 +19,7 @@
 		width: 1070px;
 	}
 	
-	#table-salaries tbody {
+	#salary-list tbody {
 		display: block;
 		height: 225px;
 		max-height: 225px;
@@ -28,7 +27,7 @@
 		width: 1072px;
 	}
 	
-	#table-salaries thead, #table-salaries tfoot, #table-salaries tbody tr {
+	#salary-list thead, #salary-list tfoot, #salary-list tbody tr {
 		display: table;
 		width: 100%;
 		table-layout: fixed;
@@ -220,7 +219,7 @@ $(function() {
 		       .siblings().removeClass("table-primary");
 		let no = $(this).attr('data-employee-no');
 		let date = $("#pay-date").text();
-		$.getJSON('/salary/salaryDetail.json', {empNo : no, paydate : date}, function(salary) { 
+		$.getJSON('http://localhost/salary/salaryDetail.json', {empNo : no, paydate : date}, function(salary) { 
 			let baseSalary = new Number(salary.baseSalary).toLocaleString()
 			$("#base-salary").text(baseSalary);
 			let incomeTax = new Number(salary.incomeTax).toLocaleString()
