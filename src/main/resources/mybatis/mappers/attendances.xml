@@ -102,7 +102,8 @@
 			B.employee_name 	as empName,
 			B.employee_no		as empNo,
 			C.dept_name 		as deptName,
-			D.position_name 	as positionName
+			D.position_name 	as positionName,
+			A.attendances_type	as attendancesType
 		from
 			employee_attendances A,
 			employees B,
@@ -125,7 +126,8 @@
 			B.employee_name 	as empName,
 			B.employee_no		as empNo,
 			C.dept_name 		as deptName,
-			D.position_name 	as positionName
+			D.position_name 	as positionName,
+			A.attendances_type	as attendancesType
 		from
 			employee_attendances A,
 			employees B,
@@ -153,7 +155,8 @@
 			B.employee_name 	as empName,
 			B.employee_no		as empNo,
 			C.dept_name 		as deptName,
-			D.position_name 	as positionName
+			D.position_name 	as positionName,
+			A.attendances_type	as attendancesType
 		from
 			employee_attendances A,
 			employees B,
