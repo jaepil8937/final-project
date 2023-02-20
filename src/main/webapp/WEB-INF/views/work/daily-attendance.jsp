@@ -30,7 +30,7 @@
 			<hr>
 			<div class="row mb-3 p-4 bg-light">
 				<div class="col-4">
-					<a href="/work/startAttendance" onclick="javascript:btnStart()"
+					<a href="/work/startAttendance" onclick="javascript:btnStart()" name="" value="${param.empNo }"
 						class="btn btn-success btn-lg ${isStartAttendanced ? 'disabled' : '' }">출근</a>
 					<a href="/work/endAttendance" onclick="javascript:btnEnd()"
 						class="btn btn-danger btn-lg ${isEndAttendanced ? 'disabled' : ''}">퇴근</a>
@@ -41,8 +41,8 @@
 				<div class="col-6" text-align:"end" >
 					<form method="get" action="/work/searchAttendances" name="calform">
 								<!-- value="${param.startDate } param으로 전송된 값을 달력폼에 입력시켜줌 -->
-						<input autocomplete="off" type="text" name="startDate" id="start-cal" value="${param.startDate }">
-						~ <input autocomplete="off" type="text" name="endDate" id="end-cal" value="${param.endDate }">
+						<input autocomplete="off" type="date" name="startDate" id="start-cal" value="${param.startDate }">
+						~ <input autocomplete="off" type="date" name="endDate" id="end-cal" value="${param.endDate }">
 						<button type="submit" class="btn btn-danger btn-sm">조회</button>
 					</form>
 				</div>
@@ -120,19 +120,6 @@ function btnEnd(){
 	}
 }
 
-// datepicker 적용
-$("#start-cal").datepicker();
-$("#end-cal").datepicker();
-// 달력날짜포맷변경,한글변환
-$.datepicker.setDefaults({
-	dateFormat:'yy-mm-dd'
-	,showMonthAfterYear: true
-	,maxDate:"D"
-	,yearSuffix: "년"
-	,monthNames: ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'] 
-	,dayNamesMin: ['일','월','화','수','목','금','토'] 
-	,dayNames: ['일요일','월요일','화요일','수요일','목요일','금요일','토요일']
-});
 
 </script>
 </body>

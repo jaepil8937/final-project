@@ -6,7 +6,7 @@
 		insert into employee_attendances
 			(attendance_no, employee_no, working_date, start_work_time)
 		values
-			(attendances_seq.nextval, #{value}, sysdate, to_char(sysdate, 'hh24:mi'))
+			(attendances_seq.nextval, #{empNo}, sysdate, to_char(sysdate, 'hh24:mi'))
 	</insert>
 	
 	<select id="getWeeklyAttendancesByEmpNo" parameterType="int" resultType="Attendance">
@@ -16,11 +16,14 @@
 			working_date 		as workingDate, 
 			start_work_time 	as startWorkTime,
 			end_work_time 		as endWorkTime,
-			worked_times		as workedTimes
+			worked_times		as workedTimes,
+			holiday_work_time	as holidayWorkTime,
+			overtime_worked_times	as overtimeWorkedTimes,
+			night_worked_times	as nightWorkedTimes
 		from
 			employee_attendances
 		where
-			employee_no = #{value}
+			employee_no = #{empNo}
 			and working_date between trunc(sysdate - 7)  and trunc(sysdate + 1) <!-- trunc(sysdate + 1) : 오늘 밤 12시 -->
 		order by
 			working_date desc
@@ -33,7 +36,10 @@
 			working_date 		as workingDate, 
 			start_work_time 	as startWorkTime,
 			end_work_time 		as endWorkTime,
-			worked_times		as workedTimes
+			worked_times		as workedTimes,
+			holiday_work_time	as holidayWorkTime,
+			overtime_worked_times	as overtimeWorkedTimes,
+			night_worked_times	as nightWorkedTimes
 		from
 			employee_attendances
 		where
@@ -48,7 +54,10 @@
 			working_date 		as workingDate, 
 			start_work_time 	as startWorkTime,
 			end_work_time 		as endWorkTime,
-			worked_times		as workedTimes
+			worked_times		as workedTimes,
+			holiday_work_time	as holidayWorkTime,
+			overtime_worked_times	as overtimeWorkedTimes,
+			night_worked_times	as nightWorkedTimes
 		from
 			employee_attendances
 		where
@@ -69,7 +78,10 @@
 			employee_no 		as empNo, 
 			working_date 		as workingDate, 
 			start_work_time 	as startWorkTime,
-			end_work_time 		as endWorkTime
+			end_work_time 		as endWorkTime,
+			holiday_work_time	as holidayWorkTime,
+			overtime_worked_times	as overtimeWorkedTimes,
+			night_worked_times	as nightWorkedTimes
 		from
 			employee_attendances
 		where

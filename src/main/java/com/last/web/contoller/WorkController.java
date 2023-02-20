@@ -32,8 +32,7 @@ public class WorkController {
 	
 	// 일일근태등록페이지
 	@GetMapping("/day")
-	public String dailyAttendance(Model model) {
-		
+	public String dailyAttendance( Model model) {
 		int empNo = 1001;
 		// 이번 주 출퇴근 정보 조회
 		List<WorkAttendance> attendances = workService.getWeeklyAttendances(empNo);
@@ -49,14 +48,12 @@ public class WorkController {
 		return "work/daily-attendance"; // WEB-INF/views/work/daily-attendance.jsp로 내부 이동
 	}
 	
-
 	// 출근시간등록
 	@GetMapping("/startAttendance")
-	public String startAttendance() {
-		int empNo = 1001;
+	public String startAttendance(@RequestParam("empNo") int empNo) {
 		workService.addAttendance(empNo);
 		
-		return "redirect:/work/day"; // 저장작업했기 때문에 재요청 URL을 전송
+		return "redirect:/work/day?empNo=" + empNo; // 저장작업했기 때문에 재요청 URL을 전송
 	}
 	
 	// 퇴근시간등록
