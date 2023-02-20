@@ -9,7 +9,7 @@
 </head>
 <body>
 <body>
-<c:set var="menu" value="attendences" />
+<c:set var="menu" value="work" />
 <c:set var="side" value="monthly-manage" />
 <%@ include file="../common/navbar.jsp" %>
 <div class="container my-3">

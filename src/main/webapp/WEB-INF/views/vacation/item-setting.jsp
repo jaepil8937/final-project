@@ -17,6 +17,7 @@
 </style>
 </head>
 <body>
+<c:set var="menu" value="work" />
 <c:set var="side" value="item-setting" />
 <%@ include file="../common/navbar.jsp" %>
 	<div class="container">
