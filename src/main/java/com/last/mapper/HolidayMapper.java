@@ -12,4 +12,6 @@ public interface HolidayMapper {
 
 	List<OvertimeHistoryDto> getOvertimeHistories(Map<String, Object> param);
 
+	int getOvertimeHistoriesTotalRows(Map<String, Object> param);
+
 }
