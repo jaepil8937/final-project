@@ -9,7 +9,7 @@
 	 		A.BASE_SALARY_TTL     		as baseSalary,
 	 		A.OVERTIME_SALARY_TTL		as overtimeSalary,
 	 		A.NIGHT_SALARY_TTL			as nightSalary,
-	 		A.HOLIDAY_SALARY			as holidaySalary,
+	 		A.HOLIDAY_SALARY_TTL		as holidaySalary,
 	 		A.CARE_SALARY_TTL			as careSalary,
 	 		A.REWARD_SALARY_TTL			as rewardSalary,
 	 		A.MEAL_TTL					as mealSalary,
@@ -76,7 +76,7 @@
 	 		A.BASE_SALARY_TTL     		as baseSalary,
 	 		A.OVERTIME_SALARY_TTL		as overtimeSalary,
 	 		A.NIGHT_SALARY_TTL			as nightSalary,
-	 		A.HOLIDAY_SALARY			as holidaySalary,
+	 		A.HOLIDAY_SALARY_TTL		as holidaySalary,
 	 		A.CARE_SALARY_TTL			as careSalary,
 	 		A.REWARD_SALARY_TTL			as rewardSalary,
 	 		A.MEAL_TTL					as mealSalary,
@@ -127,7 +127,7 @@
 	<!-- 급여계산 - 입력한 급여 저장하기 -->
 	<insert id="insertSalary" parameterType="salaryDto">
 		insert into SALARY_HISTORIES
-		(EMPLOYEE_NO, BASE_YEAR_MONTH, BASE_SALARY_TTL, OVERTIME_SALARY_TTL, NIGHT_SALARY_TTL, HOLIDAY_SALARY, CARE_SALARY_TTL, REWARD_SALARY_TTL, MEAL_TTL,
+		(EMPLOYEE_NO, BASE_YEAR_MONTH, BASE_SALARY_TTL, OVERTIME_SALARY_TTL, NIGHT_SALARY_TTL, HOLIDAY_SALARY_TTL, CARE_SALARY_TTL, REWARD_SALARY_TTL, MEAL_TTL,
 		BUSINESS_SALARY_TTL, INCOME_TAX_TTL, RESIDENCE_TAX_TTL, PENSION_TTL, HEALTH_INSURANCE_TTL, LONGTERM_INSURANCE_TTL, EMPLOYMENT_INSURANCE_TTL, START_DATE, END_DATE, PAY_DATE)
 		values
 		(#{employeeNo}, #{baseYearMonth}, #{baseSalary}, #{overtimeSalary}, #{nightSalary}, #{holidaySalary}, #{careSalary}, #{rewardSalary}, #{mealSalary},
@@ -141,7 +141,7 @@
 			BASE_SALARY_TTL = #{baseSalary},
 			OVERTIME_SALARY_TTL = #{overtimeSalary}, 
 			NIGHT_SALARY_TTL = #{nightSalary}, 
-			HOLIDAY_SALARY = #{holidaySalary}, 
+			HOLIDAY_SALARY_TTL = #{holidaySalary}, 
 			CARE_SALARY_TTL = #{careSalary}, 
 			REWARD_SALARY_TTL = #{rewardSalary}, 
 			MEAL_TTL = #{mealSalary},
@@ -167,7 +167,7 @@
 	 		A.BASE_SALARY_TTL     		as baseSalary,
 	 		A.OVERTIME_SALARY_TTL		as overtimeSalary,
 	 		A.NIGHT_SALARY_TTL			as nightSalary,
-	 		A.HOLIDAY_SALARY			as holidaySalary,
+	 		A.HOLIDAY_SALARY_TTL		as holidaySalary,
 	 		A.CARE_SALARY_TTL			as careSalary,
 	 		A.REWARD_SALARY_TTL			as rewardSalary,
 	 		A.MEAL_TTL					as mealSalary,
@@ -209,7 +209,7 @@
 	 		A.BASE_SALARY_TTL     		as baseSalary,
 	 		A.OVERTIME_SALARY_TTL		as overtimeSalary,
 	 		A.NIGHT_SALARY_TTL			as nightSalary,
-	 		A.HOLIDAY_SALARY			as holidaySalary,
+	 		A.HOLIDAY_SALARY_TTL		as holidaySalary,
 	 		A.CARE_SALARY_TTL			as careSalary,
 	 		A.REWARD_SALARY_TTL			as rewardSalary,
 	 		A.MEAL_TTL					as mealSalary,
