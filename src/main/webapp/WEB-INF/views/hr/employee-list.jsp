@@ -97,18 +97,27 @@
 							</tr>
 						</thead>
 						<tbody>
-							<c:forEach var="employee" items="${employees }">
-								<tr>
-									<td class="text-center">${employee.no }</td>
-									<td class="text-center"><a href="" data-name="${employee.name }" class="text-decoration-none" >${employee.name }</a></td>
-									<td class="text-center">${employee.positionName }</td>
-									<td class="text-center">${employee.deptName }</td>
-									<td class="text-center"><fmt:formatDate value="${employee.hire }" pattern="yyyy-MM-dd"/></td>
-									<td class="text-center">${employee.mobileTel }</td>
-									<td class="text-center">${employee.companyEmail }</td>
-									<td class="text-center">${employee.basicAddress }</td>
-								</tr>
-							</c:forEach>
+							<c:choose>
+								<c:when test="${empty employees }">
+									<tr>
+										<td id="item-nothing" colspan="12" class="text-center">목록이 없습니다.</td>
+									</tr>
+								</c:when> 
+								<c:otherwise>
+									<c:forEach var="employee" items="${employees }">
+										<tr>
+											<td class="text-center">${employee.no }</td>
+											<td class="text-center"><a href="" data-name="${employee.name }" class="text-decoration-none" >${employee.name }</a></td>
+											<td class="text-center">${employee.positionName }</td>
+											<td class="text-center">${employee.deptName }</td>
+											<td class="text-center"><fmt:formatDate value="${employee.hire }" pattern="yyyy-MM-dd"/></td>
+											<td class="text-center">${employee.mobileTel }</td>
+											<td class="text-center">${employee.companyEmail }</td>
+											<td class="text-center">${employee.basicAddress }</td>
+										</tr>
+									</c:forEach>
+								</c:otherwise>
+							</c:choose>
 						</tbody>
 					</table>
 				</div>
