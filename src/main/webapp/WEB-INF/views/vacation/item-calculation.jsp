@@ -40,7 +40,7 @@
 								<option value="empName">성명</option>
 								<option value="dept">부서명</option>
 							</select>
-							<input type="text" id="search-keyword" name="keyword" value="" />
+							<input type="text" id="search-keyword" name="keyword" value="${loginEmployee.no }" />
 						</sec:authorize>
 						<sec:authorize access="hasAnyRole('ROLE_EMPLOYEE')">
 							<select name="opt">
