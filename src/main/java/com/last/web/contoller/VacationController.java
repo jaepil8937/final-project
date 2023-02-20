@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.last.dto.VacationCalculateDto;
 import com.last.dto.VacationRequestDto;
+import com.last.security.LoginEmployee;
 import com.last.service.VacationService;
 import com.last.vo.VacationDay;
 import com.last.vo.VacationItem;
@@ -147,7 +148,9 @@ public class VacationController {
 	
 
 	@PostMapping("/insert-request")
-	public String insertVacationRequest(VacationRequestForm form) {
+	public String insertVacationRequest(@com.last.security.AuthenticatedUser LoginEmployee loginEmployee, VacationRequestForm form) {
+		form.setEmpNo(loginEmployee.getNo());
+		System.out.println(form.getEmpNo());
 		vacationService.insertVacationRequest(form);
 		
 		return "redirect:apply";
