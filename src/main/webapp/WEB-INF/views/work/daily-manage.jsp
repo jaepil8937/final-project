@@ -126,7 +126,7 @@
 				      <td>${adminAttendance.empName }</td>
 				      <td>${adminAttendance.positionName }</td>
 				      <td>${adminAttendance.deptName }</td>
-				      <td>${adminAttendance.workedTimes }시간</td>
+				      <td>${adminAttendance.attendancesType }</td>
 				      <td>${adminAttendance.startWorkTime }</td>
 				      <td>${adminAttendance.endWorkTime }</td>
 				      <td>${adminAttendance.workedTimes }</td>
