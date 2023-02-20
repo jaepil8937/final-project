@@ -18,7 +18,8 @@
 <style>
 </style>
 <body>
-	<c:set var="menu" value="post" />
+	<c:set var="menu" value="work" />
+	<c:set var="side" value="year-vacation" />
 	<%@ include file="../common/navbar.jsp"%>
 	<div class="container">
 		<div class="row">

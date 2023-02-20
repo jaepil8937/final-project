@@ -13,7 +13,7 @@
 <title>애플리케이션</title>
 </head>
 <body>
-<c:set var="menu" value="attendences" />
+<c:set var="menu" value="work" />
 <c:set var="side" value="daily-manage" />
 <%@ include file="../common/navbar.jsp" %>
 <div class="container my-3">

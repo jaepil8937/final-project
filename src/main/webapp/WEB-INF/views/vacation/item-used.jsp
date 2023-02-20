@@ -9,6 +9,7 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.2/font/bootstrap-icons.css">
 </head>
 <body>
+<c:set var="menu" value="work" />
 <c:set var="side" value="item-used" />
 <%@ include file="../common/navbar.jsp" %>
 	<div class="container">

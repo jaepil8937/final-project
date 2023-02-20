@@ -16,6 +16,7 @@
 <style>
 </style>
 <body>
+	<c:set var="menu" value="work" />
 	<c:set var="side" value="overtime-history" />
 	<%@ include file="../common/navbar.jsp"%>
 	<div class="container">

@@ -23,6 +23,7 @@
 </style>
 </head>
 <body>
+<c:set var="menu" value="work" />
 <c:set var="side" value="item-apply" />
 <%@ include file="../common/navbar.jsp" %>
 	<div class="container">
@@ -199,6 +200,7 @@
 				<table class="table">
 					<tr class="fw-bold">
 						<td>휴가사유 <input type="text" name="reason" id="vacation-reason" style="width:500px;">
+							<input type="hidden" class="d-none" name="no" value="" id="vacation-no">
 						</td>
 					</tr>
 				</table>
@@ -450,6 +452,8 @@ $(function() {
 			alert("휴가신청이 취소되었습니다.");
 		}
 		
+		$("#vacation-no").attr("name", "");
+		
 		$("#form-register").attr("action", "insert-request");
 		$("#form-register").trigger("submit");
 	});
@@ -497,7 +501,7 @@ $(function() {
 		}
 		
 		let delConfirm = confirm("휴가 신청을 취소하시겠습니까?")
-		if (mdfConfirm) {
+		if (delConfirm) {
 			alert("휴가신청내역이 취소되었습니다.");
 		}
 		
