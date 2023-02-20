@@ -51,10 +51,12 @@
 						</select>
 						<label class="form-label"><strong>사원번호</strong></label>
 						<sec:authentication property="principal" var="loginEmployee" />
-						<sec:authorize access="hasAnyRole('ROLE_ADMIN')">						
+						<sec:authorize access="hasAnyRole('ROLE_ADMIN')">	
 						<input type="text" id="text-empNo" name="empNo" value="${loginEmployee.no }" style="text-align:center; width:100px" />
+						</sec:authorize>					
 						<sec:authorize access="hasAnyRole('ROLE_EMPLOYEE')">
 						<input type="text" id="text-empNo" name="empNo" value="${loginEmployee.no }" style="text-align:center; width:100px" readOnly />
+						</sec:authorize>
 						<button type="button" class="btn btn-danger" style="float:right;" id="btn-search">검색</button>
 					</div>
 				</div>
@@ -136,7 +138,7 @@
 					<colgroup>
 						<col width="5%">
 						<col width="10%">
-						<col width="7%">
+						<col width="9%">
 						<col width="10%">
 						<col width="10%">
 						<col width="7%">
@@ -197,7 +199,6 @@
 				<table class="table">
 					<tr class="fw-bold">
 						<td>휴가사유 <input type="text" name="reason" id="vacation-reason" style="width:500px;">
-							<input type="hidden" class="d-none" name="no" id="vacation-no">
 						</td>
 					</tr>
 				</table>
