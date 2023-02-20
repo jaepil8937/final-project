@@ -2,6 +2,7 @@ package com.last.service;
 
 import java.time.LocalDateTime;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -91,7 +92,6 @@ public class WorkService {
 		return workMapper.getAllAttendancesByDateRange(empNo, startDate, endDate);
 	}
 
-	// 사원들의 일일근태정보(관리자권한)
 	public List<WorkAdminAttendanceDto> getAdminAttendances(int empNo) {
 		return workMapper.getAdminAttendancesByEmpNo(empNo);
 	}
@@ -101,7 +101,25 @@ public class WorkService {
 		return workMapper.getAdminAttendanceByNo(attendanceNo);
 	}
 
-	public List<WorkAdminAttendanceDto> getAllAdminAttendances(Map<String, Object> param) {
+	public List<WorkAdminAttendanceDto> getAllAdminAttendances(String startDate, String endDate, int empNo, int positionNo, int deptNo) {
+		
+		Map<String, Object> param = new HashMap<String, Object>();
+		if (!startDate.isBlank()) {
+			param.put("startDate", startDate);
+		}
+		if (!endDate.isBlank()) {
+			param.put("endDate", endDate);
+		}
+		if (empNo > 0) {
+			param.put("empNo", empNo);
+		}
+		if (positionNo > 0) {
+			param.put("positionNo", positionNo);
+		}
+		if (deptNo > 0) {
+			param.put("deptNo", deptNo);
+		}
+		
 		return workMapper.getAllAdminAttendancesByOptions(param);
 	}
 
