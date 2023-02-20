@@ -110,16 +110,15 @@
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script type="text/javascript">
 // 출퇴근알림창
-function btnStart(){
-    alert('출근완료');
-}
-
-function btnEnd(){
-	if (confirm("퇴근하시겠습니까?")) {
-		alert("퇴근완료");
+	function btnStart(){
+	    alert('출근완료');
 	}
-}
-
+	
+	function btnEnd(){
+		if (confirm("퇴근하시겠습니까?")) {
+			alert("퇴근완료");
+		}
+	}
 
 </script>
 </body>
