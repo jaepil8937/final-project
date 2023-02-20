@@ -194,6 +194,25 @@
 			photo				as photo
 		from
 			employees
+
+	</select>
+	
+
+	<insert id="insertEmployees" parameterType="Employee">
+			insert into Employees
+				(employee_no, employee_password, employee_name, employee_gender, employee_birthday, company_tel, home_tel, mobile_tel, company_email, external_email, home_zipcode, home_basic_address, home_detail_address, hire_date, retirement_date, employee_status, employee_role_name, memo, dept_no, position_no, hobong_grade, photo)
+			values
+				(#{employeeNo}, #{password}, #{name}, #{gender}, #{birthday}, #{comTel}, #{homeTel}, #{mobileTel}, #{comEmail}, #{extEmail}, #{zipcode}, #{basicAddress}, #{detailAddress}, #{hireDate}, #{retirementDate}, #{employeeStatus}, #{employeeRoleName}, #{memo}, #{deptNo}, #{positionNo}, #{hobong}, #{photo})
+	</insert>
+
+	<select id="getEmployeesByNo" parameterType="int" resultType="Employee">
+		select
+			employee_no as employeeNo,
+			employee_password as password,
+			employee_name as name,
+			employee_role_name as employeeRoleName
+		from
+			employees
 		where
 			employee_no = #{value}
 	</select>

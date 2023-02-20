@@ -33,12 +33,21 @@
 							<select id="search-year" name="baseYear" style="width: 100px">
 							</select>
 						<label class="form-label"><strong>검색어</strong></label>
-						<select name="opt">
-							<option value="empNo">사원번호</option>
-							<option value="empName">성명</option>
-							<option value="dept">부서명</option>
-						</select>
-						<input type="text" id="search-keyword" name="keyword" value="" />
+						<sec:authentication property="principal" var="loginEmployee" />
+						<sec:authorize access="hasAnyRole('ROLE_ADMIN')">
+							<select name="opt">
+								<option value="empNo">사원번호</option>
+								<option value="empName">성명</option>
+								<option value="dept">부서명</option>
+							</select>
+							<input type="text" id="search-keyword" name="keyword" value="" />
+						</sec:authorize>
+						<sec:authorize access="hasAnyRole('ROLE_EMPLOYEE')">
+							<select name="opt">
+								<option value="empNo">사원번호</option>
+							</select>
+							<input type="text" id="search-keyword" name="keyword" value="${loginEmployee.no }" readOnly />
+						</sec:authorize>
 						<button type="button" class="btn btn-danger" style="float:right;" id="btn-search">검색</button>
 					</div>
 				</div>
