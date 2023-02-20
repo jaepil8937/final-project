@@ -18,7 +18,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.last.dto.WorkAdminAttendanceDto;
+import com.last.security.AuthenticatedUser;
+import com.last.security.LoginEmployee;
 import com.last.service.WorkService;
+import com.last.vo.Employees;
 import com.last.vo.WorkAttendance;
 import com.last.web.request.WorkModifyForm;
 
@@ -32,15 +35,14 @@ public class WorkController {
 	
 	// 일일근태등록페이지
 	@GetMapping("/day")
-	public String dailyAttendance( Model model) {
-		int empNo = 1001;
+	public String dailyAttendance(@AuthenticatedUser LoginEmployee loginEmployee, WorkAttendance workAttendance, Model model) {
 		// 이번 주 출퇴근 정보 조회
-		List<WorkAttendance> attendances = workService.getWeeklyAttendances(empNo);
+		List<WorkAttendance> attendances = workService.getWeeklyAttendances(loginEmployee.getNo());
 		model.addAttribute("attendances", attendances);
 		
-		// 일일출퇴근여부를 판단
-		boolean isStartAttendanced = workService.isStartAttendancedToday(empNo);
-		boolean isEndAttendanced = workService.isEndAttendancedToday(empNo);
+		//일일출퇴근여부를 판단
+		boolean isStartAttendanced = workService.isStartAttendancedToday(loginEmployee.getNo());
+		boolean isEndAttendanced = workService.isEndAttendancedToday(loginEmployee.getNo());
 		
 		model.addAttribute("isStartAttendanced", isStartAttendanced);
 		model.addAttribute("isEndAttendanced", isEndAttendanced);
@@ -50,31 +52,31 @@ public class WorkController {
 	
 	// 출근시간등록
 	@GetMapping("/startAttendance")
-	public String startAttendance(@RequestParam("empNo") int empNo) {
-		workService.addAttendance(empNo);
+	public String startAttendance(@AuthenticatedUser LoginEmployee loginEmployee) {
 		
-		return "redirect:/work/day?empNo=" + empNo; // 저장작업했기 때문에 재요청 URL을 전송
+		workService.addAttendance(loginEmployee.getNo());
+		
+		return "redirect:/work/day"; // 저장작업했기 때문에 재요청 URL을 전송
 	}
 	
 	// 퇴근시간등록
 	@GetMapping("/endAttendance")
-	public String endAttendance() {
-		int empNo = 1001;
-		workService.endAttendance(empNo);
+	public String endAttendance(@AuthenticatedUser LoginEmployee loginEmployee) {
+		workService.endAttendance(loginEmployee.getNo());
 		
 		return "redirect:/work/day";
 	}
 	
 	// 근태정보 기간으로 조회, startDate와endDate의 값을 전달해줌
 	@GetMapping("/searchAttendances")
-	public String getAttendanceList(@RequestParam("startDate") String startDate,
-									@RequestParam("endDate") String endDate, Model model) {
-		int empNo = 1001;
-		List<WorkAttendance> attendances = workService.getAllAttendances(empNo, startDate, endDate);
+	public String getAttendanceList(@AuthenticatedUser LoginEmployee loginEmployee,
+			@RequestParam("startDate") String startDate,
+			@RequestParam("endDate") String endDate, Model model) {
+		List<WorkAttendance> attendances = workService.getAllAttendances(loginEmployee.getNo(), startDate, endDate);
 		model.addAttribute("attendances", attendances);
 		
-		boolean isStartAttendanced = workService.isStartAttendancedToday(empNo);
-		boolean isEndAttendanced = workService.isEndAttendancedToday(empNo);
+		boolean isStartAttendanced = workService.isStartAttendancedToday(loginEmployee.getNo());
+		boolean isEndAttendanced = workService.isEndAttendancedToday(loginEmployee.getNo());
 		
 		model.addAttribute("isStartAttendanced", isStartAttendanced);
 		model.addAttribute("isEndAttendanced", isEndAttendanced);

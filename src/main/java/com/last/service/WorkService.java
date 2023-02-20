@@ -22,7 +22,18 @@ public class WorkService {
 	
 	// 출근시간등록
 	public void addAttendance(int empNo) {
-		workMapper.addAttendance(empNo);
+		WorkAttendance attendance = new WorkAttendance();
+		attendance.setEmpNo(empNo);
+		
+		LocalDateTime now = LocalDateTime.now();		
+		int hour = now.getHour();
+		if (hour > 9) {
+			attendance.setAttendancesType("지각");
+		} else {
+			attendance.setAttendancesType("출근");			
+		}
+		
+		workMapper.addAttendance(attendance);
 	}
 	
 	// 퇴근시간등록

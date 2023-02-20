@@ -13,7 +13,7 @@ import com.last.vo.WorkAttendance;
 public interface WorkMapper {
 
 	// 출근시간등록
-	void addAttendance(int empNo);
+	void addAttendance(WorkAttendance attendance);
 	// 퇴근시간등록
 	void endAttendance(WorkAttendance attendance);
 	

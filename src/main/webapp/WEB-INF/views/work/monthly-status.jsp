@@ -56,7 +56,7 @@
 					<p>
 						<i class="bi bi-exclamation-circle-fill"></i>
 						 아이콘 클릭시 상세내용이 보입니다. 
-						<i class="bi bi-square-fill" style="color: #333333 ;">: 출근</i>  
+						<i class="bi bi-square-fill" style="color: #91C483 ;">: 출근</i>  
 						<i class="bi bi-square-fill" style="color: #ffc34d ;">: 지각</i>  
 						<i class="bi bi-square-fill" style="color: #e76a83 ;">: 조퇴</i>  
 						<i class="bi bi-square-fill" style="color: #6495ed ;">: 휴가</i>

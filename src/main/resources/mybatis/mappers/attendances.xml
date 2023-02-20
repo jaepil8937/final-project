@@ -2,11 +2,11 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.last.mapper.WorkMapper">
 
-	<insert id="addAttendance" parameterType="int">
+	<insert id="addAttendance" parameterType="Attendance">
 		insert into employee_attendances
-			(attendance_no, employee_no, working_date, start_work_time)
+			(attendance_no, employee_no, working_date, start_work_time, attendances_type)
 		values
-			(attendances_seq.nextval, #{empNo}, sysdate, to_char(sysdate, 'hh24:mi'))
+			(attendances_seq.nextval, #{empNo}, sysdate, to_char(sysdate, 'hh24:mi'), #{attendancesType})
 	</insert>
 	
 	<select id="getWeeklyAttendancesByEmpNo" parameterType="int" resultType="Attendance">
@@ -16,14 +16,11 @@
 			working_date 		as workingDate, 
 			start_work_time 	as startWorkTime,
 			end_work_time 		as endWorkTime,
-			worked_times		as workedTimes,
-			holiday_work_time	as holidayWorkTime,
-			overtime_worked_times	as overtimeWorkedTimes,
-			night_worked_times	as nightWorkedTimes
+			worked_times		as workedTimes
 		from
 			employee_attendances
 		where
-			employee_no = #{empNo}
+			employee_no = #{value}
 			and working_date between trunc(sysdate - 7)  and trunc(sysdate + 1) <!-- trunc(sysdate + 1) : 오늘 밤 12시 -->
 		order by
 			working_date desc
@@ -36,10 +33,7 @@
 			working_date 		as workingDate, 
 			start_work_time 	as startWorkTime,
 			end_work_time 		as endWorkTime,
-			worked_times		as workedTimes,
-			holiday_work_time	as holidayWorkTime,
-			overtime_worked_times	as overtimeWorkedTimes,
-			night_worked_times	as nightWorkedTimes
+			worked_times		as workedTimes
 		from
 			employee_attendances
 		where
@@ -54,10 +48,7 @@
 			working_date 		as workingDate, 
 			start_work_time 	as startWorkTime,
 			end_work_time 		as endWorkTime,
-			worked_times		as workedTimes,
-			holiday_work_time	as holidayWorkTime,
-			overtime_worked_times	as overtimeWorkedTimes,
-			night_worked_times	as nightWorkedTimes
+			worked_times		as workedTimes
 		from
 			employee_attendances
 		where
@@ -78,10 +69,7 @@
 			employee_no 		as empNo, 
 			working_date 		as workingDate, 
 			start_work_time 	as startWorkTime,
-			end_work_time 		as endWorkTime,
-			holiday_work_time	as holidayWorkTime,
-			overtime_worked_times	as overtimeWorkedTimes,
-			night_worked_times	as nightWorkedTimes
+			end_work_time 		as endWorkTime
 		from
 			employee_attendances
 		where
