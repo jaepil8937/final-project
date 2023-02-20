@@ -32,8 +32,8 @@
 				<div class="col-12">
 					<form mehod="get" action="/work/dayadmin">
 					   	<b>근무일자: </b>
-						<input autocomplete="off" type="text" name="startDate" id="start-cal" value="${param.startDate }"> 
-						~ <input autocomplete="off" type="text" name="endDate" id="end-cal" value="${param.endDate }"><p></p><p>
+						<input autocomplete="off" type="date" name="startDate" id="start-cal" value="${param.startDate }"> 
+						~ <input autocomplete="off" type="date" name="endDate" id="end-cal" value="${param.endDate }"><p></p><p>
 						<th>
 						<b>사원번호:</b>
 						<input autocomplete="off" type="number" name="empNo" min="1000"/></th>&nbsp;&nbsp;
@@ -191,17 +191,6 @@ $("#table-daily-attendance tbody button").click(function() {
 	hourModifyModal.show();
 	
 })
-	
-$("#start-cal").datepicker();
-$("#end-cal").datepicker();
-$.datepicker.setDefaults({
-	dateFormat:'yy-mm-dd'
-   ,maxDate:"D"
-})
-
-function getItem(){
-	$("#positionNo option:selected").val();
-}
 </script>
 </body>
 </html>

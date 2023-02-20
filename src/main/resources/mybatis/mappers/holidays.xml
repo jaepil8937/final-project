@@ -2,27 +2,46 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.last.mapper.HolidayMapper">
 
+	<select id="getOvertimeHistoriesTotalRows" parameterType="map" resultType="int"> 
+		select 
+			count(*)
+		from 
+			employee_attendances A
+		<where>
+			<if test="month != null">
+			   		and to_char(A.working_date, 'yyyy-MM')  = #{month}
+			</if>
+			<if test="empNo != null">
+			   		and A.employee_no = #{empNo}
+			</if>
+		</where>
+	</select>
+
   	<select id="getOvertimeHistories" parameterType="map" resultType="OvertimeDto">
-  		select 
-		    E.employee_no 		as employeeNo,
-		    E.employee_name 	as employeeName,
-		    P.position_name 	as positionName,
-		    D.dept_name 		as deptName,
-		    A.attendances_type	as attendancesType,
-		    A.end_work_time 	as endWorkTime,
-		    A.working_date 		as workingDate
-		from
-		    employees E, positions P, departments D, employee_attendances A
-		where
-		   	e.dept_no = d.dept_no
-		   	and e.position_no = p.position_no
-		   	and e.employee_no = A.employee_no
-		   	<if test="month != null">
-		   		and to_char(A.working_date, 'yyyy-MM')  = #{month}
-		   	</if>
-		   	<if test="empNo != null">
-		   		and E.employee_no = #{empNo}
-		   	</if>
+  		select *
+  		from (
+	  		select
+	  			row_number() over (order by A.working_date desc)  as row_numbers,
+			    E.employee_no 		as employeeNo,
+			    E.employee_name 	as employeeName,
+			    P.position_name 	as positionName,
+			    D.dept_name 		as deptName,
+			    A.attendances_type	as attendancesType,
+			    A.end_work_time 	as endWorkTime,
+			    A.working_date 		as workingDate
+			from
+			    employees E, positions P, departments D, employee_attendances A
+			where
+			   	e.dept_no = d.dept_no
+			   	and e.position_no = p.position_no
+			   	and e.employee_no = A.employee_no
+			   	<if test="month != null">
+			   		and to_char(A.working_date, 'yyyy-MM')  = #{month}
+			   	</if>
+			   	<if test="empNo != null">
+			   		and E.employee_no = #{empNo}
+			   	</if>)
+		where row_numbers between #{begin} and #{end}
   	</select>
   	
 </mapper>

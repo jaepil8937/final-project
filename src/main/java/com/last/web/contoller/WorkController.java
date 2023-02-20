@@ -70,8 +70,8 @@ public class WorkController {
 	// 근태정보 기간으로 조회, startDate와endDate의 값을 전달해줌
 	@GetMapping("/searchAttendances")
 	public String getAttendanceList(@AuthenticatedUser LoginEmployee loginEmployee,
-			@RequestParam("startDate") String startDate,
-			@RequestParam("endDate") String endDate, Model model) {
+									@RequestParam("startDate") String startDate,
+									@RequestParam("endDate") String endDate, Model model) {
 		List<WorkAttendance> attendances = workService.getAllAttendances(loginEmployee.getNo(), startDate, endDate);
 		model.addAttribute("attendances", attendances);
 		
@@ -81,36 +81,18 @@ public class WorkController {
 		model.addAttribute("isStartAttendanced", isStartAttendanced);
 		model.addAttribute("isEndAttendanced", isEndAttendanced);
 		
-		return "work/daily-attendance";	// WEB-INF/views/work/daily-attendance.jsp로 내부 이동
+		return "work/daily-attendance";	
 	}
 	
 	// 관리자일일근태페이지 기본화면
 	@GetMapping("/dayadmin")
-	public String getAdminAttendanceList(@RequestParam(name = "startDate", required = false, defaultValue = "") String startDate, //required = false 값이 안담겨도 조회될 수 있음
+	public String getAdminAttendanceList(@RequestParam(name = "startDate", required = false, defaultValue = "") String startDate, 
 			@RequestParam(name = "endDate", required = false, defaultValue = "") String endDate,
 			@RequestParam(name = "empNo", required = false, defaultValue = "0") int empNo,
 			@RequestParam(name = "positionNo", required = false, defaultValue = "0") int positionNo,
 			@RequestParam(name = "deptNo", required = false, defaultValue = "0") int deptNo, Model model) {
 		
-		Map<String, Object> param = new HashMap<String, Object>();
-		if (!startDate.isBlank()) {
-			param.put("startDate", startDate);
-		}
-		if (!endDate.isBlank()) {
-			param.put("endDate", endDate);
-		}
-		if (empNo > 0) {
-			param.put("empNo", empNo);
-		}
-		if (positionNo > 0) {
-			param.put("positionNo", positionNo);
-		}
-		if (deptNo > 0) {
-			param.put("deptNo", deptNo);
-		}
-		
-		
-		List<WorkAdminAttendanceDto> adminAttendanceDtos = workService.getAllAdminAttendances(param);
+		List<WorkAdminAttendanceDto> adminAttendanceDtos = workService.getAllAdminAttendances(startDate, endDate, empNo, positionNo, deptNo);
 		model.addAttribute("adminAttendanceDtos", adminAttendanceDtos);
 		
 		return "work/daily-manage";

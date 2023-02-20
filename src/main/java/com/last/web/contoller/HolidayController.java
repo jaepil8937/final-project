@@ -21,9 +21,11 @@ public class HolidayController {
 	@Autowired
 	HolidayService holidayService;
 	
+	// 휴일,연장,야간 근무조회
 	@GetMapping("/overtime-history")
 	public String history(@RequestParam(name="month", required = false, defaultValue = "")String month,
-			@RequestParam(name="empNo", required = false, defaultValue = "0") int empNo, Model model) {
+			@RequestParam(name="empNo", required = false, defaultValue = "0") int empNo, 
+			@RequestParam(name="pages", required = false, defaultValue = "1") int pages, Model model) {
 		
 	 	Map<String, Object> param = new HashMap<>();
 	 	if (!month.isBlank()) {
@@ -32,13 +34,16 @@ public class HolidayController {
 	 	if (empNo != 0) {
 	 		param.put("empNo", empNo);
 	 	}
+	 	param.put("pages", pages);
 	 	
-	 	List<OvertimeHistoryDto> dots = holidayService.getOvertimeHistories(param);
-	 	model.addAttribute("histories", dots);
+	 	Map<String, Object> result= holidayService.getOvertimeHistories(param);
+	 	model.addAttribute("histories", result.get("dtos"));
+	 	model.addAttribute("pagination", result.get("pagination"));
 	 	
 		
 		return "holiday/overtime-history";
 	}
+	
 	
 	@GetMapping("/holiday-setting")
 	public String setting() {

@@ -16,12 +16,34 @@
 			working_date 		as workingDate, 
 			start_work_time 	as startWorkTime,
 			end_work_time 		as endWorkTime,
-			worked_times		as workedTimes
+			worked_times		as workedTimes,
+			holiday_work_time	as holidayWorkTime,
+			overtime_worked_times	as overtimeWorkedTimes,
+			night_worked_times	as nightWorkedTimes
 		from
 			employee_attendances
 		where
 			employee_no = #{value}
 			and working_date between trunc(sysdate - 7)  and trunc(sysdate + 1) <!-- trunc(sysdate + 1) : 오늘 밤 12시 -->
+		order by
+			working_date desc
+	</select>
+	
+	<select id="getAllAttendancesByEmpNo" parameterType="int" resultType="Attendance">
+		select
+			attendance_no		as no,
+			employee_no 		as empNo, 
+			working_date 		as workingDate, 
+			start_work_time 	as startWorkTime,
+			end_work_time 		as endWorkTime,
+			worked_times		as workedTimes,
+			holiday_work_time	as holidayWorkTime,
+			overtime_worked_times	as overtimeWorkedTimes,
+			night_worked_times	as nightWorkedTimes
+		from
+			employee_attendances
+		where
+			employee_no = #{value}
 		order by
 			working_date desc
 	</select>
