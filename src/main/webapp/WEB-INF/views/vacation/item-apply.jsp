@@ -97,7 +97,7 @@
 						<tbody>
 							<tr>
 								<td><input type="text" name="input-empName" value="홍길동" style="text-align:center; width:100px" disabled/></td>
-								<td><input type="text" name="input-remained-days" value="10" style="text-align:center; width:100px" disabled/></td>
+								<td><input type="text" name="input-remained-days" value="" style="text-align:center; width:100px" disabled/></td>
 							</tr>
 						</tbody>
 					</table>	
@@ -199,8 +199,10 @@
 				</table>
 				<div class="row mb-2">
 					<div class="col">
-						<button type="button" id="update-status-refusal" class="btn btn-outline-dark btn-sm" style="float:right; margin-right: 4px;">반려</button>
-						<button type="button" id="update-status-approval" class="btn btn-outline-dark btn-sm" style="float:right; margin-right: 4px;">승인</button>
+						<sec:authorize access="hasAnyRole('ROLE_ADMIN')">
+							<button type="button" id="update-status-refusal" class="btn btn-outline-dark btn-sm" style="float:right; margin-right: 4px;">반려</button>
+							<button type="button" id="update-status-approval" class="btn btn-outline-dark btn-sm" style="float:right; margin-right: 4px;">승인</button>
+						</sec:authorize>
 					</div>
 				</div>
 				<div class="row mb-2 bg-light m-2">

@@ -13,7 +13,7 @@ public class EmployeeUserDetails extends LoginEmployee implements UserDetails {
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		return List.of(new SimpleGrantedAuthority(getRoleName()));
 	}
-
+	
 	@Override
 	public String getPassword() {
 		return getEncryptPassword();

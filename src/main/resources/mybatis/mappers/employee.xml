@@ -165,7 +165,7 @@
 
 	<select id="getEmployeesByNo" parameterType="int" resultType="Employee">
 		select
-			employee_no as empNo,
+			employee_no as employeeNo,
 			employee_password as password,
 			employee_name as name,
 			employee_role_name as employeeRoleName
