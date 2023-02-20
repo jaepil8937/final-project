@@ -1,5 +1,7 @@
 package com.last.service;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Map;
 
@@ -59,6 +61,15 @@ public class VacationService {
 	}
 
 	public VacationCalculateDto calculatedVacation(Map<String, Object> param) {
+		int baseYear = (int) param.get("baseYear");
+		
+		Calendar c1 = Calendar.getInstance();
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		c1.set(baseYear, 11, 31);
+		String baseDate = sdf.format(c1.getTime());
+		
+		param.put("baseDate", baseDate);
+		
 		// 근속년수 계산
 		int workedYears = vacationMapper.getWorkedYears(param);
 		if (workedYears < 0) {
@@ -96,7 +107,7 @@ public class VacationService {
 	}
 
 	public VacationCalculateDto getCalculatedDays(Map<String, Object> param) {
-		return vacationMapper.getCalculatedDays(param);
+		return vacationMapper.getCalculatedDays(param); 
 	}
 
 	public VacationRequestDto getVacationRequestInfoByNo(int no) {
