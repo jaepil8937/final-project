@@ -49,12 +49,12 @@
 				<div class="row">
 					<table class="table table-bordered table-hover table-striped table-sm" id="table-family">
 						<colgroup>
-							<col width="5%">
+							<col width="10%">
 							<col width="12%">
 							<col width="12%">
-							<col width="12">
-							<col width="12">
-							<col width="12">
+							<col width="12%">
+							<col width="12%">
+							<col width="12%">
 							<col width="10%">
 							<col width="10%">
 							<col width="10%">
@@ -72,19 +72,7 @@
 								<th>장애인</th>
 							</tr>
 						</thead>
-						<tbody>
-							<tr class="text-center" >
-								<td><input type="checkbox" name="familyNo" ></td>
-								<td><input type="text"></td>
-								<td><input type="text"></td>
-								<td><input type="text"></td>
-								<td><input type="text"></td>
-								<td><input type="text"></td>
-								<td><input type="checkbox"></td>
-								<td><input type="checkbox"></td>
-								<td><input type="checkbox"></td>
-							</tr>												
-						</tbody>
+						
 					</table>
 				</div>
 					<div class="row">
