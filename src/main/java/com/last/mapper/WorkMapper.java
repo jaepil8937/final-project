@@ -25,6 +25,8 @@ public interface WorkMapper {
 	// 주간근태목록
 	List<WorkAttendance> getWeeklyAttendancesByEmpNo(int empNo);
 	
+	List<WorkAttendance> getAllAttendancesByEmpNo(int empNo);
+	
 	// 전체근무시간조회
 	List<WorkAttendance> getAllAttendancesByDateRange(@Param("empNo") int empNo, @Param("startDate") String startDate, @Param("endDate") String endDate);
 	

@@ -19,7 +19,9 @@
 				<ul class="dropdown-menu dropdown-menu-dark" id="sub-menu">
 
 					<li><a class="dropdown-item ${side eq 'daily-attendance' ? 'text-light fw-bold' : '' }" href="/work/day">일일근태등록</a></li>
-					<li><a class="dropdown-item ${side eq 'daily-manage' ? 'text-light fw-bold' : '' }" href="/work/dayadmin">일일근태관리</a></li>
+					<sec:authorize access="hasAnyRole('ROLE_ADMIN')">
+						<li><a class="dropdown-item ${side eq 'daily-manage' ? 'text-light fw-bold' : '' }" href="/work/dayadmin">일일근태관리</a></li>
+					</sec:authorize>
 					<li><a class="dropdown-item ${side eq 'monthly-manage' ? 'text-light fw-bold' : '' }" href="/work/month">월간근태관리</a></li>
 					<li><a class="dropdown-item ${side eq 'monthly-status' ? 'text-light fw-bold' : '' }" href="/work/monthstatus">월근태현황</a></li>
 					<li><a class="dropdown-item ${side eq '3' ? 'text-light fw-bold' : '' }" href="/holiday/calendar">휴일달력</a></li>
