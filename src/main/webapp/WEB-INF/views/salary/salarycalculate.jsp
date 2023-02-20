@@ -288,6 +288,8 @@ $(function() {
 				$("#deduction-salary").val(deductionSalary);
 				let realSalary = new Number(salary.realSalary).toLocaleString();
 				$("#real-salary").text(realSalary);
+				
+				
 			}
 		})
 	}
@@ -324,6 +326,28 @@ $(function() {
 		$("#deduction-salary").val(0);
 		$("#real-salary").text(0);
 	}
+	
+	// 자동계산
+	$("#auto-calculate").click(function() {
+		baseSalary = parseInt($("#base-salary").val().replaceAll(",", ""));
+		overtimeSalary = parseInt($("#overtime-salary").val().replaceAll(",", ""));
+		nightSalary = parseInt($("#night-salary").val().replaceAll(",", ""));
+		holidaySalary = parseInt($("#holiday-salary").val().replaceAll(",", ""));
+		rewardSalary = parseInt($("#reward-salary").val().replaceAll(",", ""));
+		mealSalary = parseInt($("#meal-salary").val().replaceAll(",", ""));
+		businessSalary = parseInt($("#business-salary").val().replaceAll(",", ""));
+		incomeTax = parseInt($("#income-tax").val().replaceAll(",", ""));
+		residenceTax = parseInt($("#residence-tax").val().replaceAll(",", ""));
+		pension = parseInt($("#national-pension").val().replaceAll(",", ""));
+		healthInsurance = parseInt($("#health-insurance").val().replaceAll(",", ""));
+		longtermInsurance = parseInt($("#longterm-insurance").val().replaceAll(",", ""));
+		employmentInsurance = parseInt($("#employment-insurance").val().replaceAll(",", ""));
+		$("#total-salary").val((baseSalary + mealSalary + overtimeSalary + nightSalary + holidaySalary + businessSalary + rewardSalary).toLocaleString());
+		$("#deduction-salary").val((incomeTax + residenceTax + pension + healthInsurance + healthInsurance + employmentInsurance).toLocaleString());
+		totalSalary = baseSalary + mealSalary + overtimeSalary + nightSalary + holidaySalary + businessSalary + rewardSalary
+		deductionSalary = incomeTax + residenceTax + pension + healthInsurance + healthInsurance + employmentInsurance
+		$("#real-salary").text((totalSalary-deductionSalary).toLocaleString());
+	})
 	
 	// 급여정보 저장하기
 	$("#btn-save").click(function() {
@@ -391,10 +415,14 @@ $(function() {
 					selectedDeductionSalary.text(deductionSalary);
 					let realSalary = new Number(savedSalary.realSalary).toLocaleString();
 					selectedRealSalary.text(realSalary);
+
+					alert("저장되었습니다.");
+					
+					
 				}
 			})
-		alert("저장되었습니다.");
 		}	
+		
 		function updateSalary(){
 			$.ajax({
 				type : 'PUT',
@@ -414,7 +442,6 @@ $(function() {
 		alert("수정되었습니다.");	
 		}
 	})
-	
 	
 	// 급여내용 삭제하기
 	$("#btn-delete").click(function() {
