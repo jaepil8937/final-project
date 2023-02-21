@@ -1,6 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"
 	trimDirectiveWhitespaces="true"%>
-<%@ include file="../common/tags.jsp" %>
+<%@ include file="../common/tags.jsp"%>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -14,6 +14,39 @@
 <title>애플리케이션</title>
 </head>
 <style>
+/* 이전/다음/오늘 버튼 회색 */
+.fc-prev-button.fc-button.fc-button-primary {
+	background-color: hsl(210deg 17% 98%);
+	border-color: hsl(210deg 17% 98%);
+	color: black;
+}
+
+.fc-next-button.fc-button.fc-button-primary {
+	background-color: hsl(210deg 17% 98%);
+	border-color: hsl(210deg 17% 98%);
+	color: black;
+}
+
+.fc-today-button.fc-button.fc-button-primary {
+	background-color: hsl(210deg 17% 98%);
+	border-color: hsl(210deg 17% 98%);
+	color: black;
+}
+/* 날짜 검은색 */
+.fc-day a {
+	color: black;
+	text-decoration: none;
+}
+/* 일요일 날짜 빨간색 */
+.fc-day-sun a {
+	color: red;
+	text-decoration: none;
+}
+/* 토요일 날짜 파란색 */
+.fc-day-sat a {
+	color: blue;
+	text-decoration: none;
+}
 </style>
 <body>
 	<c:set var="menu" value="work" />
@@ -52,51 +85,50 @@
 					</div>
 				</div>
 				<div class="row" style="margin-top: 60px;">
-					<div class="col-6">
-						<div class="nav">
-							<button class="btn btn-light" onclick="prevMonth()">&lt;</button>
-							<button class="btn btn-light" onclick="nextMonth()">&gt;</button>
-							<button class="btn btn-light" onclick="goToday()">오늘</button>
-						</div>
-					</div>
-					<div class="col-6">
-						<p>
-							<button type="button" class="btn btn-light" style="float: right;">휴일추가</button>
-						</p>
-					</div>
-					<div class="row" style="padding-right: 0px;">
-						<table class="table table-bordered" style="margin-top: 16px;">
-							<colgroup>
-								<col width="14%">
-								<col width="14%">
-								<col width="14%">
-								<col width="14%">
-								<col width="14%">
-								<col width="14%">
-								<col width="14%">
-							</colgroup>
-							<thead>
-								<tr class="bg-light text-center">
-									<th>일</th>
-									<th>월</th>
-									<th>화</th>
-									<th>수</th>
-									<th>목</th>
-									<th>금</th>
-									<th>토</th>
-								</tr>
-							</thead>
-						</table>
+					<div class="col-12">
+						<div id="calendar"></div>
 					</div>
 				</div>
+				<div class="row"></div>
 			</div>
 		</div>
 	</div>
-</div>
-<script
-	src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
-	crossorigin="anonymous"></script>
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+	<script
+		src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
+		crossorigin="anonymous"></script>
+	<script
+		src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+	<script
+		src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.4/index.global.min.js'></script>
+	<script src="https://momentjs.com/downloads/moment.js"
+		type="text/javascript"></script>
+	<script type="text/javascript">
+		let calendar = new FullCalendar.Calendar(document
+				.getElementById("calendar"), {
+			// 달력의 월, 요일정보가 한글로 표시되도록 한다.
+			locale : 'ko',
+			// 달력의 초기화면을 월별로 일정이 표시되게 한다.
+			initialView : 'dayGridMonth',
+			// events 프로퍼티에는 달력이 변경될 때마다 실행되는 함수를 등록한다.
+			// info는 화면에 표시되는 달력의 시작일, 종료일을 제공한다.
+			// 일정정보를 조회하고, successCallback(이벤트배열)함수의 매개변수로 일정정보를 제공하고 실행하면 화면에 반영된다.
+			events : function(info, successCallback, failureCallback) {
+
+			},
+			headerToolbar : { // 헤더에 표시할 툴 바
+				left : 'prev,next today',
+				center : 'title',
+				right : ''
+			},
+
+			// dateClick 프로퍼티에는 달력의 날짜를 클릭했을 때 실행되는 함수를 등록한다.
+			// info는 클릭한 날짜의 날짜정보를 제공한다.
+			dateClick : function(info) {
+
+			}
+		});
+		// Calendar를 렌더링한다.
+		calendar.render();
+	</script>
 </body>
 </html>
