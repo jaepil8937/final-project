@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.last.mapper.FamilyMapper">
+	
+	<insert id="insertFamily" parameterType="Family">
+		insert into employee_families
+			(employee_no, name, relations, cohabitation, dependents, handicapped, family_no)
+		values
+			(#{employeeNo}, #{name}, #{relations}, #{cohabitation},  #{dependents}, #{handicapped}, families_seq.nextval)
+	</insert>
+	
+	<select id="getAllFamily" resultType="Family">
+		select
+			employee_no 		as employeeNo,
+			name				as name,
+			relations			as relations,
+			cohabitation		as cohabitation,
+			dependents			as dependents,
+			handicapped			as handicapped,
+			family_no			as familyNo
+		from
+			employee_families
+	</select>
+	
+</mapper>

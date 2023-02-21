@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.last.mapper.EducationMapper">
+	
+	<insert id="insertEducations" parameterType="Education">
+		insert into employee_educations
+			(employee_no, admission_date, school_name, mager_department, graduation_type, education_no)
+		values
+			(#{employeeNo}, #{admissionDate}, #{schoolName}, #{magerDepartment},  #{graduationType}, educations_seq.nextval)
+	</insert>
+	
+	<select id="getAllEducations" resultType="Education">
+		select
+			employee_no 		as employeeNo,
+			admission_date		as admissionDate,
+			school_name			as schoolName,
+			mager_department	as magerDepartment,
+			graduation_type		as graduationType,
+			education_no		as educationNo
+		from
+			employee_educations
+	</select>
+	
+</mapper>
