@@ -440,6 +440,10 @@ $(function() {
 			return false;
 		}
 		
+		if ($startDate > $endDate) {
+			alert("휴가 종료일이 시작일보다 빠를 수 없습니다.");
+			return false;
+		}
 		if (!$reason) {
 			alert("휴가 사유를 입력하세요.");
 			return false;
@@ -470,6 +474,11 @@ $(function() {
 		
 		if (!$endDate) {
 			alert("휴가 종료일을 입력하세요.");
+			return false;
+		}
+		
+		if ($startDate > $endDate) {
+			alert("휴가 종료일이 시작일보다 빠를 수 없습니다.");
 			return false;
 		}
 		
