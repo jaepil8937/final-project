@@ -32,6 +32,7 @@
 	border-color: hsl(210deg 17% 98%);
 	color: black;
 }
+
 /* 날짜 검은색 */
 .fc-day a {
 	color: black;
@@ -93,6 +94,44 @@
 			</div>
 		</div>
 	</div>
+	<!-- 일정 등록/수정 모달 -->
+    <div id="calendarBox">
+        <div id="calendar"></div>
+    </div>
+	<!-- modal 추가 -->
+    <div class="modal" id="calendarModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">휴일정보등록</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="taskId" class="col-form-label">기준일자</label>
+                       		<input type="date" class="form-control" id="calendar_date" name="calendar_date">
+                        <label for="taskId" class="col-form-label">일자구분</label>
+	                        <select class="form-select form-select-sm" aria-label=".form-select-sm example" name="">
+								<option selected>무급휴일</option>
+								<option value="1">유급휴일</option>
+							</select>
+						<label for="taskId" class="col-form-label">휴일구분</label>
+	                        <select class="form-select form-select-sm" aria-label=".form-select-sm example" name="">
+								<option selected>법정공휴일</option>
+								<option value="1">대체공휴일</option>
+								<option value="2">회사공휴일</option>
+							</select>
+                        <label for="taskId" class="col-form-label">휴일명</label>
+                       	 	<input type="text" class="form-control" id="calendar_content" name="calendar_content">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-dark" id="addCalendar">추가</button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal" id="sprintSettingModalClose">취소</button>
+                </div>
+            </div>
+        </div>
+    </div>
 	<script
 		src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
 		crossorigin="anonymous"></script>
@@ -103,32 +142,49 @@
 	<script src="https://momentjs.com/downloads/moment.js"
 		type="text/javascript"></script>
 	<script type="text/javascript">
-		let calendar = new FullCalendar.Calendar(document
-				.getElementById("calendar"), {
-			// 달력의 월, 요일정보가 한글로 표시되도록 한다.
-			locale : 'ko',
-			// 달력의 초기화면을 월별로 일정이 표시되게 한다.
-			initialView : 'dayGridMonth',
-			// events 프로퍼티에는 달력이 변경될 때마다 실행되는 함수를 등록한다.
-			// info는 화면에 표시되는 달력의 시작일, 종료일을 제공한다.
-			// 일정정보를 조회하고, successCallback(이벤트배열)함수의 매개변수로 일정정보를 제공하고 실행하면 화면에 반영된다.
-			events : function(info, successCallback, failureCallback) {
+	  document.addEventListener('DOMContentLoaded', function () {
+          var calendarEl = document.getElementById('calendar');
+          var calendar = new FullCalendar.Calendar(calendarEl, {
+              locale: 'ko',
+              initialView: 'dayGridMonth',
+              dateClick: function(info) {
+            	  $("#calendarModal").modal("show");
+            	  }, 
+              headerToolbar: {
+            	  left : 'prev,next today',
+            	  center : 'title',
+            	  right : 'addEventButton' //s headerToolbar에 버튼을 추가
+              }, customButtons: {
+                  addEventButton: { // 추가한 버튼 설정
+                      text : "휴일 추가",  // 버튼 내용
+                      click : function(){ // 버튼 클릭 시 이벤트 추가
+                          $("#calendarModal").modal("show"); // modal 나타내기
 
-			},
-			headerToolbar : { // 헤더에 표시할 툴 바
-				left : 'prev,next today',
-				center : 'title',
-				right : ''
-			},
+                          $("#addCalendar").on("click",function(){  // modal의 추가 버튼 클릭 시
+                              var calendar_date = $("#calendar_date").val();
+                              var content = $("#calendar_content").val();
+                              
+                              //내용 입력 여부 확인
+                              if(calendar_date == null || calendar_date == ""){
+                                  alert("기준일자를 선택해주세요.");
+                              }else if(content == "" || content ==""){
+                                  alert("휴일명을 입력해주세요.");
+                              }else{ // 정상적인 입력 시
+                                  var obj = {
+                                   
+                                  }//전송할 객체 생성
 
-			// dateClick 프로퍼티에는 달력의 날짜를 클릭했을 때 실행되는 함수를 등록한다.
-			// info는 클릭한 날짜의 날짜정보를 제공한다.
-			dateClick : function(info) {
-
-			}
-		});
-		// Calendar를 렌더링한다.
-		calendar.render();
+                                  console.log(obj); //서버로 해당 객체를 전달해서 DB 연동 가능
+                              }
+                          });
+                      }
+                  }
+              },
+              editable: true, // false로 변경 시 draggable 작동 x 
+              displayEventTime: false // 시간 표시 x
+          });
+          calendar.render();
+      });
 	</script>
 </body>
 </html>
