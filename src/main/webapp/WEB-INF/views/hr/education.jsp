@@ -29,7 +29,6 @@
 					<i class="bi bi-arrow-right-square-fill text-danger"></i> <strong>상세정보</strong>
 				</div>
 			</div>
-			
 			<div class="row mb-3">
 				<div class="col-12">
 					<div class="btn-group" >
@@ -40,60 +39,79 @@
 					</div>
 				</div>
 			</div>
-			
 			<div class="row">
 				<div class="col text-end mb-3">
-					<button type="button" class="btn btn-outline-dark btn-sm" id="">행삭제</button>
-					<button type="button" class="btn btn-outline-dark btn-sm"  id="">행추가</button>
+					<button type="button" class="btn btn-outline-dark btn-sm" id="btn-del">행삭제</button>
+					<button type="button" class="btn btn-outline-dark btn-sm"  id="btn-add">행추가</button>
 				</div>
 			</div>
+			
+			<form id="form-register" method="post" action="education" name="delete">
 			<div class="row">
 				<div class="col-12">
-					<table class="table table-bordered table-hover table-striped table-sm" id="edu-table">
+					<table class="table table-bordered  table-sm" id="edu-table">
 						<colgroup>
-							<col width="5%">
-							<col width="7%">
-							<col width="7%">
 							<col width="10%">
-							<col width="10%">
-							<col width="10%">
-							<col width="10%">
-							<col width="10%">
+							<col width="22.5%">
+							<col width="22.5%">
+							<col width="22.5%">
+							<col width="22.5%">
 						</colgroup>
 						<thead>
 							<tr class="text-center">
-								<th><input type="checkbox" id="checkbox-all-toggle" onchange="toggleAllCheckUncheck()"></th>
+								<th><input type="checkbox" id="checkbox-all-toggle" onchange="toggleAllCheckUncheck()" ></th>
 								<th>입학년월</th>
-								<th>졸업년월</th>
 								<th>학교명</th>
 								<th>전공학과</th>
-								<th>학위</th>
-								<th>졸업구분</th>
-								<th>소재지</th>
+								<th>졸업구분</th>	
 							</tr>
 						</thead>
 						<tbody>
-							<tr class="text-center">
-								<td><input type="checkbox" name="skill"></td>
-								<td><input type="date" id="start-date"  value="2023-02-03" style="text-align:center; width:130px"/></td>
-								<td><input type="date" id="end-date" value="2023-02-03" style="text-align:center; width:130px"/></td>
-								<td>서울대</td>
-								<td>전산</td>
-								<td>학사</td>
-								<td>졸업</td>
-								<td>서울</td>
+							<c:forEach var="edu" items="${educations }">
+								<tr class="text-center align-middle">
+									<th><input type="checkbox" name="eduNo" value="${edu.employeeNo}"></th>
+									<td><fmt:formatDate value="${edu.admissionDate}" pattern="yyyy년 M월 d일"/> </td>
+									<td>${edu.schoolName} </td>
+									<td>${edu.magerDepartment} </td>
+									<td> 
+										<input class="form-check-input" type="radio" name="graduationType-${edu.employeeNo}" value="Y"  ${edu.graduationType eq 'Y' ? 'checked' : '' } >
+										<label class="form-check-label" for="flexRadioDefault1">졸업</label>
+										<input class="form-check-input" type="radio" name="graduationType-${edu.employeeNo}" value="N"  ${edu.graduationType eq 'N' ? 'checked' : '' }>
+	  									<label class="form-check-label" for="flexRadioDefault2">재학중</label>
+									</td>
+								</tr>
+							</c:forEach>
+							<tr class="text-center align-middle">
+								<td>
+									<input type="checkbox" name="eduNo" value="0">
+								</td>
+								<td>
+									<input type="date" id="start-date"  class="form-control" name="admissionDate" >
+								</td>
+								<td>
+									<input type="text" class="form-control" name="schoolName" >
+								</td>
+								<td>
+									<input type="text" class="form-control" name="magerDepartment" >
+								</td>
+								<td>
+									<input class="form-check-input" type="radio" name="graduationType" value="Y"  id="flexRadioDefault1" >
+									<label class="form-check-label" for="flexRadioDefault1">졸업</label>
+									<input class="form-check-input" type="radio" name="graduationType" value="N" id="flexRadioDefault1" >
+	  								<label class="form-check-label" for="flexRadioDefault2">재학중</label>
+								</td>	
 							</tr>										
 						</tbody>
 					</table>
 				</div>
 			</div>
 			
-			
-			<div class="row">
-				<div class="col text-end">
-					<button type="submit" class="btn btn-dark" style="float:right;" id="">저장</button>
+				<div class="row">
+					<div class="col text-end">
+						<button type="submit" class="btn btn-dark" style="float:right;" >저장</button>
+					</div>
 				</div>
-			</div>
+			</form>
 		</div>
 	</div>
 </div>				
@@ -106,7 +124,7 @@ function toggleAllCheckUncheck() {
 	var currentChecked = el.checked;
 	
 	// 모든 보유기술 체크박스의 체크상태를 위에서 조회한 전체 선택/해제 체크박스의 체크상태와 같은 상태로 만든다.
-	var collection = document.querySelectorAll('[name=skill]');
+	var collection = document.querySelectorAll('[name=eduNo]');
 	for (var index = 0; index < collection.length; index++) {
 		var el = collection[index];
 		el.checked = currentChecked;
@@ -114,7 +132,7 @@ function toggleAllCheckUncheck() {
 }
 function checkAll() {
 	// 체크박스 전체 선택하기
-	var collection = document.querySelectorAll('[name=skill]');
+	var collection = document.querySelectorAll('[name=eduNo]');
 	for (var index = 0; index < collection.length; index++) {
 		var el = collection[index];
 		el.checked = true;
@@ -122,16 +140,16 @@ function checkAll() {
 }
 function uncheckAll() {
 	// 체크박스 전체 선택하기
-	var collection = document.querySelectorAll('[name=skill]');
+	var collection = document.querySelectorAll('[name=eduNo]');
 	for (var index = 0; index < collection.length; index++) {
 		var el = collection[index];
 		el.checked = false;
 	}
 }
 
-$("#edu-table tbody").on('change', ":checkbox[name=skill]", function() {
-	let checkboxLen = $("#edu-table tbody :checkbox[name=skill]").length;
-	let checkedCheckboxLen = $("#edu-table tbody :checkbox[name=skill]:checked").length;
+$("#edu-table tbody").on('change', ":checkbox[name=eduNo]", function() {
+	let checkboxLen = $("#edu-table tbody :checkbox[name=eduNo]").length;
+	let checkedCheckboxLen = $("#edu-table tbody :checkbox[name=eduNo]:checked").length;
 
 
 if (checkboxLen == checkedCheckboxLen) {
@@ -142,25 +160,38 @@ if (checkboxLen == checkedCheckboxLen) {
 })
 
 $(function() {
+	var count = 0;
 	$("#btn-add").click(function() {
 		
-		var familyRowsLength = $("#edu-table tbody tr").length;
-		if (familyRowsLength >= 10) {
+		var eduRowsLength = $("#edu-table tbody tr").length;
+		if (eduRowsLength >= 10) {
 			alert("학력정보 입력필드는 최대 10개까지만 추가 가능합니다.");
 			return;
 		}
 		
+		count++;
+		
 		var htmlContent = `
-			<tr class="text-center" >
-				<td><input type="checkbox" name="skill"></td>
-				<td><input type="date" id="start-date"  value="2023-02-03" style="text-align:center; width:130px"/></td>
-				<td><input type="date" id="end-date" value="2023-02-03" style="text-align:center; width:130px"/></td>
-				<td>서울대</td>
-				<td>전산</td>
-				<td>학사</td>
-				<td>졸업</td>
-				<td>서울</td>
-			</tr>		
+			<tr class="text-center align-middle">
+			<td>
+				<input type="checkbox" name="eduNo">
+			</td>
+			<td>
+				<input type="date" id="start-date"  class="form-control">
+			</td>
+			<td>
+				<input type="text" class="form-control">
+			</td>
+			<td>
+				<input type="text" class="form-control">
+			</td>
+			<td>
+				<input class="form-check-input" type="radio" name="graduationType-\${count}" value="Y"  id="flexRadioDefault1" >
+				<label class="form-check-label" for="flexRadioDefault1">졸업</label>
+				<input class="form-check-input" type="radio" name="graduationType-\${count}" value="N" id="flexRadioDefault1" >
+					<label class="form-check-label" for="flexRadioDefault2">재학중</label>
+			</td>	
+		</tr>		
 		`;
 		$("#edu-table tbody").append(htmlContent);
 	});
@@ -174,6 +205,8 @@ $(function() {
 		$(this).closest('.row').remove();
 	});
 })
+
+
 </script>
 </body>
 </html>
