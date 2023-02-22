@@ -145,6 +145,85 @@
 	let calendar = new FullCalendar.Calendar(document.getElementById("calendar"), {
               locale: 'ko',
               initialView: 'dayGridMonth',
+            <sec:authorize access="hasRole('ADMIN')">  
+              dateClick: function(info) {
+            	  let clickedDate = info.dateStr;
+            	  
+            	  $("#calendar_date").val(clickedDate)
+            	  $("#calendarModal").modal("show");
+            	  
+            }, 
+            </sec:authorize>
+              headerToolbar: {
+            	  left : 'prev,next today',
+            	  center : 'title'
+           		<sec:authorize access="hasRole('ADMIN')">  
+           	 	  ,right : 'addEventButton' //s headerToolbar에 버튼을 추가
+            	</sec:authorize>
+              }
+            <sec:authorize access="hasRole('ADMIN')">  
+            , customButtons: {
+                  addEventButton: { // 추가한 버튼 설정
+                      text : "휴일 추가",  // 버튼 내용
+                      click : function(){ // 버튼 클릭 시 이벤트 추가
+                          $("#calendarModal").modal("show"); // modal 나타내기                        
+                      }
+                  }
+              }
+            </sec:authorize>
+              
+          });
+          calendar.render();
+          
+          $("#addCalendar").on("click",function(){  // modal의 추가 버튼 클릭 시
+              var calendar_date = $("#calendar_date").val();
+              var content = $("#calendar_content").val();
+              
+              //내용 입력 여부 확인
+              if(calendar_date == null || calendar_date == ""){
+                  alert("기준일자를 선택해주세요.");
+              }else if(content == "" || content ==""){
+                  alert("휴일명을 입력해주세요.");
+              }else{ // 정상적인 입력 시
+                  var obj = {
+                   
+                  }//전송할 객체 생성
+
+                  console.log(obj); //서버로 해당 객체를 전달해서 DB 연동 가능
+              }
+          });
+     
+	</script>
+</body>
+</html>
+			<option selected>법정공휴일</option>
+								<option value="1">대체공휴일</option>
+								<option value="2">회사공휴일</option>
+							</select>
+                        <label for="taskId" class="col-form-label">휴일명</label>
+                       	 	<input type="text" class="form-control" id="calendar_content" name="calendar_content">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-dark" id="addCalendar">추가</button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal" id="sprintSettingModalClose">취소</button>
+                </div>
+            </div>
+        </div>
+    </div>
+	<script
+		src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
+		crossorigin="anonymous"></script>
+	<script
+		src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+	<script
+		src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.4/index.global.min.js'></script>
+	<script src="https://momentjs.com/downloads/moment.js"
+		type="text/javascript"></script>
+	<script type="text/javascript">
+	let calendar = new FullCalendar.Calendar(document.getElementById("calendar"), {
+              locale: 'ko',
+              initialView: 'dayGridMonth',
               dateClick: function(info) {
             	  let clickedDate = info.dateStr;
             	  
