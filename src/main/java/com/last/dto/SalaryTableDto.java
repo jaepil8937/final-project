@@ -12,9 +12,9 @@ import lombok.Setter;
 @Alias("salaryTableDto")
 public class SalaryTableDto {
 	
-	private List<SalaryDto> salaryDtoLists;
+	private List<SalaryDto> salaryDtoLists;            
 	
-	public int getTotalSalary() {
+	public int getTotalSalary() {                                // 사원들의 지급총액 합계
 		int total = 0;
 		for (SalaryDto dto : salaryDtoLists) {
 			total += dto.getTotalSalary();
@@ -22,7 +22,7 @@ public class SalaryTableDto {
 		return total;
 	}
 	
-	public int getDeductionSalary() {
+	public int getDeductionSalary() {                           // 사원들의 공제총액 합계 
 		int total = 0;
 		for (SalaryDto dto : salaryDtoLists) {
 			total += dto.getDeductionSalary();
@@ -30,7 +30,7 @@ public class SalaryTableDto {
 		return total;
 	}
 	
-	public int getRealSalary() {
+	public int getRealSalary() {                          // 사원들의 실지급액 합계 
 		int total = 0;
 		for (SalaryDto dto : salaryDtoLists) {
 			total += dto.getRealSalary();

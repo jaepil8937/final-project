@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import com.last.dto.SalaryDto;
+import com.last.dto.SalaryPeriodDto;
 import com.last.vo.PayBankInfo;
 
 @Mapper
@@ -28,4 +29,7 @@ public interface SalaryMapper {
 	void deleteSalary(@Param("employeeNo") int empNo, @Param("baseYearMonth") String baseYearMonth);
 	// 급여조회 - 사원 급여 명세 가져오기
 	SalaryDto getSalaryDetailDto(Map<String, Object> param);
+	// 기간별 급여현황 - 급여총계
+	List<SalaryPeriodDto> getPeriodDtoLists(Map<String, Object> param);
+	
 }

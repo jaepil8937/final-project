@@ -65,16 +65,12 @@
 			<c:if test="${menu eq 'pay'}">
 			<li class="nav-item dropdown"><a class="nav-link dropdown-toggle text-light" href="#" data-bs-toggle="dropdown" data-bs-auto-close="false" aria-expanded="false">급여관리</a>
 					<ul class="dropdown-menu dropdown-menu-dark" id="sub-menu">
-						<li><a class="dropdown-item ${side eq '1' ? 'text-light fw-bold' : '' }" href="/pay/paybase">급여기본정보관리</a></li>
-						<li><a class="dropdown-item ${side eq '2' ? 'text-light fw-bold' : '' }" href="/pay/extrapay">기본수당외 수당</a></li>
-						<li><a class="dropdown-item ${side eq '3' ? 'text-light fw-bold' : '' }" href="/pay/salarytax">급여비과세표</a></li>
-						<li><a class="dropdown-item ${side eq '3' ? 'text-light fw-bold' : '' }" href="/pay/grade">급호테이블</a></li>
-						<li><a class="dropdown-item ${side eq '4' ? 'text-light fw-bold' : '' }" href="/pay/simpletax">간이세액조견표</a></li>
-						<li><a class="dropdown-item ${side eq '4' ? 'text-light fw-bold' : '' }" href="/pay/insurance">4대보험요율표</a></li>
+					<sec:authorize access="hasAnyRole('ROLE_ADMIN')">
 						<li><a class="dropdown-item ${side eq 'salary-calculate' ? 'text-light fw-bold' : '' }" href="/salary/salarycalculate">급여계산</a></li>
 						<li><a class="dropdown-item ${side eq 'salary-check' ? 'text-light fw-bold' : '' }" href="/salary/salarycheck">급여조회</a></li>
 						<li><a class="dropdown-item ${side eq 'salary-book' ? 'text-light fw-bold' : '' }" href="/salary/salarybook">급여대장/기간별 급여현황</a></li>
 						<li><a class="dropdown-item ${side eq '7' ? 'text-light fw-bold' : '' }" href="/salary/national-pension">국민연금/건강보험/고용보험</a></li>
+					</sec:authorize>	
 					</ul>
 				</li>	
 			</c:if>

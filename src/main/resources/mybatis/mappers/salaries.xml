@@ -201,6 +201,15 @@
 			B.POSITION_NO = D.POSITION_NO	
 	</select>
 	
+	<!-- 급여계산 - 사원 급여내역 삭제하기 -->
+	<delete id="deleteSalary">
+		delete from 
+			SALARY_HISTORIES
+	 	where
+	 		EMPLOYEE_NO = #{employeeNo}
+			and BASE_YEAR_MONTH = #{baseYearMonth}
+	</delete>
+	
 	<!-- 급여조회 - 사원 급여 명세 가져오기 -->
 	<select id="getSalaryDetailDto" parameterType="map" resultType="salaryDto">
 	 	select
@@ -239,12 +248,30 @@
 	 		B.DEPT_NO = C.DEPT_NO	
 	</select>
 	
-	<!-- 급여계산 - 사원 급여내역 삭제하기 -->
-	<delete id="deleteSalary">
-		delete from 
-			SALARY_HISTORIES
-	 	where
-	 		EMPLOYEE_NO = #{employeeNo}
-			and BASE_YEAR_MONTH = #{baseYearMonth}
-	</delete>
+	<!-- 기간별 급여현황 - 급여총계 -->
+	<select id="getPeriodDtoLists" parameterType="map" resultType="periodDto">
+	 	select
+	 		B.EMPLOYEE_NO				as employeeNo,
+	 		B.EMPLOYEE_NAME             as name,
+	 		SUM(A.BASE_SALARY_TTL + A.OVERTIME_SALARY_TTL + A.NIGHT_SALARY_TTL + A.HOLIDAY_SALARY_TTL + A.CARE_SALARY_TTL + 
+			A.REWARD_SALARY_TTL + A.MEAL_TTL + A.BUSINESS_SALARY_TTL) as totalSalary,
+			SUM(A.INCOME_TAX_TTL + A.RESIDENCE_TAX_TTL + A.PENSION_TTL + A.HEALTH_INSURANCE_TTL + A.LONGTERM_INSURANCE_TTL + A.EMPLOYMENT_INSURANCE_TTL) as deductionSalary,
+			SUM(A.BASE_SALARY_TTL + A.OVERTIME_SALARY_TTL + A.NIGHT_SALARY_TTL + A.HOLIDAY_SALARY_TTL + A.CARE_SALARY_TTL + A.REWARD_SALARY_TTL + A.MEAL_TTL + A.BUSINESS_SALARY_TTL)
+    		- SUM(A.INCOME_TAX_TTL + A.RESIDENCE_TAX_TTL + A.PENSION_TTL + A.HEALTH_INSURANCE_TTL + A.LONGTERM_INSURANCE_TTL + A.EMPLOYMENT_INSURANCE_TTL) as realSalary
+	 	from
+	 		SALARY_HISTORIES A , EMPLOYEES B
+	 	<where>
+			A.EMPLOYEE_NO = B.EMPLOYEE_NO 
+			<if test="startdate != null">
+		 		and A.PAY_DATE >= #{startdate}
+	 		</if>
+	 		<if test="enddate != null">
+		 		and	A.PAY_DATE &lt;= #{enddate}
+	 		</if>
+	 	</where>
+	 	group by B.EMPLOYEE_NO, B.EMPLOYEE_NAME
+	</select>
+	
+	<!-- 기간별 급여현황 - 급여상세내역 -->
+	 
 </mapper>

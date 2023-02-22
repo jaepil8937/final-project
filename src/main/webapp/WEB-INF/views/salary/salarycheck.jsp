@@ -219,7 +219,7 @@ $(function() {
 		       .siblings().removeClass("table-primary");
 		let no = $(this).attr('data-employee-no');
 		let date = $("#pay-date").text();
-		$.getJSON('http://localhost/salary/salaryDetail.json', {empNo : no, paydate : date}, function(salary) { 
+		$.getJSON('/salary/salaryDetail', {empNo : no, paydate : date}, function(salary) { 
 			let baseSalary = new Number(salary.baseSalary).toLocaleString()
 			$("#base-salary").text(baseSalary);
 			let incomeTax = new Number(salary.incomeTax).toLocaleString()

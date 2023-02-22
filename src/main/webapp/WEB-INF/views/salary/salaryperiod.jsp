@@ -64,9 +64,11 @@
 			</div>
 			<div class="row mt-3 text-end">
 				<div class="col-12">
-					<label>급여년월</label> <input type="month" name="basemonth" value="${param.basemonth }"/> ~ 
-					<input type="month" name="basemonth" value="${param.basemonth }"/> &nbsp; 
-					<button type="submit" class="btn btn-danger btn-sm" id="btn-search">검색</button>
+					<form id="salary-search" action="/salary/salaryperiod">
+						<label>급여기간</label> <input type="date" name="startdate" value="${param.startdate }"/> ~ 
+						<input type="date" name="enddate" value="${param.enddate }"/> &nbsp; 
+						<button type="submit" class="btn btn-danger btn-sm" id="btn-search">검색</button>
+					</form>
 				</div>
 			</div>
 			<div class="row mt-3">
@@ -82,54 +84,37 @@
 								<tr>
 									<th>사원번호</th>
 									<th>성 명</th>
-									<th>지급합계</th>
-									<th>공제합계</th>
-									<th>실지급합계</th>
+									<th>지급총액</th>
+									<th>공제총액</th>
+									<th>실지급액</th>
 								</tr>
 							</thead>  
 							<tbody>
-								<tr>
-									<td>1000</td>
-									<td>홍길동</td>
-									<td>55,441,320</td>
-									<td>7,182,644</td>
-									<td>62,623,964</td>
-								</tr>
-								<tr>
-									<td></td>
-									<td>이순신</td>
-									<td></td>
-									<td></td>
-									<td></td>
-								</tr>
-								<tr>
-									<td></td>
-									<td>강감찬</td>
-									<td></td>
-									<td></td>
-									<td></td>
-								</tr>
-								<tr>
-									<td></td>
-									<td>강감찬</td>
-									<td></td>
-									<td></td>
-									<td></td>
-								</tr>
-								<tr>
-									<td></td>
-									<td>강감찬</td>
-									<td></td>
-									<td></td>
-									<td></td>
-								</tr>
+								<c:choose>
+									<c:when test="${empty SalaryPeriodSumDto }">
+										<tr>
+											<td colspan="5" class="text-center">급여 내역이 존재하지 않습니다.</td>
+										</tr>
+									</c:when>
+									<c:otherwise>
+										<c:forEach var="dto" items="${SalaryPeriodSumDto.salaryPeriodDtos }">
+											<tr>
+												<td>${dto.employeeNo }</td>
+												<td>${dto.name }</td>
+												<td><fmt:formatNumber value="${dto.totalSalary }"/></td>
+												<td><fmt:formatNumber value="${dto.deductionSalary }"/></td>
+												<td><fmt:formatNumber value="${dto.realSalary }"/></td>
+											</tr>
+										</c:forEach>	
+									</c:otherwise>
+								</c:choose>
 							</tbody>
 							<tfoot>
 								<tr>
 									<th colspan="2">합&emsp;&emsp;계</th>
-									<th></th>
-									<th></th>
-									<th></th>
+									<th><fmt:formatNumber value="${SalaryPeriodSumDto.totalSalaryTtl }"/></th>
+									<th><fmt:formatNumber value="${SalaryPeriodSumDto.reductionSalaryTtl }"/></th>
+									<th><fmt:formatNumber value="${SalaryPeriodSumDto.realSalaryTtl }"/></th>
 								</tr>
 							</tfoot>
 						</table>
@@ -160,7 +145,7 @@
 							<tbody>
 								<tr>
 									<td>1</td>
-									<td></td>
+									<td>기본급</td>
 									<td></td>
 									<td></td>
 									<td></td>
@@ -170,7 +155,7 @@
 								</tr>
 								<tr>
 									<td>2</td>
-									<td></td>
+									<td>식대</td>
 									<td></td>
 									<td></td>
 									<td></td>
@@ -180,7 +165,37 @@
 								</tr>
 								<tr>
 									<td>3</td>
+									<td>연장수당</td>
 									<td></td>
+									<td></td>
+									<td></td>
+									<td></td>
+									<td></td>
+									<td></td>
+								</tr>
+								<tr>
+									<td>4</td>
+									<td>야간수당</td>
+									<td></td>
+									<td></td>
+									<td></td>
+									<td></td>
+									<td></td>
+									<td></td>
+								</tr>
+								<tr>
+									<td>5</td>
+									<td>휴일근무수당</td>
+									<td></td>
+									<td></td>
+									<td></td>
+									<td></td>
+									<td></td>
+									<td></td>
+								</tr>
+								<tr>
+									<td>6</td>
+									<td>보육수당</td>
 									<td></td>
 									<td></td>
 									<td></td>
