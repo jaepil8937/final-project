@@ -22,6 +22,50 @@
 			<%@ include file="../common/sidebar.jsp" %>
 		</div>
 		<div class="col-10">
+
+			<div class="row mb-2">
+				<div class="col">
+					<h1 class="fs-10 p-2" style="font-weight: bold;">일일근태관리</h1>
+				</div>
+			</div>
+			<hr>
+			<div class="row mb-2 p-2 bg-light">
+				<div class="col-12">
+					<form method="get" action="/work/dayadmin">
+					   	<b>근무일자: </b>
+						<input autocomplete="off" type="date" name="startDate" id="start-cal" value="${param.startDate }"> 
+						~ <input autocomplete="off" type="date" name="endDate" id="end-cal" value="${param.endDate }"><p></p><p>
+						<th>
+						<b>사원번호:</b>
+						<input autocomplete="off" type="number" name="empNo" min="1000" value="${param.empNo }"/></th>&nbsp;&nbsp;
+						
+						<th>
+							<b>직급:</b>
+							<select id="positionNo" name="positionNo" value="${param.positionNo }" >
+							    <option value="">선택하세요</option>
+							    <option value="100" ${param.positionNo eq '100' ? 'selected' : '' }>사원</option>
+							    <option value="101">대리</option>
+							    <option value="102">과장</option>
+							    <option value="103">차장</option>
+							    <option value="104">부장</option>
+							</select>
+						</th>&nbsp;&nbsp;
+						<th>
+							<b>부서:</b>
+							<select name="deptNo" value="${param.deptNo }">
+							    <option value="">선택하세요</option>
+							    <option value="100">영업부</option>
+							    <option value="101">개발부</option>
+							    <option value="102">인사부</option>
+							    <option value="103">총무부</option>
+							</select>
+						</th>&nbsp;
+						
+						<button type="submit" class="btn btn-danger btn-sm" style="float: end;">조회</button></p>
+					</form>
+				</div>
+			</div>
+
 			<div class="row mb-3">
 					<h2>일일근태관리</h2>
 			</div>
@@ -60,6 +104,7 @@
 					</div>
 				</div>	
 			</form>
+
 			<div class="row">
 				<div class="col-3 text-left mb-1">
 					<p>
@@ -139,24 +184,24 @@
 			  </tbody>
 			</table>
 	    	</div>
-			<c:if test="${not empty adminAttendanceDtos }">
+			<c:if test="${not empty pagination }">
 				<nav aria-label="Page navigation example">
 					<ul class="pagination justify-content-center">
 						<li class="page-item">
-							<a class="page-link" ${pagination.first ? 'disabled' : '' }"
+							<a class="page-link ${pagination.first ? 'disabled' : '' }"
 								href="dayadmin?startDate=${param.startDate }&endDate=${param.endDate }&empNo=${param.empNo }
 								&positionNo=${param.positionNo }&deptNo=${param.deptNo }&page=${pagination.prevPage }" >이전</a>
 						</li>
 						<c:forEach var="num" begin="${pagination.beginPage }" end="${pagination.endPage }">
 							<li class="page-item">
-								<a class="page-link" ${pagination.page eq num ? 'active' : '' }" 
+								<a class="page-link ${pagination.page eq num ? 'active' : '' }" 
 									href="dayadmin?startDate=${param.startDate }&endDate=${param.endDate }&empNo=${param.empNo }
 										&positionNo=${param.positionNo }&deptNo=${param.deptNo }&page=${num }">${num }</a>
 							</li >
 						</c:forEach>
 						
 						<li class="page-item">
-							<a class="page-link" ${pagination.last ? 'disabled' : '' }"
+							<a class="page-link ${pagination.last ? 'disabled' : '' }"
 								href="dayadmin?startDate=${param.startDate }&endDate=${param.endDate }&empNo=${param.empNo }
 								&positionNo=${param.positionNo }&deptNo=${param.deptNo }&page=${pagination.nextPage }" >다음</a>
 						</li>
