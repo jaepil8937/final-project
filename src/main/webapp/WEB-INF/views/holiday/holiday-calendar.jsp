@@ -142,49 +142,51 @@
 	<script src="https://momentjs.com/downloads/moment.js"
 		type="text/javascript"></script>
 	<script type="text/javascript">
-	  document.addEventListener('DOMContentLoaded', function () {
-          var calendarEl = document.getElementById('calendar');
-          var calendar = new FullCalendar.Calendar(calendarEl, {
+	let calendar = new FullCalendar.Calendar(document.getElementById("calendar"), {
               locale: 'ko',
               initialView: 'dayGridMonth',
               dateClick: function(info) {
+            	  let clickedDate = info.dateStr;
+            	  
+            	  $("#calendar_date").val(clickedDate)
             	  $("#calendarModal").modal("show");
-            	  }, 
+            	  
+            }, 
               headerToolbar: {
             	  left : 'prev,next today',
-            	  center : 'title',
-            	  right : 'addEventButton' //s headerToolbar에 버튼을 추가
-              }, customButtons: {
+            	  center : 'title'
+           	 	  ,right : 'addEventButton' //s headerToolbar에 버튼을 추가
+              }
+            , customButtons: {
                   addEventButton: { // 추가한 버튼 설정
                       text : "휴일 추가",  // 버튼 내용
                       click : function(){ // 버튼 클릭 시 이벤트 추가
-                          $("#calendarModal").modal("show"); // modal 나타내기
-
-                          $("#addCalendar").on("click",function(){  // modal의 추가 버튼 클릭 시
-                              var calendar_date = $("#calendar_date").val();
-                              var content = $("#calendar_content").val();
-                              
-                              //내용 입력 여부 확인
-                              if(calendar_date == null || calendar_date == ""){
-                                  alert("기준일자를 선택해주세요.");
-                              }else if(content == "" || content ==""){
-                                  alert("휴일명을 입력해주세요.");
-                              }else{ // 정상적인 입력 시
-                                  var obj = {
-                                   
-                                  }//전송할 객체 생성
-
-                                  console.log(obj); //서버로 해당 객체를 전달해서 DB 연동 가능
-                              }
-                          });
+                          $("#calendarModal").modal("show"); // modal 나타내기                        
                       }
                   }
-              },
-              editable: true, // false로 변경 시 draggable 작동 x 
-              displayEventTime: false // 시간 표시 x
+              }
+              
           });
           calendar.render();
-      });
+          
+          $("#addCalendar").on("click",function(){  // modal의 추가 버튼 클릭 시
+              var calendar_date = $("#calendar_date").val();
+              var content = $("#calendar_content").val();
+              
+              //내용 입력 여부 확인
+              if(calendar_date == null || calendar_date == ""){
+                  alert("기준일자를 선택해주세요.");
+              }else if(content == "" || content ==""){
+                  alert("휴일명을 입력해주세요.");
+              }else{ // 정상적인 입력 시
+                  var obj = {
+                   
+                  }//전송할 객체 생성
+
+                  console.log(obj); //서버로 해당 객체를 전달해서 DB 연동 가능
+              }
+          });
+     
 	</script>
 </body>
 </html>

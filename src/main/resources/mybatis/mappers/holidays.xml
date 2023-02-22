@@ -44,4 +44,11 @@
 		where row_numbers between #{begin} and #{end}
   	</select>
   	
+  	<insert id="insertholidays" parameterType="Holiday">
+  		insert into holidays
+  			(base_date, name, date_type, holiday_type)
+  		values
+  			(#{baseDate),#{name},#{dateType},#{holidayType})
+  	</insert>
+  	
 </mapper>
