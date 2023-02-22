@@ -22,13 +22,13 @@
 			<%@ include file="../common/sidebar.jsp" %>
 		</div>
 		<div class="col-10">
-			<div class="row mb-3">
+			<div class="row mb-2">
 				<div class="col">
-					<h1 class="fs-10 p-4" style="font-weight: bold;">일일근태관리</h1>
+					<h1 class="fs-10 p-2" style="font-weight: bold;">일일근태관리</h1>
 				</div>
 			</div>
 			<hr>
-			<div class="row mb-3 p-4 bg-light">
+			<div class="row mb-2 p-2 bg-light">
 				<div class="col-12">
 					<form method="get" action="/work/dayadmin">
 					   	<b>근무일자: </b>
@@ -143,24 +143,24 @@
 			  </tbody>
 			</table>
 	    	</div>
-			<c:if test="${not empty adminAttendanceDtos }">
+			<c:if test="${not empty pagination }">
 				<nav aria-label="Page navigation example">
 					<ul class="pagination justify-content-center">
 						<li class="page-item">
-							<a class="page-link" ${pagination.first ? 'disabled' : '' }"
+							<a class="page-link ${pagination.first ? 'disabled' : '' }"
 								href="dayadmin?startDate=${param.startDate }&endDate=${param.endDate }&empNo=${param.empNo }
 								&positionNo=${param.positionNo }&deptNo=${param.deptNo }&page=${pagination.prevPage }" >이전</a>
 						</li>
 						<c:forEach var="num" begin="${pagination.beginPage }" end="${pagination.endPage }">
 							<li class="page-item">
-								<a class="page-link" ${pagination.page eq num ? 'active' : '' }" 
+								<a class="page-link ${pagination.page eq num ? 'active' : '' }" 
 									href="dayadmin?startDate=${param.startDate }&endDate=${param.endDate }&empNo=${param.empNo }
 										&positionNo=${param.positionNo }&deptNo=${param.deptNo }&page=${num }">${num }</a>
 							</li >
 						</c:forEach>
 						
 						<li class="page-item">
-							<a class="page-link" ${pagination.last ? 'disabled' : '' }"
+							<a class="page-link ${pagination.last ? 'disabled' : '' }"
 								href="dayadmin?startDate=${param.startDate }&endDate=${param.endDate }&empNo=${param.empNo }
 								&positionNo=${param.positionNo }&deptNo=${param.deptNo }&page=${pagination.nextPage }" >다음</a>
 						</li>

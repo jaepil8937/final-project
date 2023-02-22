@@ -16,8 +16,6 @@ import com.last.vo.HrAppointment;
 import com.last.vo.HrCertifcateRequest;
 import com.last.vo.Position;
 
-
-
 @Mapper
 public interface EmployeeMapper {
 

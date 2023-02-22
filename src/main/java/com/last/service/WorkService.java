@@ -143,7 +143,7 @@ public class WorkService {
 		
 		Map<String, Object> result = new HashMap<>();
 		result.put("adminAttendanceDtos", adminAttendanceDtos);
-		result.put("pagination", result.get("pagination"));
+		result.put("pagination", pagination);
 		
 		return result;
 		
