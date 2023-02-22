@@ -244,11 +244,11 @@ $(function() {
 		selectedCompleted = completed;
 	})
 	
-	// 급여계산 - 사원 급여 정보 가져오기
+	// 사원 급여 정보 가져오기
 	function setSalaryHistory(no, month) {
 		$.ajax({
 			type: 'GET',
-			url: 'http://localhost/salary/calculateDetail.json',
+			url: '/salary/calculateDetail',
 			data: {empNo : no, basemonth : month},
 			dataType: 'json',
 			success: function(salary) {
@@ -289,16 +289,15 @@ $(function() {
 				let realSalary = new Number(salary.realSalary).toLocaleString();
 				$("#real-salary").text(realSalary);
 				
-				
 			}
 		})
 	}
 	
-	// 급여계산 - 급여내역 없는 사원의 기본정보 가져오기
+	// 급여내역 없는 사원의 기본정보 가져오기
 	function setSalaryBasicInfo(no) {
 		$.ajax({
 			type: 'GET',
-			url: 'http://localhost/salary/basicInfo.json',
+			url: '/salary/basicInfo',
 			data: {empNo : no},
 			dataType: 'json',
 			success: function(salaryInfo) {
@@ -308,6 +307,7 @@ $(function() {
 		})
 	}
 	
+	// input태그 값 리셋하기
 	function clearTable() {
 		$("#base-salary").val(0);
 		$("#income-tax").val(0);
@@ -329,27 +329,27 @@ $(function() {
 	
 	// 자동계산
 	$("#auto-calculate").click(function() {
-		baseSalary = parseInt($("#base-salary").val().replaceAll(",", ""));
-		overtimeSalary = parseInt($("#overtime-salary").val().replaceAll(",", ""));
-		nightSalary = parseInt($("#night-salary").val().replaceAll(",", ""));
-		holidaySalary = parseInt($("#holiday-salary").val().replaceAll(",", ""));
-		rewardSalary = parseInt($("#reward-salary").val().replaceAll(",", ""));
-		mealSalary = parseInt($("#meal-salary").val().replaceAll(",", ""));
-		businessSalary = parseInt($("#business-salary").val().replaceAll(",", ""));
-		incomeTax = parseInt($("#income-tax").val().replaceAll(",", ""));
-		residenceTax = parseInt($("#residence-tax").val().replaceAll(",", ""));
-		pension = parseInt($("#national-pension").val().replaceAll(",", ""));
-		healthInsurance = parseInt($("#health-insurance").val().replaceAll(",", ""));
-		longtermInsurance = parseInt($("#longterm-insurance").val().replaceAll(",", ""));
-		employmentInsurance = parseInt($("#employment-insurance").val().replaceAll(",", ""));
+		let baseSalary = parseInt($("#base-salary").val().replaceAll(",", ""));
+		let overtimeSalary = parseInt($("#overtime-salary").val().replaceAll(",", ""));
+		let nightSalary = parseInt($("#night-salary").val().replaceAll(",", ""));
+		let holidaySalary = parseInt($("#holiday-salary").val().replaceAll(",", ""));
+		let rewardSalary = parseInt($("#reward-salary").val().replaceAll(",", ""));
+		let mealSalary = parseInt($("#meal-salary").val().replaceAll(",", ""));
+		let businessSalary = parseInt($("#business-salary").val().replaceAll(",", ""));
+		let incomeTax = parseInt($("#income-tax").val().replaceAll(",", ""));
+		let residenceTax = parseInt($("#residence-tax").val().replaceAll(",", ""));
+		let pension = parseInt($("#national-pension").val().replaceAll(",", ""));
+		let healthInsurance = parseInt($("#health-insurance").val().replaceAll(",", ""));
+		let longtermInsurance = parseInt($("#longterm-insurance").val().replaceAll(",", ""));
+		let employmentInsurance = parseInt($("#employment-insurance").val().replaceAll(",", ""));
 		$("#total-salary").val((baseSalary + mealSalary + overtimeSalary + nightSalary + holidaySalary + businessSalary + rewardSalary).toLocaleString());
 		$("#deduction-salary").val((incomeTax + residenceTax + pension + healthInsurance + healthInsurance + employmentInsurance).toLocaleString());
-		totalSalary = baseSalary + mealSalary + overtimeSalary + nightSalary + holidaySalary + businessSalary + rewardSalary
-		deductionSalary = incomeTax + residenceTax + pension + healthInsurance + healthInsurance + employmentInsurance
+		let totalSalary = baseSalary + mealSalary + overtimeSalary + nightSalary + holidaySalary + businessSalary + rewardSalary;
+		let deductionSalary = incomeTax + residenceTax + pension + healthInsurance + healthInsurance + employmentInsurance;
 		$("#real-salary").text((totalSalary-deductionSalary).toLocaleString());
 	})
 	
-	// 급여정보 저장하기
+	// 급여정보 저장하기 - 입력된 값 읽기
 	$("#btn-save").click(function() {
 		
 		let baseYearMonth = $("input[name=basemonth]").val();
@@ -395,7 +395,7 @@ $(function() {
 		
 		let saveSalary = JSON.stringify(salary);
 		
-		// 급여내역 없는 사원의 급여 저장하기와 급여내역 있는 사원의 급여 수정하기
+		// 급여정보 저장하기 - 급여내역 있는 사원의 급여 수정하기와 급여내역 없는 사원의 급여 저장하기
 		if (selectedCompleted == "Y") {
 			updateSalary();
 		} else if (selectedCompleted == "N") {
@@ -404,46 +404,66 @@ $(function() {
 		function storeSalary(){
 			$.ajax({
 				type : 'POST',
-				url : 'http://localhost/salary/saveSalary',
+				url : '/salary/saveSalary',
 				data : saveSalary,
 				contentType : 'application/json',
 				dataType : 'json',
 				success : function(savedSalary) {
-					let totalSalary = new Number(savedSalary.totalSalary).toLocaleString();
+					let totalSalary = new Number(savedSalary.totalSalary).toLocaleString();        // 저장버튼 클릭하면 1번째 테이블 지급총액 변경
 					selectedTotalSalary.text(totalSalary);           
 					let deductionSalary = new Number(savedSalary.deductionSalary).toLocaleString();
 					selectedDeductionSalary.text(deductionSalary);
 					let realSalary = new Number(savedSalary.realSalary).toLocaleString();
 					selectedRealSalary.text(realSalary);
+					
+					let totalSalary2 = new Number(salary.totalSalary).toLocaleString();            // 저장버튼 클릭하면 2번째 테이블 지급총액 변경
+					$("#total-salary").val(totalSalary);
+					let deductionSalary2 = new Number(salary.deductionSalary).toLocaleString();
+					$("#deduction-salary").val(deductionSalary);
+					let realSalary2 = new Number(salary.realSalary).toLocaleString();
+					$("#real-salary").text(realSalary);
+										
+					// 저장과 동시에 합계 출력하기
+					generateTotalSalary();
+					
+					// 저장버튼 클릭 후에 다시 사원을 클릭해도 저장한 급여가 출력되도록 하기.
+					$("#table-salaries tbody tr.table-primary a").attr('data-salary-calculated', "Y");   
 
 					alert("저장되었습니다.");
-					
-					
 				}
 			})
 		}	
-		
 		function updateSalary(){
 			$.ajax({
 				type : 'PUT',
-				url : 'http://localhost/salary/updateSalary',
+				url : '/salary/updateSalary',
 				data : saveSalary,
 				contentType : 'application/json',
 				dataType : 'json',
 				success : function(updatedSalary) {
-					let totalSalary = new Number(updatedSalary.totalSalary).toLocaleString();
-					selectedTotalSalary.text(totalSalary);         
+					let totalSalary = new Number(updatedSalary.totalSalary).toLocaleString();        // 저장버튼 클릭하면 1번째 테이블 지급총액 변경
+					selectedTotalSalary.text(totalSalary);           
 					let deductionSalary = new Number(updatedSalary.deductionSalary).toLocaleString();
 					selectedDeductionSalary.text(deductionSalary);
 					let realSalary = new Number(updatedSalary.realSalary).toLocaleString();
 					selectedRealSalary.text(realSalary);
+					
+					let totalSalary2 = new Number(salary.totalSalary).toLocaleString();            // 변수명 짓기 어렵다.. 저장버튼 클릭하면 2번째 테이블 지급총액 변경
+					$("#total-salary").val(totalSalary);
+					let deductionSalary2 = new Number(salary.deductionSalary).toLocaleString();
+					$("#deduction-salary").val(deductionSalary);
+					let realSalary2 = new Number(salary.realSalary).toLocaleString();
+					$("#real-salary").text(realSalary);
+					
+					generateTotalSalary();
+					
+					alert("수정되었습니다.");	
 				}
 			})
-		alert("수정되었습니다.");	
 		}
 	})
 	
-	// 급여내용 삭제하기
+	// 급여내역 삭제하기
 	$("#btn-delete").click(function() {
 		let answer = confirm('삭제하시겠습니까?');
 		if (answer) {
@@ -480,6 +500,31 @@ $(function() {
 		}
 	})
 	
+	// 저장과 동시에 합계 출력하기
+	function generateTotalSalary() {
+		
+		let total1 = 0;               // 합계 출력하기
+		$("#table-salaries tbody td:nth-child(4)").each(function(index, td) {
+			let text = $(td).text().replaceAll(",",'');
+			total1 += parseInt(text);
+		})
+		$("#table-salaries tfoot th:nth-child(2)").text(total1.toLocaleString());
+		
+		let total2 = 0;
+		$("#table-salaries tbody td:nth-child(5)").each(function(index, td) {
+			let text = $(td).text().replaceAll(",",'');
+			total2 += parseInt(text);
+		})
+		$("#table-salaries tfoot th:nth-child(3)").text(total2.toLocaleString());
+		
+		let total3 = 0;
+		$("#table-salaries tbody td:nth-child(6)").each(function(index, td) {
+			let text = $(td).text().replaceAll(",",'');
+			total3 += parseInt(text);
+		})
+		$("#table-salaries tfoot th:nth-child(4)").text(total3.toLocaleString());
+
+	}
 	
 })
 

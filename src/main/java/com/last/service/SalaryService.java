@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.last.dto.SalaryDto;
+import com.last.dto.SalaryPeriodDto;
 import com.last.mapper.SalaryMapper;
 import com.last.vo.PayBankInfo;
 
@@ -116,6 +117,21 @@ public class SalaryService {
 		List<SalaryDto> salaryDtoLists = salaryMapper.getSalaryLists(param);
 		
 		return salaryDtoLists;
+	}
+	
+	// 기간별 급여현황 - 급여총계
+	public List<SalaryPeriodDto> getPeriodDtoLists(String startdate, String enddate) {
+		
+		Map<String,Object> param = new HashMap<String, Object>();
+		if (!startdate.isBlank()) {
+			param.put("startdate", startdate);			
+		}
+		if (!enddate.isBlank()) {
+			param.put("enddate", enddate);			
+		}
+		List<SalaryPeriodDto> periodDtoLists = salaryMapper.getPeriodDtoLists(param);
+		
+		return periodDtoLists;
 	}
 	
 }
