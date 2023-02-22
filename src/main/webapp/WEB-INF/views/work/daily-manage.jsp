@@ -110,6 +110,13 @@
 				    </tr>
 			  	</thead>
 				<tbody>
+				  <c:choose>
+				  	<c:when test="${empty adminAttendanceDtos }">
+				  		<tr>
+				  			<td colspan="12" class="text-center">등록된 근태정보가 없습니다.</td>
+				  		</tr>
+				  	</c:when>
+				  <c:otherwise>
 				  <c:forEach var="adminAttendance" items="${adminAttendanceDtos }">
 				    <tr class="text-center">
 				      <td><fmt:formatDate value="${adminAttendance.workingDate }" pattern="yyyy년 M월 d일"/></td>
@@ -120,16 +127,42 @@
 				      <td>${adminAttendance.attendancesType }</td>
 				      <td>${adminAttendance.startWorkTime }</td>
 				      <td>${adminAttendance.endWorkTime }</td>
-				      <td>${adminAttendance.workedTimes }</td>
+				      <td>${adminAttendance.workedTimes }시간</td>
 				      <td>${adminAttendance.holidayWorkTime }시간</td>
 				      <td>${adminAttendance.overtimeWorkedTimes }시간</td>
 				      <td>${adminAttendance.nightWorkedTimes }시간</td>
-				      <td><button type="button" class="btn btn-secondary btn-sm" data-att-no="${adminAttendance.no }" >수정</button></td>
+				      <td><button type="button" class="btn btn-dark btn-sm" data-att-no="${adminAttendance.no }" >수정</button></td>
 				    </tr>
 				   </c:forEach>
+				  </c:otherwise>
+				</c:choose>
 			  </tbody>
 			</table>
 	    	</div>
+			<c:if test="${not empty adminAttendanceDtos }">
+				<nav aria-label="Page navigation example">
+					<ul class="pagination justify-content-center">
+						<li class="page-item">
+							<a class="page-link" ${pagination.first ? 'disabled' : '' }"
+								href="dayadmin?startDate=${param.startDate }&endDate=${param.endDate }&empNo=${param.empNo }
+								&positionNo=${param.positionNo }&deptNo=${param.deptNo }&page=${pagination.prevPage }" >이전</a>
+						</li>
+						<c:forEach var="num" begin="${pagination.beginPage }" end="${pagination.endPage }">
+							<li class="page-item">
+								<a class="page-link" ${pagination.page eq num ? 'active' : '' }" 
+									href="dayadmin?startDate=${param.startDate }&endDate=${param.endDate }&empNo=${param.empNo }
+										&positionNo=${param.positionNo }&deptNo=${param.deptNo }&page=${num }">${num }</a>
+							</li >
+						</c:forEach>
+						
+						<li class="page-item">
+							<a class="page-link" ${pagination.last ? 'disabled' : '' }"
+								href="dayadmin?startDate=${param.startDate }&endDate=${param.endDate }&empNo=${param.empNo }
+								&positionNo=${param.positionNo }&deptNo=${param.deptNo }&page=${pagination.nextPage }" >다음</a>
+						</li>
+					</ul>
+				</nav>
+			</c:if>
 		</form>
 		  </div>
 	 </div>
@@ -143,10 +176,10 @@
 	      </div>
 	      <div class="modal-body">
 	       	<form id="form-hour" method="post" action="modify">
-	       		<input type="hidden" name="no" value="${modifyAttendance.no }" />
+	       		<input type="hidden" name="no" value="data-att-no" />
 	       		<div class="mb-2">
 	       			<label class="form-label">출근시간</label>
-	       			<input type="text" class="form-control" name="startTime">
+	       			<input type="text" class="form-control" name="startTime" vaue="">
 	       		</div>
 	       		<div class="mb-2">
 	       			<label class="form-label">퇴근시간</label>

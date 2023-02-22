@@ -1,15 +1,18 @@
 package com.last.vo;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 import org.apache.ibatis.type.Alias;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 @Alias("Attendance")
-@Getter
 @Setter
+@Getter
+@ToString
 public class WorkAttendance {
 		
 	private int no;
@@ -23,4 +26,5 @@ public class WorkAttendance {
 	private int overtimeWorkedTimes;// 연장근로시간
 	private int nightWorkedTimes;	// 야간근로시간
 	private String note;			// 비고
+	
 }

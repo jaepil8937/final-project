@@ -38,7 +38,6 @@
 				</div>
 				<div class="col-6" text-align:"end" >
 					<form method="get" action="/work/searchAttendances" name="calform">
-								<!-- value="${param.startDate } param으로 전송된 값을 달력폼에 입력시켜줌 -->
 						<input autocomplete="off" type="date" name="startDate" id="start-cal" value="${param.startDate }">
 						~ <input autocomplete="off" type="date" name="endDate" id="end-cal" value="${param.endDate }">
 						<button type="submit" class="btn btn-danger btn-sm">조회</button>
@@ -54,12 +53,14 @@
 				</div>
 			</div>
 		<form>
-		<div class="row">
+		<div class="row" style="width: 100%; overflow: auto;">
 			<p>
 				<i class="bi bi-exclamation-circle-fill"></i>
-				근무시간, 연장, 야간, 지각, 조퇴시간이 계산되지 않는 경우 관리자에게 문의하세요
+				최근 7일동안의 근태정보를 확인하세요.<br>
+				<i class="bi bi-exclamation-circle-fill"></i>
+				근무시간, 연장, 야간, 지각, 조퇴시간이 계산되지 않는 경우 관리자에게 문의하세요.
 			</p>
-			<table class="table table-bordered table-hover table-striped table-sm" id="table-day-info">
+			<table class="table table-bordered table-hover table-striped table-sm" id="table-day-info" style="white-space: nowrap;">
 				<colgroup>
 					<col width="16%">
 					<col width="12%">
@@ -83,7 +84,14 @@
 				    </tr>
 			  	</thead>
 				<tbody>
-					<c:forEach var="attendance" items="${attendances }">
+					<c:choose>
+						<c:when test="${empty attendances}">
+							<tr>
+								<td colspan="12" class="text-center">등록된 근태정보가 없습니다.</td>
+							</tr>
+						</c:when>
+					<c:otherwise>
+					   <c:forEach var="attendance" items="${attendances }">
 					    <tr class="text-center">
 					      <td><fmt:formatDate value="${attendance.workingDate }" pattern="yyyy년 M월 d일"/> </td>
 					      <td>${attendance.empNo }</td>
@@ -95,6 +103,8 @@
 					      <td>${attendance.nightWorkedTimes }시간</td>
 					    </tr>
 					</c:forEach>
+					</c:otherwise>
+				</c:choose>
 			  </tbody>
 			</table>
 		  </div>
@@ -107,7 +117,7 @@
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script type="text/javascript">
-// 출퇴근알림창
+
 	function btnStart(){
 	    alert('출근완료');
 	}
@@ -117,7 +127,7 @@
 			alert("퇴근완료");
 		}
 	}
-
+	
 </script>
 </body>
 </html>

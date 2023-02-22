@@ -10,7 +10,7 @@ import lombok.Setter;
 @Alias("salaryDto")
 @Setter
 @Getter
-public class SalaryDto{
+public class SalaryDto {               // 급여내역, 사원, 부서, 직책테이블 조인              
 	
 	private int employeeNo;            // 사원번호
 	private String baseYearMonth;      // 급여년월
@@ -37,17 +37,17 @@ public class SalaryDto{
 	private Date hireDate; 		       // 입사일자
 	private Date retirementDate;	   // 퇴사일자
 	
-	public int getTotalSalary() {      // 지급총액
+	public int getTotalSalary() {      // 사원의 지급총액
 		int totalSalary = baseSalary + overtimeSalary + nightSalary + holidaySalary + careSalary + rewardSalary + mealSalary + businessSalary;
 		return totalSalary;
 	}
 	
-	public int getDeductionSalary() {   // 공제총액
+	public int getDeductionSalary() {   // 사원의 공제총액
 		int deductionSalary = incomeTax + residenceTax + pension + healthInsurance + longtermInsurance + employmentInsurance;
 		return deductionSalary;
 	}
 	
-	public int getRealSalary() {        // 실지급액
+	public int getRealSalary() {        // 사원의 실지급액
 		return getTotalSalary() - getDeductionSalary();
 	}
 }

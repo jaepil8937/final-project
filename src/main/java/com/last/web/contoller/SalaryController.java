@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.last.dto.SalaryBookDto;
 import com.last.dto.SalaryDto;
+import com.last.dto.SalaryPeriodDto;
+import com.last.dto.SalaryPeriodSumDto;
 import com.last.dto.SalaryTableDto;
 import com.last.service.SalaryService;
 import com.last.vo.PayBankInfo;
@@ -42,7 +44,7 @@ public class SalaryController {
 		return "salary/salarycalculate";
 	}
 
-	@GetMapping("/calculateDetail.json")     // 급여계산 - 사원별 상세 급여내역 
+	@GetMapping("/calculateDetail")     // 급여계산 - 사원별 상세 급여내역 
 	@ResponseBody
 	public SalaryDto calculateDetail(@RequestParam("empNo") int empNo, @RequestParam("basemonth") String basemonth) {
 		SalaryDto salaryDto = salaryService.getCalculatedSalaryDto(empNo, basemonth);
@@ -50,7 +52,7 @@ public class SalaryController {
 		return salaryDto;
 	}
 	
-	@GetMapping("/basicInfo.json")     // 급여계산 - 급여내역 없는 사원의 기본정보
+	@GetMapping("/basicInfo")     // 급여계산 - 급여내역 없는 사원의 기본정보
 	@ResponseBody
 	public PayBankInfo basicInfo(@RequestParam("empNo") int empNo) {
 		PayBankInfo payBankInfo = salaryService.getBasicSalaryInfo(empNo);
@@ -99,7 +101,7 @@ public class SalaryController {
 		return "salary/salarycheck";
 	}
 	
-	@GetMapping("/salaryDetail.json")     // 급여조회-사원별 상세 급여내역 
+	@GetMapping("/salaryDetail")     // 급여조회-사원별 상세 급여내역 
 	@ResponseBody
 	public SalaryDto salaryDetail(@RequestParam("empNo") int empNo, @RequestParam("paydate") String paydate) {
 		SalaryDto salaryDto = salaryService.getSalaryDetailDto(empNo, paydate);
@@ -120,9 +122,15 @@ public class SalaryController {
 		return "salary/salarybook";
 	}
 	
-	@GetMapping("/salaryperiod")      // 기간별 급여현황조회
-	public String salaryperiod() {
-		
+	@GetMapping("/salaryperiod")      // 기간별 급여현황 - 급여총계
+	public String salaryperiod(@RequestParam(name="startdate", required=false) String startdate, 
+			 				   @RequestParam(name="enddate", required=false) String enddate, Model model) {
+		if (startdate != null && enddate != null) {
+			List<SalaryPeriodDto> periodDtoLists = salaryService.getPeriodDtoLists(startdate, enddate);
+			SalaryPeriodSumDto periodSumDto = new SalaryPeriodSumDto();
+			periodSumDto.setSalaryPeriodDtos(periodDtoLists);
+			model.addAttribute("SalaryPeriodSumDto", periodSumDto);
+		}	
 		return "salary/salaryperiod";
 	}
 	

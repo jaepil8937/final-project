@@ -32,11 +32,13 @@ public interface WorkMapper {
 	
 	// 사원들의 일일근태정보(관리자권한)
 	List<WorkAdminAttendanceDto> getAdminAttendancesByEmpNo(int empNo);
+	
 	WorkAdminAttendanceDto getAdminAttendanceByNo(int attendanceNo);
 	
 	List<WorkAdminAttendanceDto> getAllAdminAttendancesByOptions(Map<String, Object> param);
 	
-//	void updateAttendance(WorkAttendance workAttendance);
-	WorkAdminAttendanceDto updateAttendanceByNo(int attendanceNo);
+	int getTotalRows(Map<String, Object> param);
 	
+	WorkAdminAttendanceDto updateAttendanceByNo(int attendanceNo);
+//	void updateAttendance(WorkAttendance workAttendance);
 }
