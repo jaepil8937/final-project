@@ -16,6 +16,7 @@
 <style>
 </style>
 <body>
+	<c:set var="menu" value="work" />
 	<c:set var="side" value="overtime-history" />
 	<%@ include file="../common/navbar.jsp"%>
 	<div class="container">
@@ -23,16 +24,17 @@
 			<div class="col-2 bg-dark mr35">
 				<%@ include file="../common/sidebar.jsp"%>
 			</div>
-			<div class="col">
+			<div class="col-10">
 				<div class="row mb-3">
 					<div class="col">
-						<h1 class="fs-10 p-4">휴일/연장/야간 근무조회</h1>
+						<h2>휴일/연장/야간 근무조회</h2>
 					</div>
 				</div>
+				<hr>
 				<div class="row" style="margin-top: 24px;">
 					<div class="shadow-none p-3 mb-5 bg-light rounded">
 						<div class="container text-center">
-							<form id="" method="get" action="/holiday/overtime-history">
+							<form id="form-search" method="get" action="/holiday/overtime-history">
 								<div class="row">
 									<div class="col-3">
 										<label for="start" style="padding-top: 12px;">근무년월: <input
@@ -53,17 +55,17 @@
 						</div>
 					</div>
 				</div>
-				<div class="row" style="margin-top: 25px;">
-					<div class="col-6" style="padding-bottom: 15px;">
+				<div class="row">
+					<div class="col-3 text-left mb-1">
 						<p>
 							<i class="bi bi-arrow-right-square-fill text-danger"></i>
-							휴일/연장/야간 근무조회
+							<strong>휴일/연장/야간 근무조회</strong>
 						</p>
 					</div>
-					<div class="col-6">
-						<p>
+					<div class="row">
+						<div class="col text-end mb-3">
 							<button type="button" class="btn btn-light" style="float: right;">엑셀파일다운</button>
-						</p>
+						</div>
 					</div>
 					<div class="row">
 						<table class="table">
@@ -97,8 +99,7 @@
 												<td>${OvertimeDto.deptName }</td>
 												<td>${OvertimeDto.attendancesType }</td>
 												<td>${OvertimeDto.endWorkTime }</td>
-												<td><fmt:formatDate pattern="yyyy-MM-dd"
-														value="${OvertimeDto.workingDate }" /></td>
+												<td><fmt:formatDate pattern="yyyy-MM-dd" value="${OvertimeDto.workingDate }" /></td>
 											</tr>
 										</c:forEach>
 									</c:otherwise>
@@ -106,19 +107,26 @@
 							</tbody>
 						</table>
 					</div>
-					<nav class="pagination pagination-sm justify-content-center" style="margin-top: 10px;">
-						<ul class="pagination">
-							<li class="page-item"><a class="page-link" href="#"
-								aria-label="Previous"> <span aria-hidden="true">&laquo;</span>
-							</a></li>
-							<li class="page-item"><a class="page-link" href="#">1</a></li>
-							<li class="page-item"><a class="page-link" href="#">2</a></li>
-							<li class="page-item"><a class="page-link" href="#">3</a></li>
-							<li class="page-item"><a class="page-link" href="#"
-								aria-label="Next"> <span aria-hidden="true">&raquo;</span>
-							</a></li>
-						</ul>
-					</nav>
+					<c:if test="${not empty histories }">
+						<nav class="pagination pagination-sm justify-content-center" style="margin-top: 10px;">
+							<ul class="pagination">
+								<li class="page-item">
+									<a class="page-link ${pagination.first ? 'disabled' : '' }" 
+										href="overtime-history?month=${param.month }&empNo=${param.empNo }&pages=${pagination.prevPage }" aria-label="Previous">이전</a>
+								</li>
+								<c:forEach var="num" begin="${pagination.beginPage }" end="${pagination.endPage }">
+									<li class="page-item">
+										<a class="page-link ${pagination.page eq num ? 'active' : '' }" 
+											href="overtime-history?month=${param.month }&empNo=${param.empNo }&pages=${num }">${num }</a>
+									</li>
+								</c:forEach>
+								
+								<li class="page-item">
+									<a class="page-link ${pagination.last ? 'disabled' : '' }" href="overtime-history?month=${param.month }&empNo=${param.empNo }&pages=${pagination.nextPage }" aria-label="Next">다음</a>
+								</li>
+							</ul>
+						</nav>
+					</c:if>
 					<div class="row mb-2 bg-light m-2">
 						<hr>
 						<div class="col">
@@ -132,13 +140,9 @@
 			</div>
 		</div>
 	</div>
-<script
-	src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
-	crossorigin="anonymous"></script>
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
-<script src="https://momentjs.com/downloads/moment.js"
-	type="text/javascript"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+<script src="https://momentjs.com/downloads/moment.js" type="text/javascript"></script>
 <script type="text/javascript">
 	//근무년월에 당일 날짜 선택
 	$(function() {

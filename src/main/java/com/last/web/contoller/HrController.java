@@ -27,13 +27,19 @@ import com.last.dto.EmployeebasicDto;
 import com.last.dto.PersonnelDto;
 import com.last.security.AuthenticatedUser;
 import com.last.security.LoginEmployee;
+import com.last.service.EducationService;
 import com.last.service.EmployeeService;
+import com.last.service.FamilyService;
 import com.last.vo.Department;
+import com.last.vo.Educations;
 import com.last.vo.Employees;
+import com.last.vo.Family;
 import com.last.vo.Grades;
 import com.last.vo.Position;
+import com.last.web.request.EducationRegisterForm;
 import com.last.web.request.EmployeeRegisterForm;
 import com.last.web.request.EmployeeRequest;
+import com.last.web.request.FamilyRegisterForm;
 
 
 @Controller
@@ -44,6 +50,10 @@ public class HrController {
 
 	@Autowired
 	private EmployeeService employeeService;
+	@Autowired
+	private EducationService educationService;
+	@Autowired
+	private FamilyService familyService;
 
 	@GetMapping("/info")		// 사원명부,인사기록카드
 	public String info(@RequestParam(name="sort", required = false, defaultValue="") String sort,
@@ -146,12 +156,15 @@ public class HrController {
 	}
 
 	@GetMapping("/family")			// 가족사항
-	public String family() {
+	public String family(@AuthenticatedUser LoginEmployee LoginEmployee, Model model) {
+		List<Family> familys = familyService.getAllFamily(LoginEmployee.getNo());
 		return "hr/family";
 	}
 
 	@GetMapping("/education")		// 학력정보
-	public String education() {
+	public String education(@AuthenticatedUser LoginEmployee LoginEmployee, Model model) {
+		List<Educations> educations = educationService.getAllEducations(LoginEmployee.getNo());
+		model.addAttribute("educations", educations);
 		return "hr/education";
 	}
 
@@ -203,6 +216,19 @@ public class HrController {
 	
 
 
+	@PostMapping("/education")
+	public String education(EducationRegisterForm educationRegisterForm) {
+		
+	
+		return "hr/education";
+	}
+
+	@PostMapping("/family")
+	public String family(FamilyRegisterForm familyRegisterForm) {
+		
+	
+		return "hr/family";
+	}
 }
 
 

@@ -177,7 +177,8 @@
 		update 
 			vacation_used_summary
 		set
-			used_vacation_count = #{usedDays}
+			used_vacation_count = #{usedDays},
+			remaining_vacation_count = #{remainedDays}
 		where
 			employee_no = #{empNo}
 			and base_year = #{baseYear}
@@ -240,7 +241,7 @@
 		insert into vacation_request_histories
 			(request_no, request_date, start_date, end_date, days, reason, request_status, item_code, employee_no)
 		values
-			(vacation_request_histories_seq.nextval, sysdate, to_date(#{startDate}, 'YYYY-MM-DD'), to_date(#{endDate}, 'YYYY-MM-DD'), #{days}, #{reason}, #{status}, #{itemCode} , 1002)
+			(vacation_request_histories_seq.nextval, sysdate, to_date(#{startDate}, 'YYYY-MM-DD'), to_date(#{endDate}, 'YYYY-MM-DD'), #{days}, #{reason}, #{status}, #{itemCode} , #{empNo})
 	</insert>
 	
 	<!-- 휴가 신청 수정 -->

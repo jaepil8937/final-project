@@ -1,7 +1,5 @@
 package com.last.web.contoller;
 
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -17,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.last.dto.VacationCalculateDto;
 import com.last.dto.VacationRequestDto;
+import com.last.security.LoginEmployee;
 import com.last.service.VacationService;
 import com.last.vo.VacationDay;
 import com.last.vo.VacationItem;
@@ -78,19 +77,12 @@ public class VacationController {
 	@GetMapping("/calculate-days")
 	@ResponseBody
 	public VacationCalculateDto calculatedVacation(@RequestParam("baseYear") int baseYear,
-			@RequestParam("opt") String opt, @RequestParam("keyword") int keyword) {
-		Calendar c1 = Calendar.getInstance();
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-		c1.set(baseYear, 11, 31);
-		String baseDate = sdf.format(c1.getTime());
-		
+			@RequestParam("empNo") int empNo) {
 		Map<String, Object> param = new HashMap<>();
 		param.put("baseYear", baseYear);
-		param.put("empNo", keyword);
-		param.put("baseDate", baseDate);
+		param.put("empNo", empNo);
 		
 		return vacationService.calculatedVacation(param);
-		
 	}
 
 	@GetMapping("/apply")
@@ -111,7 +103,7 @@ public class VacationController {
 		param.put("empNo", empNo);
 		param.put("status", status);
 		
-		VacationCalculateDto calculatedDays = vacationService.getCalculatedDays(param);
+		VacationCalculateDto calculatedDays = vacationService.calculatedVacation(param);
 		
 		List<VacationRequestDto> usedVacationsList = vacationService.getUsedVacations(param);
 		
@@ -147,7 +139,8 @@ public class VacationController {
 	
 
 	@PostMapping("/insert-request")
-	public String insertVacationRequest(VacationRequestForm form) {
+	public String insertVacationRequest(@com.last.security.AuthenticatedUser LoginEmployee loginEmployee, VacationRequestForm form) {
+		form.setEmpNo(loginEmployee.getNo());
 		vacationService.insertVacationRequest(form);
 		
 		return "redirect:apply";

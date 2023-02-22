@@ -17,6 +17,7 @@
 </style>
 </head>
 <body>
+<c:set var="menu" value="work" />
 <c:set var="side" value="item-setting" />
 <%@ include file="../common/navbar.jsp" %>
 	<div class="container">
@@ -42,7 +43,6 @@
 					<div class="col text-end mb-3">
 						<button type="button" class="btn btn-outline-dark btn-sm" style="float:right;" id="btn-add-row">행추가</button>
 					</div>
-				<div class="row">
 					<table class="table table-bordered table-sm" id="table-item">
 						<colgroup>
 							<col width="5%">

@@ -14,6 +14,7 @@
 </style>
 </head>
 <body>
+<c:set var="menu" value="work" />
 <c:set var="side" value="item-calculation" />
 <%@ include file="../common/navbar.jsp" %>
 	<div class="container">
@@ -32,21 +33,13 @@
 						<label class="form-label"><strong>기준년도</strong></label>
 							<select id="search-year" name="baseYear" style="width: 100px">
 							</select>
-						<label class="form-label"><strong>검색어</strong></label>
 						<sec:authentication property="principal" var="loginEmployee" />
+						<label class="form-label"><strong>사원번호</strong></label>
 						<sec:authorize access="hasAnyRole('ROLE_ADMIN')">
-							<select name="opt">
-								<option value="empNo">사원번호</option>
-								<option value="empName">성명</option>
-								<option value="dept">부서명</option>
-							</select>
-							<input type="text" id="search-keyword" name="keyword" value="${loginEmployee.no }" />
+							<input type="text" id="text-empNo" name="empNo" value="${loginEmployee.no }" style="text-align:center; width:100px" />
 						</sec:authorize>
 						<sec:authorize access="hasAnyRole('ROLE_EMPLOYEE')">
-							<select name="opt">
-								<option value="empNo">사원번호</option>
-							</select>
-							<input type="text" id="search-keyword" name="keyword" value="${loginEmployee.no }" readOnly />
+							<input type="text" id="text-empNo" name="empNo" value="${loginEmployee.no }" style="text-align:center; width:100px" readOnly />
 						</sec:authorize>
 						<button type="button" class="btn btn-danger" style="float:right;" id="btn-search">검색</button>
 					</div>
@@ -113,13 +106,13 @@
 $(function() {
 	function check() {
 		let $year = $("#search-year").val();
-		let $keyword = $("#search-keyword").val();
+		let $empNo = $("#text-empNo").val();
 		if (!$year) {
 			alert("기준년도를 선택하세요.");
 			return false;
 		}
-		if (!$keyword) {
-			alert("검색어를 입력하세요.");
+		if (!$empNo) {
+			alert("사원번호를 입력하세요.");
 			return false;
 		}
 	}

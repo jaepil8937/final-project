@@ -10,12 +10,8 @@ public class WorkModifyForm {
 	
 	private int no;
 	private int empNo;
-	private Date workingDate;
 	private String attendancesType;
 	private String startWorkTime;
 	private String endWorkTime;
-	private String empName;
-	private int positionNo;
-	private int deptNo;
 	
 }

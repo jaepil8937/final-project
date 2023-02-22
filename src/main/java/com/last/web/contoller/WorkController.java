@@ -18,7 +18,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
 import com.last.dto.WorkAdminAttendanceDto;
+import com.last.security.AuthenticatedUser;
+import com.last.security.LoginEmployee;
 import com.last.service.WorkService;
+import com.last.vo.Employees;
 import com.last.vo.WorkAttendance;
 import com.last.web.request.WorkModifyForm;
 
@@ -32,15 +35,14 @@ public class WorkController {
 	
 	// 일일근태등록페이지
 	@GetMapping("/day")
-	public String dailyAttendance( Model model) {
-		int empNo = 1001;
+	public String dailyAttendance(@AuthenticatedUser LoginEmployee loginEmployee, WorkAttendance workAttendance, Model model) {
 		// 이번 주 출퇴근 정보 조회
-		List<WorkAttendance> attendances = workService.getWeeklyAttendances(empNo);
+		List<WorkAttendance> attendances = workService.getWeeklyAttendances(loginEmployee.getNo());
 		model.addAttribute("attendances", attendances);
 		
-		// 일일출퇴근여부를 판단
-		boolean isStartAttendanced = workService.isStartAttendancedToday(empNo);
-		boolean isEndAttendanced = workService.isEndAttendancedToday(empNo);
+		//일일출퇴근여부를 판단
+		boolean isStartAttendanced = workService.isStartAttendancedToday(loginEmployee.getNo());
+		boolean isEndAttendanced = workService.isEndAttendancedToday(loginEmployee.getNo());
 		
 		model.addAttribute("isStartAttendanced", isStartAttendanced);
 		model.addAttribute("isEndAttendanced", isEndAttendanced);
@@ -50,45 +52,46 @@ public class WorkController {
 	
 	// 출근시간등록
 	@GetMapping("/startAttendance")
-	public String startAttendance(@RequestParam("empNo") int empNo) {
-		workService.addAttendance(empNo);
+	public String startAttendance(@AuthenticatedUser LoginEmployee loginEmployee) {
 		
-		return "redirect:/work/day?empNo=" + empNo; // 저장작업했기 때문에 재요청 URL을 전송
+		workService.addAttendance(loginEmployee.getNo());
+		
+		return "redirect:/work/day"; // 저장작업했기 때문에 재요청 URL을 전송
 	}
 	
 	// 퇴근시간등록
 	@GetMapping("/endAttendance")
-	public String endAttendance() {
-		int empNo = 1001;
-		workService.endAttendance(empNo);
+	public String endAttendance(@AuthenticatedUser LoginEmployee loginEmployee) {
+		workService.endAttendance(loginEmployee.getNo());
 		
 		return "redirect:/work/day";
 	}
 	
 	// 근태정보 기간으로 조회, startDate와endDate의 값을 전달해줌
 	@GetMapping("/searchAttendances")
-	public String getAttendanceList(@RequestParam("startDate") String startDate,
+	public String getAttendanceList(@AuthenticatedUser LoginEmployee loginEmployee,
+									@RequestParam("startDate") String startDate,
 									@RequestParam("endDate") String endDate, Model model) {
-		int empNo = 1001;
-		List<WorkAttendance> attendances = workService.getAllAttendances(empNo, startDate, endDate);
+		List<WorkAttendance> attendances = workService.getAllAttendances(loginEmployee.getNo(), startDate, endDate);
 		model.addAttribute("attendances", attendances);
 		
-		boolean isStartAttendanced = workService.isStartAttendancedToday(empNo);
-		boolean isEndAttendanced = workService.isEndAttendancedToday(empNo);
+		boolean isStartAttendanced = workService.isStartAttendancedToday(loginEmployee.getNo());
+		boolean isEndAttendanced = workService.isEndAttendancedToday(loginEmployee.getNo());
 		
 		model.addAttribute("isStartAttendanced", isStartAttendanced);
 		model.addAttribute("isEndAttendanced", isEndAttendanced);
 		
-		return "work/daily-attendance";	// WEB-INF/views/work/daily-attendance.jsp로 내부 이동
+		return "work/daily-attendance";	
 	}
 	
 	// 관리자일일근태페이지 기본화면
 	@GetMapping("/dayadmin")
-	public String getAdminAttendanceList(@RequestParam(name = "startDate", required = false, defaultValue = "") String startDate, //required = false 값이 안담겨도 조회될 수 있음
+	public String getAdminAttendanceList(@RequestParam(name = "startDate", required = false, defaultValue = "") String startDate, 
 			@RequestParam(name = "endDate", required = false, defaultValue = "") String endDate,
 			@RequestParam(name = "empNo", required = false, defaultValue = "0") int empNo,
 			@RequestParam(name = "positionNo", required = false, defaultValue = "0") int positionNo,
-			@RequestParam(name = "deptNo", required = false, defaultValue = "0") int deptNo, Model model) {
+			@RequestParam(name = "deptNo", required = false, defaultValue = "0") int deptNo, 
+			@RequestParam(name = "page", required = false, defaultValue = "1") int page, Model model) {
 		
 		Map<String, Object> param = new HashMap<String, Object>();
 		if (!startDate.isBlank()) {
@@ -106,24 +109,25 @@ public class WorkController {
 		if (deptNo > 0) {
 			param.put("deptNo", deptNo);
 		}
+		param.put("page", page);
 		
-		
-		List<WorkAdminAttendanceDto> adminAttendanceDtos = workService.getAllAdminAttendances(param);
-		model.addAttribute("adminAttendanceDtos", adminAttendanceDtos);
+		Map<String, Object> result = workService.getAllAdminAttendances(param);
+		model.addAttribute("adminAttendanceDtos", result.get("adminAttendanceDtos"));
+		model.addAttribute("pagination", result.get("pagination"));
 		
 		return "work/daily-manage";
 	}
 	
-//	@GetMapping("/modify")
-//	public String modifyAttendanceForm(@RequestParam("no") int attendanceNo, Model model) {
-//		
-//		WorkAdminAttendanceDto dto = workService.getAdminAttendance(attendanceNo);
-//		WorkModifyForm form = new WorkModifyForm();
-//		BeanUtils.copyProperties(dto, form);
-//		model.addAttribute("modifyAttendance", form);
-//		
-//		return "work/modify-attendance";
-//	}
+	@GetMapping("/modify")
+	public String modifyAttendanceForm(@RequestParam("no") int attendanceNo, Model model) {
+		
+		WorkAdminAttendanceDto dto = workService.getAdminAttendance(attendanceNo);
+		WorkModifyForm form = new WorkModifyForm();
+		BeanUtils.copyProperties(dto, form);
+		model.addAttribute("modifyAttendance", form);
+		
+		return "work/modify-attendance";
+	}
 	
 //	@PostMapping("/modify")
 //	public String modifyAttendance(@RequestParam("no") int attendanceNo, 

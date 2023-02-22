@@ -2,13 +2,14 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.last.mapper.SalaryMapper">
 
+	<!-- 급여계산, 급여조회, 급여대장  --> 
 	<select id="getSalaryLists" parameterType="map" resultType="salaryDto">
 	 	select
 	 		A.BASE_YEAR_MONTH     		as baseYearMonth,
 	 		A.BASE_SALARY_TTL     		as baseSalary,
 	 		A.OVERTIME_SALARY_TTL		as overtimeSalary,
 	 		A.NIGHT_SALARY_TTL			as nightSalary,
-	 		A.HOLIDAY_SALARY			as holidaySalary,
+	 		A.HOLIDAY_SALARY_TTL		as holidaySalary,
 	 		A.CARE_SALARY_TTL			as careSalary,
 	 		A.REWARD_SALARY_TTL			as rewardSalary,
 	 		A.MEAL_TTL					as mealSalary,
@@ -34,7 +35,7 @@
 		     <if test="basemonth != null">
 		     where BASE_YEAR_MONTH = #{basemonth}
 		     </if>
-		     ) A, EMPLOYEES B, DEPARTMENTS C, POSITIONS D
+		     ) A , EMPLOYEES B, DEPARTMENTS C, POSITIONS D
 	 	<where>
 				A.EMPLOYEE_NO(+) = B.EMPLOYEE_NO 
 			and
@@ -64,9 +65,10 @@
 		 	</choose>
 		 	</if>	
 	 	</where>
+	 	order by B.EMPLOYEE_NO asc
 	</select>
 	
-
+	<!-- 급여계산 - 사원 급여 정보 가져오기 --> 
 	<select id="getCalculatedSalaryDto" parameterType="map" resultType="salaryDto">
 	 	select
 	 		A.EMPLOYEE_NO				as employeeNo,
@@ -74,7 +76,7 @@
 	 		A.BASE_SALARY_TTL     		as baseSalary,
 	 		A.OVERTIME_SALARY_TTL		as overtimeSalary,
 	 		A.NIGHT_SALARY_TTL			as nightSalary,
-	 		A.HOLIDAY_SALARY			as holidaySalary,
+	 		A.HOLIDAY_SALARY_TTL		as holidaySalary,
 	 		A.CARE_SALARY_TTL			as careSalary,
 	 		A.REWARD_SALARY_TTL			as rewardSalary,
 	 		A.MEAL_TTL					as mealSalary,
@@ -104,6 +106,111 @@
 	 		B.DEPT_NO = C.DEPT_NO		
 	</select>
 	
+	<!-- 급여계산 - 급여내역 없는 사원의 기본정보 가져오기 -->
+	<select id="getBasicSalaryInfo" parameterType="int" resultType="BankInfo">
+		select
+			employee_no		as employeeNo,
+			base_salary		as baseSalary,
+			overtime_salary	as overtimeSalary,
+			night_salary	as nightSalary,
+			holiday_salary	as holidaySalary,
+			start_date		as startDate,
+			end_date		as endDate,
+			note			as note
+		from
+			salary_basic_item_info
+		where
+			employee_no = ${value}
+	</select>
+	
+	
+	<!-- 급여계산 - 입력한 급여 저장하기 -->
+	<insert id="insertSalary" parameterType="salaryDto">
+		insert into SALARY_HISTORIES
+		(EMPLOYEE_NO, BASE_YEAR_MONTH, BASE_SALARY_TTL, OVERTIME_SALARY_TTL, NIGHT_SALARY_TTL, HOLIDAY_SALARY_TTL, CARE_SALARY_TTL, REWARD_SALARY_TTL, MEAL_TTL,
+		BUSINESS_SALARY_TTL, INCOME_TAX_TTL, RESIDENCE_TAX_TTL, PENSION_TTL, HEALTH_INSURANCE_TTL, LONGTERM_INSURANCE_TTL, EMPLOYMENT_INSURANCE_TTL, START_DATE, END_DATE, PAY_DATE)
+		values
+		(#{employeeNo}, #{baseYearMonth}, #{baseSalary}, #{overtimeSalary}, #{nightSalary}, #{holidaySalary}, #{careSalary}, #{rewardSalary}, #{mealSalary},
+		#{businessSalary}, #{incomeTax}, #{residenceTax}, #{pension}, #{healthInsurance}, #{longtermInsurance}, #{employmentInsurance}, #{startDate}, #{endDate}, #{payDate})
+	</insert>
+	
+	<!-- 급여계산 - 입력된 급여 수정하기 -->
+	<update id="updateSalary" parameterType="salaryDto">
+		update SALARY_HISTORIES
+		set
+			BASE_SALARY_TTL = #{baseSalary},
+			OVERTIME_SALARY_TTL = #{overtimeSalary}, 
+			NIGHT_SALARY_TTL = #{nightSalary}, 
+			HOLIDAY_SALARY_TTL = #{holidaySalary}, 
+			CARE_SALARY_TTL = #{careSalary}, 
+			REWARD_SALARY_TTL = #{rewardSalary}, 
+			MEAL_TTL = #{mealSalary},
+			BUSINESS_SALARY_TTL = #{businessSalary}, 
+			INCOME_TAX_TTL = #{incomeTax}, 
+			RESIDENCE_TAX_TTL = #{residenceTax}, 
+			PENSION_TTL = #{pension}, 
+			HEALTH_INSURANCE_TTL = #{healthInsurance}, 
+			LONGTERM_INSURANCE_TTL = #{longtermInsurance}, 
+			EMPLOYMENT_INSURANCE_TTL = #{employmentInsurance}, 
+			START_DATE = #{startDate}, 
+			END_DATE = #{endDate}, 
+			PAY_DATE = #{payDate}
+		where 
+			EMPLOYEE_NO = #{employeeNo}
+			and BASE_YEAR_MONTH = #{baseYearMonth}
+	</update>
+	
+	<!-- 급여계산 - 입력한 사원의 급여 불러오기 -->
+	<select id="getCalculatedSalaryByNo" resultType="salaryDto">
+		select
+			A.BASE_YEAR_MONTH     		as baseYearMonth,
+	 		A.BASE_SALARY_TTL     		as baseSalary,
+	 		A.OVERTIME_SALARY_TTL		as overtimeSalary,
+	 		A.NIGHT_SALARY_TTL			as nightSalary,
+	 		A.HOLIDAY_SALARY_TTL		as holidaySalary,
+	 		A.CARE_SALARY_TTL			as careSalary,
+	 		A.REWARD_SALARY_TTL			as rewardSalary,
+	 		A.MEAL_TTL					as mealSalary,
+	 		A.BUSINESS_SALARY_TTL		as businessSalary,
+	 		A.INCOME_TAX_TTL			as incomeTax,
+	 		A.RESIDENCE_TAX_TTL			as residenceTax,
+	 		A.PENSION_TTL				as pension,
+	 		A.HEALTH_INSURANCE_TTL		as healthInsurance,
+	 		A.LONGTERM_INSURANCE_TTL	as longtermInsurance,
+	 		A.EMPLOYMENT_INSURANCE_TTL	as employmentInsurance,
+	 		A.START_DATE				as startDate,
+	 		A.END_DATE					as endDate,
+	 		A.PAY_DATE					as payDate,
+	 		B.EMPLOYEE_NO				as employeeNo,
+	 		B.EMPLOYEE_NAME				as name,
+	 		B.HIRE_DATE					as hireDate,
+	 		B.RETIREMENT_DATE			as retirementDate,
+	 		C.DEPT_NAME					as deptName,
+	 		D.POSITION_NAME				as positionName
+		from
+			SALARY_HISTORIES A, EMPLOYEES B, DEPARTMENTS C, POSITIONS D
+		where
+			A.BASE_YEAR_MONTH = #{baseYearMonth}
+		and		
+			A.EMPLOYEE_NO = #{employeeNo}
+		and
+			A.EMPLOYEE_NO = B.EMPLOYEE_NO 
+		and
+			B.DEPT_NO = C.DEPT_NO	
+		and
+			B.POSITION_NO = D.POSITION_NO	
+	</select>
+	
+	<!-- 급여계산 - 사원 급여내역 삭제하기 -->
+	<delete id="deleteSalary">
+		delete from 
+			SALARY_HISTORIES
+	 	where
+	 		EMPLOYEE_NO = #{employeeNo}
+			and BASE_YEAR_MONTH = #{baseYearMonth}
+	</delete>
+	
+	<!-- 급여조회 - 사원 급여 명세 가져오기 -->
 	<select id="getSalaryDetailDto" parameterType="map" resultType="salaryDto">
 	 	select
 	 		A.EMPLOYEE_NO				as employeeNo,
@@ -111,7 +218,7 @@
 	 		A.BASE_SALARY_TTL     		as baseSalary,
 	 		A.OVERTIME_SALARY_TTL		as overtimeSalary,
 	 		A.NIGHT_SALARY_TTL			as nightSalary,
-	 		A.HOLIDAY_SALARY			as holidaySalary,
+	 		A.HOLIDAY_SALARY_TTL		as holidaySalary,
 	 		A.CARE_SALARY_TTL			as careSalary,
 	 		A.REWARD_SALARY_TTL			as rewardSalary,
 	 		A.MEAL_TTL					as mealSalary,
@@ -138,23 +245,33 @@
 	 	and 
 	 		A.EMPLOYEE_NO = B.EMPLOYEE_NO
 	 	and
-	 		B.DEPT_NO = C.DEPT_NO		
+	 		B.DEPT_NO = C.DEPT_NO	
 	</select>
 	
-	<select id="getBasicSalaryInfo" parameterType="int" resultType="BankInfo">
-		select
-			employee_no		as employeeNo,
-			base_salary		as baseSalary,
-			overtime_salary	as overtimeSalary,
-			night_salary	as nightSalary,
-			holiday_salary	as holidaySalary,
-			start_date		as startDate,
-			end_date		as endDate,
-			note			as note
-		from
-			salary_basic_item_info
-		where
-			employee_no = ${value}
+	<!-- 기간별 급여현황 - 급여총계 -->
+	<select id="getPeriodDtoLists" parameterType="map" resultType="periodDto">
+	 	select
+	 		B.EMPLOYEE_NO				as employeeNo,
+	 		B.EMPLOYEE_NAME             as name,
+	 		SUM(A.BASE_SALARY_TTL + A.OVERTIME_SALARY_TTL + A.NIGHT_SALARY_TTL + A.HOLIDAY_SALARY_TTL + A.CARE_SALARY_TTL + 
+			A.REWARD_SALARY_TTL + A.MEAL_TTL + A.BUSINESS_SALARY_TTL) as totalSalary,
+			SUM(A.INCOME_TAX_TTL + A.RESIDENCE_TAX_TTL + A.PENSION_TTL + A.HEALTH_INSURANCE_TTL + A.LONGTERM_INSURANCE_TTL + A.EMPLOYMENT_INSURANCE_TTL) as deductionSalary,
+			SUM(A.BASE_SALARY_TTL + A.OVERTIME_SALARY_TTL + A.NIGHT_SALARY_TTL + A.HOLIDAY_SALARY_TTL + A.CARE_SALARY_TTL + A.REWARD_SALARY_TTL + A.MEAL_TTL + A.BUSINESS_SALARY_TTL)
+    		- SUM(A.INCOME_TAX_TTL + A.RESIDENCE_TAX_TTL + A.PENSION_TTL + A.HEALTH_INSURANCE_TTL + A.LONGTERM_INSURANCE_TTL + A.EMPLOYMENT_INSURANCE_TTL) as realSalary
+	 	from
+	 		SALARY_HISTORIES A , EMPLOYEES B
+	 	<where>
+			A.EMPLOYEE_NO = B.EMPLOYEE_NO 
+			<if test="startdate != null">
+		 		and A.PAY_DATE >= #{startdate}
+	 		</if>
+	 		<if test="enddate != null">
+		 		and	A.PAY_DATE &lt;= #{enddate}
+	 		</if>
+	 	</where>
+	 	group by B.EMPLOYEE_NO, B.EMPLOYEE_NAME
 	</select>
 	
+	<!-- 기간별 급여현황 - 급여상세내역 -->
+	 
 </mapper>

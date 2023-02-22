@@ -23,6 +23,7 @@
 </style>
 </head>
 <body>
+<c:set var="menu" value="work" />
 <c:set var="side" value="item-apply" />
 <%@ include file="../common/navbar.jsp" %>
 	<div class="container">
@@ -51,10 +52,12 @@
 						</select>
 						<label class="form-label"><strong>사원번호</strong></label>
 						<sec:authentication property="principal" var="loginEmployee" />
-						<sec:authorize access="hasAnyRole('ROLE_ADMIN')">						
+						<sec:authorize access="hasAnyRole('ROLE_ADMIN')">	
 						<input type="text" id="text-empNo" name="empNo" value="${loginEmployee.no }" style="text-align:center; width:100px" />
+						</sec:authorize>					
 						<sec:authorize access="hasAnyRole('ROLE_EMPLOYEE')">
 						<input type="text" id="text-empNo" name="empNo" value="${loginEmployee.no }" style="text-align:center; width:100px" readOnly />
+						</sec:authorize>
 						<button type="button" class="btn btn-danger" style="float:right;" id="btn-search">검색</button>
 					</div>
 				</div>
@@ -136,7 +139,7 @@
 					<colgroup>
 						<col width="5%">
 						<col width="10%">
-						<col width="7%">
+						<col width="9%">
 						<col width="10%">
 						<col width="10%">
 						<col width="7%">
@@ -197,7 +200,7 @@
 				<table class="table">
 					<tr class="fw-bold">
 						<td>휴가사유 <input type="text" name="reason" id="vacation-reason" style="width:500px;">
-							<input type="hidden" class="d-none" name="no" id="vacation-no">
+							<input type="hidden" class="d-none" name="no" value="" id="vacation-no">
 						</td>
 					</tr>
 				</table>
@@ -437,6 +440,10 @@ $(function() {
 			return false;
 		}
 		
+		if ($startDate > $endDate) {
+			alert("휴가 종료일이 시작일보다 빠를 수 없습니다.");
+			return false;
+		}
 		if (!$reason) {
 			alert("휴가 사유를 입력하세요.");
 			return false;
@@ -448,6 +455,8 @@ $(function() {
 		} else {
 			alert("휴가신청이 취소되었습니다.");
 		}
+		
+		$("#vacation-no").attr("name", "");
 		
 		$("#form-register").attr("action", "insert-request");
 		$("#form-register").trigger("submit");
@@ -465,6 +474,11 @@ $(function() {
 		
 		if (!$endDate) {
 			alert("휴가 종료일을 입력하세요.");
+			return false;
+		}
+		
+		if ($startDate > $endDate) {
+			alert("휴가 종료일이 시작일보다 빠를 수 없습니다.");
 			return false;
 		}
 		
@@ -496,7 +510,7 @@ $(function() {
 		}
 		
 		let delConfirm = confirm("휴가 신청을 취소하시겠습니까?")
-		if (mdfConfirm) {
+		if (delConfirm) {
 			alert("휴가신청내역이 취소되었습니다.");
 		}
 		

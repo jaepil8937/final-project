@@ -59,15 +59,15 @@
 				<div class="col-12">
 					<table class="table">
 						<colgroup>
-							<col width=""/>
-							<col width=""/>
-							<col width=""/>
-							<col width=""/>
-							<col width=""/>
+							<col width="20%"/>
+							<col width="20%"/>
+							<col width="20%"/>
+							<col width="20%"/>
+							<col width="20%"/>
 						</colgroup>
 						<thead>
 							<tr>
-								<th  class="table-primary">순번</th>
+								<th>사원번호</th>
 								<th>성명</th>
 								<th>핸드폰</th>
 								<th>외부이메일</th>
@@ -75,11 +75,17 @@
 							</tr>
 						</thead>
 						<tbody>
-							<td>1000</td>
-							<td>홍길동</td>
-							<td>010-1111-1111</td>
-							<td>hong@naver.com</td>
-							<td>20220101</td>
+							<c:if test="${not empty employees }">
+								<c:forEach var="emp" items="${employees }">
+									<tr data-emp-no="${emp.employeeNo }">
+										<td>${emp.employeeNo} </td>
+										<td>${emp.name} </td>
+										<td>${emp.mobileTel} </td>
+										<td>${emp.extEmail} </td>
+										<td><fmt:formatDate value="${emp.birthday}" /> </td>
+									</tr>
+								</c:forEach>
+							</c:if>
 						</tbody>
 					</table>
 				</div>
@@ -145,7 +151,7 @@
 					<div class="row p-3">
 				<div class="col">
 					<button type="submit" class="btn btn-dark" style="float:right;" id="">저장</button>
-					<a href="" class="btn btn-outline-primary" style="float:right; margin-right: 4px;" id="">사원번호중복확인</a>
+					<a href="" class="btn btn-outline-primary" style="float:right; margin-right: 4px;" id="dupli">사원번호중복확인</a>
 				</div>
 			</div>
 					
@@ -161,5 +167,15 @@
 				
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+<script type="text/javascript">
+$(function() {
+	$("#dupli").click(function() {
+		
+		if (employeeNo = employeeNo) {
+			alert("이미 존재하는 사원번호입니다.");
+			return;
+		}
+
+</script>
 </body>
 </html>

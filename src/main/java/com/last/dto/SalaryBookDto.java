@@ -1,20 +1,16 @@
 package com.last.dto;
 
 import java.util.List;
-
-import org.apache.ibatis.type.Alias;
-
 import lombok.Getter;
 import lombok.Setter;
 
 @Setter
 @Getter
-@Alias("salaryBookDto")
 public class SalaryBookDto {
 
 	private List<SalaryDto> salaryDtoLists;
 	
-	public int getBaseSalaryTtl() {
+	public int getBaseSalaryTtl() {                  // 사원들의 기본급 합계
 		int total = 0;
 		for (SalaryDto dto : salaryDtoLists) {
 			total += dto.getBaseSalary();
@@ -22,7 +18,7 @@ public class SalaryBookDto {
 		return total;
 	}
 	
-	public int getMealSalaryTtl() {
+	public int getMealSalaryTtl() {                 // 사원들의 식대 합계
 		int total = 0;
 		for (SalaryDto dto : salaryDtoLists) {
 			total += dto.getMealSalary();
@@ -30,7 +26,7 @@ public class SalaryBookDto {
 		return total;
 	}
 	
-	public int getOvertimeSalaryTtl() {
+	public int getOvertimeSalaryTtl() {             // 사원들의 연장수당 합계 
 		int total = 0;
 		for (SalaryDto dto : salaryDtoLists) {
 			total += dto.getOvertimeSalary();

@@ -46,52 +46,57 @@
 						<button type="button" class="btn btn-outline-dark btn-sm" id="btn-del">행삭제</button>
 						<button type="button" class="btn btn-outline-dark btn-sm" id="btn-add">행추가</button>
 					</div>
+			<form id="form-register" method="post" action="family">
 				<div class="row">
 					<table class="table table-bordered table-hover table-striped table-sm" id="table-family">
 						<colgroup>
-							<col width="5%">
-							<col width="12%">
-							<col width="12%">
-							<col width="12">
-							<col width="12">
-							<col width="12">
 							<col width="10%">
-							<col width="10%">
-							<col width="10%">
+							<col width="18%">
+							<col width="18%">
+							<col width="18%">
+							<col width="18%">
+							<col width="18%">
 						</colgroup>
 						<thead>
 							<tr class="text-center">
 								<th><input type="checkbox" id="checkbox-all-toggle" onchange="toggleAllCheckUncheck()" ></th>
 								<th>성명</th>
 								<th>가족관계</th>
-								<th>최종학력</th>
-								<th>직업</th>
-								<th>회사명</th>
 								<th>동거여부</th>
 								<th>부양가족</th>
 								<th>장애인</th>
 							</tr>
 						</thead>
 						<tbody>
-							<tr class="text-center" >
-								<td><input type="checkbox" name="familyNo" ></td>
-								<td><input type="text"></td>
-								<td><input type="text"></td>
-								<td><input type="text"></td>
-								<td><input type="text"></td>
-								<td><input type="text"></td>
-								<td><input type="checkbox"></td>
-								<td><input type="checkbox"></td>
-								<td><input type="checkbox"></td>
-							</tr>												
+							<tr class="text-center align-middle">
+								<td>
+									<input type="checkbox" name="familyNo">
+								</td>
+								<td>
+									<input type="text"  class="form-control">
+								</td>
+								<td>
+									<input type="text" class="form-control">
+								</td>
+								<td>
+									<input type="checkbox"  >
+								</td>
+								<td>
+									<input type="checkbox" >
+								</td>
+								<td>
+									<input type="checkbox" >
+								</td>
+							</tr>										
 						</tbody>
 					</table>
 				</div>
 					<div class="row">
 						<div class="col text-end">
-							<button type="submit" class="btn btn-dark" style="float:right;" id="">저장</button>
+							<button type="submit" class="btn btn-dark" style="float:right;" >저장</button>
 						</div>
-					</div>		
+					</div>	
+					</form>	
 				</div>
 			</div>
 		</div>
@@ -159,17 +164,26 @@ $(function() {
 		}
 		
 		var htmlContent = `
-			<tr class="text-center" >
-				<td><input type="checkbox" name="familyNo" ></td>
-				<td>홍길동</td>
-				<td>배우자</td>
-				<td>학사</td>
-				<td>회사원</td>
-				<td>삼성</td>
-				<td><input type="checkbox"></td>
-				<td><input type="checkbox"></td>
-				<td><input type="checkbox"></td>
-			</tr>		
+			<tr class="text-center align-middle">
+			<td>
+				<input type="checkbox" name="familyNo">
+			</td>
+			<td>
+				<input type="text"  class="form-control">
+			</td>
+			<td>
+				<input type="text" class="form-control">
+			</td>
+			<td>
+				<input type="checkbox" >
+			</td>
+			<td>
+				<input type="checkbox" >
+			</td>
+			<td>
+				<input type="checkbox" >
+			</td>
+		</tr>				
 		`;
 		$("#table-family tbody").append(htmlContent);
 	});

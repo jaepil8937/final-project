@@ -8,7 +8,7 @@
 <title>애플리케이션</title>
 </head>
 <body>
-<c:set var="menu" value="attendences" />
+<c:set var="menu" value="work" />
 <c:set var="side" value="monthly-status" />
 <%@ include file="../common/navbar.jsp" %>
 <div class="container my-3">
@@ -18,31 +18,23 @@
 		</div>
 		<div class="col-10">
 			<div class="row mb-3">
-				<div class="col">
-					<h1 class="fs-10 p-4" style="font-weight: bold;">월근태현황</h1>
-				</div>
+				<h2>월근태현황</h2>
 			</div>
 			<hr>
 			<div class="row mb-3 p-4 bg-light">
-				<div class="col-5">
-					<label for="month" style="padding-top: 12px;">근무년월: <input
-						   type="month" id="month" name="month-work" value="" min="" max="2023-12-31">
-					</label>
-				</div>
-				<div class="col-5">
-					<th>사원번호: <input type="number" min="1000" max="2000" /></th>&nbsp;
-					<th>
-						부서 : 
-						<select name="dept">
-						    <option value="">부서선택</option>
-						    <option value="개발팀">개발팀</option>
-						    <option value="영업팀">영업팀</option>
-						    <option value="인사팀">인사팀</option>
-						</select>
-					</th>
-				</div>
-				<div class="col-2 text-end">
-					<button type="button" class="btn btn-danger btn-sm">조회</button>
+				<div>
+					<label class="form-label"><strong>근무년월: </strong></label>
+					<input type="month" id="currentMonth" name="month-work" value="" min="" max="2023-12-31" style="width: 130px">
+					<label class="form-label"><strong>사원번호: </strong></label>
+					<input type="text" style="text-align:center; width:100px" />
+					<label class="form-label"><strong>부서: </strong></label>
+					<select name="dept" style="width: 100px">
+						<option value="">부서선택</option>
+						<option value="개발팀">개발팀</option>
+						<option value="영업팀">영업팀</option>
+						<option value="인사팀">인사팀</option>
+					</select>
+					<button type="button" class="btn btn-danger" style="float:right;" id="btn-search">조회</button>
 				</div>
 			</div>
 			<div class="row">
@@ -56,7 +48,7 @@
 					<p>
 						<i class="bi bi-exclamation-circle-fill"></i>
 						 아이콘 클릭시 상세내용이 보입니다. 
-						<i class="bi bi-square-fill" style="color: #333333 ;">: 출근</i>  
+						<i class="bi bi-square-fill" style="color: #91C483 ;">: 출근</i>  
 						<i class="bi bi-square-fill" style="color: #ffc34d ;">: 지각</i>  
 						<i class="bi bi-square-fill" style="color: #e76a83 ;">: 조퇴</i>  
 						<i class="bi bi-square-fill" style="color: #6495ed ;">: 휴가</i>
@@ -184,5 +176,10 @@
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+<script type="text/javascript">
+$(function() {
+	$("#currentMonth").val(new Date().toISOString().slice(0, 7));
+});
+</script>
 </body>
 </html>

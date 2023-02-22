@@ -2,11 +2,11 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.last.mapper.WorkMapper">
 
-	<insert id="addAttendance" parameterType="int">
+	<insert id="addAttendance" parameterType="Attendance">
 		insert into employee_attendances
-			(attendance_no, employee_no, working_date, start_work_time)
+			(attendance_no, employee_no, working_date, start_work_time, attendances_type)
 		values
-			(attendances_seq.nextval, #{empNo}, sysdate, to_char(sysdate, 'hh24:mi'))
+			(attendances_seq.nextval, #{empNo}, sysdate, to_char(sysdate, 'hh24:mi'), #{attendancesType})
 	</insert>
 	
 	<select id="getWeeklyAttendancesByEmpNo" parameterType="int" resultType="Attendance">
@@ -23,8 +23,27 @@
 		from
 			employee_attendances
 		where
-			employee_no = #{empNo}
-			and working_date between trunc(sysdate - 7)  and trunc(sysdate + 1) <!-- trunc(sysdate + 1) : 오늘 밤 12시 -->
+			employee_no = #{value}
+			and working_date between trunc(sysdate - 6)  and trunc(sysdate + 1) <!-- trunc(sysdate + 1) : 오늘 밤 12시 -->
+		order by
+			working_date desc
+	</select>
+	
+	<select id="getAllAttendancesByEmpNo" parameterType="int" resultType="Attendance">
+		select
+			attendance_no		as no,
+			employee_no 		as empNo, 
+			working_date 		as workingDate, 
+			start_work_time 	as startWorkTime,
+			end_work_time 		as endWorkTime,
+			worked_times		as workedTimes,
+			holiday_work_time	as holidayWorkTime,
+			overtime_worked_times	as overtimeWorkedTimes,
+			night_worked_times	as nightWorkedTimes
+		from
+			employee_attendances
+		where
+			employee_no = #{value}
 		order by
 			working_date desc
 	</select>
@@ -79,6 +98,7 @@
 			working_date 		as workingDate, 
 			start_work_time 	as startWorkTime,
 			end_work_time 		as endWorkTime,
+			worked_times		as workedTimes,
 			holiday_work_time	as holidayWorkTime,
 			overtime_worked_times	as overtimeWorkedTimes,
 			night_worked_times	as nightWorkedTimes
@@ -105,6 +125,16 @@
 			attendance_no = #{no}
 	</update>
 	
+	<update id="updateAttendances" parameterType="Attendance">
+		update
+			employee_attendances
+		set
+			start_work_time = #{startWorkTime}
+			end_work_time = #{endWorkTime}
+		where
+			attendance_no = #{value}
+	</update>
+	
 	<select id="getAdminAttendancesByEmpNo" parameterType="int" resultType="AdminAttendanceDto">
 		select
 			A.attendance_no		as no,
@@ -114,7 +144,12 @@
 			B.employee_name 	as empName,
 			B.employee_no		as empNo,
 			C.dept_name 		as deptName,
-			D.position_name 	as positionName
+			D.position_name 	as positionName,
+			A.attendances_type	as attendancesType,
+			A.worked_times		as workedTimes,
+			A.holiday_work_time		as holidayWorkTime,
+			A.overtime_worked_times	as overtimeWorkedTimes,
+			A.night_worked_times	as nightWorkedTimes
 		from
 			employee_attendances A,
 			employees B,
@@ -137,7 +172,12 @@
 			B.employee_name 	as empName,
 			B.employee_no		as empNo,
 			C.dept_name 		as deptName,
-			D.position_name 	as positionName
+			D.position_name 	as positionName,
+			A.attendances_type	as attendancesType,
+			A.worked_times		as workedTimes,
+			A.holiday_work_time		as holidayWorkTime,
+			A.overtime_worked_times	as overtimeWorkedTimes,
+			A.night_worked_times	as nightWorkedTimes
 		from
 			employee_attendances A,
 			employees B,
@@ -156,16 +196,64 @@
 						@Param("position") String  position, @Param("dept") String dept);
 	 -->
 	 
+				<!--  
+				and A.working_date between #{startDate} and to_date(#{endDate}, 'yyyy-mm-dd') + 1
+				-->
 	 <select id="getAllAdminAttendancesByOptions" parameterType="map" resultType="AdminAttendanceDto">
+		select *
+		from (
+			select 
+				row_number() over (order by A.working_date desc) row_numbers,
+				A.attendance_no		as no,
+				A.working_date		as workingDate,
+				A.start_work_time 	as startWorkTime,
+				A.end_work_time 	as endWorkTime,
+				B.employee_name 	as empName,
+				B.employee_no		as empNo,
+				C.dept_name 		as deptName,
+				D.position_name 	as positionName,
+				A.attendances_type	as attendancesType,
+				A.worked_times		as workedTimes,
+				A.holiday_work_time		as holidayWorkTime,
+				A.overtime_worked_times	as overtimeWorkedTimes,
+				A.night_worked_times	as nightWorkedTimes
+			from
+				employee_attendances A,
+				employees B,
+				departments C,
+				positions D
+			where
+				A.employee_no = B.employee_no
+				and B.dept_no = C.dept_no
+				and B.position_no = D.position_no
+				<if test="empNo == null and deptNo == null and positionNo == null and startDate == null and endDate == null">
+					and A.working_date between trunc(sysdate) and trunc(sysdate + 1)
+				</if>
+				<if test="empNo != null">
+					and A.employee_no = #{empNo}			
+				</if>
+					
+				<if test="deptNo != null">
+					and C.dept_no = #{deptNo}
+				</if>
+				
+				<if test="positionNo != null">
+					and D.position_no = #{positionNo}
+				</if>
+				
+				<if test="startDate != null">
+					and working_date >= #{startDate} 		
+				</if>
+				
+				<if test="endDate != null">
+					and working_date &lt; to_date(#{endDate}) + 1 	
+				</if>)
+			where row_numbers between #{begin} and #{end}
+	</select>
+	
+	<select id="getTotalRows" parameterType="map" resultType="int">
 		select
-			A.attendance_no		as no,
-			A.working_date		as workingDate,
-			A.start_work_time 	as startWorkTime,
-			A.end_work_time 	as endWorkTime,
-			B.employee_name 	as empName,
-			B.employee_no		as empNo,
-			C.dept_name 		as deptName,
-			D.position_name 	as positionName
+			count(*)
 		from
 			employee_attendances A,
 			employees B,
@@ -181,9 +269,6 @@
 			<if test="empNo != null">
 				and A.employee_no = #{empNo}			
 			</if>
-				<!--  
-				and A.working_date between #{startDate} and to_date(#{endDate}, 'yyyy-mm-dd') + 1
-				-->
 				
 			<if test="deptNo != null">
 				and C.dept_no = #{deptNo}
@@ -200,18 +285,6 @@
 			<if test="endDate != null">
 				and working_date &lt; to_date(#{endDate}) + 1 	
 			</if>
-		order by
-			working_date desc
-		
 	</select>
 	
-	<update id="updateAttendances" parameterType="Attendance">
-		update
-			employee_attendances
-		set
-			start_work_time = #{startWorkTime}
-			end_work_time = #{endWorkTime}
-		where
-			attendance_no = #{value}
-	</update>
 </mapper>

@@ -11,13 +11,13 @@
 			</sec:authorize>	
 			&nbsp;
 			<sec:authorize access="hasAnyRole('ROLE_ADMIN', 'ROLE_EMPLOYEE')">	
-				<a class="nav-link ${menu eq 'attendences' ? 'active' : '' }" href="/work/day" role="button">
+				<a class="nav-link ${menu eq 'work' ? 'active' : '' }" href="/work/day" role="button">
 					근무
 				</a>
 			</sec:authorize>
 			&nbsp;
-			<sec:authorize access="hasAnyRole('ROLE_EMPLOYEE')">
-				<a class="nav-link ${menu eq 'pay' ? 'active' : '' }" href="#" role="button">
+			<sec:authorize access="hasAnyRole('ROLE_ADMIN')">
+				<a class="nav-link ${menu eq 'pay' ? 'active' : '' }" href="/salary/salarycalculate" role="button">
 					급여
 				</a>
 			</sec:authorize>	

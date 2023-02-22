@@ -22,19 +22,21 @@
 <style>
 </style>
 <body>
-	<c:set var="menu" value="post" />
+	<c:set var="menu" value="work" />
+	<c:set var="side" value="holiday-setting" />
 	<%@ include file="../common/navbar.jsp"%>
 	<div class="container">
 		<div class="row">
 			<div class="col-2 bg-dark mr35">
 				<%@ include file="../common/sidebar.jsp"%>
 			</div>
-			<div class="col">
+			<div class="col-10">
 				<div class="row mb-3">
 					<div class="col">
-						<h1 class="fs-10 p-4">휴일일괄설정</h1>
+						<h2>휴일일괄설정</h2>
 					</div>
 				</div>
+				<hr>
 				<div class="row" style="margin-top: 24px;">
 					<div class="shadow-none p-3 mb-5 bg-light rounded">
 						<div class="container text-center">
@@ -54,8 +56,16 @@
 						</div>
 					</div>
 				</div>
-				<div class="row" style="margin-top: 60px;">
-					<div class="col-6">
+				<div class="row">
+					<div class="col-3 text-left">
+						<p>
+							<i class="bi bi-arrow-right-square-fill text-danger"></i>
+							<strong>휴일일괄설정</strong>
+						</p>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-6 text-left mb-1">
 						<p>
 							<button type="button" class="btn btn-light" style="float: left;">엑셀파일 불러오기</button>
 						</p>
@@ -119,40 +129,41 @@
 				</div>
 			</div>
 		</div>
-		<script
-			src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
-			crossorigin="anonymous"></script>
-		<script>
-			$(function() {
-				$('input[name="daterange"]').daterangepicker(
-						{
-							"locale" : {
-								"format" : "YYYY-MM-DD",
-								"separator" : " ~ ",
-								"applyLabel" : "확인",
-								"cancelLabel" : "취소",
-								"fromLabel" : "From",
-								"toLabel" : "To",
-								"customRangeLabel" : "Custom",
-								"weekLabel" : "W",
-								"daysOfWeek" : [ "월", "화", "수", "목", "금", "토",
-										"일" ],
-								"monthNames" : [ "1월", "2월", "3월", "4월", "5월",
-										"6월", "7월", "8월", "9월", "10월", "11월",
-										"12월" ],
-								"firstDay" : 1
-							},
-							"startDate" : "2023-01-01",
-							"endDate" : "2023-12-31",
-							"drops" : "down"
-						},
-						function(start, end, label) {
-							console.log('New date range selected: '
-									+ start.format('YYYY-MM-DD') + ' to '
-									+ end.format('YYYY-MM-DD')
-									+ ' (predefined range: ' + label + ')');
-						});
-			});
-		</script>
+	</div>
+<script
+	src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
+	crossorigin="anonymous"></script>
+<script>
+	$(function() {
+		$('input[name="daterange"]').daterangepicker(
+				{
+					"locale" : {
+						"format" : "YYYY-MM-DD",
+						"separator" : " ~ ",
+						"applyLabel" : "확인",
+						"cancelLabel" : "취소",
+						"fromLabel" : "From",
+						"toLabel" : "To",
+						"customRangeLabel" : "Custom",
+						"weekLabel" : "W",
+						"daysOfWeek" : [ "월", "화", "수", "목", "금", "토",
+								"일" ],
+						"monthNames" : [ "1월", "2월", "3월", "4월", "5월",
+								"6월", "7월", "8월", "9월", "10월", "11월",
+								"12월" ],
+						"firstDay" : 1
+					},
+					"startDate" : "2023-01-01",
+					"endDate" : "2023-12-31",
+					"drops" : "down"
+				},
+				function(start, end, label) {
+					console.log('New date range selected: '
+							+ start.format('YYYY-MM-DD') + ' to '
+							+ end.format('YYYY-MM-DD')
+							+ ' (predefined range: ' + label + ')');
+				});
+	});
+</script>
 </body>
 </html>

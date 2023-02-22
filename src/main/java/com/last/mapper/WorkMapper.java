@@ -13,7 +13,7 @@ import com.last.vo.WorkAttendance;
 public interface WorkMapper {
 
 	// 출근시간등록
-	void addAttendance(int empNo);
+	void addAttendance(WorkAttendance attendance);
 	// 퇴근시간등록
 	void endAttendance(WorkAttendance attendance);
 	
@@ -25,16 +25,20 @@ public interface WorkMapper {
 	// 주간근태목록
 	List<WorkAttendance> getWeeklyAttendancesByEmpNo(int empNo);
 	
+	List<WorkAttendance> getAllAttendancesByEmpNo(int empNo);
+	
 	// 전체근무시간조회
 	List<WorkAttendance> getAllAttendancesByDateRange(@Param("empNo") int empNo, @Param("startDate") String startDate, @Param("endDate") String endDate);
 	
 	// 사원들의 일일근태정보(관리자권한)
 	List<WorkAdminAttendanceDto> getAdminAttendancesByEmpNo(int empNo);
+	
 	WorkAdminAttendanceDto getAdminAttendanceByNo(int attendanceNo);
 	
 	List<WorkAdminAttendanceDto> getAllAdminAttendancesByOptions(Map<String, Object> param);
 	
-//	void updateAttendance(WorkAttendance workAttendance);
-	WorkAdminAttendanceDto updateAttendanceByNo(int attendanceNo);
+	int getTotalRows(Map<String, Object> param);
 	
+	WorkAdminAttendanceDto updateAttendanceByNo(int attendanceNo);
+//	void updateAttendance(WorkAttendance workAttendance);
 }

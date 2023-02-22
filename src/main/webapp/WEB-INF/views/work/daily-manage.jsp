@@ -3,7 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
-<html>
+<html lang="ko">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -13,7 +13,7 @@
 <title>애플리케이션</title>
 </head>
 <body>
-<c:set var="menu" value="attendences" />
+<c:set var="menu" value="work" />
 <c:set var="side" value="daily-manage" />
 <%@ include file="../common/navbar.jsp" %>
 <div class="container my-3">
@@ -23,52 +23,44 @@
 		</div>
 		<div class="col-10">
 			<div class="row mb-3">
-				<div class="col">
-					<h1 class="fs-10 p-4" style="font-weight: bold;">일일근태관리</h1>
-				</div>
+					<h2>일일근태관리</h2>
 			</div>
 			<hr>
-			<div class="row mb-3 p-4 bg-light">
-				<div class="col-12">
-					<form mehod="get" action="/work/dayadmin">
-					   	<b>근무일자: </b>
-						<input autocomplete="off" type="text" name="startDate" id="start-cal" value="${param.startDate }"> 
-						~ <input autocomplete="off" type="text" name="endDate" id="end-cal" value="${param.endDate }"><p></p><p>
-						<th>
-						<b>사원번호:</b>
-						<input autocomplete="off" type="number" name="empNo" min="1000"/></th>&nbsp;&nbsp;
-						
-						<th>
-							<b>직급:</b>
-							<select id="positionNo" name="positionNo" >
-							    <option value="">선택하세요</option>
-							    <option value="100" ${param.positionNo eq '100' ? 'selected' : '' }>사원</option>
-							    <option value="101">대리</option>
-							    <option value="102">과장</option>
-							    <option value="103">대리</option>
-							    <option value="104">대리</option>
-							    <option value="105">대리</option>
-							    <option value="106">대리</option>
-							</select>
-						</th>&nbsp;&nbsp;
-						<th>
-							<b>부서:</b>
-							<select name="deptNo" >
-							    <option value="">선택하세요</option>
-							    <option value="100">영업부</option>
-							    <option value="101">개발부</option>
-							    <option value="102">개발부</option>
-							    <option value="103">개발부</option>
-							    <option value="104">개발부</option>
-							    <option value="105">개발부</option>
-							    <option value="106">개발부</option>
-							</select>
-						</th>&nbsp;
-						
-						<button type="submit" class="btn btn-danger btn-sm" style="float: end;">조회</button></p>
-					</form>
-				</div>
-			</div>
+			<form mehod="get" action="/work/dayadmin">
+				<div class="row mb-3 p-4 bg-light">
+					<div>
+						<label class="form-label"><strong>근무일자: </strong></label>
+						<input autocomplete="off" type="date" name="startDate" id="start-cal" value="${param.startDate }" style="text-align:center; width:130px" /> 
+						~ <input autocomplete="off" type="date" name="endDate" id="end-cal" value="${param.endDate }" style="text-align:center; width:130px" />
+						<label class="form-label"><strong>사원번호: </strong></label>
+						<input type="text" style="text-align:center; width:100px" />
+						<label class="form-label"><strong>직급: </strong></label>
+						<select id="positionNo" name="positionNo" style="width: 100px" >
+							<option value="">선택하세요</option>
+							<option value="100" ${param.positionNo eq '100' ? 'selected' : '' }>사원</option>
+					        <option value="101">대리</option>
+							<option value="102">과장</option>
+							<option value="103">대리</option>
+							<option value="104">대리</option>
+							<option value="105">대리</option>
+							<option value="106">대리</option>
+						</select>
+						<label class="form-label"><strong>부서: </strong></label>
+						<select name="deptNo" style="width: 100px" >
+							<option value="">선택하세요</option>
+							<option value="100">영업부</option>
+							<option value="101">개발부</option>
+							<option value="102">개발부</option>
+							<option value="103">개발부</option>
+							<option value="104">개발부</option>
+							<option value="105">개발부</option>
+							<option value="106">개발부</option>
+						</select>
+						<button type="submit" class="btn btn-danger" style="float:right;" id="btn-search">조회</button>
+					</div>
+				</div>	
+			</form>
+
 			<div class="row">
 				<div class="col-3 text-left mb-1">
 					<p>
@@ -119,6 +111,13 @@
 				    </tr>
 			  	</thead>
 				<tbody>
+				  <c:choose>
+				  	<c:when test="${empty adminAttendanceDtos }">
+				  		<tr>
+				  			<td colspan="12" class="text-center">등록된 근태정보가 없습니다.</td>
+				  		</tr>
+				  	</c:when>
+				  <c:otherwise>
 				  <c:forEach var="adminAttendance" items="${adminAttendanceDtos }">
 				    <tr class="text-center">
 				      <td><fmt:formatDate value="${adminAttendance.workingDate }" pattern="yyyy년 M월 d일"/></td>
@@ -126,19 +125,45 @@
 				      <td>${adminAttendance.empName }</td>
 				      <td>${adminAttendance.positionName }</td>
 				      <td>${adminAttendance.deptName }</td>
-				      <td>${adminAttendance.workedTimes }시간</td>
+				      <td>${adminAttendance.attendancesType }</td>
 				      <td>${adminAttendance.startWorkTime }</td>
 				      <td>${adminAttendance.endWorkTime }</td>
-				      <td>${adminAttendance.workedTimes }</td>
+				      <td>${adminAttendance.workedTimes }시간</td>
 				      <td>${adminAttendance.holidayWorkTime }시간</td>
 				      <td>${adminAttendance.overtimeWorkedTimes }시간</td>
 				      <td>${adminAttendance.nightWorkedTimes }시간</td>
-				      <td><button type="button" class="btn btn-secondary btn-sm" data-att-no="${adminAttendance.no }" >수정</button></td>
+				      <td><button type="button" class="btn btn-dark btn-sm" data-att-no="${adminAttendance.no }" >수정</button></td>
 				    </tr>
 				   </c:forEach>
+				  </c:otherwise>
+				</c:choose>
 			  </tbody>
 			</table>
 	    	</div>
+			<c:if test="${not empty pagination }">
+				<nav aria-label="Page navigation example">
+					<ul class="pagination justify-content-center">
+						<li class="page-item">
+							<a class="page-link ${pagination.first ? 'disabled' : '' }"
+								href="dayadmin?startDate=${param.startDate }&endDate=${param.endDate }&empNo=${param.empNo }
+								&positionNo=${param.positionNo }&deptNo=${param.deptNo }&page=${pagination.prevPage }" >이전</a>
+						</li>
+						<c:forEach var="num" begin="${pagination.beginPage }" end="${pagination.endPage }">
+							<li class="page-item">
+								<a class="page-link ${pagination.page eq num ? 'active' : '' }" 
+									href="dayadmin?startDate=${param.startDate }&endDate=${param.endDate }&empNo=${param.empNo }
+										&positionNo=${param.positionNo }&deptNo=${param.deptNo }&page=${num }">${num }</a>
+							</li >
+						</c:forEach>
+						
+						<li class="page-item">
+							<a class="page-link ${pagination.last ? 'disabled' : '' }"
+								href="dayadmin?startDate=${param.startDate }&endDate=${param.endDate }&empNo=${param.empNo }
+								&positionNo=${param.positionNo }&deptNo=${param.deptNo }&page=${pagination.nextPage }" >다음</a>
+						</li>
+					</ul>
+				</nav>
+			</c:if>
 		</form>
 		  </div>
 	 </div>
@@ -152,10 +177,10 @@
 	      </div>
 	      <div class="modal-body">
 	       	<form id="form-hour" method="post" action="modify">
-	       		<input type="hidden" name="no" value="${modifyAttendance.no }" />
+	       		<input type="hidden" name="no" value="data-att-no" />
 	       		<div class="mb-2">
 	       			<label class="form-label">출근시간</label>
-	       			<input type="text" class="form-control" name="startTime">
+	       			<input type="text" class="form-control" name="startTime" vaue="">
 	       		</div>
 	       		<div class="mb-2">
 	       			<label class="form-label">퇴근시간</label>
@@ -191,17 +216,6 @@ $("#table-daily-attendance tbody button").click(function() {
 	hourModifyModal.show();
 	
 })
-	
-$("#start-cal").datepicker();
-$("#end-cal").datepicker();
-$.datepicker.setDefaults({
-	dateFormat:'yy-mm-dd'
-   ,maxDate:"D"
-})
-
-function getItem(){
-	$("#positionNo option:selected").val();
-}
 </script>
 </body>
 </html>

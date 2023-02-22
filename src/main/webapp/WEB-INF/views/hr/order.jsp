@@ -52,14 +52,16 @@
 							<col width="16%"/>
 						</colgroup>
 							<tr>
-								<th class="table-secondary text-end">현직책</th>
-								<td colspan="1"><input type="text" class="form-control form-control-sm"  style="width: 130px;" disabled/></td>
+								<th class="table-secondary text-end">현부서</th>
+								<td colspan="1"><input type="text" class="form-control form-control-sm"  style="width: 130px;" name="deptNo" value="${dept.deptName }" disabled/></td>
 								<th class="table-secondary text-end">현직급</th>
 								<td colspan="1"><input type="text" class="form-control form-control-sm"  style="width: 130px;" disabled/></td>
 								<th class="table-secondary text-end">호봉</th>
 								<td colspan="1"><input type="text" class="form-control form-control-sm"  style="width: 130px;" disabled/></td>
 							</tr>
-					</div>
+						</table>
+				</div>
+			</div>
 				<div class="row">
 					<table class="table table-bordered table-hover table-striped table-sm">
 						<colgroup>
