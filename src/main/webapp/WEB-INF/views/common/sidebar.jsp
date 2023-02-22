@@ -53,7 +53,7 @@
 					<li><a class="dropdown-item ${side eq 'employee-list' ? 'text-light fw-bold' : '' }" href="/hr/info">사원명부/인사기록카드</a></li>
 					<li><a class="dropdown-item ${side eq 'personnel' ? 'text-light fw-bold' : '' }" href="/hr/personnel">인사발령등록</a></li>
 					<li><a class="dropdown-item ${side eq 'certificate' ? 'text-light fw-bold' : '' }" href="/hr/issue">증명서발급</a></li>
-					<li><a class="dropdown-item ${side eq '6' ? 'text-light fw-bold' : '' }" href="#">회원탈퇴/비밀번호변경</a></li>
+					<li><a class="dropdown-item ${side eq 'password' ? 'text-light fw-bold' : '' }" href="/hr/password">비밀번호변경/회원탈퇴</a></li>
 				</ul>
 			</li>	
 			<li class="nav-item dropdown"><a class="nav-link dropdown-toggle text-light" href="#" data-bs-toggle="dropdown" data-bs-auto-close="false" aria-expanded="false">급여관리</a>

@@ -107,7 +107,7 @@
 									<c:forEach var="employee" items="${employees }">
 										<tr>
 											<td class="text-center">${employee.no }</td>
-											<td class="text-center"><a href="" data-name="${employee.name }" class="text-decoration-none" >${employee.name }</a></td>
+											<td class="text-center"><a href="" data-no="${employee.no }" class="text-decoration-none" >${employee.name }</a></td>
 											<td class="text-center">${employee.positionName }</td>
 											<td class="text-center">${employee.deptName }</td>
 											<td class="text-center"><fmt:formatDate value="${employee.hire }" pattern="yyyy-MM-dd"/></td>
@@ -153,19 +153,19 @@
 									<input type="file" class="form-control form-control-sm" name="file1">	
 								</td>	
 								<th class="table-secondary text-end">사원번호</th>
-								<td><input type="text" class="form-control form-control-sm"  style="width: 130px;" path="employeeNo"/></td>
+								<td id="emp-no"></td>
 								<th class="table-secondary text-end">비밀번호</th>
 								<td colspan="2"><input type="text" class="form-control form-control-sm"  style="width: 130px;" path="password"/></td>	
 							</tr>
 							<tr>
 								<th class="table-secondary text-end">성명</th>
-								<td><input type="text" class="form-control form-control-sm"  style="width: 130px;" path="name"/></td>
+								<td id="emp-name"></td>
 								<th class="table-secondary text-end">생년월일</th>
-								<td colspan="2"><input type="text" class="form-control form-control-sm"  style="width: 130px;" path="birthday"/></td>
+								<td id="emp-birthday" colspan="2"></td>
 							</tr>
 							<tr>
 								<th class="table-secondary text-end">성별</th>
-								<td><input class="form-check-input" type="radio" name="flexRadioDefault1" path="gender" id="flexRadioDefault1" checked >
+								<td id="emp-gender"><input class="form-check-input" type="radio" name="flexRadioDefault1" path="gender" id="flexRadioDefault1" checked >
 								<label class="form-check-label" for="flexRadioDefault1">남</label>
 								<input class="form-check-input" type="radio" path="gender" name="flexRadioDefault1" id="flexRadioDefault1" >
   								<label class="form-check-label" for="flexRadioDefault2">여</label>
@@ -173,23 +173,23 @@
 								
 							<tr>
 								<th class="table-secondary text-end">메모</th>
-								<td colspan="4"><textarea class="form-control" rows="3" name="memo" path="memo"></textarea></td>
+								<td id="emp-memo" colspan="4"><textarea class="form-control" rows="3" name="memo" path="memo"></textarea></td>
 							</tr>
 							<tr>
 								<th class="table-secondary text-end">회사전화</th>
-								<td colspan="1"><input type="text" class="form-control form-control-sm"  style="width: 130px;" path="com_tel"/></td>
+								<td id="emp-comTel" colspan="1"><input type="text" class="form-control form-control-sm"  style="width: 130px;" path="com_tel"/></td>
 								<th class="table-secondary text-end">자택전화</th>
-								<td colspan="1"><input type="text" class="form-control form-control-sm"  style="width: 130px;" path="home_tel"/></td>
+								<td id="emp-homeTel" colspan="1"><input type="text" class="form-control form-control-sm"  style="width: 130px;" path="home_tel"/></td>
 								<th class="table-secondary text-end">핸드폰</th>
-								<td colspan="1"><input type="text" class="form-control form-control-sm"  style="width: 130px;" path="mobile_tel"/></td>
+								<td id="emp-mobileTel" colspan="1"><input type="text" class="form-control form-control-sm"  style="width: 130px;" path="mobile_tel"/></td>
 							</tr>
 							<tr>
 								<th class="table-secondary text-end">회사이메일</th>
-								<td colspan="5"><input type="text" class="form-control form-control-sm"  style="width: 600px;" path="com-email"/></td>
+								<td id="emp-comEmail" colspan="5"><input type="text" class="form-control form-control-sm"  style="width: 600px;" path="com-email"/></td>
 							</tr>
 							<tr>
 								<th class="table-secondary text-end">외부이메일</th>
-								<td colspan="5"><input type="text" class="form-control form-control-sm"  style="width: 600px;" path="ext_email"/></td>
+								<td id="emp-extEmail" colspan="5"><input type="text" class="form-control form-control-sm"  style="width: 600px;" path="ext_email"/></td>
 							</tr>
 							
 							<tr>
@@ -233,15 +233,6 @@
 								<td colspan="3"><input type="date" id="end-date" name="" value="2023-02-03" style="text-align:center; width:130px"/></td>
 							</tr>
 							<tr>
-								<th class="table-secondary text-end">직책</th>
-								<td><input type="text" class="form-control form-control-sm"  style="width: 130px;" path="positionName" /></td>
-								<th class="table-secondary text-end">급여계약기준</th>
-								<td colspan="3"><select style="width: 130px;"/>
-									<option>연봉제</option>
-									<option>호봉제</option>
-								</select></td>	
-							</tr>
-							<tr>
 								<th  class="table-secondary text-end">호봉</th>
 									<td><select style="width: 130px;" path="hobong"/>
 										<option>사업장1</option>
@@ -283,9 +274,20 @@ $(function(){
 	
 	$("#table-employee tbody").on('click', 'a', function(event) {
 		event.preventDefault();
+		let no = $(this).attr('data-no');
 		
-		let name = $(this).attr('data-name');
-		console.log(name);
+		$.getJSON("detail.json", {empNo:no}, function(employee){
+			$("#emp-no").text(employee.employeeNo);
+			$("#emp-name").text(employee.name);
+			$("#emp-birthday").text(employee.birthday);
+			$("#emp-gender").text(employee.gender);
+			$("#emp-memo").text(employee.memo);
+			$("#emp-comTel").text(employee.comTel);
+			$("#emp-homeTel").text(employee.homeTel);
+			$("#emp-mobileTel").text(employee.mobileTel);
+			$("#emp-comEmail").text(employee.comEmail);
+			$("#emp-extEmail").text(employee.extEmail);
+		})
 		modal.show();
 	})
 })

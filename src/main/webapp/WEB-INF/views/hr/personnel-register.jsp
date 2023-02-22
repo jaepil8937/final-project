@@ -58,7 +58,7 @@
 							<input type="date" name="appointmentDate" />
 							<label>발령직급</label>
 							<select name="positionNo">
-								<option>선택</option>
+								<option selected="selected" disabled="disabled">선택</option>
 								<option value="100">대표</option>
 								<option value="101">전무</option>
 								<option value="102">상무</option>
@@ -66,7 +66,7 @@
 							</select>
 							<label>발령부서</label>
 							<select name="deptNo">
-								<option>선택</option>
+								<option selected="selected" disabled="disabled">선택</option>
 								<option value="100">개발팀</option>
 								<option value="101">인사팀</option>
 								<option value="102">관리팀</option>
@@ -135,7 +135,6 @@ $(function() {
 		let empNo = $("input[name=empNo]:checked").val();
 		$("input[name=employeeNo]").val(empNo);
 		let checkedLength =  $("input[name=empNo]:checked").length;
-		
 		if (checkedLength == 0) {
 			alert("발령처리 할 사원을 선택해주세요.");
 			return false;
@@ -144,7 +143,19 @@ $(function() {
 		if (checkedLength > 1) {
 			alert("발령처리는 하나씩 처리 가능합니다.");
 			return false;
-		}	
+		}
+		
+		let type = $("select[name=type] option:selected").val();
+		if (type == '선택') {
+			alert("발령구분을 선택해주세요.");
+			return false;
+		}
+		
+		let appointmentDate = $("input[name=appointmentDate]").val();
+		if (appointmentDate == "") {
+			alert("발령일자를 선택해주세요.");
+			return false;
+		}
 		
 		$("form").trigger("submit");
 	});

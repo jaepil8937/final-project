@@ -36,6 +36,10 @@ public class EmployeeService {
 		return employeeMapper.getAllEmployees(param);
 	}
 	
+	public Employees getAllEmployeebyNo(int no) {			// 사원번호로 직원정보 조회
+		return employeeMapper.getAllEmployeebyNo(no);
+	}
+	
 	public List<PersonnelDto> getAllPersonnel(Map<String, Object> param) {
 		return employeeMapper.getAllPersonnel(param);
 	}
@@ -50,11 +54,33 @@ public class EmployeeService {
 	
 	public void updatePersonnel(EmployeeRequest form) {
 		Employees employee = employeeMapper.getAllEmployeebyNo(form.getEmployeeNo());
-		BeanUtils.copyProperties(form, employee);
+		
+		//BeanUtils.copyProperties(form, employee);
+		
+		if (form.getPositionNo() != 0) {
+			employee.setPositionNo(form.getPositionNo());
+		}
+		if (form.getDeptNo() != 0) {
+			employee.setDeptNo(form.getDeptNo());
+		}
 		employeeMapper.updateEmployees(employee);
 		
 		HrAppointment hrAppointment = employeeMapper.getAllAppointment(form.getEmployeeNo());
-		BeanUtils.copyProperties(form, hrAppointment);
+		
+		//BeanUtils.copyProperties(form, hrAppointment);
+		
+		if (form.getType() != null) {
+			hrAppointment.setType(form.getType());
+		}
+		if (form.getAppointmentDate() != null) {
+			hrAppointment.setAppointmentDate(form.getAppointmentDate());
+		}
+		if (form.getContent() != null) {
+			hrAppointment.setContent(form.getContent());
+		}
+		if (form.getNote() != null) {
+			hrAppointment.setNote(form.getNote());
+		}
 		employeeMapper.updateAppointment(hrAppointment);
 	}
 
