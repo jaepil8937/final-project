@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.last.dto.CertificateDto;
@@ -74,6 +75,13 @@ public class HrController {
 		model.addAttribute("employees", employees);
 		return "hr/employee-list";
 	}
+	
+	@GetMapping("/detail.json")
+	@ResponseBody
+	public Employees detail(@RequestParam(name="empNo") int empNo) {
+		Employees employee = employeeService.getAllEmployeebyNo(empNo);
+		return employee;
+	}
 
 	@GetMapping("/personnel")	// 인사발령등록
 	public String personnel(@RequestParam(name = "sort", required = false, defaultValue = "") String sort,
@@ -124,7 +132,7 @@ public class HrController {
 			param.put("startDate", startDate);
 		}
 		if(!endDate.isBlank()) {
-			param.put("endDAte", endDate);
+			param.put("endDate", endDate);
 		}
 		
 		List<CertificateDto> certificate = employeeService.getAllcertificate(param);
@@ -132,6 +140,16 @@ public class HrController {
 		return "hr/certificate";
 	}
 
+	@GetMapping("/delete")		// 회원탈퇴
+	public String deleteform() {
+		return "hr/delete-form";
+	}
+	
+	@GetMapping("/password")		// 비밀번호 변경
+	public String passwordChangeForm() {
+		return "hr/password-form";
+	}
+	
 	@GetMapping("/re-register")		// 인사정보재등록
 	public String reregister() {
 		return "hr/re-register";
