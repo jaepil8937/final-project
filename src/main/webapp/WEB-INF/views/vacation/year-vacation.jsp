@@ -26,24 +26,23 @@
 			<div class="col-2 bg-dark mr35">
 				<%@ include file="../common/sidebar.jsp"%>
 			</div>
-			<div class="col">
+			<div class="col-10">
 				<div class="row mb-3">
-					<div class="col">
-						<h1 class="fs-10 p-4">근속연수별 휴가 설정</h1>
-					</div>
+					<h2>근속연수별 휴가 설정</h2>
 				</div>
-				<div class="row" style="margin-top: 60px; margin-bottom: 20px;">
-					<div class="col-6">
+				<hr>
+				<div class="row">
+					<div class="col-3 text-left mb-1">
 						<p>
-							<i class="bi bi-arrow-right-square-fill text-danger"></i> 근속연수별
-							휴가 설정
+							<i class="bi bi-arrow-right-square-fill text-danger"></i>
+							<strong>근속연수별 휴가 설정</strong>
 						</p>
 					</div>
-					<div class="col-6">
-						<div class="text-end">
+				</div>
+				<div class="row">
+					<div class="col text-end mb-3">
 							<button id="btn-open-add-row" class="btn btn-light">행추가</button>
 							<button id="btn-open-delete-row" class="btn btn-light">행삭제</button>
-						</div>
 					</div>
 				</div>
 				<div class="" style="overflow-y: scroll; height: 250px;">
