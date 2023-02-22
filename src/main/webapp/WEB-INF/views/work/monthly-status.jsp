@@ -24,7 +24,7 @@
 			<div class="row mb-3 p-4 bg-light">
 				<div>
 					<label class="form-label"><strong>근무년월: </strong></label>
-					<input type="month" id="month" name="month-work" value="" min="" max="2023-12-31" style="width: 130px">
+					<input type="month" id="currentMonth" name="month-work" value="" min="" max="2023-12-31" style="width: 130px">
 					<label class="form-label"><strong>사원번호: </strong></label>
 					<input type="text" style="text-align:center; width:100px" />
 					<label class="form-label"><strong>부서: </strong></label>
@@ -177,8 +177,9 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
 <script type="text/javascript">
-document.getElementById('currentMonth').value= 
-	new Date().toISOString().slice(0, 7);
+$(function() {
+	$("#currentMonth").val(new Date().toISOString().slice(0, 7));
+});
 </script>
 </body>
 </html>
