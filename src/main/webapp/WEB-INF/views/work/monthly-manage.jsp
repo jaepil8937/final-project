@@ -27,7 +27,7 @@
 		<div class="row mb-3 p-4 bg-light">
 			<div class="col-12">
 				<label for="month" style="padding-top: 12px;">근무년월: <input
-						   type="month" id="month" name="month-work" value="" min="" max="2023-12-31">
+						   type="month" id="currentMonth" name="month-work" value="" min="" max="2023-12-31">
 				</label>&emsp;
 					<%-- 부서, 직급, 호봉별로 조회하는 것도 나중에 가능하면 추가하기 --%>
 				<button type="button" class="btn btn-danger btn-sm">조회</button>
@@ -43,10 +43,6 @@
 		</div>
 		<div class="row">
 		<div class="col-6">
-			<p>
-				<i class="bi bi-exclamation-circle-fill"></i>
-				월 근태 정보를 확인하세요
-			</p>
 			<div class="card">
 				<div class="card-header" style="font-weight: bold;">월근태 사용정보</div>
 				<div class="card-body">
@@ -83,11 +79,9 @@
 					<div class="text-end">
 						<button class="btn btn-dark btn-sm" id="btn-close">마감</button>
 					</div>
-				</div>
-			</div>
-		</div>
-			<div class="col-6">
 				<p>
+					<i class="bi bi-exclamation-circle-fill"></i>
+					월 근태 정보를 확인하세요.<br>
 					<i class="bi bi-exclamation-circle-fill"></i>
 					총근무일수는 평일근무일수와 휴일근무일수를 합한 일수입니다.<br>
 					<i class="bi bi-exclamation-circle-fill"></i>
@@ -95,6 +89,10 @@
 					<i class="bi bi-exclamation-circle-fill"></i>
 					기타휴가일수는 연차 사용에 반영되지 않는 일수입니다.
 				</p>
+				</div>
+			</div>
+		</div>
+			<div class="col-6">
 				<div class="card">
 					<div class="card-header" style="font-weight: bold;">월근태일수</div>
 					<div class="card-body">
@@ -175,5 +173,9 @@
 </div>			
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+<script type="text/javascript">
+document.getElementById('currentMonth').value= 
+	new Date().toISOString().slice(0, 7);
+</script>
 </body>
 </html>

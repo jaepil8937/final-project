@@ -90,24 +90,44 @@ public class WorkController {
 			@RequestParam(name = "endDate", required = false, defaultValue = "") String endDate,
 			@RequestParam(name = "empNo", required = false, defaultValue = "0") int empNo,
 			@RequestParam(name = "positionNo", required = false, defaultValue = "0") int positionNo,
-			@RequestParam(name = "deptNo", required = false, defaultValue = "0") int deptNo, Model model) {
+			@RequestParam(name = "deptNo", required = false, defaultValue = "0") int deptNo, 
+			@RequestParam(name = "page", required = false, defaultValue = "1") int page, Model model) {
 		
-		List<WorkAdminAttendanceDto> adminAttendanceDtos = workService.getAllAdminAttendances(startDate, endDate, empNo, positionNo, deptNo);
-		model.addAttribute("adminAttendanceDtos", adminAttendanceDtos);
+		Map<String, Object> param = new HashMap<String, Object>();
+		if (!startDate.isBlank()) {
+			param.put("startDate", startDate);
+		}
+		if (!endDate.isBlank()) {
+			param.put("endDate", endDate);
+		}
+		if (empNo > 0) {
+			param.put("empNo", empNo);
+		}
+		if (positionNo > 0) {
+			param.put("positionNo", positionNo);
+		}
+		if (deptNo > 0) {
+			param.put("deptNo", deptNo);
+		}
+		param.put("page", page);
+		
+		Map<String, Object> result = workService.getAllAdminAttendances(param);
+		model.addAttribute("adminAttendanceDtos", result.get("adminAttendanceDtos"));
+		model.addAttribute("pagination", result.get("pagination"));
 		
 		return "work/daily-manage";
 	}
 	
-//	@GetMapping("/modify")
-//	public String modifyAttendanceForm(@RequestParam("no") int attendanceNo, Model model) {
-//		
-//		WorkAdminAttendanceDto dto = workService.getAdminAttendance(attendanceNo);
-//		WorkModifyForm form = new WorkModifyForm();
-//		BeanUtils.copyProperties(dto, form);
-//		model.addAttribute("modifyAttendance", form);
-//		
-//		return "work/modify-attendance";
-//	}
+	@GetMapping("/modify")
+	public String modifyAttendanceForm(@RequestParam("no") int attendanceNo, Model model) {
+		
+		WorkAdminAttendanceDto dto = workService.getAdminAttendance(attendanceNo);
+		WorkModifyForm form = new WorkModifyForm();
+		BeanUtils.copyProperties(dto, form);
+		model.addAttribute("modifyAttendance", form);
+		
+		return "work/modify-attendance";
+	}
 	
 //	@PostMapping("/modify")
 //	public String modifyAttendance(@RequestParam("no") int attendanceNo, 
