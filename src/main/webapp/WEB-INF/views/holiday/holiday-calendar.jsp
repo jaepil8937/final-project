@@ -58,12 +58,13 @@
 			<div class="col-2 bg-dark mr35">
 				<%@ include file="../common/sidebar.jsp"%>
 			</div>
-			<div class="col">
+			<div class="col-10">
 				<div class="row mb-3">
 					<div class="col">
-						<h1 class="fs-10 p-4">휴일달력</h1>
+						<h2>휴일달력</h2>
 					</div>
 				</div>
+				<hr>
 				<div class="row" style="margin-top: 24px;">
 					<div class="shadow-none p-3 mb-5 bg-light rounded">
 						<div class="container text-center">

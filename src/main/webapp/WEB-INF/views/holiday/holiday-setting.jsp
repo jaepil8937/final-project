@@ -30,12 +30,13 @@
 			<div class="col-2 bg-dark mr35">
 				<%@ include file="../common/sidebar.jsp"%>
 			</div>
-			<div class="col">
+			<div class="col-10">
 				<div class="row mb-3">
 					<div class="col">
-						<h1 class="fs-10 p-4">휴일일괄설정</h1>
+						<h2>휴일일괄설정</h2>
 					</div>
 				</div>
+				<hr>
 				<div class="row" style="margin-top: 24px;">
 					<div class="shadow-none p-3 mb-5 bg-light rounded">
 						<div class="container text-center">
@@ -55,8 +56,16 @@
 						</div>
 					</div>
 				</div>
-				<div class="row" style="margin-top: 60px;">
-					<div class="col-6">
+				<div class="row">
+					<div class="col-3 text-left">
+						<p>
+							<i class="bi bi-arrow-right-square-fill text-danger"></i>
+							<strong>휴일일괄설정</strong>
+						</p>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-6 text-left mb-1">
 						<p>
 							<button type="button" class="btn btn-light" style="float: left;">엑셀파일 불러오기</button>
 						</p>

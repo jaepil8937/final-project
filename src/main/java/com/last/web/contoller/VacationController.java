@@ -141,7 +141,6 @@ public class VacationController {
 	@PostMapping("/insert-request")
 	public String insertVacationRequest(@com.last.security.AuthenticatedUser LoginEmployee loginEmployee, VacationRequestForm form) {
 		form.setEmpNo(loginEmployee.getNo());
-		System.out.println(form.getEmpNo());
 		vacationService.insertVacationRequest(form);
 		
 		return "redirect:apply";

@@ -18,31 +18,23 @@
 		</div>
 		<div class="col-10">
 			<div class="row mb-3">
-				<div class="col">
-					<h1 class="fs-10 p-4" style="font-weight: bold;">월근태현황</h1>
-				</div>
+				<h2>월근태현황</h2>
 			</div>
 			<hr>
 			<div class="row mb-3 p-4 bg-light">
-				<div class="col-5">
-					<label for="month" style="padding-top: 12px;">근무년월: <input
-						   type="month" id="month" name="month-work" value="" min="" max="2023-12-31">
-					</label>
-				</div>
-				<div class="col-5">
-					<th>사원번호: <input type="number" min="1000" max="2000" /></th>&nbsp;
-					<th>
-						부서 : 
-						<select name="dept">
-						    <option value="">부서선택</option>
-						    <option value="개발팀">개발팀</option>
-						    <option value="영업팀">영업팀</option>
-						    <option value="인사팀">인사팀</option>
-						</select>
-					</th>
-				</div>
-				<div class="col-2 text-end">
-					<button type="button" class="btn btn-danger btn-sm">조회</button>
+				<div>
+					<label class="form-label"><strong>근무년월: </strong></label>
+					<input type="month" id="month" name="month-work" value="" min="" max="2023-12-31" style="width: 130px">
+					<label class="form-label"><strong>사원번호: </strong></label>
+					<input type="text" style="text-align:center; width:100px" />
+					<label class="form-label"><strong>부서: </strong></label>
+					<select name="dept" style="width: 100px">
+						<option value="">부서선택</option>
+						<option value="개발팀">개발팀</option>
+						<option value="영업팀">영업팀</option>
+						<option value="인사팀">인사팀</option>
+					</select>
+					<button type="button" class="btn btn-danger" style="float:right;" id="btn-search">조회</button>
 				</div>
 			</div>
 			<div class="row">
