@@ -3,7 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
-<html>
+<html lang="ko">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -23,47 +23,43 @@
 		</div>
 		<div class="col-10">
 			<div class="row mb-3">
-				<div class="col">
-					<h1 class="fs-10 p-4" style="font-weight: bold;">일일근태관리</h1>
-				</div>
+					<h2>일일근태관리</h2>
 			</div>
 			<hr>
-			<div class="row mb-3 p-4 bg-light">
-				<div class="col-12">
-					<form method="get" action="/work/dayadmin">
-					   	<b>근무일자: </b>
-						<input autocomplete="off" type="date" name="startDate" id="start-cal" value="${param.startDate }"> 
-						~ <input autocomplete="off" type="date" name="endDate" id="end-cal" value="${param.endDate }"><p></p><p>
-						<th>
-						<b>사원번호:</b>
-						<input autocomplete="off" type="number" name="empNo" min="1000" value="${param.empNo }"/></th>&nbsp;&nbsp;
-						
-						<th>
-							<b>직급:</b>
-							<select id="positionNo" name="positionNo" value="${param.positionNo }" >
-							    <option value="">선택하세요</option>
-							    <option value="100" ${param.positionNo eq '100' ? 'selected' : '' }>사원</option>
-							    <option value="101">대리</option>
-							    <option value="102">과장</option>
-							    <option value="103">차장</option>
-							    <option value="104">부장</option>
-							</select>
-						</th>&nbsp;&nbsp;
-						<th>
-							<b>부서:</b>
-							<select name="deptNo" value="${param.deptNo }">
-							    <option value="">선택하세요</option>
-							    <option value="100">영업부</option>
-							    <option value="101">개발부</option>
-							    <option value="102">인사부</option>
-							    <option value="103">총무부</option>
-							</select>
-						</th>&nbsp;
-						
-						<button type="submit" class="btn btn-danger btn-sm" style="float: end;">조회</button></p>
-					</form>
-				</div>
-			</div>
+			<form mehod="get" action="/work/dayadmin">
+				<div class="row mb-3 p-4 bg-light">
+					<div>
+						<label class="form-label"><strong>근무일자: </strong></label>
+						<input autocomplete="off" type="date" name="startDate" id="start-cal" value="${param.startDate }" style="text-align:center; width:130px" /> 
+						~ <input autocomplete="off" type="date" name="endDate" id="end-cal" value="${param.endDate }" style="text-align:center; width:130px" />
+						<label class="form-label"><strong>사원번호: </strong></label>
+						<input type="text" style="text-align:center; width:100px" />
+						<label class="form-label"><strong>직급: </strong></label>
+						<select id="positionNo" name="positionNo" style="width: 100px" >
+							<option value="">선택하세요</option>
+							<option value="100" ${param.positionNo eq '100' ? 'selected' : '' }>사원</option>
+					        <option value="101">대리</option>
+							<option value="102">과장</option>
+							<option value="103">대리</option>
+							<option value="104">대리</option>
+							<option value="105">대리</option>
+							<option value="106">대리</option>
+						</select>
+						<label class="form-label"><strong>부서: </strong></label>
+						<select name="deptNo" style="width: 100px" >
+							<option value="">선택하세요</option>
+							<option value="100">영업부</option>
+							<option value="101">개발부</option>
+							<option value="102">개발부</option>
+							<option value="103">개발부</option>
+							<option value="104">개발부</option>
+							<option value="105">개발부</option>
+							<option value="106">개발부</option>
+						</select>
+						<button type="submit" class="btn btn-danger" style="float:right;" id="btn-search">조회</button>
+					</div>
+				</div>	
+			</form>
 			<div class="row">
 				<div class="col-3 text-left mb-1">
 					<p>

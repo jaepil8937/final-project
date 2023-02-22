@@ -23,9 +23,7 @@
 		</div>
 		<div class="col-10">
 			<div class="row mb-3">
-				<div class="col">
-					<h1 class="fs-10 p-4" style="font-weight: bold;">일일근태등록</h1>
-				</div>
+				<h2>일일근태등록</h2>
 			</div>
 			<hr>
 			<div class="row mb-3 p-4 bg-light">
