@@ -1,16 +1,20 @@
 package com.last.web.contoller;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.last.dto.HolidayEvent;
 import com.last.dto.OvertimeHistoryDto;
 import com.last.service.HolidayService;
 import com.last.vo.Holiday;
@@ -51,11 +55,18 @@ public class HolidayController {
 		return "holiday/holiday-setting";
 	}
 	
+	// 휴일달력
 	@GetMapping("/calendar")
-	public String calendar() {
+	public String calendar() {		
 		return "holiday/holiday-calendar";
 	}
 	
-	// 휴일달력 일정 등록
+	// 달력 휴일 정보 조회
+	@GetMapping("/days")
+	@ResponseBody
+	public List<HolidayEvent> holidays(@RequestParam("startDate") String startDate, @RequestParam("endDate") String endDate) {
+		return holidayService.getHolidayEvents(startDate, endDate);
+	}
+	
 	
 }

@@ -45,12 +45,26 @@
   	</select>
   	
 
-  	<!-- <insert id="insertholidays" parameterType="Holiday">
+  	<insert id="insertholidays" parameterType="Holiday">
   		insert into holidays
   			(base_date, name, date_type, holiday_type)
   		values
-  			(#{baseDate),#{name},#{dateType},#{holidayType})
-  	</insert> -->
+  			(#{baseDate}, #{name}, #{dateType}, #{holidayType})
+  	</insert>
+  	
+  	<!-- 
+  		달력 휴일 정보 조회
+  	 -->
+  	<select id="getHolidays"  resultType="Holiday">
+  		select 
+  			base_date baseDate,
+  			name,
+  			date_type dateType,
+  			holiday_type holidayType
+  		from holidays
+  		where
+  			base_date between #{startDate} and #{endDate}
+  	</select>
   	
 
 </mapper>
