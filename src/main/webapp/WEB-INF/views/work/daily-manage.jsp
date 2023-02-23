@@ -33,15 +33,15 @@
 						<input autocomplete="off" type="date" name="startDate" id="start-cal" value="${param.startDate }" style="text-align:center; width:130px" /> 
 						~ <input autocomplete="off" type="date" name="endDate" id="end-cal" value="${param.endDate }" style="text-align:center; width:130px" />
 						<label class="form-label"><strong>사원번호: </strong></label>
-						<input type="text" style="text-align:center; width:100px" />
+						<input type="text" name="empNo" value="${param.empNo }" style="text-align:center; width:100px" />
 						<label class="form-label"><strong>직급: </strong></label>
 						<select id="positionNo" name="positionNo" style="width: 100px" >
 							<option value="">선택하세요</option>
 							<option value="100" ${param.positionNo eq '100' ? 'selected' : '' }>사원</option>
-					        <option value="101">대리</option>
-							<option value="102">과장</option>
-							<option value="103">대리</option>
-							<option value="104">대리</option>
+					        <option value="101" ${param.positionNo eq '101' ? 'selected' : '' }>대리</option>
+							<option value="102" ${param.positionNo eq '102' ? 'selected' : '' }>과장</option>
+							<option value="103" ${param.positionNo eq '103' ? 'selected' : '' }>차장</option>
+							<option value="104" ${param.positionNo eq '104' ? 'selected' : '' }>부장</option>
 							<option value="105">대리</option>
 							<option value="106">대리</option>
 						</select>
@@ -69,12 +69,6 @@
 					</p>
 				</div>
 			</div>
-			<p>
-				<i class="bi bi-exclamation-circle-fill"></i>
-				출근시간, 퇴근시간 변경 후 재계산된 시간을 확인하세요.<br>
-				<i class="bi bi-exclamation-circle-fill"></i>
-				출근시간, 퇴근시간 입력 포맷은 시간(2자리), 분(2자리)와 ':'를 같이 입력하시기 바랍니다.
-			</p>
 		<form>
 		<div class="row" style="width: 100%; overflow: auto;">
 			<table class="table table-bordered table-hover table-striped table-sm" id="table-daily-attendance" style="white-space: nowrap;">
@@ -132,7 +126,7 @@
 				      <td>${adminAttendance.holidayWorkTime }시간</td>
 				      <td>${adminAttendance.overtimeWorkedTimes }시간</td>
 				      <td>${adminAttendance.nightWorkedTimes }시간</td>
-				      <td><button type="button" class="btn btn-dark btn-sm" data-att-no="${adminAttendance.no }" >수정</button></td>
+				      <td><button type="button" class="btn btn-outline-dark btn-sm" data-att-no="${adminAttendance.no }" >수정</button></td>
 				    </tr>
 				   </c:forEach>
 				  </c:otherwise>
@@ -165,33 +159,46 @@
 				</nav>
 			</c:if>
 		</form>
+		<div class="row mb-2 bg-light m-2">
+		  	<hr>
+		  	<div class="col">
+				<p>
+					<i class="bi bi-exclamation-circle-fill"></i>
+					출근시간, 퇴근시간 변경 후 재계산된 시간을 확인하세요.<br>
+					<i class="bi bi-exclamation-circle-fill"></i>
+					출근시간, 퇴근시간 입력 포맷은 시간(2자리), 분(2자리)와 ':'를 같이 입력하시기 바랍니다.
+				</p>
+		  	</div>
 		  </div>
+	   </div>
 	 </div>
 	</div>
+	
+	<!-- 근태시간 수정 모달창 -->
 	<div class="modal" tabindex="-1" id="modal-modify-hour">
 	  <div class="modal-dialog">
 	    <div class="modal-content">
+	      <form id="form-hour" method="post" action="modify">
 	      <div class="modal-header">
 	        <h5 class="modal-title">출근/퇴근 시간 수정</h5>
 	        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 	      </div>
 	      <div class="modal-body">
-	       	<form id="form-hour" method="post" action="modify">
-	       		<input type="hidden" name="no" value="data-att-no" />
+	       		<input type="hidden" name="no" value="${adminAttendance.no }" />
 	       		<div class="mb-2">
 	       			<label class="form-label">출근시간</label>
-	       			<input type="text" class="form-control" name="startTime" vaue="">
+	       			<input type="text" class="form-control" name="startTime" value="">
 	       		</div>
 	       		<div class="mb-2">
 	       			<label class="form-label">퇴근시간</label>
-	       			<input type="text" class="form-control" name="endTime">
+	       			<input type="text" class="form-control" name="endTime" value="">
 	       		</div>
-	       	</form>
 	      </div>
 	      <div class="modal-footer">
 	        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
-	        <button type="button" class="btn btn-primary" id="btn-modify-hour">수정</button>
+	        <button type="submit" class="btn btn-primary" id="btn-modify-hour">수정</button>
 	      </div>
+	      </form>
 	    </div>
 	  </div>
 	</div>	
@@ -201,21 +208,23 @@
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script type="text/javascript">
+$(function() {
+	let hourModifyModal = new bootstrap.Modal("#modal-modify-hour");
 
-let hourModifyModal = new bootstrap.Modal("#modal-modify-hour");
-
-$("#table-daily-attendance tbody button").click(function() {
+	$("#table-daily-attendance tbody button").click(function() {
 	
-	// 근태번호 출근시간, 퇴근 시간을 읽어서 모달창의 히든, 출근시간, 퇴근시간 필드에 표시한다.
-	var no = $(this).attr("data-att-no");
-	var startTime = $(this).closest("tr").find("td:eq(6)").text();
-	var endTime = $(this).closest("tr").find("td:eq(7)").text();
-	
-	
-	
-	hourModifyModal.show();
-	
-})
+		// 근태번호 출근시간, 퇴근 시간을 읽어서 모달창의 히든, 출근시간, 퇴근시간 필드에 표시한다.
+		var no = $(this).attr("data-att-no");
+		var startTime = $(this).closest("tr").find("td:eq(6)").text();
+		var endTime = $(this).closest("tr").find("td:eq(7)").text();
+		
+		$("#form-hour :input[name=no]").val(no);
+		$("#form-hour :input[name=startTime]").val(startTime);
+		$("#form-hour :input[name=endTime]").val(endTime);
+		
+		hourModifyModal.show();
+	});
+});
 </script>
 </body>
 </html>
