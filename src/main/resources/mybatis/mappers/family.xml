@@ -47,10 +47,10 @@
 	<!-- 
 		void deleteFamilyByNo(int familyNo);
 	 -->
-	<delete id="deleteFamily" parameterType="int">
+	<delete id="deleteFamilyByNo" parameterType="int">
 		delete from
 			employee_families
 		where
-			family_no = #{familyNo}
+			family_no = #{value}
 	</delete>
 </mapper>

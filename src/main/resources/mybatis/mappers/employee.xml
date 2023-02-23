@@ -341,7 +341,14 @@
             where
                 a.position_no = b.position_no
                 and a.dept_no = c.dept_no
+                <if test="status != null">
+                	and a.employee_status = #{status}
+                </if>
+            order by
+				employee_no asc
 	</select>
+	
+
 
 	<insert id="insertEmployees" parameterType="Employee">
 			insert into Employees
@@ -380,6 +387,8 @@
 			employees
 		where
 			employee_no = #{value}
+		order by
+			employee_no asc
 	</select>
 	
 </mapper>

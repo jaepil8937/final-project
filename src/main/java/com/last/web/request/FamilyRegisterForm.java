@@ -8,7 +8,7 @@ import lombok.Setter;
 public class FamilyRegisterForm {
 
 	
-	private int employeeNo;
+	
 	private String name;
 	private String relations;
 	private String cohabitation;

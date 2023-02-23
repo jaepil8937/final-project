@@ -75,9 +75,9 @@
 							</tr>
 						</thead>
 						<tbody>
-							<c:if test="${not empty employees }">
+							<c:if test="${not empty employees }" >
 								<c:forEach var="emp" items="${employees }">
-									<tr data-emp-no="${emp.employeeNo }">
+									<tr data-emp-no="${emp.employeeNo }" >
 										<td>${emp.employeeNo} </td>
 										<td>${emp.name} </td>
 										<td>${emp.mobileTel} </td>
@@ -90,15 +90,12 @@
 					</table>
 				</div>
 			</div>
-		
+		<form id="form-register" class="border bg-light p-3" method="post" action="re-register" >
 			<div class="row mb-3">
 				<div class="col-3">
 					<i class="bi bi-arrow-right-square-fill text-danger"></i> <strong>사원번호등록</strong>
 				</div>
 			</div>
-			
-			
-			
 			<div class="row mb-3">
 				<div class="col-12">
 					<table class="table table-bordered">
@@ -109,28 +106,24 @@
 							<col width="20%"/>
 							<col width="20%"/>
 						</colgroup>
-						<tbody>
-							
+						<tbody>			
 							<tr>
 								<th class="table-secondary text-end">사원번호</th>
-								<td colsapn="1"><input type="text" class="form-control form-control-sm"  style="width: 130px;"/></td>
+								<td colsapn="1"><input type="text" class="form-control form-control-sm"  style="width: 130px;" name="employeeNo" /></td>
 								<th class="table-secondary text-end">성명</th>
-								<td ><input type="text" class="form-control form-control-sm"  style="width: 130px;"/></td>
+								<td ><input type="text" class="form-control form-control-sm"  style="width: 130px;" name="name" /></td>
 								<th class="table-secondary text-end">핸드폰</th>
-								<td ><input type="text" class="form-control form-control-sm"  style="width: 130px;"/></td>
+								<td ><input type="text" class="form-control form-control-sm"  style="width: 130px;" name="mobileTel" /></td>
 							</tr>
 							<tr>
 								<th class="table-secondary text-end">외부이메일</th>
-								<td><input type="text" class="form-control form-control-sm"  style="width: 130px;"/></td>
+								<td><input type="text" class="form-control form-control-sm"  style="width: 130px;" name="extEmail" /></td>
 								<th class="table-secondary text-end">생년월일</th>
-								<td colspan="3"><input type="text" class="form-control form-control-sm"  style="width: 130px;"/></td>	
-							</tr>
-							
+								<td colspan="3"><input type="text" class="form-control form-control-sm"  style="width: 130px;" name="birthday"/></td>	
+							</tr>	
 						</tbody>
 					</table>
-					
 					<div class="row mb-2 bg-light m-2">
-						
 						<div class="col-10">
 						<p>
 							<i class="bi bi-exclamation-circle-fill"></i>
@@ -147,16 +140,15 @@
 						</p>
 						</div>
 					</div>
-					
 					<div class="row p-3">
-				<div class="col">
-					<button type="submit" class="btn btn-dark" style="float:right;" id="">저장</button>
-					<a href="" class="btn btn-outline-primary" style="float:right; margin-right: 4px;" id="dupli">사원번호중복확인</a>
+						<div class="col">
+							<button type="submit" class="btn btn-dark" style="float:right;" id="">저장</button>
+							<a href="" class="btn btn-outline-primary" style="float:right; margin-right: 4px;" id="dupli">사원번호중복확인</a>
+						</div>
+					</div>	
 				</div>
 			</div>
-					
-				</div>
-			</div>
+		</form>
 		</div>
 	</div>
 </div>

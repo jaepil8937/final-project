@@ -44,7 +44,7 @@
 					<button type="button" class="btn btn-outline-dark btn-sm" id="btn-del">행삭제</button>
 					<button type="button" class="btn btn-outline-dark btn-sm" id="btn-add" data-bs-toggle="modal" data-bs-target="#exampleModal">행추가</button>
 				</div>
-			<form id="form-register" method="post" action="education">
+			<form id="form-educations" method="get" action="/hr/education/del">
 				<div class="row">
 					<div class="col-12">
 						<table class="table table-bordered  table-sm" id="edu-table">
@@ -67,14 +67,14 @@
 							<tbody>
 								<c:forEach var="edu" items="${educations }">
 									<tr class="text-center align-middle">
-										<th><input type="checkbox" name="eduNo" value="${edu.employeeNo}"></th>
+										<th><input type="checkbox" name="eduNo" value="${edu.educationNo}"></th>
 										<td><fmt:formatDate value="${edu.admissionDate}" pattern="yyyy년 M월 d일"/> </td>
 										<td>${edu.schoolName} </td>
 										<td>${edu.magerDepartment} </td>
 										<td> 
-											<input class="form-check-input" type="radio" name="graduationType-${edu.educationNo}" value="Y"  ${edu.graduationType eq 'Y' ? 'checked' : '' } >
+											<input class="form-check-input" type="radio" name="graduationType-${edu.educationNo}" value="Y" disabled ${edu.graduationType eq 'Y' ? 'checked' : '' } >
 											<label class="form-check-label" for="flexRadioDefault1">졸업</label>
-											<input class="form-check-input" type="radio" name="graduationType-${edu.educationNo}" value="N"  ${edu.graduationType eq 'N' ? 'checked' : '' }>
+											<input class="form-check-input" type="radio" name="graduationType-${edu.educationNo}" value="N" disabled  ${edu.graduationType eq 'N' ? 'checked' : '' }>
 		  									<label class="form-check-label" for="flexRadioDefault2">재학중</label>
 										</td>
 									</tr>
@@ -206,14 +206,17 @@ if (checkboxLen == checkedCheckboxLen) {
 			alert("체크박스를 선택하세요");
 			return;
 		}
-	
+		
+		$("#form-educations").trigger("submit")
+		
+		/*
 		$checkboxes.each(function(index, checkbox) {
 			let eduNo = $(checkbox).val();
 			if (eduNo != "0") {
 				
 			}
 			$(checkbox).closest("tr").remove();
-		});
+		}); */
 	})
 
 </script>

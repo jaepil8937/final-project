@@ -11,12 +11,9 @@ import lombok.Setter;
 @Setter
 public class EducationRegisterForm {
 
-	
-	private int employeeNo;
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date admissionDate;
 	private String schoolName;
 	private String magerDepartment;
 	private String graduationType;
-	private int educationNo;
 }
