@@ -9,7 +9,7 @@
 			(#{employeeNo}, #{admissionDate}, #{schoolName}, #{magerDepartment},  #{graduationType}, educations_seq.nextval)
 	</insert>
 	
-	<select id="getAllEducations" resultType="Education">
+	<select id="getAllEducations" parameterType="int" resultType="Education">
 		select
 			employee_no 		as employeeNo,
 			admission_date		as admissionDate,
@@ -19,6 +19,34 @@
 			education_no		as educationNo
 		from
 			employee_educations
+		where
+			employee_no = #{value}
 	</select>
 	
+	
+	<!-- 
+	void updateEducation(Educations educations);
+	 -->
+	<update id="updateEducation" parameterType="Education">
+		update
+			employee_educations
+		set
+			admission_date = #{admissionDate},
+			school_name = #{schoolName},
+			mager_department = #{magerDepartment},
+			graduation_type = #{graduationType},
+			education_no = #{educationNo}
+		where
+			education_no = #{educationNo}
+	</update>
+
+	<!-- 
+		void deleteEducationByNo(int educationNo);
+	 -->
+	<delete id="deleteEducation" parameterType="int">
+		delete from
+			employee_educations
+		where
+			education_no = #{educationNo}
+	</delete>
 </mapper>

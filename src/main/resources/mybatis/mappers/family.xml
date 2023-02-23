@@ -9,7 +9,11 @@
 			(#{employeeNo}, #{name}, #{relations}, #{cohabitation},  #{dependents}, #{handicapped}, families_seq.nextval)
 	</insert>
 	
-	<select id="getAllFamily" resultType="Family">
+	
+	<!--  
+		List<Family> getAllFamily(int empNo);
+	-->
+	<select id="getAllFamily" parameterType="int" resultType="Family">
 		select
 			employee_no 		as employeeNo,
 			name				as name,
@@ -20,6 +24,33 @@
 			family_no			as familyNo
 		from
 			employee_families
+		where
+			employee_no = #{value}
 	</select>
 	
+	<!-- 
+	void updateFamily(Family family);
+	 -->
+	<update id="updateFamily" parameterType="Family">
+		update
+			employee_families
+		set
+			name = #{name},
+			relations = #{relations},
+			cohabitation = #{cohabitation},
+			dependents = #{dependents},
+			handicapped = #{handicapped}
+		where
+			family_no = #{familyNo}
+	</update>
+
+	<!-- 
+		void deleteFamilyByNo(int familyNo);
+	 -->
+	<delete id="deleteFamily" parameterType="int">
+		delete from
+			employee_families
+		where
+			family_no = #{familyNo}
+	</delete>
 </mapper>

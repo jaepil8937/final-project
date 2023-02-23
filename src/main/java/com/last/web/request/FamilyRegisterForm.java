@@ -14,5 +14,4 @@ public class FamilyRegisterForm {
 	private String cohabitation;
 	private String dependents;
 	private String handicapped;
-	private int familyNo;
 }

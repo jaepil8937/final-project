@@ -42,82 +42,111 @@
 			<div class="row">
 				<div class="col text-end mb-3">
 					<button type="button" class="btn btn-outline-dark btn-sm" id="btn-del">행삭제</button>
-					<button type="button" class="btn btn-outline-dark btn-sm"  id="btn-add">행추가</button>
+					<button type="button" class="btn btn-outline-dark btn-sm" id="btn-add" data-bs-toggle="modal" data-bs-target="#exampleModal">행추가</button>
 				</div>
-			</div>
-			
-			<form id="form-register" method="post" action="education" name="delete">
-			<div class="row">
-				<div class="col-12">
-					<table class="table table-bordered  table-sm" id="edu-table">
-						<colgroup>
-							<col width="10%">
-							<col width="22.5%">
-							<col width="22.5%">
-							<col width="22.5%">
-							<col width="22.5%">
-						</colgroup>
-						<thead>
-							<tr class="text-center">
-								<th><input type="checkbox" id="checkbox-all-toggle" onchange="toggleAllCheckUncheck()" ></th>
-								<th>입학년월</th>
-								<th>학교명</th>
-								<th>전공학과</th>
-								<th>졸업구분</th>	
-							</tr>
-						</thead>
-						<tbody>
-							<c:forEach var="edu" items="${educations }">
-								<tr class="text-center align-middle">
-									<th><input type="checkbox" name="eduNo" value="${edu.employeeNo}"></th>
-									<td><fmt:formatDate value="${edu.admissionDate}" pattern="yyyy년 M월 d일"/> </td>
-									<td>${edu.schoolName} </td>
-									<td>${edu.magerDepartment} </td>
-									<td> 
-										<input class="form-check-input" type="radio" name="graduationType-${edu.employeeNo}" value="Y"  ${edu.graduationType eq 'Y' ? 'checked' : '' } >
-										<label class="form-check-label" for="flexRadioDefault1">졸업</label>
-										<input class="form-check-input" type="radio" name="graduationType-${edu.employeeNo}" value="N"  ${edu.graduationType eq 'N' ? 'checked' : '' }>
-	  									<label class="form-check-label" for="flexRadioDefault2">재학중</label>
-									</td>
-								</tr>
-							</c:forEach>
-							<tr class="text-center align-middle">
-								<td>
-									<input type="checkbox" name="eduNo" value="0">
-								</td>
-								<td>
-									<input type="date" id="start-date"  class="form-control" name="admissionDate" >
-								</td>
-								<td>
-									<input type="text" class="form-control" name="schoolName" >
-								</td>
-								<td>
-									<input type="text" class="form-control" name="magerDepartment" >
-								</td>
-								<td>
-									<input class="form-check-input" type="radio" name="graduationType" value="Y"  id="flexRadioDefault1" >
-									<label class="form-check-label" for="flexRadioDefault1">졸업</label>
-									<input class="form-check-input" type="radio" name="graduationType" value="N" id="flexRadioDefault1" >
-	  								<label class="form-check-label" for="flexRadioDefault2">재학중</label>
-								</td>	
-							</tr>										
-						</tbody>
-					</table>
-				</div>
-			</div>
-			
+			<form id="form-register" method="post" action="education">
 				<div class="row">
-					<div class="col text-end">
-						<button type="submit" class="btn btn-dark" style="float:right;" >저장</button>
+					<div class="col-12">
+						<table class="table table-bordered  table-sm" id="edu-table">
+							<colgroup>
+								<col width="10%">
+								<col width="22.5%">
+								<col width="22.5%">
+								<col width="22.5%">
+								<col width="22.5%">
+							</colgroup>
+							<thead>
+								<tr class="text-center">
+									<th><input type="checkbox" id="checkbox-all-toggle" onchange="toggleAllCheckUncheck()" ></th>
+									<th>입학년월</th>
+									<th>학교명</th>
+									<th>전공학과</th>
+									<th>졸업구분</th>	
+								</tr>
+							</thead>
+							<tbody>
+								<c:forEach var="edu" items="${educations }">
+									<tr class="text-center align-middle">
+										<th><input type="checkbox" name="eduNo" value="${edu.employeeNo}"></th>
+										<td><fmt:formatDate value="${edu.admissionDate}" pattern="yyyy년 M월 d일"/> </td>
+										<td>${edu.schoolName} </td>
+										<td>${edu.magerDepartment} </td>
+										<td> 
+											<input class="form-check-input" type="radio" name="graduationType-${edu.educationNo}" value="Y"  ${edu.graduationType eq 'Y' ? 'checked' : '' } >
+											<label class="form-check-label" for="flexRadioDefault1">졸업</label>
+											<input class="form-check-input" type="radio" name="graduationType-${edu.educationNo}" value="N"  ${edu.graduationType eq 'N' ? 'checked' : '' }>
+		  									<label class="form-check-label" for="flexRadioDefault2">재학중</label>
+										</td>
+									</tr>
+								</c:forEach>						
+							</tbody>
+						</table>
 					</div>
 				</div>
 			</form>
+			</div>
 		</div>
 	</div>
+</div>		
+
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">학력정보 등록</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+      	<form class="p-3 bg-light border" id="form-edu" method="post" action="education">
+      		<div class="mb-2">
+      			<label class="form-label">입학년월</label>
+      			<input type="date" id="start-date"  class="form-control" name="admissionDate" >
+      		</div>
+      		<div class="mb-2">
+      			<label class="form-label">학교명</label>
+      			<input type="text" class="form-control" name="schoolName" >
+      		</div>
+      		<div class="mb-2">
+      			<label class="form-label">전공학과</label>
+      			<input type="text" class="form-control" name="magerDepartment" >
+      		</div>
+      		<div class="mb-2">
+      			<label class="form-label">졸업여부</label>
+      			<div>
+      				<div class="form-check form-check-inline">
+					  <input class="form-check-input" type="radio" name="graduationType"  value="Y" checked>
+					  <label class="form-check-label" for="inlineRadio1">졸업</label>
+					</div>
+					<div class="form-check form-check-inline">
+					  <input class="form-check-input" type="radio" name="graduationType"  value="N">
+					  <label class="form-check-label" for="inlineRadio2">재학중</label>
+					</div>
+      			</div>
+      		</div>
+      	</form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
+        <button type="button" class="btn btn-primary" id="btn-add-edu">저장</button>
+      </div>
+    </div>
+  </div>
 </div>				
+
+
+		
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
 <script type="text/javascript">
+
+$("#btn-add-edu").click(function() {
+	
+	$("#form-edu").trigger('submit')
+});
+
+
 function toggleAllCheckUncheck() {
 	// 전체 선택/해제 체크박스의 체크상태를 조회하다.
 	var el = document.querySelector("#checkbox-all-toggle");
@@ -159,42 +188,7 @@ if (checkboxLen == checkedCheckboxLen) {
 	}
 })
 
-$(function() {
-	var count = 0;
-	$("#btn-add").click(function() {
-		
-		var eduRowsLength = $("#edu-table tbody tr").length;
-		if (eduRowsLength >= 10) {
-			alert("학력정보 입력필드는 최대 10개까지만 추가 가능합니다.");
-			return;
-		}
-		
-		count++;
-		
-		var htmlContent = `
-			<tr class="text-center align-middle">
-			<td>
-				<input type="checkbox" name="eduNo">
-			</td>
-			<td>
-				<input type="date" id="start-date"  class="form-control">
-			</td>
-			<td>
-				<input type="text" class="form-control">
-			</td>
-			<td>
-				<input type="text" class="form-control">
-			</td>
-			<td>
-				<input class="form-check-input" type="radio" name="graduationType-\${count}" value="Y"  id="flexRadioDefault1" >
-				<label class="form-check-label" for="flexRadioDefault1">졸업</label>
-				<input class="form-check-input" type="radio" name="graduationType-\${count}" value="N" id="flexRadioDefault1" >
-					<label class="form-check-label" for="flexRadioDefault2">재학중</label>
-			</td>	
-		</tr>		
-		`;
-		$("#edu-table tbody").append(htmlContent);
-	});
+
 	
 	// <div id="box-career"> 내부에 미래에 추가된 삭제버튼을 클릭했을 실행될 이벤트 핸들러 등록하기
 	$("#box-career").on("click", '.btn-danger', function() {
@@ -204,8 +198,23 @@ $(function() {
 		// .closest('선택자')는 조상 엘리먼트 중에서 지정한 선택자에 해당하는 가장 가까운 조상엘리먼트가 포함된 jQuery객체를 반환한다.
 		$(this).closest('.row').remove();
 	});
-})
 
+	
+	$("#btn-del").click(function() {
+		let $checkboxes = $("#edu-table tbody :checkbox:checked");
+		if ($checkboxes.length == 0) {
+			alert("체크박스를 선택하세요");
+			return;
+		}
+	
+		$checkboxes.each(function(index, checkbox) {
+			let eduNo = $(checkbox).val();
+			if (eduNo != "0") {
+				
+			}
+			$(checkbox).closest("tr").remove();
+		});
+	})
 
 </script>
 </body>
