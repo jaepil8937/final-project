@@ -151,13 +151,23 @@ public class HrController {
 	}
 	
 	@GetMapping("/re-register")		// 인사정보재등록
-	public String reregister() {
+	public String reregister(@AuthenticatedUser LoginEmployee LoginEmployee, Model model) {
+		
+		if ("ROLE_ADMIN".equals(LoginEmployee.getRoleName())) {
+			List<Employees> employees = employeeService.getAllEmployee();
+			model.addAttribute("employees", employees);
+		} else {
+			Employees employees = employeeService.getEmployeesByNo(LoginEmployee.getNo());
+			model.addAttribute("emp", employees);
+		}
+		
 		return "hr/re-register";
 	}
 
 	@GetMapping("/family")			// 가족사항
 	public String family(@AuthenticatedUser LoginEmployee LoginEmployee, Model model) {
 		List<Family> familys = familyService.getAllFamily(LoginEmployee.getNo());
+		model.addAttribute("familys", familys);
 		return "hr/family";
 	}
 
@@ -217,17 +227,18 @@ public class HrController {
 
 
 	@PostMapping("/education")
-	public String education(EducationRegisterForm educationRegisterForm) {
-		
+	public String education(@AuthenticatedUser LoginEmployee LoginEmployee, EducationRegisterForm educationRegisterForm) {
+		// 저장작업
 	
-		return "hr/education";
+	
+		return "redirect:/hr/education";
 	}
 
 	@PostMapping("/family")
 	public String family(FamilyRegisterForm familyRegisterForm) {
 		
 	
-		return "hr/family";
+		return "redirect:/hr/family";
 	}
 }
 

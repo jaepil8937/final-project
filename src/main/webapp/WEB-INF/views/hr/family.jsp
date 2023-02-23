@@ -44,9 +44,9 @@
 			<div class="row" >
 					<div class="col text-end mb-3">
 						<button type="button" class="btn btn-outline-dark btn-sm" id="btn-del">행삭제</button>
-						<button type="button" class="btn btn-outline-dark btn-sm" id="btn-add">행추가</button>
+						<button type="button" class="btn btn-outline-dark btn-sm" id="btn-add" data-bs-toggle="modal" data-bs-target="#exampleModal">행추가</button>
 					</div>
-			<form id="form-register" method="post" action="family">
+			  <form id="form-register" method="post" action="family">
 				<div class="row">
 					<table class="table table-bordered table-hover table-striped table-sm" id="table-family">
 						<colgroup>
@@ -64,39 +64,25 @@
 								<th>가족관계</th>
 								<th>동거여부</th>
 								<th>부양가족</th>
-								<th>장애인</th>
+								<th>장애인여부</th>
 							</tr>
 						</thead>
 						<tbody>
-							<tr class="text-center align-middle">
-								<td>
-									<input type="checkbox" name="familyNo">
-								</td>
-								<td>
-									<input type="text"  class="form-control">
-								</td>
-								<td>
-									<input type="text" class="form-control">
-								</td>
-								<td>
-									<input type="checkbox"  >
-								</td>
-								<td>
-									<input type="checkbox" >
-								</td>
-								<td>
-									<input type="checkbox" >
-								</td>
-							</tr>										
+							<c:forEach var="fam" items="${familys }">
+								<tr class="text-center align-middle">
+									<th><input type="checkbox" name="familyNo" value="${fam.employeeNo}"></th>
+									<td><input type="text"  class="form-control" name="name" value= "${fam.name}" ></td>
+									<td><input type="text" class="form-control" name="relations" value="${fam.relations}"> </td>
+									<td><input type="checkbox" name="cohabitation" value="${fam.cohabitation}"> </td>
+									<td><input type="checkbox" name="dependents" value="${fam.dependents }"></td>
+									<td><input type="checkbox" name="handicapped" value="${fam.handicapped }"></td>
+								</tr>
+							</c:forEach>						
 						</tbody>
 					</table>
 				</div>
-					<div class="row">
-						<div class="col text-end">
-							<button type="submit" class="btn btn-dark" style="float:right;" >저장</button>
-						</div>
-					</div>	
-					</form>	
+					
+				  </form>	
 				</div>
 			</div>
 		</div>
@@ -104,90 +90,129 @@
 </div>
 			
 		
-				
+
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">가족 등록</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+      	<form class="p-3 bg-light border" id="form-family" method="post" action="family">
+      		<div class="mb-2">
+      			<label class="form-label">이름</label>
+      			<input type="text" class="form-control" name="name" >
+      		</div>
+      		<div class="mb-2">
+      			<label class="form-label">가족관계</label>
+      			<input type="text" class="form-control" name="name" >
+      		</div>
+      		<div class="mb-2">
+      			<label class="form-label">동거여부</label>
+      			<div>
+      				<div class="form-check form-check-inline">
+					  <input class="form-check-input" type="radio" name="cohabitation"  value="Y" checked>
+					  <label class="form-check-label" for="inlineRadio1">예</label>
+					</div>
+					<div class="form-check form-check-inline">
+					  <input class="form-check-input" type="radio" name="cohabitation"  value="N">
+					  <label class="form-check-label" for="inlineRadio2">아니오</label>
+					</div>
+      			</div>
+      		</div>
+      		<div class="mb-2">
+      			<label class="form-label">부양가족</label>
+      			<div>
+      				<div class="form-check form-check-inline">
+					  <input class="form-check-input" type="radio" name="dependents"  value="Y" checked>
+					  <label class="form-check-label" for="inlineRadio1">예</label>
+					</div>
+					<div class="form-check form-check-inline">
+					  <input class="form-check-input" type="radio" name="dependents"  value="N">
+					  <label class="form-check-label" for="inlineRadio2">아니오</label>
+					</div>
+      			</div>
+      		</div>
+      		<div class="mb-2">
+      			<label class="form-label">장애인여부</label>
+      			<div>
+      				<div class="form-check form-check-inline">
+					  <input class="form-check-input" type="radio" name="handicapped"  value="Y">
+					  <label class="form-check-label" for="inlineRadio1">예</label>
+					</div>
+					<div class="form-check form-check-inline">
+					  <input class="form-check-input" type="radio" name="handicapped"  value="N" checked>
+					  <label class="form-check-label" for="inlineRadio2">아니오</label>
+					</div>
+      			</div>
+      		</div>
+      	</form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">취소</button>
+        <button type="button" class="btn btn-primary" id="btn-add-family">저장</button>
+      </div>
+    </div>
+  </div>
+</div>				
 				
 				
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
 <script type="text/javascript">
 
-function toggleAllCheckUncheck() {
-	// 전체 선택/해제 체크박스의 체크상태를 조회하다.
-	var el = document.querySelector("#checkbox-all-toggle");
-	var currentChecked = el.checked;
-	
-	// 모든 보유기술 체크박스의 체크상태를 위에서 조회한 전체 선택/해제 체크박스의 체크상태와 같은 상태로 만든다.
-	var collection = document.querySelectorAll('[name=familyNo]');
-	for (var index = 0; index < collection.length; index++) {
-		var el = collection[index];
-		el.checked = currentChecked;
-	}
-}
-function checkAll() {
-	// 체크박스 전체 선택하기
-	var collection = document.querySelectorAll('[name=familyNo]');
-	for (var index = 0; index < collection.length; index++) {
-		var el = collection[index];
-		el.checked = true;
-	}
-}
-function uncheckAll() {
-	// 체크박스 전체 선택하기
-	var collection = document.querySelectorAll('[name=familyNo]');
-	for (var index = 0; index < collection.length; index++) {
-		var el = collection[index];
-		el.checked = false;
-	}
-}
-
-$("#table-family tbody").on('change', ":checkbox[name=familyNo]", function() {
-	let checkboxLen = $("#table-family tbody :checkbox[name=familyNo]").length;
-	let checkedCheckboxLen = $("#table-family tbody :checkbox[name=familyNo]:checked").length;
-
-
-if (checkboxLen == checkedCheckboxLen) {
-		$("#checkbox-all-toggle").prop("checked", true);
-	} else {
-		$("#checkbox-all-toggle").prop("checked", false);
-	}
-})
-
-
-
-$(function() {
-	$("#btn-add").click(function() {
+	$("#btn-add-family").click(function() {
 		
-		var familyRowsLength = $("#table-family tbody tr").length;
-		if (familyRowsLength >= 10) {
-			alert("가족사항 입력필드는 최대 10개까지만 추가 가능합니다.");
-			return;
-		}
-		
-		var htmlContent = `
-			<tr class="text-center align-middle">
-			<td>
-				<input type="checkbox" name="familyNo">
-			</td>
-			<td>
-				<input type="text"  class="form-control">
-			</td>
-			<td>
-				<input type="text" class="form-control">
-			</td>
-			<td>
-				<input type="checkbox" >
-			</td>
-			<td>
-				<input type="checkbox" >
-			</td>
-			<td>
-				<input type="checkbox" >
-			</td>
-		</tr>				
-		`;
-		$("#table-family tbody").append(htmlContent);
+		$("#form-family").trigger('submit')
 	});
+
 	
+	function toggleAllCheckUncheck() {
+		// 전체 선택/해제 체크박스의 체크상태를 조회하다.
+		var el = document.querySelector("#checkbox-all-toggle");
+		var currentChecked = el.checked;
+		
+		// 모든 보유기술 체크박스의 체크상태를 위에서 조회한 전체 선택/해제 체크박스의 체크상태와 같은 상태로 만든다.
+		var collection = document.querySelectorAll('[name=familyNo]');
+		for (var index = 0; index < collection.length; index++) {
+			var el = collection[index];
+			el.checked = currentChecked;
+		}
+	}
+	
+	function checkAll() {
+		// 체크박스 전체 선택하기
+		var collection = document.querySelectorAll('[name=familyNo]');
+		for (var index = 0; index < collection.length; index++) {
+			var el = collection[index];
+			el.checked = true;
+		}
+	}
+	
+	function uncheckAll() {
+		// 체크박스 전체 선택하기
+		var collection = document.querySelectorAll('[name=familyNo]');
+		for (var index = 0; index < collection.length; index++) {
+			var el = collection[index];
+			el.checked = false;
+		}
+	}
+
+	$("#table-family tbody").on('change', ":checkbox[name=familyNo]", function() {
+		let checkboxLen = $("#table-family tbody :checkbox[name=familyNo]").length;
+		let checkedCheckboxLen = $("#table-family tbody :checkbox[name=familyNo]:checked").length;
+	
+	
+		if (checkboxLen == checkedCheckboxLen) {
+			$("#checkbox-all-toggle").prop("checked", true);
+		} else {
+			$("#checkbox-all-toggle").prop("checked", false);
+		}
+	})
+
 	// <div id="box-career"> 내부에 미래에 추가된 삭제버튼을 클릭했을 실행될 이벤트 핸들러 등록하기
 	$("#box-career").on("click", '.btn-danger', function() {
 		// this는 클릭이벤트가 발생할 엘리먼트다.
@@ -196,7 +221,24 @@ $(function() {
 		// .closest('선택자')는 조상 엘리먼트 중에서 지정한 선택자에 해당하는 가장 가까운 조상엘리먼트가 포함된 jQuery객체를 반환한다.
 		$(this).closest('.row').remove();
 	});
-})
+
+
+
+	$("#btn-del").click(function() {
+		let $checkboxes = $("#table-family tbody :checkbox[name=familyNo]:checked");
+		if ($checkboxes.length == 0) {
+			alert("체크박스를 선택하세요");
+			return;
+		}
+	
+		$checkboxes.each(function(index, checkbox) {
+			let familyNo = $(checkbox).val();
+			if (familyNo != "0") {
+				
+			}
+			$(checkbox).closest("tr").remove();
+		});
+	})
 </script>
 </body>
 </html>

@@ -11,4 +11,6 @@ public interface EducationMapper {
 
 	void insertEducation(Educations educations);
 	List<Educations> getAllEducations(int empNo);
+	void updateEducation(Educations educations);
+	void deleteEducationByNo(int educationNo);
 }

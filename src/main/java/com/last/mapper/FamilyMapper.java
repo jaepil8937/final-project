@@ -12,4 +12,6 @@ public interface FamilyMapper {
 
 	void insertFamily(Family family);
 	List<Family> getAllFamily(int empNo);
+	void updateFamily(Family family);
+	void deleteFamilyByNo(int familyNo);
 }
