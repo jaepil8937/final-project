@@ -90,8 +90,8 @@ public class EmployeeService {
 	public List<Department> getAllDepartment() {
 		return employeeMapper.getAllDepartment();
 	}
-	public List<Employees> getAllEmployee() {
-		return employeeMapper.getAllEmployee();
+	public List<Employees> getAllEmployee(String status) {
+		return employeeMapper.getAllEmployee(status);
 	}
 	public List<Grades> getAllGrade() {
 		return employeeMapper.getAllGrade();
@@ -105,11 +105,13 @@ public class EmployeeService {
 		employeeMapper.insertEmployees(employees);
 	}
 
-	
-	 
-	
 	public Employees getEmployeesByNo(int empNo) {
 		return employeeMapper.getEmployeesByNo(empNo);
+	}
+	
+	public void updateEmployee(EmployeeRegisterForm form) {
+		Employees employee = new Employees();
+		BeanUtils.copyProperties(form, employee);
 	}
 
 	

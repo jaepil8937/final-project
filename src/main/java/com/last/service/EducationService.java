@@ -21,12 +21,22 @@ public class EducationService {
 		return educationMapper.getAllEducations(empNo);
 	}
 	
-	public void insertEducation(Date admissionDate, String schoolName, String magerDepartment, String graduationType) {
+	public void insertEducation(int empNo, EducationRegisterForm form) {
 		Educations educations = new Educations();
-		educations.setAdmissionDate(admissionDate);
-		educations.setSchoolName(schoolName);
-		educations.setMagerDepartment(magerDepartment);
-		educations.setGraduationType(graduationType);
+		educations.setAdmissionDate(form.getAdmissionDate());
+		educations.setSchoolName(form.getSchoolName());
+		educations.setMagerDepartment(form.getMagerDepartment());
+		educations.setGraduationType(form.getGraduationType());
+		educations.setEmployeeNo(empNo);
+		
+		educationMapper.insertEducation(educations);
+	}
+	
+	public void deleteEducations(List<Integer> educationNos) {
+		for (int educationNo : educationNos) {
+			educationMapper.deleteEducationByNo(educationNo);
+			
+		}
 	}
 
 }

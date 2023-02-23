@@ -154,7 +154,7 @@ public class HrController {
 	public String reregister(@AuthenticatedUser LoginEmployee LoginEmployee, Model model) {
 		
 		if ("ROLE_ADMIN".equals(LoginEmployee.getRoleName())) {
-			List<Employees> employees = employeeService.getAllEmployee();
+			List<Employees> employees = employeeService.getAllEmployee("휴직");
 			model.addAttribute("employees", employees);
 		} else {
 			Employees employees = employeeService.getEmployeesByNo(LoginEmployee.getNo());
@@ -164,6 +164,9 @@ public class HrController {
 		return "hr/re-register";
 	}
 
+
+	
+	
 	@GetMapping("/family")			// 가족사항
 	public String family(@AuthenticatedUser LoginEmployee LoginEmployee, Model model) {
 		List<Family> familys = familyService.getAllFamily(LoginEmployee.getNo());
@@ -192,7 +195,7 @@ public class HrController {
 		List<Grades> grades = employeeService.getAllGrade();
 
 		if ("ROLE_ADMIN".equals(LoginEmployee.getRoleName())) {
-			List<Employees> employees = employeeService.getAllEmployee();
+			List<Employees> employees = employeeService.getAllEmployee(null);
 			model.addAttribute("employees", employees);
 		} else {
 			Employees employees = employeeService.getEmployeesByNo(LoginEmployee.getNo());
@@ -227,18 +230,37 @@ public class HrController {
 
 
 	@PostMapping("/education")
-	public String education(@AuthenticatedUser LoginEmployee LoginEmployee, EducationRegisterForm educationRegisterForm) {
+	public String education(@AuthenticatedUser LoginEmployee loginEmployee, EducationRegisterForm educationRegisterForm) {
 		// 저장작업
 	
+		educationService.insertEducation(loginEmployee.getNo(), educationRegisterForm) ; 
+		return "redirect:/hr/education";
+	}
 	
+	@GetMapping("/education/del")
+	public String deleteEducation(@RequestParam("eduNo") List<Integer> educationNos) {
+		educationService.deleteEducations(educationNos) ; 
 		return "redirect:/hr/education";
 	}
 
 	@PostMapping("/family")
-	public String family(FamilyRegisterForm familyRegisterForm) {
+	public String family(@AuthenticatedUser LoginEmployee loginEmployee, FamilyRegisterForm familyRegisterForm) {
 		
-	
+		familyService.insertFamily(loginEmployee.getNo(), familyRegisterForm);
 		return "redirect:/hr/family";
+	}
+	
+	@GetMapping("/family/del")
+	public String deleteFamily(@RequestParam("familyNo") List<Integer> familyNos) {
+		familyService.deleteFamily(familyNos) ; 
+		return "redirect:/hr/family";
+	}
+	
+	@PostMapping("/register/update")
+	public String register(@ModelAttribute("Employee") EmployeeRegisterForm employeeRegisterForm) {
+		employeeService.updateEmployee(employeeRegisterForm);
+		
+		return "redirect:/hr/register" ;
 	}
 }
 

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.last.mapper.EducationMapper">
-	
-	<insert id="insertEducations" parameterType="Education">
+	            
+	<insert id="insertEducation" parameterType="Education">
 		insert into employee_educations
 			(employee_no, admission_date, school_name, mager_department, graduation_type, education_no)
 		values
@@ -21,6 +21,8 @@
 			employee_educations
 		where
 			employee_no = #{value}
+		order by
+			admission_date asc
 	</select>
 	
 	
@@ -43,10 +45,10 @@
 	<!-- 
 		void deleteEducationByNo(int educationNo);
 	 -->
-	<delete id="deleteEducation" parameterType="int">
+	<delete id="deleteEducationByNo" parameterType="int">
 		delete from
 			employee_educations
 		where
-			education_no = #{educationNo}
+			education_no = #{value}
 	</delete>
 </mapper>

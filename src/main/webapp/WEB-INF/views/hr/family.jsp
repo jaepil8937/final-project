@@ -40,54 +40,52 @@
 					</div>
 				</div>
 			</div>
-			
 			<div class="row" >
 					<div class="col text-end mb-3">
 						<button type="button" class="btn btn-outline-dark btn-sm" id="btn-del">행삭제</button>
 						<button type="button" class="btn btn-outline-dark btn-sm" id="btn-add" data-bs-toggle="modal" data-bs-target="#exampleModal">행추가</button>
 					</div>
-			  <form id="form-register" method="post" action="family">
-				<div class="row">
-					<table class="table table-bordered table-hover table-striped table-sm" id="table-family">
-						<colgroup>
-							<col width="10%">
-							<col width="18%">
-							<col width="18%">
-							<col width="18%">
-							<col width="18%">
-							<col width="18%">
-						</colgroup>
-						<thead>
-							<tr class="text-center">
-								<th><input type="checkbox" id="checkbox-all-toggle" onchange="toggleAllCheckUncheck()" ></th>
-								<th>성명</th>
-								<th>가족관계</th>
-								<th>동거여부</th>
-								<th>부양가족</th>
-								<th>장애인여부</th>
-							</tr>
-						</thead>
-						<tbody>
-							<c:forEach var="fam" items="${familys }">
-								<tr class="text-center align-middle">
-									<th><input type="checkbox" name="familyNo" value="${fam.employeeNo}"></th>
-									<td><input type="text"  class="form-control" name="name" value= "${fam.name}" ></td>
-									<td><input type="text" class="form-control" name="relations" value="${fam.relations}"> </td>
-									<td><input type="checkbox" name="cohabitation" value="${fam.cohabitation}"> </td>
-									<td><input type="checkbox" name="dependents" value="${fam.dependents }"></td>
-									<td><input type="checkbox" name="handicapped" value="${fam.handicapped }"></td>
-								</tr>
-							</c:forEach>						
-						</tbody>
-					</table>
-				</div>
-					
-				  </form>	
-				</div>
+			  		<form id="form-familys" method="get" action="/hr/family/del">
+						<div class="row">
+							<table class="table table-bordered table-hover table-striped table-sm" id="table-family">
+								<colgroup>
+									<col width="10%">
+									<col width="18%">
+									<col width="18%">
+									<col width="18%">
+									<col width="18%">
+									<col width="18%">
+								</colgroup>
+								<thead>
+									<tr class="text-center">
+										<th><input type="checkbox" id="checkbox-all-toggle" onchange="toggleAllCheckUncheck()" ></th>
+										<th>성명</th>
+										<th>가족관계</th>
+										<th>동거여부</th>
+										<th>부양가족</th>
+										<th>장애인여부</th>
+									</tr>
+								</thead>
+							<tbody>
+								<c:forEach var="fam" items="${familys }">
+										<tr class="text-center align-middle">
+											<th><input type="checkbox" name="familyNo" value="${fam.familyNo}"></th>
+											<td><input type="text"  class="form-control" name="name" value= "${fam.name}" ></td>
+											<td><input type="text" class="form-control" name="relations" value="${fam.relations}"> </td>
+											<td><input type="checkbox" name="cohabitation" value="${fam.cohabitation}" disabled ${fam.cohabitation eq 'Y' ? 'checked' : '' }> </td>
+											<td><input type="checkbox" name="dependents" value="${fam.dependents }" disabled ${fam.dependents eq 'Y' ? 'checked' : '' }></td>
+											<td><input type="checkbox" name="handicapped" value="${fam.handicapped }" disabled ${fam.handicapped eq 'Y' ? 'checked' : '' }></td>
+										</tr>
+								</c:forEach>						
+							</tbody>
+						</table>
+					</div>	
+				</form>	
 			</div>
 		</div>
 	</div>
 </div>
+
 			
 		
 
@@ -108,7 +106,7 @@
       		</div>
       		<div class="mb-2">
       			<label class="form-label">가족관계</label>
-      			<input type="text" class="form-control" name="name" >
+      			<input type="text" class="form-control" name="relations" >
       		</div>
       		<div class="mb-2">
       			<label class="form-label">동거여부</label>
@@ -170,6 +168,7 @@
 	});
 
 	
+	
 	function toggleAllCheckUncheck() {
 		// 전체 선택/해제 체크박스의 체크상태를 조회하다.
 		var el = document.querySelector("#checkbox-all-toggle");
@@ -230,14 +229,17 @@
 			alert("체크박스를 선택하세요");
 			return;
 		}
+		
+		$("#form-familys").trigger("submit")
 	
+		/*
 		$checkboxes.each(function(index, checkbox) {
 			let familyNo = $(checkbox).val();
 			if (familyNo != "0") {
 				
 			}
 			$(checkbox).closest("tr").remove();
-		});
+		}); */
 	})
 </script>
 </body>
