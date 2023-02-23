@@ -40,7 +40,7 @@
 					<form method="get" action="/work/searchAttendances" name="calform">
 						<input autocomplete="off" type="date" name="startDate" id="start-cal" value="${param.startDate }">
 						~ <input autocomplete="off" type="date" name="endDate" id="end-cal" value="${param.endDate }">
-						<button type="submit" class="btn btn-danger btn-sm">조회</button>
+						<button type="submit" id="search-btn" class="btn btn-danger btn-sm">조회</button>
 					</form>
 				</div>
 			</div>
@@ -54,12 +54,6 @@
 			</div>
 		<form>
 		<div class="row" style="width: 100%; overflow: auto;">
-			<p>
-				<i class="bi bi-exclamation-circle-fill"></i>
-				최근 7일동안의 근태정보를 확인하세요.<br>
-				<i class="bi bi-exclamation-circle-fill"></i>
-				근무시간, 연장, 야간, 지각, 조퇴시간이 계산되지 않는 경우 관리자에게 문의하세요.
-			</p>
 			<table class="table table-bordered table-hover table-striped table-sm" id="table-day-info" style="white-space: nowrap;">
 				<colgroup>
 					<col width="16%">
@@ -108,6 +102,17 @@
 			  </tbody>
 			</table>
 		  </div>
+		  <div class="row mb-2 bg-light m-2">
+		  	<hr>
+		  	<div class="col">
+				<p>
+					<i class="bi bi-exclamation-circle-fill"></i>
+					최근 7일동안의 근태정보를 확인하세요.<br>
+					<i class="bi bi-exclamation-circle-fill"></i>
+					근무시간, 연장, 야간, 지각, 조퇴시간이 계산되지 않는 경우 관리자에게 문의하세요.
+				</p>
+		  	</div>
+		  </div>
 		</form>
 	 </div>
 	</div>
@@ -127,7 +132,7 @@
 			alert("퇴근완료");
 		}
 	}
-	
+
 </script>
 </body>
 </html>

@@ -9,6 +9,33 @@
 			(attendances_seq.nextval, #{empNo}, sysdate, to_char(sysdate, 'hh24:mi'), #{attendancesType})
 	</insert>
 	
+	<update id="endAttendance" parameterType="Attendance">
+		update 
+			employee_attendances
+		set
+			attendances_type = #{attendancesType},
+			end_work_time = to_char(sysdate, 'hh24:mi'),
+			worked_times = #{workedTimes},
+			overtime_worked_times = #{overtimeWorkedTimes},
+			night_worked_times = #{nightWorkedTimes}
+		where
+			attendance_no = #{no}
+	</update>
+	
+	<update id="updateAttendance" parameterType="AdminAttendanceDto">
+		update
+			employee_attendances
+		set
+			attendances_type = #{attendancesType},
+			start_work_time = #{startWorkTime},
+			end_work_time = #{endWorkTime},
+			worked_times = #{workedTimes},
+			overtime_worked_times = #{overtimeWorkedTimes},
+			night_worked_times = #{nightWorkedTimes}
+		where
+			attendance_no = #{no}
+	</update>
+	
 	<select id="getWeeklyAttendancesByEmpNo" parameterType="int" resultType="Attendance">
 		select
 			attendance_no		as no,
@@ -44,6 +71,25 @@
 			employee_attendances
 		where
 			employee_no = #{value}
+		order by
+			working_date desc
+	</select>
+	
+	<select id="getAttendanceByNo" parameterType="int" resultType="AdminAttendanceDto">
+		select
+			attendance_no		as no,
+			employee_no 		as empNo, 
+			working_date 		as workingDate, 
+			start_work_time 	as startWorkTime,
+			end_work_time 		as endWorkTime,
+			worked_times		as workedTimes,
+			holiday_work_time	as holidayWorkTime,
+			overtime_worked_times	as overtimeWorkedTimes,
+			night_worked_times	as nightWorkedTimes
+		from
+			employee_attendances
+		where
+			attendance_no = #{value}
 		order by
 			working_date desc
 	</select>
@@ -112,28 +158,6 @@
 		
 	</select>
 	
-	<update id="endAttendance" parameterType="Attendance">
-		update 
-			employee_attendances
-		set
-			attendances_type = #{attendancesType},
-			end_work_time = to_char(sysdate, 'hh24:mi'),
-			worked_times = #{workedTimes},
-			overtime_worked_times = #{overtimeWorkedTimes},
-			night_worked_times = #{nightWorkedTimes}
-		where
-			attendance_no = #{no}
-	</update>
-	
-	<update id="updateAttendances" parameterType="Attendance">
-		update
-			employee_attendances
-		set
-			start_work_time = #{startWorkTime}
-			end_work_time = #{endWorkTime}
-		where
-			attendance_no = #{value}
-	</update>
 	
 	<select id="getAdminAttendancesByEmpNo" parameterType="int" resultType="AdminAttendanceDto">
 		select
@@ -195,10 +219,6 @@
 			(int empNo, @Param("startDate") String startDate, @Param("endDate") String endDate, 
 						@Param("position") String  position, @Param("dept") String dept);
 	 -->
-	 
-				<!--  
-				and A.working_date between #{startDate} and to_date(#{endDate}, 'yyyy-mm-dd') + 1
-				-->
 	 <select id="getAllAdminAttendancesByOptions" parameterType="map" resultType="AdminAttendanceDto">
 		select *
 		from (

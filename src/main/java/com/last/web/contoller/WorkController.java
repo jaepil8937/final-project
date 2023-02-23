@@ -84,7 +84,7 @@ public class WorkController {
 		return "work/daily-attendance";	
 	}
 	
-	// 관리자일일근태페이지 기본화면
+	// 관리자일일근태페이지
 	@GetMapping("/dayadmin")
 	public String getAdminAttendanceList(@RequestParam(name = "startDate", required = false, defaultValue = "") String startDate, 
 			@RequestParam(name = "endDate", required = false, defaultValue = "") String endDate,
@@ -118,27 +118,17 @@ public class WorkController {
 		return "work/daily-manage";
 	}
 	
-	@GetMapping("/modify")
-	public String modifyAttendanceForm(@RequestParam("no") int attendanceNo, Model model) {
+	// 근무시간수정
+	@PostMapping("/modify")
+	public String modifyAttendance(@RequestParam("no") int attendanceNo, 
+			@RequestParam("startTime") String startTime,
+			@RequestParam("endTime") String endTime) {
 		
-		WorkAdminAttendanceDto dto = workService.getAdminAttendance(attendanceNo);
-		WorkModifyForm form = new WorkModifyForm();
-		BeanUtils.copyProperties(dto, form);
-		model.addAttribute("modifyAttendance", form);
+		workService.updateAttendance(attendanceNo, startTime, endTime);
 		
-		return "work/modify-attendance";
+		return "redirect:/work/dayadmin";
 	}
-	
-//	@PostMapping("/modify")
-//	public String modifyAttendance(@RequestParam("no") int attendanceNo, 
-//			@RequestParam("startWorkTime") String startTime,
-//			@RequestParam("endWorkTime") String endTime) {
-//		
-//		workService.updateAttendance(attendanceNo, startTime, endTime);
-//		
-//		return "redirect:/work/dayadmin";
-//	}
-	
+
 	// 월근태현황
 	@GetMapping("/monthstatus")
 	public String monthStatus() {
