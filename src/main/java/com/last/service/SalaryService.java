@@ -92,7 +92,7 @@ public class SalaryService {
 			param.put("opt", opt);
 			param.put("keyword", keyword);			
 		}
-		List<SalaryDto> salaryDtoLists = salaryMapper.getSalaryLists(param);
+		List<SalaryDto> salaryDtoLists = salaryMapper.getSalaryHistories(param);
 		
 		return salaryDtoLists;
 	}
@@ -115,7 +115,7 @@ public class SalaryService {
 		if (!basemonth.isBlank()) {
 			param.put("basemonth", basemonth);			
 		}
-		List<SalaryDto> salaryDtoLists = salaryMapper.getSalaryLists(param);
+		List<SalaryDto> salaryDtoLists = salaryMapper.getSalaryHistories(param);
 		
 		return salaryDtoLists;
 	}
