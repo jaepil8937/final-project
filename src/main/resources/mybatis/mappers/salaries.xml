@@ -272,6 +272,67 @@
 	 	group by B.EMPLOYEE_NO, B.EMPLOYEE_NAME
 	</select>
 	
-	<!-- 기간별 급여현황 - 급여상세내역 -->
+	<!-- 국민연금, 건강보험, 고용보험 기본정보 -->
+	<select id="getSalaryDtoInfos" parameterType="map" resultType="salaryDto">
+		select
+				A.EMPLOYEE_NO  		as employeeNo,
+				B.EMPLOYEE_NAME		as name,
+				C.DEPT_NAME			as deptName
+		from
+				SALARY_HISTORIES A , EMPLOYEES B, DEPARTMENTS C
+		<where>
+				A.EMPLOYEE_NO = B.EMPLOYEE_NO 
+			and
+			    B.DEPT_NO = C.DEPT_NO	
+	 		<if test="baseYear != null">
+		 		and	A.PAY_DATE like '%' || #{baseYear} || '%'
+	 		</if>
+			<if test="opt != null and keyword != null">		
+		 	<choose>
+		 		<when test="opt == 'empNo'">
+		 			and A.EMPLOYEE_NO like '%' || #{keyword} || '%'
+		 		</when>
+		 		<when test="opt == 'empName'">
+		 			and B.EMPLOYEE_NAME	like '%' || #{keyword} || '%'
+		 		</when>
+		 		<when test="opt == 'dept'">
+		 			and C.DEPT_NAME	like '%' || #{keyword} || '%'
+		 		</when>
+		 	</choose>
+		 	</if>	
+	 	</where>
+		group by A.EMPLOYEE_NO, B.EMPLOYEE_NAME, C.DEPT_NAME
+	</select>
 	 
+	<!-- 국민연금, 건강보험, 고용보험 납입내역 조회  -->
+	<select id="getContributionDetails" parameterType="map" resultType="contributionDto">
+		select
+	 		A.EMPLOYEE_NO					as employeeNo,
+	 		A.BASE_SALARY_TTL     			as baseSalary,
+	 		A.OVERTIME_SALARY_TTL			as overtimeSalary,
+	 		A.NIGHT_SALARY_TTL				as nightSalary,
+	 		A.HOLIDAY_SALARY_TTL			as holidaySalary,
+	 		A.REWARD_SALARY_TTL				as rewardSalary,
+	 		A.BUSINESS_SALARY_TTL			as businessSalary,
+	 		A.PENSION_TTL					as pension,
+	 		A.HEALTH_INSURANCE_TTL			as healthInsurance,
+	 		A.LONGTERM_INSURANCE_TTL		as longtermInsurance,
+	 		A.EMPLOYMENT_INSURANCE_TTL		as employmentInsurance,
+	 		A.PAY_DATE						as payDate,
+	 		B.PENSION_EMPLOYEE_INSURANCE 	as pensionEmployeeRate,
+	 		B.HEALTH_EMPLOYEE_INSURANCE		as healthEmployeeRate,
+	 		B.LONGTERM_EMPLOYEE_INSURANCE	as longtermEmployeeRate,
+	 		B.EMPLOYMENT_EMPLOYEE_INSURANCE as employmentEmployeeRate
+	 	from
+	 		SALARY_HISTORIES A, INSURANCE_CONTRIBUTIONS B
+	 	where
+	 		A.EMPLOYEE_NO = #{empNo}	
+		and	
+			A.PAY_DATE like '%' || #{baseYear} || '%'
+		and
+			B.BASE_YEAR = #{baseYear}	
+		order by 
+			A.PAY_DATE asc	
+	</select>
+	
 </mapper>

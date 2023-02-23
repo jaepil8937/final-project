@@ -58,18 +58,19 @@
 			</div>	
 			<div class="row mt-3">
 				<div class="col-12">
-					<form id="salary-search" class="row row-cols-sm-auto g-3 align-items-center float-end" action="/salary/salarycheck">
-						<label>기준년도</label><input type="number" min="1900" max="2099" step="1" value="2023"  size="10"/> &nbsp; 
+					<form id="salary-search" class="row row-cols-sm-auto g-3 align-items-center float-end" action="/salary/health-insurance">
+						<label>기준년도</label>
+						<select name="baseYear" style="height: 36px"></select> &nbsp; 
 						<div class="col-12">
 							<select class="form-select" name="opt">
-								<option value="empName">성명</option>
-								<option value="empNo">사원번호</option>
-								<option value="dept">부서</option>
+								<option value="empName" ${param.opt == 'empName' ? 'selected' : '' }>성명</option>
+								<option value="empNo" ${param.opt == 'empNo' ? 'selected' : '' }>사원번호</option>
+								<option value="dept" ${param.opt == 'dept' ? 'selected' : '' }>부서</option>
 							</select>
 						</div>
 						<div class="col-12">
-							<input type="text" class="form-control" size="10" name="keyword" value=""/>
-						</div>	
+							<input type="text" class="form-control" size="10" name="keyword" value="${param.keyword }"/>
+						</div>		
 						<div class="col-12">
 							<button type="submit" class="btn btn-danger btn-sm" id="btn-search">검색</button>
 						</div>
@@ -96,66 +97,22 @@
 								</tr>
 							</thead>
 							<tbody>
-								<tr>
-									<td>1000</td>
-									<td></td>
-									<td></td>
-								</tr>
-								<tr>
-									<td>1001</td>
-									<td></td>
-									<td></td>
-								</tr>
-								<tr>
-									<td>1002</td>
-									<td></td>
-									<td></td>
-								</tr>
-								<tr>
-									<td>1003</td>
-									<td></td>
-									<td></td>
-								</tr>
-								<tr>
-									<td>1004</td>
-									<td></td>
-									<td></td>
-								</tr>
-								<tr>
-									<td>1004</td>
-									<td></td>
-									<td></td>
-								</tr>
-								<tr>
-									<td>1004</td>
-									<td></td>
-									<td></td>
-								</tr>
-								<tr>
-									<td>1004</td>
-									<td></td>
-									<td></td>
-								</tr>
-								<tr>
-									<td>1004</td>
-									<td></td>
-									<td></td>
-								</tr>
-								<tr>
-									<td>1004</td>
-									<td></td>
-									<td></td>
-								</tr>
-								<tr>
-									<td>1004</td>
-									<td></td>
-									<td></td>
-								</tr>
-								<tr>
-									<td>1004</td>
-									<td></td>
-									<td></td>
-								</tr>
+								<c:choose>
+									<c:when test="${empty SalaryDtos}">
+										<tr>
+											<td colspan="3" class="text-center">해당 내역이 없습니다.</td> 
+										</tr>	
+									</c:when>	
+									<c:otherwise>
+										<c:forEach var="dto" items="${SalaryDtos }">
+											<tr>
+												<td>${dto.employeeNo }</td>
+												<td><a href="" data-employee-no="${dto.employeeNo }" class="text-decoration-none"> ${dto.name }</a></td>
+												<td>${dto.deptName }</td>
+											</tr>
+										</c:forEach>
+									</c:otherwise>
+								</c:choose>			
 							</tbody>
 						</table>
 					</div>
@@ -165,7 +122,6 @@
 						<table>
 							<thead>
 								<tr>
-									<th>No</th>
 									<th>납입일자</th>
 									<th>기준소득월액</th>
 									<th>요율(%)</th>
@@ -173,90 +129,6 @@
 								</tr>
 							</thead>
 							<tbody>
-								<tr>
-									<td>1</td>
-									<td></td>
-									<td></td>
-									<td></td>
-									<td></td>
-								</tr>
-								<tr>
-									<td>2</td>
-									<td></td>
-									<td></td>
-									<td></td>
-									<td></td>
-								</tr>
-								<tr>
-									<td>3</td>
-									<td></td>
-									<td></td>
-									<td></td>
-									<td></td>
-								</tr>
-								<tr>
-									<td>4</td>
-									<td></td>
-									<td></td>
-									<td></td>
-									<td></td>
-								</tr>
-								<tr>
-									<td>5</td>
-									<td></td>
-									<td></td>
-									<td></td>
-									<td></td>
-								</tr>
-								<tr>
-									<td>5</td>
-									<td></td>
-									<td></td>
-									<td></td>
-									<td></td>
-								</tr>
-								<tr>
-									<td>5</td>
-									<td></td>
-									<td></td>
-									<td></td>
-									<td></td>
-								</tr>
-								<tr>
-									<td>5</td>
-									<td></td>
-									<td></td>
-									<td></td>
-									<td></td>
-								</tr>
-								<tr>
-									<td>5</td>
-									<td></td>
-									<td></td>
-									<td></td>
-									<td></td>
-								</tr>
-								<tr>
-									<td>5</td>
-									<td></td>
-									<td></td>
-									<td></td>
-									<td></td>
-								</tr>
-								<tr>
-									<td>5</td>
-									<td></td>
-									<td></td>
-									<td></td>
-									<td></td>
-								</tr>
-								<tr>
-									<td>5</td>
-									<td></td>
-									<td></td>
-									<td></td>
-									<td></td>
-								</tr>
 							</tbody>
 						</table>
 					</div>
@@ -267,5 +139,51 @@
 </div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+<script>
+$(function() {
+	
+	// 기준년도 선택
+	let currentYear = new Date().getFullYear();
+	
+	for (let count=0; count<10; count++) {
+		
+		let option = `<option value="\${currentYear}"> \${currentYear}년</option>`
+		$("select[name=baseYear]").append(option);
+		currentYear--;
+	}
+	
+	
+	$("#employee-info a[data-employee-no]").click(function(event) {
+		
+		let $tbody = $("#payment-detail table tbody").empty();
+		
+		event.preventDefault();
+		$(this).closest("tr").addClass("table-primary")
+			   .siblings().removeClass("table-primary");
+		let no = $(this).attr('data-employee-no');
+		let year = $("select[name=baseYear]").val();
+		$.ajax({
+			type : 'GET',
+			url: '/salary/contributionDetail',
+			data: {empNo : no, baseYear : year},
+			dataType: 'json',
+			success: function(healthArray) {
+				$.each(healthArray, function(index, health) {
+					let tr = `
+						<tr>
+							<td>\${health.payDate}</td>
+							<td>\${health.baseIncome.toLocaleString()}</td>
+							<td>\${health.healthEmployeeRate.toLocaleString()}</td>
+							<td>\${health.healthInsurance.toLocaleString()}</td>
+						</tr>
+					`;
+					$tbody.append(tr);
+				})
+			}
+		})
+		
+	})
+})
+</script>
 </body>
 </html>

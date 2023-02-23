@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.last.dto.SalaryBookDto;
 import com.last.dto.SalaryDto;
+import com.last.dto.SalaryContribution;
 import com.last.dto.SalaryPeriodDto;
 import com.last.dto.SalaryPeriodSumDto;
 import com.last.dto.SalaryTableDto;
@@ -134,22 +135,48 @@ public class SalaryController {
 		return "salary/salaryperiod";
 	}
 	
-	@GetMapping("/national-pension")      // 국민연금 조회
-	public String nationalPension() {
+	@GetMapping("/national-pension")      // 국민연금 기본정보
+	public String getNationalPension(@RequestParam(name="baseYear", required=false) String baseYear, 
+								  @RequestParam(name="opt", required=false) String opt, 
+								  @RequestParam(name="keyword", required=false) String keyword, Model model) {
+		if (baseYear != null) {
+			List<SalaryDto> salaryDtoInfos = salaryService.getSalaryDtoInfos(baseYear, opt, keyword);
+			model.addAttribute("SalaryDtos", salaryDtoInfos);
+		}	
 		
 		return "salary/national-pension";
 	}
 	
-	@GetMapping("/health-insurance")      // 건강보험 조회
-	public String healthInsurance() {
+	@GetMapping("/health-insurance")      // 건강보험 기본정보
+	public String healthInsurance(@RequestParam(name="baseYear", required=false) String baseYear, 
+								  @RequestParam(name="opt", required=false) String opt, 
+								  @RequestParam(name="keyword", required=false) String keyword, Model model) {
+		if (baseYear != null) {
+			List<SalaryDto> salaryDtoInfos = salaryService.getSalaryDtoInfos(baseYear, opt, keyword);
+			model.addAttribute("SalaryDtos", salaryDtoInfos);
+		}	
 		
 		return "salary/health-insurance";
 	}
 	
-	@GetMapping("/employment-insurance")      // 고용보험 조회
-	public String employmentInsurance() {
+	@GetMapping("/employment-insurance")      // 고용보험 기본정보
+	public String employmentInsurance(@RequestParam(name="baseYear", required=false) String baseYear, 
+									  @RequestParam(name="opt", required=false) String opt, 
+									  @RequestParam(name="keyword", required=false) String keyword, Model model) {
+		if (baseYear != null) {
+		List<SalaryDto> salaryDtoInfos = salaryService.getSalaryDtoInfos(baseYear, opt, keyword);
+		model.addAttribute("SalaryDtos", salaryDtoInfos);
+		}	
 		
 		return "salary/employment-insurance";
+	}
+	
+	@GetMapping("/contributionDetail")      // 국민연금, 건강보험, 고용보험 납입내역
+	@ResponseBody
+	public List<SalaryContribution> getContributionDetails (@RequestParam("empNo") int empNo, @RequestParam("baseYear") String baseYear) {
+		List<SalaryContribution> contributionDetails = salaryService.getContributionDetails(empNo, baseYear);
+		
+		return contributionDetails;
 	}
 	
 }
