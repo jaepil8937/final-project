@@ -68,11 +68,11 @@
 				<div class="row" style="margin-top: 24px;">
 					<div class="shadow-none p-3 mb-5 bg-light rounded">
 						<div class="container text-center">
-							<form id="" method="post" action="" enctype="">
+							<form id="" method="get" action="/holiday/calendar">
 								<div class="row">
 									<div class="col-3">
 										<label for="start" style="padding-top: 12px;">근무년월: <input
-											type="date" id="" name="" value="" min="2023-01-01"
+											type="date" id="" name="workdate" value="" min="2023-01-01"
 											max="2023-12-31">
 										</label>
 									</div>
@@ -112,18 +112,18 @@
                         <label for="taskId" class="col-form-label">기준일자</label>
                        		<input type="date" class="form-control" id="calendar_date" name="calendar_date">
                         <label for="taskId" class="col-form-label">일자구분</label>
-	                        <select class="form-select form-select-sm" aria-label=".form-select-sm example" name="">
+	                        <select class="form-select form-select-sm" aria-label=".form-select-sm example" name="dateType">
 								<option selected>무급휴일</option>
 								<option value="1">유급휴일</option>
 							</select>
 						<label for="taskId" class="col-form-label">휴일구분</label>
-	                        <select class="form-select form-select-sm" aria-label=".form-select-sm example" name="">
+	                        <select class="form-select form-select-sm" aria-label=".form-select-sm example" name="holidayType">
 								<option selected>법정공휴일</option>
 								<option value="1">대체공휴일</option>
 								<option value="2">회사공휴일</option>
 							</select>
                         <label for="taskId" class="col-form-label">휴일명</label>
-                       	 	<input type="text" class="form-control" id="calendar_content" name="calendar_content">
+                       	 	<input type="text" class="form-control" id="calendar_content" name="name">
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -146,7 +146,11 @@
 	let calendar = new FullCalendar.Calendar(document.getElementById("calendar"), {
               locale: 'ko',
               initialView: 'dayGridMonth',
-            <sec:authorize access="hasRole('ADMIN')">  
+              events: function(info, successCallback, failureCallback) {
+              	//console.log(info.start, info.end);
+      			refreshEvents(info, successCallback);
+      		}, 
+            <sec:authorize access="hasRole('ADMIN')">  // 휴일등록 모달창 : 관리자만 접근
               dateClick: function(info) {
             	  let clickedDate = info.dateStr;
             	  
@@ -158,9 +162,12 @@
               headerToolbar: {
             	  left : 'prev,next today',
             	  center : 'title'
-           		<sec:authorize access="hasRole('ADMIN')">  
+           		<sec:authorize access="hasRole('ADMIN')">  // 휴일추가 버튼 : 관리지만 접근
            	 	  ,right : 'addEventButton' //s headerToolbar에 버튼을 추가
             	</sec:authorize>
+           	 	<sec:authorize access="hasRole('EMPLOYEE')"> // 휴일추가 버튼 : 직원에게 안보이게 변경
+           		 ,right : '' 
+             	</sec:authorize>
               }
             <sec:authorize access="hasRole('ADMIN')">  
             , customButtons: {
@@ -172,7 +179,7 @@
                   }
               }
             </sec:authorize>
-              
+             ,event
           });
           calendar.render();
           
@@ -193,6 +200,26 @@
                   console.log(obj); //서버로 해당 객체를 전달해서 DB 연동 가능
               }
           });
+          
+          function refreshEvents(info, successCallback) {
+      		let startDate = moment(info.start).format("YYYY-MM-DD");
+      		let endDate = moment(info.end).format("YYYY-MM-DD");
+      	
+      		let param = {
+      			startDate: startDate,
+      			endDate: endDate
+      		};
+      		
+      		$.ajax({
+      			type: 'get',
+      			url: '/holiday/days',
+      			data: param,
+      			dataType: 'json'
+      		})
+      		.done(function(events) {
+      			successCallback(events);
+      		})
+      	}
      
 	</script>
 </body>

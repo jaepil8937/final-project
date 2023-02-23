@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import com.last.dto.OvertimeHistoryDto;
 import com.last.vo.Holiday;
@@ -15,8 +16,10 @@ public interface HolidayMapper {
 
 	int getOvertimeHistoriesTotalRows(Map<String, Object> param);
 	
+	// 휴일 일정 등록
 	void insertholidays(Holiday holiday);
 	
-	List<Holiday> getHolidays(Map<String, Object> param);
+	// 일정정보 조회
+	List<Holiday> getHolidays(@Param("startDate") String startDate, @Param("endDate") String ednDate);
 
 }
