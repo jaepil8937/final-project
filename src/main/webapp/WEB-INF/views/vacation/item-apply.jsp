@@ -282,14 +282,20 @@ $(function() {
 				dataArr = data.usedVacationsList;
 				
 				let innerHtml = "";
-				$('#used-table > tbody').empty();
+				if (data.calculatedDays) {
+					$('#used-table > tbody').empty();
+					
+					$("input[name=input-empNo]").val(data.calculatedDays.empNo);
+					$("input[name=input-empName]").val(data.calculatedDays.empName);
+					$("input[name=input-used-days]").val(data.calculatedDays.usedDays);
+					$("input[name=input-remained-days]").val(data.calculatedDays.remainedDays);
+					$("input[name=input-last-day]").val(data.calculatedDays.baseDate);
+					$("input[name=input-start-day]").val(data.calculatedDays.baseYear +"-01-01");
+				} else {
+					alert("선택하신 기준년도 이후에 입사한 사원입니다.");
+					location.reload();
+				}
 				
-				$("input[name=input-empNo]").val(data.calculatedDays.empNo);
-				$("input[name=input-empName]").val(data.calculatedDays.empName);
-				$("input[name=input-used-days]").val(data.calculatedDays.usedDays);
-				$("input[name=input-remained-days]").val(data.calculatedDays.remainedDays);
-				$("input[name=input-last-day]").val(data.calculatedDays.baseDate);
-				$("input[name=input-start-day]").val(data.calculatedDays.baseYear +"-01-01");
 				if (!data.usedVacationsList) {
 					innerHtml += '<tr>';
 					innerHtml += '<td id="item-noting" colspan="12" class="text-center">해당 년도에 대한 휴가 신청 내역이 없습니다.</td>'
