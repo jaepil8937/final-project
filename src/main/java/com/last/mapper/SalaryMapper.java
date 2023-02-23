@@ -14,8 +14,10 @@ import com.last.vo.PayBankInfo;
 @Mapper
 public interface SalaryMapper {
 	
-	// 급여계산, 급여조회, 급여대장 
+	// 급여계산
 	List<SalaryDto> getSalaryLists(Map<String, Object> param);
+	// 급여조회, 급여대장 
+	List<SalaryDto> getSalaryHistories(Map<String, Object> param);
 	// 급여계산 - 사원 급여 정보 가져오기
 	SalaryDto getCalculatedSalaryDto(Map<String, Object> param);
 	// 급여계산 - 급여내역 없는 사원의 기본정보 가져오기

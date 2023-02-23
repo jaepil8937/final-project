@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.last.mapper.SalaryMapper">
 
-	<!-- 급여계산, 급여조회, 급여대장  --> 
+	<!-- 급여계산 --> 
 	<select id="getSalaryLists" parameterType="map" resultType="salaryDto">
 	 	select
 	 		A.BASE_YEAR_MONTH     		as baseYearMonth,
@@ -50,6 +50,48 @@
 	 		</if>
 	 		<if test="paydate != null">
 		 		and	A.PAY_DATE = #{paydate}
+	 		</if>
+	 	</where>
+	 	order by B.EMPLOYEE_NO asc
+	</select>
+	
+	<!-- 급여조회, 급여대장  --> 
+	<select id="getSalaryHistories" parameterType="map" resultType="salaryDto">
+	 	select
+	 		A.BASE_YEAR_MONTH     		as baseYearMonth,
+	 		A.BASE_SALARY_TTL     		as baseSalary,
+	 		A.OVERTIME_SALARY_TTL		as overtimeSalary,
+	 		A.NIGHT_SALARY_TTL			as nightSalary,
+	 		A.HOLIDAY_SALARY_TTL		as holidaySalary,
+	 		A.CARE_SALARY_TTL			as careSalary,
+	 		A.REWARD_SALARY_TTL			as rewardSalary,
+	 		A.MEAL_TTL					as mealSalary,
+	 		A.BUSINESS_SALARY_TTL		as businessSalary,
+	 		A.INCOME_TAX_TTL			as incomeTax,
+	 		A.RESIDENCE_TAX_TTL			as residenceTax,
+	 		A.PENSION_TTL				as pension,
+	 		A.HEALTH_INSURANCE_TTL		as healthInsurance,
+	 		A.LONGTERM_INSURANCE_TTL	as longtermInsurance,
+	 		A.EMPLOYMENT_INSURANCE_TTL	as employmentInsurance,
+	 		A.START_DATE				as startDate,
+	 		A.END_DATE					as endDate,
+	 		A.PAY_DATE					as payDate,
+	 		B.EMPLOYEE_NO				as employeeNo,
+	 		B.EMPLOYEE_NAME				as name,
+	 		B.HIRE_DATE					as hireDate,
+	 		B.RETIREMENT_DATE			as retirementDate,
+	 		C.DEPT_NAME					as deptName,
+	 		D.POSITION_NAME				as positionName
+	 	from
+	 		SALARY_HISTORIES A , EMPLOYEES B, DEPARTMENTS C, POSITIONS D
+	 	<where>
+				A.EMPLOYEE_NO = B.EMPLOYEE_NO 
+			and
+			    B.DEPT_NO = C.DEPT_NO	
+			and
+			    B.POSITION_NO = D.POSITION_NO	
+	 		<if test="basemonth != null">
+		 		and	A.PAY_DATE like '%' || #{basemonth} || '%'
 	 		</if>
 			<if test="opt != null and keyword != null">		
 		 	<choose>
