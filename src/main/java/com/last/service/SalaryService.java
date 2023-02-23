@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.last.dto.SalaryDto;
+import com.last.dto.SalaryContribution;
 import com.last.dto.SalaryPeriodDto;
 import com.last.mapper.SalaryMapper;
 import com.last.vo.PayBankInfo;
@@ -21,7 +22,7 @@ public class SalaryService {
 	// 급여계산
 	public List<SalaryDto> getSalaryDtoLists(String basemonth, String startdate, String enddate, String paydate) {
 		
-		Map<String,Object> param = new HashMap<String, Object>();
+		Map<String, Object> param = new HashMap<String, Object>();
 		if (!basemonth.isBlank()) {
 			param.put("basemonth", basemonth);	
 		}
@@ -83,7 +84,7 @@ public class SalaryService {
 	// 급여조회
 	public List<SalaryDto> getSalaryDtoLists(String basemonth, String opt, String keyword) {
 		
-		Map<String,Object> param = new HashMap<String, Object>();
+		Map<String, Object> param = new HashMap<String, Object>();
 		if (!basemonth.isBlank()) {
 			param.put("basemonth", basemonth);			
 		}
@@ -122,7 +123,7 @@ public class SalaryService {
 	// 기간별 급여현황 - 급여총계
 	public List<SalaryPeriodDto> getPeriodDtoLists(String startdate, String enddate) {
 		
-		Map<String,Object> param = new HashMap<String, Object>();
+		Map<String, Object> param = new HashMap<String, Object>();
 		if (!startdate.isBlank()) {
 			param.put("startdate", startdate);			
 		}
@@ -132,6 +133,34 @@ public class SalaryService {
 		List<SalaryPeriodDto> periodDtoLists = salaryMapper.getPeriodDtoLists(param);
 		
 		return periodDtoLists;
+	}
+	
+	// 국민연금, 건강보험, 고용보험 기본정보
+	public List<SalaryDto> getSalaryDtoInfos(String baseYear, String opt, String keyword) {
+		
+		Map<String, Object> param = new HashMap<String, Object>();
+		if (!baseYear.isBlank()) {
+			param.put("baseYear", baseYear);
+		}
+		if (!opt.isBlank() && !keyword.isBlank()) {
+			param.put("opt", opt);
+			param.put("keyword", keyword);
+		}
+		
+		List<SalaryDto> salaryDtoInfos = salaryMapper.getSalaryDtoInfos(param);
+			
+		return salaryDtoInfos;
+	}
+	
+	// 국민연금, 건강보험, 고용보험 납입내역
+	public List<SalaryContribution> getContributionDetails(int empNo, String baseYear) {
+		
+		Map<String, Object> param = new HashMap<String, Object>();
+		param.put("empNo", empNo);
+		param.put("baseYear", baseYear);
+		List<SalaryContribution> pensionDto = salaryMapper.getContributionDetails(param);
+		
+		return pensionDto;
 	}
 	
 }
