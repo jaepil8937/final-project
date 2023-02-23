@@ -109,7 +109,9 @@ public class VacationController {
 		
 		Map<String, Object> result = new HashMap<>();
 		
-		result.put("calculatedDays", calculatedDays);
+		if (calculatedDays != null) {
+			result.put("calculatedDays", calculatedDays);
+		}
 		
 		if (!usedVacationsList.isEmpty()) {
 			result.put("usedVacationsList", usedVacationsList);

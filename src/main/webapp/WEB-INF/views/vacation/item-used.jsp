@@ -36,13 +36,13 @@
 								<option value="empName">성명</option>
 								<option value="dept">부서명</option>
 							</select>
-							<input type="text" id="search-keyword" name="keyword" value="${loginEmployee.no }" />
+							<input type="text" id="search-keyword" name="keyword" value="${loginEmployee.no }" style="text-align:center; width:100px" />
 						</sec:authorize>
 						<sec:authorize access="hasAnyRole('ROLE_EMPLOYEE')">
 							<select name="opt">
 								<option value="empNo">사원번호</option>
 							</select>
-							<input type="text" id="search-keyword" name="keyword" value="${loginEmployee.no }" readOnly />
+							<input type="text" id="search-keyword" name="keyword" value="${loginEmployee.no }" style="text-align:center; width:100px" readOnly />
 						</sec:authorize>
 						<button type="button" class="btn btn-danger" style="float:right;" id="btn-search">검색</button>
 					</div>
