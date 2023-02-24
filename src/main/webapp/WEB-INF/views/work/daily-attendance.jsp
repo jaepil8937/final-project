@@ -122,7 +122,7 @@
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script type="text/javascript">
-
+	
 	function btnStart(){
 	    alert('출근완료');
 	}
@@ -132,7 +132,15 @@
 			alert("퇴근완료");
 		}
 	}
+$(function() {
+	
+	//end-cal 현재날짜 이후로는 비활성화함
+	var now_utc = Date.now() 
+	var timeOff = new Date().getTimezoneOffset()*60000; 
+	var today = new Date(now_utc-timeOff).toISOString().split("T")[0];
+	document.getElementById("end-cal").setAttribute("max", today);
 
+})
 </script>
 </body>
 </html>

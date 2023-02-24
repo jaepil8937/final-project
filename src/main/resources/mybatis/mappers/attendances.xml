@@ -22,7 +22,7 @@
 			attendance_no = #{no}
 	</update>
 	
-	<update id="updateAttendance" parameterType="AdminAttendanceDto">
+	<update id="updateAttendance" parameterType="Attendance">
 		update
 			employee_attendances
 		set

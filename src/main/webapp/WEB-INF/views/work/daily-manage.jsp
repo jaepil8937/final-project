@@ -42,19 +42,14 @@
 							<option value="102" ${param.positionNo eq '102' ? 'selected' : '' }>과장</option>
 							<option value="103" ${param.positionNo eq '103' ? 'selected' : '' }>차장</option>
 							<option value="104" ${param.positionNo eq '104' ? 'selected' : '' }>부장</option>
-							<option value="105">대리</option>
-							<option value="106">대리</option>
 						</select>
 						<label class="form-label"><strong>부서: </strong></label>
 						<select name="deptNo" style="width: 100px" >
 							<option value="">선택하세요</option>
-							<option value="100">영업부</option>
-							<option value="101">개발부</option>
-							<option value="102">개발부</option>
-							<option value="103">개발부</option>
-							<option value="104">개발부</option>
-							<option value="105">개발부</option>
-							<option value="106">개발부</option>
+							<option value="100" ${param.deptNo eq '100' ? 'selected' : '' }>영업팀</option>
+							<option value="101" ${param.deptNo eq '101' ? 'selected' : '' }>인사팀</option>
+							<option value="102" ${param.deptNo eq '102' ? 'selected' : '' }>관리팀</option>
+							<option value="103" ${param.deptNo eq '103' ? 'selected' : '' }>홍보팀</option>
 						</select>
 						<button type="submit" class="btn btn-danger" style="float:right;" id="btn-search">조회</button>
 					</div>
@@ -179,6 +174,11 @@
 	  <div class="modal-dialog">
 	    <div class="modal-content">
 	      <form id="form-hour" method="post" action="modify">
+	      <input type="hidden" name="startDate" value="${param.startDate }">
+	      <input type="hidden" name="endDate" value="${param.endDate }">
+	      <input type="hidden" name="empNo" value="${param.empNo }">
+	      <input type="hidden" name="positionNo" value="${param.positionNo }">
+	      <input type="hidden" name="deptNo" value="${param.deptNo }">
 	      <div class="modal-header">
 	        <h5 class="modal-title">출근/퇴근 시간 수정</h5>
 	        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -196,7 +196,9 @@
 	      </div>
 	      <div class="modal-footer">
 	        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
-	        <button type="submit" class="btn btn-primary" id="btn-modify-hour">수정</button>
+	        <button type="submit" class="btn btn-primary" id="btn-modify-hour" 
+					href="dayadmin?startDate=${param.startDate }&endDate=${param.endDate }&empNo=${param.empNo }
+					&positionNo=${param.positionNo }&deptNo=${param.deptNo }&page=${param.page }" >수정</button>
 	      </div>
 	      </form>
 	    </div>
@@ -224,6 +226,11 @@ $(function() {
 		
 		hourModifyModal.show();
 	});
+	
+	var now_utc = Date.now() 
+	var timeOff = new Date().getTimezoneOffset()*60000; 
+	var today = new Date(now_utc-timeOff).toISOString().split("T")[0];
+	document.getElementById("end-cal").setAttribute("max", today);
 });
 </script>
 </body>
