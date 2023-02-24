@@ -122,4 +122,17 @@ public class EmployeeService {
 	}
 
 	
+	// 인사정보재등록 사원번호,이름,핸드폰번호,이메일
+	public void reRegister(int employeeNo, String name, String tel, String email) {
+		Employees employee = employeeMapper.getEmployeesByNo(employeeNo);
+		employee.setName(name);
+		employee.setMobileTel(tel);
+		employee.setExtEmail(email);
+		employee.setEmployeeStatus("N"); // 상태N으로 변경
+		
+		employeeMapper.updateEmployees(employee);
+		
+		
+		
+	}
 }

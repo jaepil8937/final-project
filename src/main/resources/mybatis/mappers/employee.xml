@@ -438,7 +438,7 @@
 		update 
 			employees
 		set
-			employee_status = '재직'
+			employee_status = 'N'
 		where
 			employee_no = #{employeeNo}
 	</update>
