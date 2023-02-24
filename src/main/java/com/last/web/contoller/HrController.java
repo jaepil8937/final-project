@@ -178,9 +178,12 @@ public class HrController {
 	
 	
 	@PostMapping("/re-register")		// 인사정보재등록
-	public String infoRegister(@AuthenticatedUser LoginEmployee LoginEmployee, Model model) {
+	public String infoRegister(@RequestParam("employeeNo") int employeeNo,
+			@RequestParam("name") String name,
+			@RequestParam("mobileTel") String tel,
+			@RequestParam("extEmail") String email) {
 		
-		
+		employeeService.reRegister(employeeNo, name, tel, email);
 		
 		return "redirect:/hr/re-register";
 	}
