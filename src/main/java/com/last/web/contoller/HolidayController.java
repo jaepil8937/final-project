@@ -10,6 +10,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -18,6 +19,7 @@ import com.last.dto.HolidayEvent;
 import com.last.dto.OvertimeHistoryDto;
 import com.last.service.HolidayService;
 import com.last.vo.Holiday;
+import com.last.vo.VacationDay;
 
 @Controller
 @RequestMapping("/holiday")
@@ -66,6 +68,18 @@ public class HolidayController {
 	@ResponseBody
 	public List<HolidayEvent> holidays(@RequestParam("startDate") String startDate, @RequestParam("endDate") String endDate) {
 		return holidayService.getHolidayEvents(startDate, endDate);
+	}
+	
+	// 달력 휴일 정보 추가
+	@PostMapping("/add")
+	@ResponseBody 
+	public HolidayEvent addHoliday(@RequestParam("baseDate") @DateTimeFormat(pattern = "yyyy-MM-dd") Date baseDate, 
+			@RequestParam("name") String name, 
+			@RequestParam("dateType") String dateType,
+			@RequestParam("holidayType") String holidayType) {
+		
+		HolidayEvent holidayEvent = holidayService.insertholidays(baseDate, name, dateType, holidayType);
+		return holidayEvent;		
 	}
 	
 	

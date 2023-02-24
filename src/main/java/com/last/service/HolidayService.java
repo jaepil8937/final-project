@@ -1,6 +1,7 @@
 package com.last.service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -40,9 +41,23 @@ public class HolidayService {
 	}
 	
 	// 달력 휴일 등록
-	public Holiday insertholidays(Map<String, Object> param) {
+	public HolidayEvent insertholidays(Date baseDate, String name, String dateType, String holidayType ) {
+		Holiday holiday = new Holiday();
+		holiday.setBaseDate(baseDate);
+		holiday.setName(name);
+		holiday.setDateType(dateType);
+		holiday.setHolidayType(holidayType);
 		
-		return null;
+		holidayMapper.insertholidays(holiday);
+		
+		HolidayEvent holidayEvent = new HolidayEvent();
+		holidayEvent.setStart(holiday.getBaseDate());
+		holidayEvent.setEnd(holiday.getBaseDate());
+		holidayEvent.setId(String.valueOf(holiday.getBaseDate().getTime()));
+		holidayEvent.setTitle(holiday.getName());
+		holidayEvent.setAllDay(true);
+		
+		return holidayEvent;
 	}
 	
 	// 달력 휴일 정보 조회
@@ -57,6 +72,8 @@ public class HolidayService {
 			event.setId(String.valueOf(day.getBaseDate().getTime()));
 			event.setTitle(day.getName());
 			event.setAllDay(true);
+			event.setDateType(day.getDateType());
+			event.setHolidayType(day.getHolidayType());
 			
 			events.add(event);
 		}

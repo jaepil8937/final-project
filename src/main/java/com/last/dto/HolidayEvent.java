@@ -2,6 +2,7 @@ package com.last.dto;
 
 import java.util.Date;
 
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -14,4 +15,8 @@ public class HolidayEvent {
 	private Date end;
 	private String title;
 	private boolean allDay;
+	
+	private String dateType;
+	private String holidayType;
+	
 }
