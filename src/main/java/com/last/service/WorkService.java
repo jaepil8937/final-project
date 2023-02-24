@@ -12,10 +12,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.last.dto.WorkAdminAttendanceDto;
+import com.last.dto.WorkMonthlyAttendanceDto;
 import com.last.mapper.WorkMapper;
 import com.last.utils.Pagination;
 import com.last.vo.WorkAttendance;
-import com.last.web.request.WorkModifyForm;
 
 @Service
 public class WorkService {
@@ -53,7 +53,7 @@ public class WorkService {
 		if (startHour < 9) {
 			if (nowHour <= 13) {
 				workHour = nowHour - 9 - overHour - nightHour;
-				attendance.setAttendancesType("조퇴");				// 점심시간(13시~14시) 전에 조퇴
+				attendance.setAttendancesType("조퇴");		// 점심시간(13시~14시) 전에 조퇴
 			} else {
 				workHour = nowHour - 9 - 1 - overHour -nightHour;
 				if (nowHour < 18) {
@@ -70,13 +70,13 @@ public class WorkService {
 			} else {
 				if (startHour <= 13 && nowHour < 18) {
 					workHour = nowHour - startHour - 1 - overHour - nightHour; 
-					attendance.setAttendancesType("지각/조퇴");		// 13시 전에 지각 & 13시 지나서 조퇴
+					attendance.setAttendancesType("지각/조퇴");		// 13시 전 지각 & 13시 이후 조퇴
 				} else {
-					workHour = nowHour - startHour - overHour - nightHour;					// 13시 후에 출근지각 
+					workHour = nowHour - startHour - overHour - nightHour;	// 13시 후 출근지각 
 					if (nowHour < 18) {
-						attendance.setAttendancesType("지각/조퇴");	// 13시 지나서 출근 & 18시 전에 조퇴
+						attendance.setAttendancesType("지각/조퇴");	// 13시 지나서 출근 & 18시 전 조퇴
 					}	else {
-						attendance.setAttendancesType("지각");		// 13시 전에 지각 & 18시 이후에 퇴근
+						attendance.setAttendancesType("지각");		// 13시 전 지각 & 18시 이후 퇴근
 					}
 				}
 			}
@@ -149,11 +149,11 @@ public class WorkService {
 
 	// 근태시간수정
 	public void updateAttendance(int attendanceNo, String startTime, String endTime) {
-		WorkAdminAttendanceDto dto = workMapper.getAttendanceByNo(attendanceNo);
-
-		WorkAttendance attendance = new WorkAttendance();
-		BeanUtils.copyProperties(dto, attendance);
-
+		
+		// WorkAdminAttendanceDto의 db에 저장된 값을 WorkAttendance객체에 복사하여 근태기록정보를 저장
+		WorkAdminAttendanceDto dto = workMapper.getAttendanceByNo(attendanceNo); //attendanceNo에 해당하는 근태기록을 가져와서 WorkAdminAttendanceDto에 반환
+		WorkAttendance attendance = new WorkAttendance();	//근태구분정보를 담을 attendance객체를 생성
+		BeanUtils.copyProperties(dto, attendance);			//이름이 같은 필드값인 dto객체의 값을 attendance객체에 복사함
 
 		int workHour = 0;
 		int overHour = 0;
@@ -165,7 +165,7 @@ public class WorkService {
 		if (startHour < 9) {
 			if (endHour <= 13) {
 				workHour = endHour - 9 - overHour - nightHour;
-				attendance.setAttendancesType("조퇴");				// 점심시간(13시~14시) 전에 조퇴
+				attendance.setAttendancesType("조퇴");	// 점심시간(13시~14시) 전에 조퇴
 			} else {
 				workHour = endHour - 9 - 1 - overHour -nightHour;
 				if (endHour < 18) {
@@ -177,18 +177,18 @@ public class WorkService {
 		} else {
 			if (endHour <= 13) {	// 
 				workHour = endHour - startHour- overHour - nightHour; 
-				attendance.setAttendancesType("지각/조퇴");			// 지각 & 13시 이전에 조퇴
+				attendance.setAttendancesType("지각/조퇴");	// 지각 & 13시 이전에 조퇴
 
 			} else {
 				if (startHour <= 13 && endHour < 18) {
 					workHour = endHour - startHour - 1 - overHour - nightHour; 
-					attendance.setAttendancesType("지각/조퇴");		// 13시 전에 지각 & 13시 지나서 조퇴
+					attendance.setAttendancesType("지각/조퇴");	// 13시 전에 지각 & 13시 지나서 조퇴
 				} else {
-					workHour = endHour - startHour - overHour - nightHour;					// 13시 후에 출근지각 
+					workHour = endHour - startHour - overHour - nightHour;	// 13시 후에 출근지각 
 					if (endHour < 18) {
 						attendance.setAttendancesType("지각/조퇴");	// 13시 지나서 출근 & 18시 전에 조퇴
 					}	else {
-						attendance.setAttendancesType("지각");		// 13시 전에 지각 & 18시 이후에 퇴근
+						attendance.setAttendancesType("지각");	// 13시 전에 지각 & 18시 이후에 퇴근
 					}
 				}
 			}
@@ -217,6 +217,10 @@ public class WorkService {
 	public WorkAdminAttendanceDto getAttendanceByNo(int attendanceNo) {
 		WorkAdminAttendanceDto dto = workMapper.getAttendanceByNo(attendanceNo);
 		return dto;
+	}
+
+	public List<WorkMonthlyAttendanceDto> getMonthlyAttendance(int no) {
+		return null;
 	}
 
 }

@@ -16,14 +16,16 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.last.dto.WorkAdminAttendanceDto;
+import com.last.dto.WorkMonthlyAttendanceDto;
 import com.last.security.AuthenticatedUser;
 import com.last.security.LoginEmployee;
 import com.last.service.WorkService;
 import com.last.vo.Employees;
 import com.last.vo.WorkAttendance;
-import com.last.web.request.WorkModifyForm;
+import com.last.vo.WorkAttendanceSummary;
 
 @Controller
 @RequestMapping("/work")
@@ -118,26 +120,43 @@ public class WorkController {
 		return "work/daily-manage";
 	}
 	
-	// 근무시간수정
 	@PostMapping("/modify")
-	public String modifyAttendance(@RequestParam("no") int attendanceNo, 
+	public String modifySearchAttendance(@RequestParam("no") int attendanceNo, 
 			@RequestParam("startTime") String startTime,
-			@RequestParam("endTime") String endTime) {
+			@RequestParam("endTime") String endTime,
+			@RequestParam(name = "startDate", required = false, defaultValue = "") String startDate, 
+			@RequestParam(name = "endDate", required = false, defaultValue = "") String endDate,
+			@RequestParam(name = "empNo", required = false, defaultValue = "0") int empNo,
+			@RequestParam(name = "positionNo", required = false, defaultValue = "0") int positionNo,
+			@RequestParam(name = "deptNo", required = false, defaultValue = "0") int deptNo, 
+			@RequestParam(name = "page", required = false, defaultValue = "1") int page,
+			RedirectAttributes redirectAttributes) {
 		
 		workService.updateAttendance(attendanceNo, startTime, endTime);
 		
+		// redirectAttributes를 사용하면 redirect url뒤에 파라미터값을 하나씩 안넣어줘도됨
+		redirectAttributes.addAttribute("startDate", startDate);
+		redirectAttributes.addAttribute("endDate", endDate);
+		redirectAttributes.addAttribute("empNo", empNo);
+		redirectAttributes.addAttribute("positionNo", positionNo);
+		redirectAttributes.addAttribute("deptNo", deptNo);
+		redirectAttributes.addAttribute("page", page);
+		
 		return "redirect:/work/dayadmin";
+		}
+	
+	// 월근태상세정보관리
+	@GetMapping("/month")
+	public String monthSetting(@AuthenticatedUser LoginEmployee loginEmployee, Model model) {
+		List<WorkMonthlyAttendanceDto> monthlyAttendanceDtos = workService.getMonthlyAttendance(loginEmployee.getNo());
+		return "work/monthly-manage";
 	}
 
 	// 월근태현황
 	@GetMapping("/monthstatus")
-	public String monthStatus() {
+	public String monthStatus(@AuthenticatedUser LoginEmployee loginEmployee, Model model) {
+		
 		return "work/monthly-status";
 	}
 	
-	// 월근태상세정보관리
-	@GetMapping("/month")
-	public String monthSetting() {
-		return "work/monthly-manage";
-	}
 }
