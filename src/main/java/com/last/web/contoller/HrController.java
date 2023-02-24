@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.last.dto.CertificateDto;
+import com.last.dto.CertificateIssueDto;
 import com.last.dto.EmployeeDto;
 import com.last.dto.EmployeebasicDto;
 import com.last.dto.PersonnelDto;
@@ -36,6 +37,7 @@ import com.last.vo.Employees;
 import com.last.vo.Family;
 import com.last.vo.Grades;
 import com.last.vo.Position;
+import com.last.web.request.CertificateRequest;
 import com.last.web.request.EducationRegisterForm;
 import com.last.web.request.EmployeeRegisterForm;
 import com.last.web.request.EmployeeRequest;
@@ -119,7 +121,8 @@ public class HrController {
 	}
 	
 	@GetMapping("/issue")		// 증명서발급
-	public String issue(@RequestParam(name = "sort", required = false, defaultValue = "") String sort,
+	public String issue(@AuthenticatedUser LoginEmployee loginEmployee,
+						@RequestParam(name = "sort", required = false, defaultValue = "") String sort,
 						@RequestParam(name = "startDate", required = false, defaultValue = "") String startDate,
 						@RequestParam(name = "endDate", required = false, defaultValue = "") String endDate,
 						Model model) {
@@ -137,7 +140,16 @@ public class HrController {
 		
 		List<CertificateDto> certificate = employeeService.getAllcertificate(param);
 		model.addAttribute("certificates", certificate);
+		
+		CertificateIssueDto certificateIssueDto  = employeeService.getCertificateIssue(loginEmployee.getNo());		// 증명서신청할때 사원번호를 통해 직원정보를 조회
+		model.addAttribute("employee", certificateIssueDto);
 		return "hr/certificate";
+	}
+	
+	@PostMapping("/issue")		// 증명서 등록
+	public String insertCertificate(CertificateRequest form) {
+	//	employeeService.insertCertificate(form);
+		return "redirect:issue";
 	}
 
 	@GetMapping("/delete")		// 회원탈퇴

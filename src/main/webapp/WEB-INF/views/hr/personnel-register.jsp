@@ -45,38 +45,48 @@
 					<form method="post" action="personnel-register">
 						<input type="hidden" name="employeeNo" />
 						<div class="border p-3 bg-white">
-							<label>발령구분</label>
-							<select name="type">
-								<option>선택</option>
-								<option value="입사">입사</option>
-								<option value="승진">승진</option>
-								<option value="전보">전보</option>
-								<option value="휴직">휴직</option>
-								<option value="퇴직">퇴직</option>
-							</select>
-							<label>발령일자</label>
-							<input type="date" name="appointmentDate" />
-							<label>발령직급</label>
-							<select name="positionNo">
-								<option selected="selected" disabled="disabled">선택</option>
-								<option value="100">대표</option>
-								<option value="101">전무</option>
-								<option value="102">상무</option>
-								<option value="103">이사</option>
-							</select>
-							<label>발령부서</label>
-							<select name="deptNo">
-								<option selected="selected" disabled="disabled">선택</option>
-								<option value="100">개발팀</option>
-								<option value="101">인사팀</option>
-								<option value="102">관리팀</option>
-								<option value="103">홍보팀</option>
-							</select>
-							<label>발령내용</label>
-							<input type="text" name="content" style="width:100px;"/>
-							<label>비고</label>
-							<input type="text" name="note" style="width:100px;"/>
-							<button type="button" id="btn-appiontment-handle" class="btn btn-dark float-end">발령처리</button>
+							<div class="w-100 mb-3">
+								<label>발령구분</label>
+								<select name="type">
+									<option>선택</option>
+									<option value="입사">입사</option>
+									<option value="승진">승진</option>
+									<option value="전보">전보</option>
+									<option value="휴직">휴직</option>
+									<option value="퇴직">퇴직</option>
+								</select>
+								<label>발령일자</label>
+								<input type="date" name="appointmentDate" />
+								<label>발령직급</label>
+								<select name="positionNo">
+									<option selected="selected" disabled="disabled">선택</option>
+									<option value="1">사원</option>
+									<option value="2">대리</option>
+									<option value="3">과장</option>
+									<option value="4">차장</option>
+									<option value="5">부장</option>
+									<option value="6">사장</option>
+								</select>
+								<label>발령부서</label>
+								<select name="deptNo">
+									<option selected="selected" disabled="disabled">선택</option>
+									<option value="100">개발팀</option>
+									<option value="101">설계팀</option>
+									<option value="102">분석팀</option>
+									<option value="103">디자인팀</option>
+									<option value="104">개발팀</option>
+									<option value="105">테스트팀</option>
+									<option value="106">운영팀</option>
+								</select>
+							</div>
+							<div>
+								<label>발령내용</label>
+								<input type="text" name="content" style="width:100px;"/>
+								<label>비고</label>
+								<input type="text" name="note" style="width:100px;"/>
+								<button type="button" id="btn-appiontment-update" class="btn btn-dark float-end btn-sm ms-3">발령수정</button>
+								<button type="button" id="btn-appiontment-insert" class="btn btn-dark float-end btn-sm">발령등록</button>
+							</div>
 						</div>
 					</form>
 				</div>
@@ -131,17 +141,46 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
 <script type="text/javascript">
 $(function() {
-	$("#btn-appiontment-handle").click(function() {
+	$("#btn-appiontment-update").click(function() {
 		let empNo = $("input[name=empNo]:checked").val();
 		$("input[name=employeeNo]").val(empNo);
 		let checkedLength =  $("input[name=empNo]:checked").length;
 		if (checkedLength == 0) {
-			alert("발령처리 할 사원을 선택해주세요.");
+			alert("수정할 사원을 선택해주세요.");
 			return false;
 		}	
 		
 		if (checkedLength > 1) {
-			alert("발령처리는 하나씩 처리 가능합니다.");
+			alert("수정은 하나씩 처리 가능합니다.");
+			return false;
+		}
+		
+		let type = $("select[name=type] option:selected").val();
+		if (type == '선택') {
+			alert("발령구분을 선택해주세요.");
+			return false;
+		}
+		
+		let appointmentDate = $("input[name=appointmentDate]").val();
+		if (appointmentDate == "") {
+			alert("발령일자를 선택해주세요.");
+			return false;
+		}
+		
+		$("form").trigger("submit");
+	});
+	
+	$("#btn-appiontment-insert").click(function() {
+		let empNo = $("input[name=empNo]:checked").val();
+		$("input[name=employeeNo]").val(empNo);
+		let checkedLength =  $("input[name=empNo]:checked").length;
+		if (checkedLength == 0) {
+			alert("등록할 사원을 선택해주세요.");
+			return false;
+		}	
+		
+		if (checkedLength > 1) {
+			alert("등록은 하나씩 처리 가능합니다.");
 			return false;
 		}
 		
