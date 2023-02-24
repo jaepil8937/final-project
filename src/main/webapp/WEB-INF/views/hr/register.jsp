@@ -36,7 +36,7 @@
 	  					<div class="col-12">
 	   						<select class="form-select">
 								<option>성명</option>
-								<option>직책</option>
+								<option>직급</option>
 								<option>부서</option>
 							</select>
 	  					</div>
@@ -82,15 +82,15 @@
 						<tbody>
 						<c:if test="${not empty employees }">
 							<c:forEach var="emp" items="${employees }">
-							<tr data-emp-no="${emp.employeeNo }">
-								<td>${emp.employeeNo} </td>
-								<td>${emp.name} </td>
-								<td>${emp.positionName} </td>
-								<td>${emp.deptName} </td>
-								<td><fmt:formatDate value="${emp.hireDate}" /> </td>
-								<td>${emp.mobileTel} </td>
-								<td>${emp.comEmail} </td>
-							</tr>
+								<tr data-emp-no="${emp.employeeNo }">
+									<td>${emp.employeeNo} </td>
+									<td><a href="" class="text-decoration-none">${emp.name} </td>
+									<td>${emp.positionName} </td>
+									<td>${emp.deptName} </td>
+									<td><fmt:formatDate value="${emp.hireDate}" /> </td>
+									<td>${emp.mobileTel} </td>
+									<td>${emp.comEmail} </td>
+								</tr>
 							</c:forEach>
 						</c:if>
 						</tbody>
@@ -115,7 +115,7 @@
 		<form id="form-register" class="border bg-light p-3" method="post" action="register" enctype="multipart/form-data">
 			<div class="row mb-3">
 				<div class="col-12">
-					<table class="table table-bordered">
+					<table class="table table-bordered" id="table-employees">
 						<colgroup>
 							<col width="16%"/>
 							<col width="16%"/>
@@ -187,8 +187,8 @@
 									
 									<th class="table-secondary text-end">재직구분</th>
 									<td><select style="width: 130px;" name="employeeStatus" ${emp.employeeRoleName eq 'ROLE_EMPLOYEE' ? 'disabled' : '' } >
-											<option ${emp.employeeStatus eq '재직' ? 'selected' : '' } >재직</option>
-											<option ${emp.employeeStatus eq '휴직' ? 'selected' : '' } >휴직</option>
+											<option ${emp.employeeStatus eq 'N' ? 'selected' : '' } value="N">재직</option>
+											<option ${emp.employeeStatus eq 'Y' ? 'selected' : '' } value="Y">휴직</option>
 										</select>
 									</td>
 									<th class="table-secondary text-end">보유권한</th>
@@ -296,6 +296,12 @@ $(function() {
 		    img.src = reader.result;
 		};
 	});
+	
+	
+
+	
+	
+	
 	
 	
 	  $("#btn-search-postcode").click(function() {

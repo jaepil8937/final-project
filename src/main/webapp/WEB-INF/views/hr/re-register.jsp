@@ -57,7 +57,7 @@
 			
 			<div class="row mb-3">
 				<div class="col-12">
-					<table class="table">
+					<table class="table" id="table-employees">
 						<colgroup>
 							<col width="20%"/>
 							<col width="20%"/>
@@ -79,7 +79,7 @@
 								<c:forEach var="emp" items="${employees }">
 									<tr data-emp-no="${emp.employeeNo }" >
 										<td>${emp.employeeNo} </td>
-										<td>${emp.name} </td>
+										<td><a href="" class="text-decoration-none">${emp.name}</a> </td>
 										<td>${emp.mobileTel} </td>
 										<td>${emp.extEmail} </td>
 										<td><fmt:formatDate value="${emp.birthday}" /> </td>
@@ -90,7 +90,7 @@
 					</table>
 				</div>
 			</div>
-		<form id="form-register" class="border bg-light p-3" method="post" action="re-register" >
+		<form id="form-reregister" class="border bg-light p-3" method="post" action="re-register" >
 			<div class="row mb-3">
 				<div class="col-3">
 					<i class="bi bi-arrow-right-square-fill text-danger"></i> <strong>사원번호등록</strong>
@@ -98,13 +98,12 @@
 			</div>
 			<div class="row mb-3">
 				<div class="col-12">
-					<table class="table table-bordered">
+					<table class="table table-bordered ">
 						<colgroup>
-							<col width="20%"/>
-							<col width="20%"/>
-							<col width="20%"/>
-							<col width="20%"/>
-							<col width="20%"/>
+							<col width="15%"/>
+							<col width="35%"/>
+							<col width="15%"/>
+							<col width="35%"/>
 						</colgroup>
 						<tbody>			
 							<tr>
@@ -112,38 +111,18 @@
 								<td colsapn="1"><input type="text" class="form-control form-control-sm"  style="width: 130px;" name="employeeNo" /></td>
 								<th class="table-secondary text-end">성명</th>
 								<td ><input type="text" class="form-control form-control-sm"  style="width: 130px;" name="name" /></td>
-								<th class="table-secondary text-end">핸드폰</th>
-								<td ><input type="text" class="form-control form-control-sm"  style="width: 130px;" name="mobileTel" /></td>
 							</tr>
 							<tr>
+								<th class="table-secondary text-end">핸드폰</th>
+								<td ><input type="text" class="form-control form-control-sm"  style="width: 130px;" name="mobileTel" /></td>
 								<th class="table-secondary text-end">외부이메일</th>
 								<td><input type="text" class="form-control form-control-sm"  style="width: 130px;" name="extEmail" /></td>
-								<th class="table-secondary text-end">생년월일</th>
-								<td colspan="3"><input type="text" class="form-control form-control-sm"  style="width: 130px;" name="birthday"/></td>	
 							</tr>	
 						</tbody>
 					</table>
-					<div class="row mb-2 bg-light m-2">
-						<div class="col-10">
-						<p>
-							<i class="bi bi-exclamation-circle-fill"></i>
-							사원번호는 회사가 직원에게 자체적으로 부여하는 직원별 일련번호입니다.
-						</p>
-						<p>
-							<i class="bi bi-exclamation-circle-fill"></i>
-							사원번호는 직원을 관리하는 체계에 맞춰 일련번호를 구성하여 부여하시기 바랍니다.
-							<br> 예) [20010001, 20010002, 20010003] [C001, C002, C003], [kt001, kt002, kt003]
-						</p>
-						<p>
-							<i class="bi bi-exclamation-circle-fill"></i>
-							사원번호 입력 후 [사원번호중복확인] 버튼을 클릭하여 반드시 중복확인을 하셔야 합니다.
-						</p>
-						</div>
-					</div>
 					<div class="row p-3">
-						<div class="col">
-							<button type="submit" class="btn btn-dark" style="float:right;" id="">저장</button>
-							<a href="" class="btn btn-outline-primary" style="float:right; margin-right: 4px;" id="dupli">사원번호중복확인</a>
+						<div class="col-12 text-end">
+							<button type="submit" class="btn btn-dark" id="">인사정보 재등록</button>
 						</div>
 					</div>	
 				</div>
@@ -161,13 +140,55 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
 <script type="text/javascript">
 $(function() {
+	
+	$("#table-employees tbody a").click(function(event) {
+		event.preventDefault();
+		
+		var $tr = $(this).closest("tr");
+		var no = $tr.find("td:eq(0)").text();
+		var name = $tr.find("td:eq(1)").text();
+		var tel = $tr.find("td:eq(2)").text();
+		var email = $tr.find("td:eq(3)").text();
+		
+		$(":input[name=employeeNo]").val(no);
+		$(":input[name=name]").val(name);
+		$(":input[name=mobileTel]").val(tel);
+		$(":input[name=extEmail]").val(email);
+	});
+
 	$("#dupli").click(function() {
 		
 		if (employeeNo = employeeNo) {
-			alert("이미 존재하는 사원번호입니다.");
-			return;
+			alert("이미 존재하는 사원번호이거나 휴직중인 직원이 아닙니다."); // 재직중인 사원번호랑 동일할때
+			return false;
 		}
-
+	});
+		
+	$("#form-reregister").submit(function () {
+		
+	
+		if (employeeNo != name ) {
+			alert("이름이 일치하지 않습니다."); // 입력한 사원번호와 이름이 일치하지 않을때
+			return false;
+		}
+		
+		if (employeeNo != mobileTel ) {
+			alert("핸드폰번호가 일치하지 않습니다."); // 입력한 사원번호와 핸드폰번호가 일치하지 않을때
+			return false;
+		}
+		
+		if (employeeNo != extEmail ) {
+			alert("외부이메일이 일치하지 않습니다."); // 입력한 사원번호와 외부이메일이 일치하지 않을때
+			return false;
+		}
+		
+		if (employeeNo != birthday ) {
+			alert("생년월일이 일치하지 않습니다."); // 입력한 사원번호와 생년월일이 일치하지 않을때
+			return false;
+		}
+		
+	})
+});
 </script>
 </body>
 </html>

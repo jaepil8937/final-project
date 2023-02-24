@@ -344,6 +344,7 @@
                 <if test="status != null">
                 	and a.employee_status = #{status}
                 </if>
+               
             order by
 				employee_no asc
 	</select>
@@ -390,5 +391,14 @@
 		order by
 			employee_no asc
 	</select>
+	
+	<update id="rereregister" parameterType="Employee">
+		update 
+			employees
+		set
+			employee_status = '재직'
+		where
+			employee_no = #{employeeNo}
+	</update>
 	
 </mapper>

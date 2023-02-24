@@ -154,7 +154,7 @@ public class HrController {
 	public String reregister(@AuthenticatedUser LoginEmployee LoginEmployee, Model model) {
 		
 		if ("ROLE_ADMIN".equals(LoginEmployee.getRoleName())) {
-			List<Employees> employees = employeeService.getAllEmployee("휴직");
+			List<Employees> employees = employeeService.getAllEmployee("Y");
 			model.addAttribute("employees", employees);
 		} else {
 			Employees employees = employeeService.getEmployeesByNo(LoginEmployee.getNo());
@@ -163,8 +163,21 @@ public class HrController {
 		
 		return "hr/re-register";
 	}
-
-
+	
+	
+	@PostMapping("/re-register")		// 인사정보재등록
+	public String rereregister(@AuthenticatedUser LoginEmployee LoginEmployee, Model model) {
+		
+		if ("ROLE_ADMIN".equals(LoginEmployee.getRoleName())) {
+			List<Employees> employees = employeeService.getAllEmployee("Y");
+			model.addAttribute("employees", employees);
+		} else {
+			Employees employees = employeeService.getEmployeesByNo(LoginEmployee.getNo());
+			model.addAttribute("emp", employees);
+		}
+		
+		return "hr/re-register";
+	}
 	
 	
 	@GetMapping("/family")			// 가족사항
