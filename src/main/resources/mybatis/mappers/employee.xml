@@ -392,7 +392,7 @@
 			employee_no asc
 	</select>
 	
-	<update id="rereregister" parameterType="Employee">
+	<update id="infoRegister" parameterType="Employee">
 		update 
 			employees
 		set

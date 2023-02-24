@@ -166,17 +166,11 @@ public class HrController {
 	
 	
 	@PostMapping("/re-register")		// 인사정보재등록
-	public String rereregister(@AuthenticatedUser LoginEmployee LoginEmployee, Model model) {
+	public String infoRegister(@AuthenticatedUser LoginEmployee LoginEmployee, Model model) {
 		
-		if ("ROLE_ADMIN".equals(LoginEmployee.getRoleName())) {
-			List<Employees> employees = employeeService.getAllEmployee("Y");
-			model.addAttribute("employees", employees);
-		} else {
-			Employees employees = employeeService.getEmployeesByNo(LoginEmployee.getNo());
-			model.addAttribute("emp", employees);
-		}
 		
-		return "hr/re-register";
+		
+		return "redirect:/hr/re-register";
 	}
 	
 	
