@@ -11,7 +11,7 @@
 <style>
 	.table {
 		display: block;
-		max-height: 420px; 
+		max-height: 430px; 
 		overflow-y: scroll;
 		white-space: nowrap;   <%-- 자식 엘리먼트가 한줄로 정렬되게 하는 요소 --%>
 	}
@@ -164,10 +164,16 @@
 										<td><input type="text" size="6" id="longterm-insurance"/></td>
 									</tr>
 									<tr>
-										<td>출장비</td>
-										<td><input type="text" size="6" id="business-salary"/></td>
+										<td>보육수당</td>
+										<td><input type="text" size="6" id="care-salary"/></td>
 										<td>고용보험</td>
 										<td><input type="text" size="6" id="employment-insurance"/></td>
+									</tr>
+									<tr>
+										<td>출장비</td>
+										<td><input type="text" size="6" id="business-salary"/></td>
+										<td></td>
+										<td></td>
 									</tr>
 									<tr>
 										<td>상여금</td>
@@ -276,10 +282,12 @@ $(function() {
 				$("#holiday-salary").val(holidaySalary);
 				let longtermInsurance = new Number(salary.longtermInsurance).toLocaleString();
 				$("#longterm-insurance").val(longtermInsurance);
-				let businessSalary = new Number(salary.businessSalary).toLocaleString();
-				$("#business-salary").val(businessSalary);
+				let careSalary = new Number(salary.careSalary).toLocaleString();
+				$("#care-salary").val(careSalary);
 				let employmentInsurance = new Number(salary.employmentInsurance).toLocaleString();
 				$("#employment-insurance").val(employmentInsurance);
+				let businessSalary = new Number(salary.businessSalary).toLocaleString();
+				$("#business-salary").val(businessSalary);
 				let rewardSalary = new Number(salary.rewardSalary).toLocaleString();
 				$("#reward-salary").val(rewardSalary);
 				let totalSalary = new Number(salary.totalSalary).toLocaleString();
@@ -319,8 +327,9 @@ $(function() {
 		$("#health-insurance").val(0);
 		$("#holiday-salary").val(0);
 		$("#longterm-insurance").val(0);
-		$("#business-salary").val(0);
+		$("#care-salary").val(0);
 		$("#employment-insurance").val(0);
+		$("#business-salary").val(0);
 		$("#reward-salary").val(0);
 		$("#total-salary").val(0);
 		$("#deduction-salary").val(0);
@@ -330,21 +339,22 @@ $(function() {
 	// 자동계산
 	$("#auto-calculate").click(function() {
 		let baseSalary = parseInt($("#base-salary").val().replaceAll(",", ""));
+		let mealSalary = parseInt($("#meal-salary").val().replaceAll(",", ""));
 		let overtimeSalary = parseInt($("#overtime-salary").val().replaceAll(",", ""));
 		let nightSalary = parseInt($("#night-salary").val().replaceAll(",", ""));
 		let holidaySalary = parseInt($("#holiday-salary").val().replaceAll(",", ""));
-		let rewardSalary = parseInt($("#reward-salary").val().replaceAll(",", ""));
-		let mealSalary = parseInt($("#meal-salary").val().replaceAll(",", ""));
+		let careSalary = parseInt($("#care-salary").val().replaceAll(",", ""));
 		let businessSalary = parseInt($("#business-salary").val().replaceAll(",", ""));
+		let rewardSalary = parseInt($("#reward-salary").val().replaceAll(",", ""));
 		let incomeTax = parseInt($("#income-tax").val().replaceAll(",", ""));
 		let residenceTax = parseInt($("#residence-tax").val().replaceAll(",", ""));
 		let pension = parseInt($("#national-pension").val().replaceAll(",", ""));
 		let healthInsurance = parseInt($("#health-insurance").val().replaceAll(",", ""));
 		let longtermInsurance = parseInt($("#longterm-insurance").val().replaceAll(",", ""));
 		let employmentInsurance = parseInt($("#employment-insurance").val().replaceAll(",", ""));
-		$("#total-salary").val((baseSalary + mealSalary + overtimeSalary + nightSalary + holidaySalary + businessSalary + rewardSalary).toLocaleString());
+		$("#total-salary").val((baseSalary + mealSalary + overtimeSalary + nightSalary + holidaySalary + careSalary + businessSalary + rewardSalary).toLocaleString());
 		$("#deduction-salary").val((incomeTax + residenceTax + pension + healthInsurance + healthInsurance + employmentInsurance).toLocaleString());
-		let totalSalary = baseSalary + mealSalary + overtimeSalary + nightSalary + holidaySalary + businessSalary + rewardSalary;
+		let totalSalary = baseSalary + mealSalary + overtimeSalary + nightSalary + holidaySalary + careSalary + businessSalary + rewardSalary;
 		let deductionSalary = incomeTax + residenceTax + pension + healthInsurance + healthInsurance + employmentInsurance;
 		$("#real-salary").text((totalSalary-deductionSalary).toLocaleString());
 	})
@@ -379,12 +389,13 @@ $(function() {
 			endDate : $("input[name=enddate]").val(),
 			payDate : $("input[name=paydate]").val(),
 			baseSalary : $("#base-salary").val().replaceAll(",", ""),
+			mealSalary : $("#meal-salary").val().replaceAll(",", ""),
 			overtimeSalary : $("#overtime-salary").val().replaceAll(",", ""),
 			nightSalary : $("#night-salary").val().replaceAll(",", ""),
 			holidaySalary : $("#holiday-salary").val().replaceAll(",", ""),
-			rewardSalary : $("#reward-salary").val().replaceAll(",", ""),
-			mealSalary : $("#meal-salary").val().replaceAll(",", ""),
+			careSalary : $("#care-salary").val().replaceAll(",",""),
 			businessSalary : $("#business-salary").val().replaceAll(",", ""),
+			rewardSalary : $("#reward-salary").val().replaceAll(",", ""),
 			incomeTax : $("#income-tax").val().replaceAll(",", ""),
 			residenceTax : $("#residence-tax").val().replaceAll(",", ""),
 			pension : $("#national-pension").val().replaceAll(",", ""),
@@ -448,7 +459,7 @@ $(function() {
 					let realSalary = new Number(updatedSalary.realSalary).toLocaleString();
 					selectedRealSalary.text(realSalary);
 					
-					let totalSalary2 = new Number(salary.totalSalary).toLocaleString();            // 변수명 짓기 어렵다.. 저장버튼 클릭하면 2번째 테이블 지급총액 변경
+					let totalSalary2 = new Number(salary.totalSalary).toLocaleString();            // 저장버튼 클릭하면 2번째 테이블 지급총액 변경
 					$("#total-salary").val(totalSalary);
 					let deductionSalary2 = new Number(salary.deductionSalary).toLocaleString();
 					$("#deduction-salary").val(deductionSalary);
@@ -486,8 +497,9 @@ $(function() {
 					$("#health-insurance").val("");
 					$("#holiday-salary").val("");
 					$("#longterm-insurance").val("");
-					$("#business-salary").val("");
+					$("#care-salary").val("");
 					$("#employment-insurance").val("");
+					$("#business-salary").val("");
 					$("#reward-salary").val("");
 					$("#total-salary").val("");
 					$("#deduction-salary").val("");
@@ -495,6 +507,8 @@ $(function() {
 					selectedTotalSalary.text("0"); 
 					selectedDeductionSalary.text("0");
 					selectedRealSalary.text("0");
+					
+					generateTotalSalary();
 				}
 			})
 		}
@@ -503,7 +517,7 @@ $(function() {
 	// 저장과 동시에 합계 출력하기
 	function generateTotalSalary() {
 		
-		let total1 = 0;               // 합계 출력하기
+		let total1 = 0;              
 		$("#table-salaries tbody td:nth-child(4)").each(function(index, td) {
 			let text = $(td).text().replaceAll(",",'');
 			total1 += parseInt(text);

@@ -1,6 +1,6 @@
 package com.last.web.contoller;
 
-import java.util.List; 
+import java.util.List;  
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -123,22 +123,29 @@ public class SalaryController {
 		return "salary/salarybook";
 	}
 	
-	@GetMapping("/salaryperiod")      // 기간별 급여현황 - 급여총계
+	@GetMapping("/salaryperiod")      // 기간별 급여현황 - 급여총계, 급여상세내역
 	public String salaryperiod(@RequestParam(name="startdate", required=false) String startdate, 
 			 				   @RequestParam(name="enddate", required=false) String enddate, Model model) {
+		
 		if (startdate != null && enddate != null) {
 			List<SalaryPeriodDto> periodDtoLists = salaryService.getPeriodDtoLists(startdate, enddate);
 			SalaryPeriodSumDto periodSumDto = new SalaryPeriodSumDto();
 			periodSumDto.setSalaryPeriodDtos(periodDtoLists);
 			model.addAttribute("SalaryPeriodSumDto", periodSumDto);
+			
+			List<SalaryDto> periodDetailLists = salaryService.getPeriodDetails(startdate, enddate);
+			
+			SalaryBookDto bookDto = new SalaryBookDto();
+			bookDto.setSalaryDtoLists(periodDetailLists);
+			model.addAttribute("periodDetailDtos", bookDto);
 		}	
 		return "salary/salaryperiod";
 	}
 	
 	@GetMapping("/national-pension")      // 국민연금 기본정보
 	public String getNationalPension(@RequestParam(name="baseYear", required=false) String baseYear, 
-								  @RequestParam(name="opt", required=false) String opt, 
-								  @RequestParam(name="keyword", required=false) String keyword, Model model) {
+									 @RequestParam(name="opt", required=false) String opt, 
+									 @RequestParam(name="keyword", required=false) String keyword, Model model) {
 		if (baseYear != null) {
 			List<SalaryDto> salaryDtoInfos = salaryService.getSalaryDtoInfos(baseYear, opt, keyword);
 			model.addAttribute("SalaryDtos", salaryDtoInfos);

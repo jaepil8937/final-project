@@ -82,8 +82,8 @@
 							<table>
 								<thead>
 									<tr>
-										<th style="background-color: #c0c0c0">사원번호</th>
-										<th style="background-color: #c0c0c0">성명</th>
+										<th style="background-color: lightgray">사원번호</th>
+										<th style="background-color: lightgray">성명</th>
 										<th>부서</th>
 										<th>직책</th>
 										<th>입사일</th>
@@ -108,14 +108,14 @@
 									<c:choose>
 										<c:when test="${empty SalaryBookDto }">
 											<tr>
-												<td colspan="20" class="text-center">급여 내역이 존재하지 않습니다.</td>
+												<td colspan="20" class="text-center">해당 정보가 존재하지 않습니다.</td>
 											</tr>
 										</c:when>
 										<c:otherwise>
 											<c:forEach var="salaryDto" items="${SalaryBookDto.salaryDtoLists }">	
 												<tr>
-													<td style="background-color: #c0c0c0; font-weight: bold">${salaryDto.employeeNo }</td>
-													<td style="background-color: #c0c0c0; font-weight: bold">${salaryDto.name }</td>
+													<td style="background-color: lightgray; font-weight: bold">${salaryDto.employeeNo }</td>
+													<td style="background-color: lightgray; font-weight: bold">${salaryDto.name }</td>
 													<td>${salaryDto.deptName }</td>
 													<td>${salaryDto.positionName }</td>
 													<td>${salaryDto.hireDate }</td>
@@ -141,7 +141,7 @@
 								</tbody>	
 								<tfoot>
 									<tr>
-										<th colspan="2" style="background-color: #c0c0c0">합 계</th>
+										<th colspan="2" style="background-color: lightgray">합 계</th>
 										<th></th>
 										<th></th>
 										<th></th>

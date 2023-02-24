@@ -1,6 +1,6 @@
 package com.last.mapper;
 
-import java.util.List;
+import java.util.List; 
 import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
@@ -34,10 +34,11 @@ public interface SalaryMapper {
 	SalaryDto getSalaryDetailDto(Map<String, Object> param);
 	// 기간별 급여현황 - 급여총계
 	List<SalaryPeriodDto> getPeriodDtoLists(Map<String, Object> param);
+	// 기간별 급여현황 - 급여상세내역
+	List<SalaryDto> getPeriodDetails(Map<String, Object> param);
 	// 국민연금, 건강보험, 고용보험 기본정보
 	List<SalaryDto> getSalaryDtoInfos(Map<String, Object> param);
 	// 국민연금, 건강보험, 고용보험 납입내역
 	List<SalaryContribution> getContributionDetails(Map<String, Object> param); 
-	
 	
 }

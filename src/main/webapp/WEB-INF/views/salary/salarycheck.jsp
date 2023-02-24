@@ -175,13 +175,20 @@
 							</tr>
 							<tr>
 								<td>6</td>
-								<td>출장비</td>
-								<td id="business-salary"></td>
+								<td>보육수당</td>
+								<td id="care-salary"></td>
 								<td>고용보험</td>
 								<td id="employment-insurance"></td>
 							</tr>
 							<tr>
 								<td>7</td>
+								<td>출장비</td>
+								<td id="business-salary"></td>
+								<td></td>
+								<td></td>
+							</tr>
+							<tr>
+								<td>8</td>
 								<td>상여금</td>
 								<td id="reward-salary"></td>
 								<td></td>
@@ -240,10 +247,12 @@ $(function() {
 			$("#holiday-salary").text(holidaySalary);
 			let longtermInsurance = new Number(salary.longtermInsurance).toLocaleString()
 			$("#longterm-insurance").text(longtermInsurance);
-			let businessSalary = new Number(salary.businessSalary).toLocaleString()
-			$("#business-salary").text(businessSalary);
+			let careSalary = new Number(salary.careSalary).toLocaleString();
+			$("#care-salary").text(careSalary);
 			let employmentInsurance = new Number(salary.employmentInsurance).toLocaleString()
 			$("#employment-insurance").text(employmentInsurance);
+			let businessSalary = new Number(salary.businessSalary).toLocaleString()
+			$("#business-salary").text(businessSalary);
 			let rewardSalary = new Number(salary.rewardSalary).toLocaleString()
 			$("#reward-salary").text(rewardSalary);
 			let totalSalary = new Number(salary.totalSalary).toLocaleString()
@@ -263,8 +272,9 @@ $(function() {
 		$("#health-insurance").text(0);
 		$("#holiday-salary").text(0);
 		$("#longterm-insurance").text(0);
-		$("#business-salary").text(0);
+		$("#care-salary").text(0);
 		$("#employment-insurance").text(0);
+		$("#business-salary").text(0);
 		$("#reward-salary").text(0);
 		$("#total-salary").text(0);
 		$("#deduction-salary").text(0);

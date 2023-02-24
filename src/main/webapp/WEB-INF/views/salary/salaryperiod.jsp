@@ -20,7 +20,7 @@
 		width: 100%;
 	}
 	thead {
-		position: sticky; top:-1px; 
+		position: sticky; top:-1px; z-index: 1;
 		background-color: lightgray; 
 	}
 	tfoot {
@@ -32,6 +32,10 @@
 		padding: 5px;
 		text-align: center;
 	}
+	#detail-table th:first-child, 
+	#detail-table td:first-child {
+		position: sticky; left:0;
+	} 
 </style>
 </head>
 <body>
@@ -67,7 +71,7 @@
 					<form id="salary-search" action="/salary/salaryperiod">
 						<label>급여기간</label> <input type="date" name="startdate" value="${param.startdate }"/> ~ 
 						<input type="date" name="enddate" value="${param.enddate }"/> &nbsp; 
-						<button type="submit" class="btn btn-danger btn-sm" id="btn-search">검색</button>
+						<button type="button" class="btn btn-danger btn-sm" id="btn-search">검색</button>
 					</form>
 				</div>
 			</div>
@@ -93,7 +97,7 @@
 								<c:choose>
 									<c:when test="${empty SalaryPeriodSumDto }">
 										<tr>
-											<td colspan="5" class="text-center">급여 내역이 존재하지 않습니다.</td>
+											<td colspan="5" class="text-center">급여기간을 선택하여 검색해주시기 바랍니다.</td>
 										</tr>
 									</c:when>
 									<c:otherwise>
@@ -132,108 +136,70 @@
 						<table>
 							<thead>
 								<tr>
-									<th>순번</th>
-									<th>지급공제명</th>
-									<th>2023.01</th>
-									<th>2023.02</th>
-									<th>2023.03</th>
-									<th>2023.04</th>
-									<th>2023.05</th>
-									<th>2023.06</th>
+									<th style="background-color: lightgray">기준년월</th>
+									<th>기본급</th>
+									<th>식대</th>
+									<th>연장수당</th>
+									<th>야간수당</th>
+									<th>휴일근무수당</th>
+									<th>보육수당</th>
+									<th>출장비</th>
+									<th>상여금</th>
+									<th>소득세</th>
+									<th>주민세</th>
+									<th>국민연금</th>
+									<th>건강보험</th>
+									<th>장기요양보험</th>
+									<th>고용보험</th>
 								</tr>
 							</thead>  
 							<tbody>
-								<tr>
-									<td>1</td>
-									<td>기본급</td>
-									<td></td>
-									<td></td>
-									<td></td>
-									<td></td>
-									<td></td>
-									<td></td>
-								</tr>
-								<tr>
-									<td>2</td>
-									<td>식대</td>
-									<td></td>
-									<td></td>
-									<td></td>
-									<td></td>
-									<td></td>
-									<td></td>
-								</tr>
-								<tr>
-									<td>3</td>
-									<td>연장수당</td>
-									<td></td>
-									<td></td>
-									<td></td>
-									<td></td>
-									<td></td>
-									<td></td>
-								</tr>
-								<tr>
-									<td>4</td>
-									<td>야간수당</td>
-									<td></td>
-									<td></td>
-									<td></td>
-									<td></td>
-									<td></td>
-									<td></td>
-								</tr>
-								<tr>
-									<td>5</td>
-									<td>휴일근무수당</td>
-									<td></td>
-									<td></td>
-									<td></td>
-									<td></td>
-									<td></td>
-									<td></td>
-								</tr>
-								<tr>
-									<td>6</td>
-									<td>보육수당</td>
-									<td></td>
-									<td></td>
-									<td></td>
-									<td></td>
-									<td></td>
-									<td></td>
-								</tr>
+								<c:choose>
+									<c:when test="${empty periodDetailDtos }">
+										<tr>
+											<td colspan="15">급여기간을 선택하여 검색해주시기 바랍니다.</td>
+										</tr>
+									</c:when>
+									<c:otherwise>
+										<c:forEach var="detailDto" items="${periodDetailDtos.salaryDtoLists }">
+											<tr>
+												<td style="background-color: lightgray"><strong>${detailDto.baseYearMonth }</strong></td>
+												<td><fmt:formatNumber value="${detailDto.baseSalary }"/></td>
+												<td><fmt:formatNumber value="${detailDto.mealSalary }"/></td>
+												<td><fmt:formatNumber value="${detailDto.overtimeSalary }"/></td>
+												<td><fmt:formatNumber value="${detailDto.nightSalary }"/></td>
+												<td><fmt:formatNumber value="${detailDto.holidaySalary }"/></td>
+												<td><fmt:formatNumber value="${detailDto.careSalary }"/></td>
+												<td><fmt:formatNumber value="${detailDto.businessSalary }"/></td>
+												<td><fmt:formatNumber value="${detailDto.rewardSalary }"/></td>
+												<td><fmt:formatNumber value="${detailDto.incomeTax }"/></td>
+												<td><fmt:formatNumber value="${detailDto.residenceTax }"/></td>
+												<td><fmt:formatNumber value="${detailDto.pension }"/></td>
+												<td><fmt:formatNumber value="${detailDto.healthInsurance }"/></td>
+												<td><fmt:formatNumber value="${detailDto.longtermInsurance }"/></td>
+												<td><fmt:formatNumber value="${detailDto.employmentInsurance }"/></td>
+											</tr>
+										</c:forEach>	
+									</c:otherwise>	
+								</c:choose>
 							</tbody>
 							<tfoot>
 								<tr>
-									<th>지급합계</th>
-									<th></th>
-									<th></th>
-									<th></th>
-									<th></th>
-									<th></th>
-									<th></th>
-									<th></th>
-								</tr>
-								<tr>
-									<th>공제합계</th>
-									<th></th>
-									<th></th>
-									<th></th>
-									<th></th>
-									<th></th>
-									<th></th>
-									<th></th>
-								</tr>
-								<tr>
-									<th>실지급합계</th>
-									<th></th>
-									<th></th>
-									<th></th>
-									<th></th>
-									<th></th>
-									<th></th>
-									<th></th>
+									<th style="background-color: lightgray">합 계</th>
+									<th><fmt:formatNumber value="${periodDetailDtos.baseSalaryTtl }"/></th>
+									<th><fmt:formatNumber value="${periodDetailDtos.mealSalaryTtl }"/></th>
+									<th><fmt:formatNumber value="${periodDetailDtos.overtimeSalaryTtl }"/></th>
+									<th><fmt:formatNumber value="${periodDetailDtos.nightSalaryTtl }"/></th>
+									<th><fmt:formatNumber value="${periodDetailDtos.holidaySalaryTtl }"/></th>
+									<th><fmt:formatNumber value="${periodDetailDtos.careSalaryTtl }"/></th>
+									<th><fmt:formatNumber value="${periodDetailDtos.businessSalaryTtl }"/></th>
+									<th><fmt:formatNumber value="${periodDetailDtos.rewardSalaryTtl }"/></th>
+									<th><fmt:formatNumber value="${periodDetailDtos.incomeTaxTtl }"/></th>
+									<th><fmt:formatNumber value="${periodDetailDtos.residenceTaxTtl }"/></th>
+									<th><fmt:formatNumber value="${periodDetailDtos.pensionTtl }"/></th>
+									<th><fmt:formatNumber value="${periodDetailDtos.healthInsuranceTtl }"/></th>
+									<th><fmt:formatNumber value="${periodDetailDtos.longtermInsuranceTtl }"/></th>
+									<th><fmt:formatNumber value="${periodDetailDtos.employmentInsuranceTtl }"/></th>
 								</tr>
 							</tfoot>
 						</table>
@@ -246,6 +212,21 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
 <script>
+$(function() {
+	$("#btn-search").click(function() {
+		let startdate = $("input[name=startdate]").val();
+		if (startdate == "") {
+			alert("급여시작기간을 선택하세요.");
+			return false;
+		}
+		let enddate = $("input[name=enddate]").val();
+		if (enddate == "") {
+			alert("급여마감기간을 선택하세요.");
+			return false;
+		}
+		$("#salary-search").trigger("submit");
+	})	
+})
 </script>
 </body>
 </html>
