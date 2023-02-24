@@ -48,7 +48,8 @@ public interface EmployeeMapper {
 	
 	void insertEmployees(Employees employees);
 	Employees getEmployeesByNo(int employeeNo);
-
+	
+	void infoRegister(Employees employees);
 
 }
 
