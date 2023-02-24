@@ -47,9 +47,9 @@
 
   	<insert id="insertholidays" parameterType="Holiday">
   		insert into holidays
-  			(base_date, name, date_type, holiday_type)
+  			(work_year, base_date, name, date_type, holiday_type)
   		values
-  			(#{baseDate}, #{name}, #{dateType}, #{holidayType})
+  			(to_char(#{baseDate},'yyyy'), #{baseDate}, #{name}, #{dateType}, #{holidayType})
   	</insert>
   	
   	<!-- 

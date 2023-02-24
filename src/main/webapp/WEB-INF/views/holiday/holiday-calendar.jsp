@@ -65,33 +65,11 @@
 					</div>
 				</div>
 				<hr>
-				<div class="row" style="margin-top: 24px;">
-					<div class="shadow-none p-3 mb-5 bg-light rounded">
-						<div class="container text-center">
-							<form id="" method="get" action="/holiday/calendar">
-								<div class="row">
-									<div class="col-3">
-										<label for="start" style="padding-top: 12px;">근무년월: <input
-											type="date" id="" name="workdate" value="" min="2023-01-01"
-											max="2023-12-31">
-										</label>
-									</div>
-									<div class="col">
-										<p style="padding-top: 7px;">
-											<button class="btn btn-danger" style="float: right;">조회</button>
-										</p>
-									</div>
-								</div>
-							</form>
-						</div>
-					</div>
-				</div>
 				<div class="row" style="margin-top: 60px;">
 					<div class="col-12">
 						<div id="calendar"></div>
 					</div>
 				</div>
-				<div class="row"></div>
 			</div>
 		</div>
 	</div>
@@ -99,7 +77,7 @@
     <div id="calendarBox">
         <div id="calendar"></div>
     </div>
-	<!-- modal 추가 -->
+	<!-- 휴일정보등록 modal 추가 -->
     <div class="modal" id="calendarModal">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -110,51 +88,101 @@
                 <div class="modal-body">
                     <div class="form-group">
                         <label for="taskId" class="col-form-label">기준일자</label>
-                       		<input type="date" class="form-control" id="calendar_date" name="calendar_date">
+                       		<input type="date" class="form-control" id="calendarDate" name="calendarDate">
                         <label for="taskId" class="col-form-label">일자구분</label>
-	                        <select class="form-select form-select-sm" aria-label=".form-select-sm example" name="dateType">
-								<option selected>무급휴일</option>
-								<option value="1">유급휴일</option>
+	                        <select class="form-select form-select-sm" aria-label=".form-select-sm example" id="dateType" name="dateType">
+								<option value="무급휴일" selected>무급휴일</option>
+								<option value="유급휴일">유급휴일</option>
 							</select>
 						<label for="taskId" class="col-form-label">휴일구분</label>
-	                        <select class="form-select form-select-sm" aria-label=".form-select-sm example" name="holidayType">
-								<option selected>법정공휴일</option>
-								<option value="1">대체공휴일</option>
-								<option value="2">회사공휴일</option>
+	                        <select class="form-select form-select-sm" aria-label=".form-select-sm example" id="holidayType" name="holidayType">
+								<option value="법정공휴일" selected>법정공휴일</option>
+								<option value="대체공휴일">대체공휴일</option>
+								<option value="회사공휴일">회사공휴일</option>
 							</select>
                         <label for="taskId" class="col-form-label">휴일명</label>
-                       	 	<input type="text" class="form-control" id="calendar_content" name="name">
+                       	 	<input type="text" class="form-control" id="calendarContent" name="calendarContent">
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-dark" id="addCalendar">추가</button>
-                    <button type="button" class="btn btn-danger" data-dismiss="modal" id="sprintSettingModalClose">취소</button>
+                    <button type="button" class="btn btn-dark" id="addCalendar">등록</button>
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">취소</button>
                 </div>
             </div>
         </div>
     </div>
-	<script
-		src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
-		crossorigin="anonymous"></script>
-	<script
-		src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
-	<script
-		src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.4/index.global.min.js'></script>
-	<script src="https://momentjs.com/downloads/moment.js"
-		type="text/javascript"></script>
-	<script type="text/javascript">
-	let calendar = new FullCalendar.Calendar(document.getElementById("calendar"), {
+	<!-- 휴일정보 확인 및 수정 modal 추가 -->
+    <div class="modal" id="calendar-info-modal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">휴일정보 확인 및 수정</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="taskId" class="col-form-label">기준일자</label>
+                       		<input type="date" class="form-control" id="calendarDate" name="calendarDate">
+                        <label for="taskId" class="col-form-label">일자구분</label>
+	                        <select class="form-select form-select-sm" aria-label=".form-select-sm example" id="dateType" name="dateType">
+								<option value="무급휴일" selected>무급휴일</option>
+								<option value="유급휴일">유급휴일</option>
+							</select>
+						<label for="taskId" class="col-form-label">휴일구분</label>
+	                        <select class="form-select form-select-sm" aria-label=".form-select-sm example" id="holidayType" name="holidayType">
+								<option value="법정공휴일" selected>법정공휴일</option>
+								<option value="대체공휴일">대체공휴일</option>
+								<option value="회사공휴일">회사공휴일</option>
+							</select>
+                        <label for="taskId" class="col-form-label">휴일명</label>
+                       	 	<input type="text" class="form-control" id="calendarContent" name="calendarContent">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" id="deleteCalendar">삭제</button>
+                </div>
+            </div>
+        </div>
+    </div>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+	<script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.4/index.global.min.js'></script>
+	<script src="https://momentjs.com/downloads/moment.js" type="text/javascript"></script>
+	<script type="text/javascript">	
+		// 휴일 정보 등록 모달 설정
+		let calendarModal = new bootstrap.Modal("#calendarModal");
+		// 휴일 상세정보 모달 설정
+		let calendarInfoModal = new bootstrap.Modal("#calendar-info-modal");
+	
+		let calendar = new FullCalendar.Calendar(document.getElementById("calendar"), {
               locale: 'ko',
               initialView: 'dayGridMonth',
               events: function(info, successCallback, failureCallback) {
               	//console.log(info.start, info.end);
       			refreshEvents(info, successCallback);
       		}, 
+      		eventClick: function(info) {   // 동록된 일정 클릭시 휴일상세정보 모달
+      		
+      			//console.log(info);
+      			let date = info.event.startStr;
+      			let name = info.event.title;
+      			let dateType = info.event.extendedProps.dateType;;
+      			let holidayType = info.event.extendedProps.holidayType;
+      			
+      			$("#calendar-info-modal :input[name=calendarDate]").val(date);
+      			$("#calendar-info-modal :input[name=dateType]").val(dateType);
+      			$("#calendar-info-modal :input[name=holidayType]").val(holidayType);
+      			$("#calendar-info-modal :input[name=calendarContent]").val(name);
+  
+      			calendarInfoModal.show();
+      		
+      			 
+      		},
             <sec:authorize access="hasRole('ADMIN')">  // 휴일등록 모달창 : 관리자만 접근
               dateClick: function(info) {
             	  let clickedDate = info.dateStr;
             	  
-            	  $("#calendar_date").val(clickedDate)
+            	  $("#calendarDate").val(clickedDate)
             	  $("#calendarModal").modal("show");
             	  
             }, 
@@ -174,7 +202,7 @@
                   addEventButton: { // 추가한 버튼 설정
                       text : "휴일 추가",  // 버튼 내용
                       click : function(){ // 버튼 클릭 시 이벤트 추가
-                          $("#calendarModal").modal("show"); // modal 나타내기                        
+                          $("#calendarModal").modal("show"); // modal 나타내기    
                       }
                   }
               }
@@ -183,22 +211,31 @@
           });
           calendar.render();
           
-          $("#addCalendar").on("click",function(){  // modal의 추가 버튼 클릭 시
-              var calendar_date = $("#calendar_date").val();
-              var content = $("#calendar_content").val();
+          $("#addCalendar").on("click",function(){  // modal의 등록 버튼 클릭
+              var calendarDate = $("#calendarDate").val();
+              var dateType = $("#dateType").val();
+              var holidayType = $("#holidayType").val();
+              var content = $("#calendarContent").val();
               
               //내용 입력 여부 확인
-              if(calendar_date == null || calendar_date == ""){
+              if(calendarDate == ""){
                   alert("기준일자를 선택해주세요.");
-              }else if(content == "" || content ==""){
-                  alert("휴일명을 입력해주세요.");
-              }else{ // 정상적인 입력 시
-                  var obj = {
-                   
-                  }//전송할 객체 생성
-
-                  console.log(obj); //서버로 해당 객체를 전달해서 DB 연동 가능
+                  return ;
               }
+              if(content ==""){
+                  alert("휴일명을 입력해주세요.");
+                  return;
+              }
+			
+          	var holiday = {
+          		baseDate: calendarDate,
+          		dateType: dateType,
+          		holidayType: holidayType,
+          		name: content
+          	}
+          	
+          	addHoliday(holiday);
+          	calendarModal.hide();
           });
           
           function refreshEvents(info, successCallback) {
@@ -220,7 +257,27 @@
       			successCallback(events);
       		})
       	}
-     
+          
+         
+       // 새 휴일정보를 서버로 보내고, FullCalenader의 달력에 새 일정정보를 추가한다.
+      	function addHoliday(holiday) {
+      		// ajax로 새 휴일정보를 서버로 보내서 등록시킨다.
+      		$.ajax({
+      			type: 'post',
+      			url: '/holiday/add', 
+      			data: holiday,
+      			dataType: 'json'
+      		})
+      		// done(함수)는 ajax 요청이 성공적으로 완료되면 실행되는 함수를 등록한다.
+      		.done(function(holidayEvent) {
+      			calendar.addEvent(holidayEvent); 
+      			
+      		})
+      		// fail(함수)는 ajax 요청이 실팽하면 실행되는 함수를 등록한다.
+      		.fail(function() {
+      			 
+      		}); 
+      	}
 	</script>
 </body>
 </html>
