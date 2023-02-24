@@ -1,6 +1,6 @@
 package com.last.service;
 
-import java.util.HashMap;
+import java.util.HashMap; 
 import java.util.List;
 import java.util.Map;
 
@@ -133,6 +133,21 @@ public class SalaryService {
 		List<SalaryPeriodDto> periodDtoLists = salaryMapper.getPeriodDtoLists(param);
 		
 		return periodDtoLists;
+	}
+	
+	// 기간별 급여현황 - 급여 상세내역
+	public List<SalaryDto> getPeriodDetails(String startdate, String enddate) {
+		
+		Map<String, Object> param = new HashMap<String, Object>();
+		if (!startdate.isBlank()) {
+			param.put("startdate", startdate);			
+		}
+		if (!enddate.isBlank()) {
+			param.put("enddate", enddate);			
+		}
+		List<SalaryDto> periodDetailLists = salaryMapper.getPeriodDetails(param);
+		
+		return periodDetailLists;
 	}
 	
 	// 국민연금, 건강보험, 고용보험 기본정보

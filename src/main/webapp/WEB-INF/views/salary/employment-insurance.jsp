@@ -143,16 +143,25 @@
 $(function() {
 	
 	// 기준년도 선택
+	const params = new Proxy (new URLSearchParams(window.location.search), {
+		get: (searchParams, prop) => searchParams.get(prop),
+	});
+	
+	let baseYear = params.baseYear || new Date().getFullYear();
 	let currentYear = new Date().getFullYear();
 	
 	for (let count=0; count<10; count++) {
 		
-		let option = `<option value="\${currentYear}"> \${currentYear}년</option>`
+		let option = `<option value="\${currentYear}" \${baseYear == currentYear ? 'selected':''}> \${currentYear}년</option>`
 		$("select[name=baseYear]").append(option);
 		currentYear--;
 	}
 	
+ 	$("select[name=baseYear]").change(function() {
+		$("#salary-search").trigger("submit")
+	}) 
 	
+	// 사원 클릭시
 	$("#employee-info a[data-employee-no]").click(function(event) {
 		
 		let $tbody = $("#payment-detail table tbody").empty();

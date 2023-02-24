@@ -314,6 +314,49 @@
 	 	group by B.EMPLOYEE_NO, B.EMPLOYEE_NAME
 	</select>
 	
+	<!-- 기간별 급여현황 - 급여 상세내역 -->
+	<select id="getPeriodDetails" parameterType="map" resultType="salaryDto">
+		with months 
+		as (select to_char(add_months(to_date(#{startdate}), level-1), 'yyyy-mm') baseYearMonth
+		from dual
+		connect by add_months(to_date(#{startdate}), level-1) &lt;=  to_date(#{enddate}))
+		select  A.baseYearMonth baseYearMonth, 
+		        nvl(B.baseSalary, 0) baseSalary, 
+		        nvl(B.mealSalary, 0) mealSalary, 
+		        nvl(B.overtimeSalary, 0) overtimeSalary, 
+		        nvl(B.nightSalary, 0) nightSalary,
+		        nvl(B.holidaySalary, 0) holidaySalary,
+		        nvl(B.careSalary, 0) careSalary,
+		        nvl(B.businessSalary, 0) businessSalary,
+		        nvl(B.rewardSalary, 0) rewardSalary,
+		        nvl(B.incomeTax, 0) incomeTax,
+		        nvl(B.residenceTax, 0) residenceTax,
+		        nvl(B.pension, 0) pension,
+		        nvl(B.healthInsurance, 0) healthInsurance,
+		        nvl(B.longtermInsurance, 0) longtermInsurance,
+		        nvl(B.employmentInsurance, 0) employmentInsurance
+		from months A, (select base_year_month, 
+		                       sum(base_salary_ttl) baseSalary, 
+		                       sum(meal_ttl) mealSalary,
+		                       sum(overtime_salary_ttl) overtimeSalary, 
+		                       sum(night_salary_ttl) nightSalary,
+		                       sum(holiday_salary_ttl) holidaySalary,
+		                       sum(care_salary_ttl) careSalary,
+		                       sum(business_salary_ttl) businessSalary,
+		                       sum(reward_salary_ttl) rewardSalary,
+		                       sum(income_tax_ttl) incomeTax,
+		                       sum(residence_tax_ttl) residenceTax,
+		                       sum(pension_ttl) pension,
+		                       sum(health_insurance_ttl) healthInsurance,
+		                       sum(longterm_insurance_ttl) longtermInsurance,
+		                       sum(employment_insurance_ttl) employmentInsurance
+		                from salary_histories
+		                where pay_date >= #{startdate} and pay_date &lt;= #{enddate}
+		                group by base_year_month) B
+		where A.baseYearMonth = B.base_year_month(+)
+		order by A.baseYearMonth asc
+	</select>
+	
 	<!-- 국민연금, 건강보험, 고용보험 기본정보 -->
 	<select id="getSalaryDtoInfos" parameterType="map" resultType="salaryDto">
 		select
@@ -344,6 +387,7 @@
 		 	</if>	
 	 	</where>
 		group by A.EMPLOYEE_NO, B.EMPLOYEE_NAME, C.DEPT_NAME
+		order by A.EMPLOYEE_NO
 	</select>
 	 
 	<!-- 국민연금, 건강보험, 고용보험 납입내역 조회  -->
