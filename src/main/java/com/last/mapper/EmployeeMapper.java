@@ -6,6 +6,7 @@ import java.util.Map;
 import org.apache.ibatis.annotations.Mapper;
 
 import com.last.dto.CertificateDto;
+import com.last.dto.CertificateIssueDto;
 import com.last.dto.EmployeeDto;
 import com.last.dto.EmployeebasicDto;
 import com.last.dto.PersonnelDto;
@@ -24,6 +25,7 @@ public interface EmployeeMapper {
 	List<PersonnelDto> getAllPersonnel(Map<String, Object> param);
 	List<CertificateDto> getAllCertificate(Map<String, Object> param);
 	List<EmployeeDto> getEmployee();
+	CertificateIssueDto getCertificateIssue(int no);
 	
 	Employees getAllEmployeebyNo(int no);
 	HrAppointment getAllAppointment(int no);

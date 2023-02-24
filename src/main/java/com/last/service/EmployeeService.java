@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.last.dto.CertificateDto;
+import com.last.dto.CertificateIssueDto;
 import com.last.dto.EmployeeDto;
 import com.last.dto.EmployeebasicDto;
 import com.last.dto.PersonnelDto;
@@ -48,6 +49,10 @@ public class EmployeeService {
 		return employeeMapper.getAllCertificate(param);
 	}
 	
+	public CertificateIssueDto getCertificateIssue(int no) {		// 증명서신청할때 사원번호를 통해 직원정보를 조회
+		return employeeMapper.getCertificateIssue(no);
+	}
+	
 	public List<EmployeeDto> getEmployee() { 
 		return employeeMapper.getEmployee();
 	}
@@ -84,6 +89,8 @@ public class EmployeeService {
 		employeeMapper.updateAppointment(hrAppointment);
 	}
 
+	
+	
 	public List<Position> getAllPosition() {
 		return employeeMapper.getAllPosition();
 	}

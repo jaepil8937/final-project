@@ -289,6 +289,48 @@
 			
 	</update> -->
 	
+	<select id="getCertificateIssue" parameterType="int" resultType="CertificateIssueDto">		<!-- 증명서신청하는 직원의 정보 -->
+		select
+			E.employee_no			as employeeNo,
+			E.employee_name			as name,
+			E.hobong_grade			as hobong,
+			D.dept_name				as deptName,
+			P.position_name			as positionName,
+			C.request_no			as requestNo,
+			C.request_date			as requestDate
+		from
+			employees E, departments D, positions P, certificate_request_histories C
+		where
+			E.dept_no = D.dept_no
+		and
+			E.position_no = P.position_no
+		and
+			E.employee_no = C.employee_no
+		and
+			E.employee_no = #{value}
+	</select>
+	
+	<!-- <insert id="insertPositions" parameterType="">
+		insert into positions
+			(position_no, position_name, position_base_salary)
+		values
+			(#{positionNo}, #{positionName}, #{positionSalary})
+	</insert>
+	
+	<insert id="insertDepartments" parameterType="">
+		insert into departments
+			(dept_no, dept_name)
+		values
+			(DEPARTMENTS_SEQ.NEXTVAL, #{deptName})
+	</insert>
+	
+	<insert id="insertCertificate" parameterType="">
+		insert into certificate_request_histories
+			(request_no, certificate_type, request_date, publish_date, request_status, purpose, note, request_created_date, request_updated_date, employee_no)
+		values
+			(#{requestNo}, #{type}, #{requestDate}, #{publishDate}, #{status}, #{purpose}, #{note}, #{createdDate}, #{updatedDate}, #{no})
+	</insert> -->
+	
 	<select id="getAllPosition" resultType="Position">
 		select	
 			position_no 		as positionNo, 

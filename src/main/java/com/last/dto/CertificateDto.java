@@ -21,5 +21,5 @@ public class CertificateDto {
 	private Date publishDate;		// 발행일자
 	private String purpose;			// 용도
 	private String status;			// 재직상태
-	
+	private String note;			// 비고
 }
