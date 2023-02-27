@@ -93,7 +93,7 @@
 								<th>입사일자</th>
 								<th>핸드폰</th>
 								<th>e-mail</th>
-								<th>주소</th>
+								<!-- <th>주소</th> -->
 							</tr>
 						</thead>
 						<tbody>
@@ -113,7 +113,7 @@
 											<td class="text-center"><fmt:formatDate value="${employee.hire }" pattern="yyyy-MM-dd"/></td>
 											<td class="text-center">${employee.mobileTel }</td>
 											<td class="text-center">${employee.companyEmail }</td>
-											<td class="text-center">${employee.basicAddress }</td>
+											<!-- <td class="text-center">${employee.basicAddress }</td> -->
 										</tr>
 									</c:forEach>
 								</c:otherwise>
@@ -150,12 +150,9 @@
 							<tr>
 								<td rowspan="4">
 									<img id="dest-image" src="/resources/images/employee/default.jpg" class="img-fluid" alt="...">
-									<input type="file" class="form-control form-control-sm" name="file1">	
 								</td>	
 								<th class="table-secondary text-end">사원번호</th>
 								<td id="emp-no"></td>
-								<th class="table-secondary text-end">비밀번호</th>
-								<td colspan="2"><input type="text" class="form-control form-control-sm"  style="width: 130px;" path="password"/></td>	
 							</tr>
 							<tr>
 								<th class="table-secondary text-end">성명</th>
@@ -170,7 +167,6 @@
 								<input class="form-check-input" type="radio" path="gender" name="flexRadioDefault1" id="flexRadioDefault1" >
   								<label class="form-check-label" for="flexRadioDefault2">여</label>
 								</td>	
-								
 							<tr>
 								<th class="table-secondary text-end">메모</th>
 								<td id="emp-memo" colspan="4"><textarea class="form-control" rows="3" name="memo" path="memo"></textarea></td>
@@ -194,57 +190,44 @@
 							
 							<tr>
 								<th class="table-secondary text-end" rowspan="3">주소</th>
-								<td colspan="5">
+								<td id="emp-homeZipcode" colspan="5" style="height:41px;">
 									<input type="text" class="form-control form-control-sm d-inline-block"  style="width: 130px;" path="zipcode" name="postcode" readonly="readonly" disabled/>
 									<button type="button" class="btn btn-primary btn-sm" id="btn-search-postcode" >주소찾기</button>
 								</td>
 							</tr>
 							<tr>
-								<td colspan="5"><input type="text" class="form-control form-control-sm" name="address1" path="basicAddress" readonly="readonly" disabled /></td>
+								<td id="emp-homeBasicAddress" colspan="5" style="height:41px;"><input type="text" class="form-control form-control-sm" name="address1" path="basicAddress" readonly="readonly" disabled /></td>
 							</tr>
 							<tr>
-								<td colspan="5"><input type="text" class="form-control form-control-sm" name="address2" path="detailAddress"  /></td>
+								<td id="emp-homeDetailAddress" colspan="5" style="height:41px;"><input type="text" class="form-control form-control-sm" name="address2" path="detailAddress"  /></td>
 							</tr>
-							
-							
 							<tr>
-								
 								<th class="table-secondary text-end">재직구분</th>
-								<td><select style="width: 130px;" path="employeeStatus"/>
+								<td id="emp-employeeStatus"><select style="width: 130px;" path="employeeStatus"/>
 									<option>재직</option>
 									<option>휴직</option>
 								</select></td>
 								<th class="table-secondary text-end">보유권한</th>
-								<td colspan="3"><input class="form-check-input" type="radio" name="flexRadioDefault2" id="flexRadioDefault2" checked>
+								<td id="emp-employeeRoleName" colspan="3"><input class="form-check-input" type="radio" name="flexRadioDefault2" id="flexRadioDefault2" checked>
 								<label class="form-check-label" for="flexRadioDefault2">관리자</label>
 								<input class="form-check-input" type="radio" name="flexRadioDefault2" id="flexRadioDefault2" >
   								<label class="form-check-label" for="flexRadioDefault2">직원</label></td>
 							</tr>
 							<tr>
 								<th class="table-secondary text-end">부서</th>
-								<td><input type="text" class="form-control form-control-sm"  style="width: 130px;" path="deptNo" /></td>
+								<td id="emp-deptName"><input type="text" class="form-control form-control-sm"  style="width: 130px;" path="deptNo" /></td>
 								<th class="table-secondary text-end">입사일자</th>
-								<td colspan="3"><input type="date" id="start-date" name="" value="2023-02-03" style="text-align:center; width:130px" path="hireDate"/></td>	
+								<td id="emp-hireDate" colspan="3"><input type="date" id="start-date" name="" value="2023-02-03" style="text-align:center; width:130px" path="hireDate"/></td>	
 							</tr>
 							<tr>
 								<th class="table-secondary text-end">직급</th>
-								<td><input type="text" class="form-control form-control-sm"  style="width: 130px;"/></td>
+								<td id="emp-positionName"><input type="text" class="form-control form-control-sm"  style="width: 130px;"/></td>
 								<th class="table-secondary text-end">퇴사일자</th>
-								<td colspan="3"><input type="date" id="end-date" name="" value="2023-02-03" style="text-align:center; width:130px"/></td>
+								<td id="emp-retirementDate" colspan="3"><input type="date" id="end-date" name="" value="2023-02-03" style="text-align:center; width:130px"/></td>
 							</tr>
 							<tr>
-								<th  class="table-secondary text-end">호봉</th>
-									<td><select style="width: 130px;" path="hobong"/>
-										<option>사업장1</option>
-										<option>사업장2</option>
-										<option>사업장3</option>
-										<option>사업장4</option>
-									</select></td>	
-								<th class="table-secondary text-end">연차생성기준</th>
-								<td colspan="3"><input class="form-check-input" type="radio" name="flexRadioDefault5" id="flexRadioDefault5" checked>
-								<label class="form-check-label" for="flexRadioDefault5">입사일</label>
-								<input class="form-check-input" type="radio" name="flexRadioDefault5" id="flexRadioDefault5" >
-  								<label class="form-check-label" for="flexRadioDefault5">연차기준일</label></td>
+								<th class="table-secondary text-end">호봉</th>
+									<td id="emp-hobong"><select style="width: 130px;" path="hobong"/></td>	
 							</tr>
 						</tbody>
 					</table>
@@ -280,13 +263,24 @@ $(function(){
 			$("#emp-no").text(employee.employeeNo);
 			$("#emp-name").text(employee.name);
 			$("#emp-birthday").text(employee.birthday);
-			$("#emp-gender").text(employee.gender);
+			$("#emp-gender").text(employee.gender == "M" ? "남" : "여");
 			$("#emp-memo").text(employee.memo);
 			$("#emp-comTel").text(employee.comTel);
 			$("#emp-homeTel").text(employee.homeTel);
 			$("#emp-mobileTel").text(employee.mobileTel);
 			$("#emp-comEmail").text(employee.comEmail);
 			$("#emp-extEmail").text(employee.extEmail);
+			$("#emp-employeeStatus").text(employee.employeeStatus == "Y" ? "재직" : "퇴사");
+			$("#emp-employeeRoleName").text(employee.employeeRoleName == "ROLE_EMPLOYEE" ? "직원" : "관리자");
+			$("#emp-deptName").text(employee.deptName);
+			$("#emp-positionName").text(employee.positionName);
+			$("#emp-hireDate").text(employee.hireDate);
+			$("#emp-positionNo").text(employee.positionNo);
+			$("#emp-retirementDate").text(employee.retirementDate);
+			$("#emp-hobong").text(employee.hobong);
+			$("#emp-homeZipcode").text(employee.zipcode);
+			$("#emp-homeBasicAddress").text(employee.basicAddress);
+			$("#emp-homeDetailAddress").text(employee.detailAddress);
 		})
 		modal.show();
 	})

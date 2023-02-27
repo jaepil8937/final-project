@@ -42,7 +42,7 @@
 					<h3><p class="fw-bold">인사발령등록</p></h3>
 				</div>	
 				<div class="col-12 mb-3">
-					<form method="post" action="personnel-register">
+					<form id="form-emp" method="post" action="personnel-register">
 						<input type="hidden" name="employeeNo" />
 						<div class="border p-3 bg-white">
 							<div class="w-100 mb-3">
@@ -167,7 +167,7 @@ $(function() {
 			return false;
 		}
 		
-		$("form").trigger("submit");
+		$("#form-emp").attr("action", "personnel-update").trigger("submit");
 	});
 	
 	$("#btn-appiontment-insert").click(function() {
@@ -196,8 +196,16 @@ $(function() {
 			return false;
 		}
 		
-		$("form").trigger("submit");
+		$("#form-emp").attr("action", "personnel-insert").trigger("submit");
 	});
+	
+	/* $("#btn-appiontment-update").click(function() {
+		$("#form-emp").attr("action", "personnel-update").trigger("submit");
+	});
+	
+	$("#btn-appiontment-insert").click(function() {
+		$("#form-emp").attr("action", "personnel-insert").trigger("submit");
+	}); */
 })
 </script>
 </body>

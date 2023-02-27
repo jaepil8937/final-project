@@ -11,15 +11,19 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.last.dto.CertificateDto;
 import com.last.dto.CertificateIssueDto;
+import com.last.dto.EmployeeDetailDto;
 import com.last.dto.EmployeeDto;
 import com.last.dto.EmployeebasicDto;
 import com.last.dto.PersonnelDto;
+import com.last.exception.ApplicationException;
 import com.last.mapper.EmployeeMapper;
 import com.last.vo.Department;
 import com.last.vo.Employees;
 import com.last.vo.Grades;
 import com.last.vo.HrAppointment;
+import com.last.vo.HrCertifcateRequest;
 import com.last.vo.Position;
+import com.last.web.request.CertificateRequest;
 import com.last.web.request.EmployeeRegisterForm;
 import com.last.web.request.EmployeeRequest;
 
@@ -41,6 +45,10 @@ public class EmployeeService {
 		return employeeMapper.getAllEmployeebyNo(no);
 	}
 	
+	public EmployeeDetailDto getAllEmployeeDetailDto(int no) {		// 사원명부/인사기록에서 사원번호를 통해 직원정보 상세조회
+		return employeeMapper.getAllEmployeeDetailDto(no);
+	}
+	
 	public List<PersonnelDto> getAllPersonnel(Map<String, Object> param) {
 		return employeeMapper.getAllPersonnel(param);
 	}
@@ -57,7 +65,7 @@ public class EmployeeService {
 		return employeeMapper.getEmployee();
 	}
 	
-	public void updatePersonnel(EmployeeRequest form) {
+	public void updatePersonnel(EmployeeRequest form) {		// 인사발령수정
 		Employees employee = employeeMapper.getAllEmployeebyNo(form.getEmployeeNo());
 		
 		//BeanUtils.copyProperties(form, employee);
@@ -89,7 +97,65 @@ public class EmployeeService {
 		employeeMapper.updateAppointment(hrAppointment);
 	}
 
+	public void insertPersonnel(EmployeeRequest form) {		// 인사발령등록
+		HrAppointment hrappointment = employeeMapper.getAllAppointment(form.getEmployeeNo());
+		if (hrappointment != null) {
+			employeeMapper.deleteAppointment(form.getEmployeeNo());
+		}
+		Employees employee = employeeMapper.getAllEmployeebyNo(form.getEmployeeNo());
+
+		if (form.getPositionNo() != 0) {
+			employee.setPositionNo(form.getPositionNo());
+		}
+		if (form.getDeptNo() != 0) {
+			employee.setDeptNo(form.getDeptNo());
+		}
+		employeeMapper.updateEmployees(employee);
+		
+		HrAppointment hrAppointment = new HrAppointment();
+		hrAppointment.setEmployeeNo(form.getEmployeeNo());
+		hrAppointment.setType(form.getType());
+		hrAppointment.setAppointmentDate(form.getAppointmentDate());
+		hrAppointment.setContent(form.getContent());
+		hrAppointment.setNote(form.getNote());
+		employeeMapper.insertAppointment(hrAppointment);
+		
+	}
 	
+	public void insertCertificate(CertificateRequest form) {
+		
+	}
+	
+	public void deleteEmployee(int employeeNo, String password) {
+		Employees employee = employeeMapper.getAllEmployeebyNo(employeeNo);
+		if (employee == null) {
+			throw new ApplicationException("사용자 정보가 존재하지 않아서 탈퇴처리할 수 없습니다.");
+		}
+		if ("Y".equals(employee.getEmployeeStatus())) {
+			throw new ApplicationException("이미 탈퇴처리된 사용자입니다.");
+		}
+		if (!passwordEncoder.matches(password, employee.getPassword())) {
+			throw new ApplicationException("비밀번호가 일치하지 않아서 탈퇴처리 할 수 없습니다.");
+		}
+		employee.setEmployeeStatus("Y");
+		employeeMapper.updateEmployees(employee);
+	}
+	
+	public void changePassword(int employeeNo, String oldPassword, String password) {
+		Employees employee = employeeMapper.getAllEmployeebyNo(employeeNo);
+		if (employee == null) {
+			throw new ApplicationException("사용자 정보가 존재하지 않아서 비밀번호를 변경할 수 없습니다.");
+		}
+		if ("Y".equals(employee.getEmployeeStatus())) {
+			throw new ApplicationException("이미 탈퇴처리된 사용자는 비밀번호를 변경할 수 없습니다.");
+		}
+		if (!passwordEncoder.matches(oldPassword, employee.getPassword())) {
+			throw new ApplicationException("비밀번호가 일치하지 않아서 비밀번호를 변경할 수 없습니다.");
+		}
+		
+		employee.setPassword(passwordEncoder.encode(password));
+		employeeMapper.updateEmployees(employee);
+	}
 	
 	public List<Position> getAllPosition() {
 		return employeeMapper.getAllPosition();

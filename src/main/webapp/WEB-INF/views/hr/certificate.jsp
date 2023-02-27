@@ -72,46 +72,48 @@
 						<thead>
 							<tr class="table-primary text-center">
 								<th></th>
-								<th>신청번호</th>
 								<th>증명서구분</th>
 								<th>신청일자</th>
-								<th>사원번호</th>
 								<th>성명</th>
 								<th>발행상태</th>
 								<th>발행일자</th>
 								<th>용도</th>
-								<th>비고</th>
 							</tr>
 						</thead>
 						<tbody>
 							<c:choose>
 								<c:when test="${empty certificates }">
 									<tr>
-										<td id="item-nothing" colspan="12" class="text-center">목록이 없습니다.</td>
+										<td id="item-nothing" colspan="7" class="text-center">목록이 없습니다.</td>
 									</tr>
 								</c:when> 
 								<c:otherwise>
 									<c:forEach var="certificate" items="${certificates }">
 										<tr class="text-center">
 											<td><input type="checkbox" /></td>
-											<td>${certificate.requestNo }</td>
 											<td>${certificate.type }</td>
 											<td><fmt:formatDate value="${certificate.requestDate }" pattern="yyyy-MM-dd"/></td>
-											<td>${certificate.no }</td>
 											<td>${certificate.name }</td>
-											<td>${certificate.requestStatus }</td>
+											<td>
+												<sec:authorize access="hasAnyRole('ROLE_ADMIN')">
+													<a href="approval?no=100" class="btn btn-primary btn-sm">승인</a>
+													<a href="approval?no=100" class="btn btn-danger btn-sm">반려</a>
+												</sec:authorize>
+												<sec:authorize access="hasAnyRole('ROLE_EMPLOYEE')">
+													<span class="badge text-bg-primary">${certificate.requestStatus }</span>
+												</sec:authorize>
+											</td>
 											<td>${certificate.publishDate }</td>
 											<td>${certificate.purpose }</td>
-											<td>${certificate.note }</td>
 										</tr>
 									</c:forEach>
 								</c:otherwise>
 							</c:choose>
 						</tbody>
 					</table>
-						<div class="modal-footer">
-							<button type="button" id="btn-open-form" class="btn btn-dark float-end">발령등록</button>
-							<button type="button" id="btn-close-form"  class="btn btn-dark float-end">발령취소</button>
+						<div class="modal-footer text-end">
+							<button type="button" id="btn-open-form" class="btn btn-dark ">발령등록</button>
+							<button type="button" id="btn-close-form" class="btn btn-dark ">발령취소</button>
 						</div>
 				</div>
 				<div id="box-register-form" class="row d-none">
@@ -126,8 +128,24 @@
 						<form id="register-form" class="border bg-light p-3" method="post" action="issue">
 							<table class="table table-light text-center align-middle">
 									<tr>
-										<th class="table-primary">신청번호</th>
-										<td><input value="${employee.requestNo }" class="form-control" name="requestNo" readonly/></td>
+										<th class="table-primary">사원번호</th>
+										<td><input value="${employee.employeeNo }" class="form-control" name="employeeNo" disabled/></td>
+										<th class="table-primary">성명</th>
+										<td colspan=""><input value="${employee.name }" class="form-control" name="name" disabled/></td>
+									<tr>
+									<tr>
+										<th class="table-primary">부서</th>
+										<td>
+											<input value="${employee.deptName }" class="form-control" name="deptNo" disabled/>
+										</td>
+										<th class="table-primary">직책</th>
+										<td>
+											<input value="${employee.positionName }" class="form-control" name="positionNo" disabled/>
+										</td>
+										<th class="table-primary">호봉</th>
+										<td><input value="${employee.hobong }" class="form-control" name="hobong" disabled/></td>
+									</tr>
+									<tr>
 										<th class="table-primary">증명서구분</th>
 										<td>
 											<select class="form-select" name="sort">
@@ -140,36 +158,18 @@
 											</select>
 										</td>
 										<th class="table-primary">신청일자</th>
-										<td><input value='<fmt:formatDate value="${employee.requestDate }" pattern="yyyy-MM-dd"/>' type="text" class="form-control" name="" disabled/></td>
-									<tr>
-									<tr>
-										<th class="table-primary">사원번호</th>
-										<td><input value="${employee.employeeNo }" class="form-control" name="employeeNo" readonly/></td>
-										<th class="table-primary">성명</th>
-										<td><input value="${employee.name }" class="form-control" name="name" readonly/></td>
+										<td><input type="date" class="form-control" name="requestDate"/></td>
 										<th class="table-primary">발행일자</th>
 										<td><input type="date" class="form-control" name="publishDate"/></td>
 									</tr>
 									<tr>
-										<th class="table-primary">부서</th>
-										<td>
-											<input value="${employee.deptName }" class="form-control" name="deptNo" readonly/>
-										</td>
-										<th class="table-primary">직책</th>
-										<td>
-											<input value="${employee.positionName }" class="form-control" name="positionNo" readonly/>
-										</td>
-										<th class="table-primary">호봉</th>
-										<td><input value="${employee.hobong }" class="form-control" name="hobong" readonly/></td>
-									</tr>
-									<tr>
 										<th class="table-primary">용도</th>
-										<td class="text-start" colspan="6"><input type="text" class="form-control w-75" name="purpose"/></td>
+										<td class="text-start" colspan="6"><input type="text" class="form-control w-100" name="purpose"/></td>
 									</tr>
-									<tr>
+									<!-- <tr>
 										<th class="table-primary">비고</th>
 										<td class="text-start" colspan="6"><input type="text" class="form-control w-75" name="note"/></td>
-									</tr>
+									</tr> -->
 							</table>
 							<div class="text-end">
 								<button class="btn btn-dark float-end">등록</button>

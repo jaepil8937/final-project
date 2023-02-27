@@ -22,5 +22,5 @@ public class EmployeeRequest {
 	private int positionNo;					// 발령직급
 	private int deptNo;						// 발령부서
 	private String content;					// 발령내용
-	private String note;					// 비고 
+	private String note;					// 비고
 }										

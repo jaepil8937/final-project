@@ -9,7 +9,7 @@
 <title>애플리케이션</title>
 </head>
 <body>
-<c:set var="menu" value="user" />
+<c:set var="menu" value="employee" />
 <%@ include file="../common/navbar.jsp" %>
 <div class="container">
 	<div class="row">
@@ -25,7 +25,7 @@
 					</div>
 				</div>
 			</div>
-			<form class="border bg-light p-3" method="post" action="delete">
+			<form id="form-delete" class="border bg-light p-3" method="post" action="delete">
 				<div class="mb-3">
 					<label class="form-label">비밀번호</label>
 					<input type="password" class="form-control" name="password">
@@ -39,5 +39,19 @@
 </div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+<script type="text/javascript">
+$(function() {
+	$("#form-delete").submit(function() {
+		let password = $("#form-delete :input[name=password]").val();
+		
+		if (password == "") {
+			alert("비밀번호는 필수입력값입니다.");
+			return false;
+		}
+		return true;
+	});
+})
+
+</script>
 </body>
 </html>
