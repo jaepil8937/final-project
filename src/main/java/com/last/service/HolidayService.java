@@ -40,26 +40,6 @@ public class HolidayService {
 		return result;
 	}
 	
-	// 달력 휴일 등록
-	public HolidayEvent insertholidays(Date baseDate, String name, String dateType, String holidayType ) {
-		Holiday holiday = new Holiday();
-		holiday.setBaseDate(baseDate);
-		holiday.setName(name);
-		holiday.setDateType(dateType);
-		holiday.setHolidayType(holidayType);
-		
-		holidayMapper.insertholidays(holiday);
-		
-		HolidayEvent holidayEvent = new HolidayEvent();
-		holidayEvent.setStart(holiday.getBaseDate());
-		holidayEvent.setEnd(holiday.getBaseDate());
-		holidayEvent.setId(String.valueOf(holiday.getBaseDate().getTime()));
-		holidayEvent.setTitle(holiday.getName());
-		holidayEvent.setAllDay(true);
-		
-		return holidayEvent;
-	}
-	
 	// 달력 휴일 정보 조회
 	public List<HolidayEvent> getHolidayEvents(String startDate, String endDate) {
 		List<Holiday> days = holidayMapper.getHolidays(startDate, endDate);
@@ -81,5 +61,28 @@ public class HolidayService {
 		return events;
 	}
 	
+	// 달력 휴일 등록
+	public HolidayEvent insertholidays(Date baseDate, String name, String dateType, String holidayType ) {
+		Holiday holiday = new Holiday();
+		holiday.setBaseDate(baseDate);
+		holiday.setName(name);
+		holiday.setDateType(dateType);
+		holiday.setHolidayType(holidayType);
+		
+		holidayMapper.insertholidays(holiday);
+		
+		HolidayEvent holidayEvent = new HolidayEvent();
+		holidayEvent.setStart(holiday.getBaseDate());
+		holidayEvent.setEnd(holiday.getBaseDate());
+		holidayEvent.setId(String.valueOf(holiday.getBaseDate().getTime()));
+		holidayEvent.setTitle(holiday.getName());
+		holidayEvent.setAllDay(true);
+		
+		return holidayEvent;
+	}
 	
+	// 달력 휴일 삭제
+	public void deleteHolidays(String baseDate) {
+		holidayMapper.deleteHolidays(baseDate);
+	}
 }

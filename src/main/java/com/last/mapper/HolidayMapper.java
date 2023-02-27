@@ -16,10 +16,13 @@ public interface HolidayMapper {
 
 	int getOvertimeHistoriesTotalRows(Map<String, Object> param);
 	
-	// 휴일 일정 등록
+	// 달력 일정 등록
 	void insertholidays(Holiday holiday);
 	
-	// 일정정보 조회
+	// 달력 일정 정보 조회
 	List<Holiday> getHolidays(@Param("startDate") String startDate, @Param("endDate") String ednDate);
+	
+	// 달력 일정 삭제
+	void deleteHolidays(String baseDate);
 
 }
