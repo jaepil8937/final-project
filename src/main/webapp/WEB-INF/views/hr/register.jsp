@@ -82,9 +82,9 @@
 						<tbody>
 						<c:if test="${not empty employees }">
 							<c:forEach var="emp" items="${employees }">
-								<tr data-emp-no="${emp.employeeNo }">
+								<tr>
 									<td>${emp.employeeNo} </td>
-									<td><a href="" class="text-decoration-none">${emp.name} </td>
+									<td><a href="" class="text-decoration-none" data-emp-no="${emp.employeeNo }">${emp.name} </td>
 									<td>${emp.positionName} </td>
 									<td>${emp.deptName} </td>
 									<td><fmt:formatDate value="${emp.hireDate}" /> </td>
@@ -261,7 +261,8 @@
 						<div class="col">
 							<button type="submit" class="btn btn-dark" style="float:right;" >저장</button>
 								<a href="register" class="btn btn-outline-dark" style="float:right; margin-right: 4px;" >삭제</a>
-								<a href="" class="btn btn-outline-dark" style="float:right; margin-right: 4px;" >엑셀업로드</a>
+								<a href="/hr/upload" class="btn btn-outline-dark" style="float:right; margin-right: 4px;" >엑셀업로드</a>
+								<a href="/hr/download" class="btn btn-outline-primary btn-sm">엑셀 다운로드</a>
 						</div>
 					</div>
 			</form>
@@ -279,9 +280,35 @@
 <script type="text/javascript">
 $(function() {
 	
-	$("#table-emp-list tbody tr").click(function() {
+	$("#table-emp-list tbody a").click(function(event) {
+		event.preventDefault();
+		
 		var empNo = $(this).attr("data-emp-no");
-		alert(empNo)
+		
+		$.getJSON("/hr/empInfo", {empNo: empNo}, function(emp) {
+			$(":input[name=employeeNo]").val(emp.employeeNo);
+			$(":input[name=name]").val(emp.name);
+			$(":input[name=memo]").val(emp.memo);
+			$(":input[name=comTel]").val(emp.comTel);
+			$(":input[name=homeTel]").val(emp.homeTel);
+			$(":input[name=mobileTel]").val(emp.mobileTel);
+			$(":input[name=extEmail]").val(emp.extEmail);
+			$(":input[name=comEmail]").val(emp.comEmail);
+			$(":input[name=basicAddress]").val(emp.basicAddress);
+			$(":input[name=detailAddress]").val(emp.detailAddress);
+			$(":input[name=zipcode]").val(emp.zipcode);
+			$(":input[name=employeeStatus]").val(emp.employeeStatus);
+			$(":input[name=deptNo]").val(emp.deptNo);
+			$(":input[name=hobong]").val(emp.hobong);
+			$(":input[name=positionNo]").val(emp.positionNo)
+			
+			$("#dest-image").attr("src", "/resources/images/employee/" + emp.photo);
+			$(":input[name=birthday]").val(emp.birthday);
+			$(":input[name=hireDate]").val(emp.hireDate);
+			$(":input[name=retirementDate]").val(emp.retirementDate);
+			$(":input[name=gender]").val(emp.gender);
+			$(":input[name=employeeRoleName]").val(emp.employeeRoleName);
+		});
 	});
 	
 	// name이 file1이 파일선택 필드의 값이 변경되면 실행되는 콜백함수를 등록한다.
@@ -325,7 +352,7 @@ $(function() {
 	      }
 	    }).open();
 	  });
-	})
+})
 </script>
 </body>
 </html>

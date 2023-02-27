@@ -51,5 +51,8 @@ public interface EmployeeMapper {
 	
 	void infoRegister(Employees employees);
 
+	List<Employees> getAllProducts();
+	List<Map<String, Object>> getAllProductsForMap();
+	void insertEmployees(@Param("employee") List<Map<String, Object>> employees);
 }
 

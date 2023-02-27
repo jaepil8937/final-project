@@ -34,7 +34,7 @@ public class Employees {
 	private String employeeStatus; 		 // 재직상태
 	private String employeeRoleName;	 // 보유권한이름 (관리자,직원)
 	private String memo; 				 // 메모
-	private Date CreatedDate; 			 // 사원정보등록일
+	private Date createdDate; 			 // 사원정보등록일
 	private Date updatedDate; 			 // 사원정보수정일
 	private int deptNo; 				 // 부서번호
 	private int positionNo;				 // 직책번호
