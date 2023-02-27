@@ -42,6 +42,7 @@ import com.last.web.request.EducationRegisterForm;
 import com.last.web.request.EmployeeRegisterForm;
 import com.last.web.request.EmployeeRequest;
 import com.last.web.request.FamilyRegisterForm;
+import com.last.web.view.ExcelParser;
 
 
 @Controller
@@ -283,6 +284,63 @@ public class HrController {
 		employeeService.updateEmployee(employeeRegisterForm);
 		
 		return "redirect:/hr/register" ;
+	}
+	
+
+	
+	@Autowired
+	private ExcelParser excelParser;
+	
+	@GetMapping("/list")
+	public String products(Model model) {
+		List<Employees> employees = employeeService.getAllProducts();
+		model.addAttribute("employees", employees);
+		
+		return "hr/register";
+	}
+	
+	@GetMapping("/empInfo")
+	@ResponseBody
+	public Employees getEmployees(@RequestParam int empNo) {
+		
+		Employees employees = employeeService.getEmployeesByNo(empNo);
+		return employees;
+	}
+	
+	/*
+	 * 상품정보를 엑셀문서로 다운로드 한다.
+	 */
+	@GetMapping(path = "/download", produces = "application/octet-stream")
+	public String download(Model model) {
+		// 엑셀문서 생성에 필요한 정보를 생성한다.
+		List<String> keys = List.of("EMPLOYEE_NO", "EMPLOYEE_NAME", "EMPLOYEE_GENDER", "MOBILE_TEL", "EXTERNAL_EMAIL", "MEMO");
+		List<String> headers = List.of("사원번호", "직원이름", "성별", "핸드폰번호", "외부이메일", "메모");
+		List<Integer> widths = List.of(10, 30, 20, 20, 20, 20);
+		List<Map<String, Object>> items = employeeService.getProducts();
+		
+		model.addAttribute("filename", "직원목록.xlsx");
+		model.addAttribute("keys", keys);
+		model.addAttribute("headers", headers);
+		model.addAttribute("widths", widths);
+		model.addAttribute("items", items);
+		
+		return "excelView";
+	}
+	
+	/*
+	 * 첨부파일로 업로드된 엑셀문서를 분석해서 서비스로 전달해 데이터베이스에 저장시킨다.
+	 */
+	@PostMapping("/upload")
+	public String upload(@RequestParam("xls") MultipartFile multipartFile) throws IOException {
+		
+		if (!multipartFile.isEmpty()) {
+			// 업로드된 첨부파일을 바이너리 데이터로 조회한다.
+			byte[] bytes = multipartFile.getBytes();
+			List<Map<String, Object>> dataList = excelParser.getExcelData(bytes);
+			employeeService.insertEmployees(dataList);
+		}
+		
+		return "redirect:/hr/register";
 	}
 }
 

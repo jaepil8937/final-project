@@ -70,7 +70,7 @@
 								<label>발령부서</label>
 								<select name="deptNo">
 									<option selected="selected" disabled="disabled">선택</option>
-									<option value="100">개발팀</option>
+									<option value="100">기획팀</option>
 									<option value="101">설계팀</option>
 									<option value="102">분석팀</option>
 									<option value="103">디자인팀</option>

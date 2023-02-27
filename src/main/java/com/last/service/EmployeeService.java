@@ -131,8 +131,20 @@ public class EmployeeService {
 		employee.setEmployeeStatus("N"); // 상태N으로 변경
 		
 		employeeMapper.updateEmployees(employee);
+	}
 		
-		
+			
+		public void insertEmployees(List<Map<String, Object>> datas) {
+			employeeMapper.insertEmployees(datas);
+		}
+			
+		public List<Employees> getAllProducts() {
+			return employeeMapper.getAllProducts();
+		}
+			
+		public List<Map<String, Object>> getProducts() {
+			return employeeMapper.getAllProductsForMap();
+		}
 		
 	}
-}
+
