@@ -82,5 +82,13 @@ public class HolidayController {
 		return holidayEvent;		
 	}
 	
+	// 달력 휴일정보 삭제
+	@GetMapping("/delete")
+	@ResponseBody
+	public String deleteHoliday(@RequestParam("baseDate") String baseDate) {
+		
+		holidayService.deleteHolidays(baseDate);
+		return "success";
+	}
 	
 }
