@@ -35,7 +35,7 @@
 		<if test="status == null">
 			and E.employee_status = 'N'
 		</if>
-		<if test="keyword != null">
+		<if test="sort == null and keyword != null">
 			and (E.employee_name like '%' || #{keyword} || '%'
 			or E.home_basic_address like '%' || #{keyword} || '%')
 		</if>
@@ -150,6 +150,39 @@
 			
 	</select>
 
+	<select id="getAllEmployeeDetailDto" parameterType="int" resultType="EmployeeDetailDto">	<!-- 사원명부/인사기록에서 사원번호를 통해 직원정보 상세조회 -->
+		select
+			E.employee_no			as employeeNo,
+			E.employee_name			as name,
+			E.employee_gender		as gender,
+			E.employee_birthday		as birthday,
+			E.memo					as memo,
+			E.company_tel			as comTel,
+			E.home_tel				as homeTel,
+			E.mobile_tel			as mobileTel,
+			E.company_email			as comEmail,
+			E.external_email		as extEmail,
+			E.home_zipcode			as zipcode,
+			E.home_basic_address	as basicAddress,
+			E.home_detail_address	as detailAddress,
+			E.hire_date				as hireDate,
+			E.retirement_date		as retirementDate,
+			E.employee_status		as employeeStatus,
+			E.employee_role_name	as employeeRoleName,
+			E.hobong_grade			as hobong,
+			E.photo					as photo,
+			D.dept_name				as deptName,
+			P.position_name			as positionName
+		from
+			employees E, departments D, positions P
+		where
+			E.dept_no = D.dept_no
+		and
+			E.position_no = P.position_no
+		and
+			employee_no = #{value}
+	</select>
+
 	<select id="getAllEmployeebyNo" parameterType="int" resultType="employee">		<!-- 사원번호로 직원정보 조회 -->
 		select
 			employee_no			as employeeNo,
@@ -192,6 +225,13 @@
 		where
 			employee_no = #{value}
 	</select>
+	
+	<delete id="deleteAppointment" parameterType="int">
+		delete from
+			employee_appointment_histories
+		where
+			employee_no = #{value}
+	</delete>
 	
 	<select id="getCertificateRequest" resultType="HrCertifcateRequest">		<!-- 증명서신청내역 조회 -->
 		select
@@ -243,7 +283,7 @@
 		update
 			departments
 		set
-			dept_name = #{deptName},
+			dept_name = #{deptName}
 		where
 			dept_no = #{deptNo}
 	</update>
@@ -295,41 +335,44 @@
 			E.employee_name			as name,
 			E.hobong_grade			as hobong,
 			D.dept_name				as deptName,
-			P.position_name			as positionName,
-			C.request_no			as requestNo,
-			C.request_date			as requestDate
+			P.position_name			as positionName
 		from
-			employees E, departments D, positions P, certificate_request_histories C
+			employees E, departments D, positions P
 		where
 			E.dept_no = D.dept_no
 		and
 			E.position_no = P.position_no
 		and
-			E.employee_no = C.employee_no
-		and
 			E.employee_no = #{value}
 	</select>
 	
-	<!-- <insert id="insertPositions" parameterType="">
+	<insert id="insertPositions" parameterType="Position">
 		insert into positions
 			(position_no, position_name, position_base_salary)
 		values
 			(#{positionNo}, #{positionName}, #{positionSalary})
 	</insert>
 	
-	<insert id="insertDepartments" parameterType="">
+	<insert id="insertDepartments" parameterType="Department">
 		insert into departments
 			(dept_no, dept_name)
 		values
-			(DEPARTMENTS_SEQ.NEXTVAL, #{deptName})
+			(#{deptNo}, #{deptName})
 	</insert>
 	
-	<insert id="insertCertificate" parameterType="">
+	<insert id="insertAppointment" parameterType="Appointment">
+		insert into employee_appointment_histories
+			(employee_no, appointment_type, appointment_date, appointment_content, appointment_note)
+		values
+			(#{employeeNo}, #{type}, #{appointmentDate}, #{content}, #{note})
+	</insert>
+	
+	<insert id="insertCertificate" parameterType="HrCertifcateRequest">
 		insert into certificate_request_histories
 			(request_no, certificate_type, request_date, publish_date, request_status, purpose, note, request_created_date, request_updated_date, employee_no)
 		values
 			(#{requestNo}, #{type}, #{requestDate}, #{publishDate}, #{status}, #{purpose}, #{note}, #{createdDate}, #{updatedDate}, #{no})
-	</insert> -->
+	</insert>
 	
 	<select id="getAllPosition" resultType="Position">
 		select	

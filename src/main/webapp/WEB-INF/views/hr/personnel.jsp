@@ -65,8 +65,9 @@
 							<strong>인사발령조회</strong>
 						</h6>
 						<div class="float-end">
-							<form>
-								<button type="submit" class="btn btn-dark float-end">발령취소</button>
+							<form method="post" action="personnel">
+								<input type="hidden" name="employeeNo" />
+									<button type="submit" id="btn-delete" class="btn btn-dark float-end">발령취소</button>
 							</form>
 						</div>	
 					</div>
@@ -86,7 +87,6 @@
 								<thead>
 									<tr class="table-primary text-center">
 										<th></th>
-										<th>No</th>
 										<th>발령구분</th>
 										<th>발령일자</th>
 										<th>사원번호</th>
@@ -106,7 +106,6 @@
 											<c:forEach var="personnel" items="${personnels }">
 												<tr class="text-center">
 													<td><input type="checkbox" /></td>
-													<td>1</td>
 													<td>${personnel.type }</td>
 													<td><fmt:formatDate value="${personnel.appointmentDate }" pattern="yyyy-MM-dd"/></td>
 													<td>${personnel.no }</td>
@@ -135,5 +134,14 @@
 </div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+<script type="text/javascript">
+$(function() {
+	$("#btn-delete").click(function() {
+		let empNo = $("input[name=empNo]:checked").val();
+		alert("fkadsf");
+	})
+})
+
+</script>
 </body>
 </html>

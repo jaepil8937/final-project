@@ -19,6 +19,7 @@ public class CertificateIssueDto {
 	private int hobong;			// 호봉
 	private int requestNo;		// 신청번호
 	private Date requestDate;	// 신청일자
+	
 	private String deptName;
 	private String positionName;
 }

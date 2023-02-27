@@ -23,6 +23,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.last.dto.CertificateDto;
 import com.last.dto.CertificateIssueDto;
+import com.last.dto.EmployeeDetailDto;
 import com.last.dto.EmployeeDto;
 import com.last.dto.EmployeebasicDto;
 import com.last.dto.PersonnelDto;
@@ -78,11 +79,11 @@ public class HrController {
 		return "hr/employee-list";
 	}
 	
-	@GetMapping("/detail.json")
+	@GetMapping("/detail.json")		// 사원명부/인사기록에서 사원번호를 통해 직원정보 상세조회
 	@ResponseBody
-	public Employees detail(@RequestParam(name="empNo") int empNo) {
-		Employees employee = employeeService.getAllEmployeebyNo(empNo);
-		return employee;
+	public EmployeeDetailDto detail(@RequestParam(name="empNo") int empNo) {
+		EmployeeDetailDto employeeDetailDto = employeeService.getAllEmployeeDetailDto(empNo);
+		return employeeDetailDto;
 	}
 
 	@GetMapping("/personnel")	// 인사발령등록
@@ -114,9 +115,15 @@ public class HrController {
 		return "hr/personnel-register";
 	}
 	
-	@PostMapping("/personnel-register")		// 인사발령등록 업데이트
+	@PostMapping("/personnel-update")		// 인사발령등록 update
 	public String updatePersonnelRegister(EmployeeRequest form) {
 		employeeService.updatePersonnel(form);
+		return "redirect:personnel";
+	}
+	
+	@PostMapping("/personnel-insert")		// 인사발령등록 insert
+	public String insertPersonnelRegister(EmployeeRequest form) {
+		employeeService.insertPersonnel(form);
 		return "redirect:personnel";
 	}
 	
@@ -146,20 +153,47 @@ public class HrController {
 		return "hr/certificate";
 	}
 	
-	@PostMapping("/issue")		// 증명서 등록
+	@PostMapping("/issue")		// 증명서 등록 insert
 	public String insertCertificate(CertificateRequest form) {
 	//	employeeService.insertCertificate(form);
 		return "redirect:issue";
 	}
 
 	@GetMapping("/delete")		// 회원탈퇴
+	@AuthenticatedUser
 	public String deleteform() {
 		return "hr/delete-form";
 	}
 	
+	@PostMapping("/delete")
+	public String delete(@AuthenticatedUser LoginEmployee loginEmployee, String password) {
+		employeeService.deleteEmployee(loginEmployee.getNo(), password);
+		return "redirect:delete-success";
+	}
+	 
+	@GetMapping("/delete-success")
+	public String deleteSuccess() {
+		return "hr/delete-success";
+	}
+	
 	@GetMapping("/password")		// 비밀번호 변경
+	@AuthenticatedUser
 	public String passwordChangeForm() {
 		return "hr/password-form";
+	}
+	
+	@PostMapping("/password")
+	public String changePassword(@AuthenticatedUser LoginEmployee loginEmployee, 
+			@RequestParam(name = "oldPassword") String oldPassword,
+			@RequestParam(name = "password") String password) {
+		employeeService.changePassword(loginEmployee.getNo(), oldPassword, password);
+		
+		return "redirect:password-success";
+	}
+	
+	@GetMapping("/password-success")
+	public String passwordChangeSuccess() {
+		return "hr/password-success";
 	}
 	
 	@GetMapping("/re-register")		// 인사정보재등록
