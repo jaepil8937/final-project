@@ -26,7 +26,7 @@
 					<h2>일일근태관리</h2>
 			</div>
 			<hr>
-			<form mehod="get" action="/work/dayadmin">
+			<form mehod="get" action="/work/dayadmin" id="form-search">
 				<div class="row mb-3 p-4 bg-light">
 					<div>
 						<label class="form-label"><strong>근무일자: </strong></label>
@@ -159,6 +159,8 @@
 		  	<div class="col">
 				<p>
 					<i class="bi bi-exclamation-circle-fill"></i>
+					출근시간, 퇴근시간을 모두 입력 후 수정이 가능합니다.<br>
+					<i class="bi bi-exclamation-circle-fill"></i>
 					출근시간, 퇴근시간 변경 후 재계산된 시간을 확인하세요.<br>
 					<i class="bi bi-exclamation-circle-fill"></i>
 					출근시간, 퇴근시간 입력 포맷은 시간(2자리), 분(2자리)와 ':'를 같이 입력하시기 바랍니다.
@@ -231,6 +233,37 @@ $(function() {
 	var timeOff = new Date().getTimezoneOffset()*60000; 
 	var today = new Date(now_utc-timeOff).toISOString().split("T")[0];
 	document.getElementById("end-cal").setAttribute("max", today);
+	
+	$("#form-hour").submit(function() {
+		let startTime = $("#form-hour :input[name=startTime]").val();
+		let endTime = $("#form-hour :input[name=endTime]").val();
+			
+		if (startTime == "") {
+			alert("출근시간을 입력해주세요.");
+			return false;
+		}
+		if (endTime == "") {
+			alert("퇴근시간을 입력해주세요.");
+			return false;
+		}
+		return true;
+	});
+	
+	$("#form-search").submit(function() {
+		let startDate = $("#form-search :input[name=startDate]").val();
+		let endDate = $("#form-search :input[name=endDate]").val();
+			
+		if (startDate == "") {
+			alert("시작일자를 지정해주세요.");
+			return false;
+		}
+		if (endDate == "") {
+			alert("종료일자를 지정해주세요.");
+			return false;
+		}
+		return true;
+	});
+	
 });
 </script>
 </body>

@@ -56,23 +56,52 @@
 			working_date desc
 	</select>
 	
-	<select id="getAllAttendancesByEmpNo" parameterType="int" resultType="Attendance">
+	<!-- 월근태관리 사용자목록을 불러옴 -->
+	<select id="getEmployees" resultType="monthlyAttendanceDto">
 		select
-			attendance_no		as no,
-			employee_no 		as empNo, 
-			working_date 		as workingDate, 
-			start_work_time 	as startWorkTime,
-			end_work_time 		as endWorkTime,
-			worked_times		as workedTimes,
-			holiday_work_time	as holidayWorkTime,
-			overtime_worked_times	as overtimeWorkedTimes,
-			night_worked_times	as nightWorkedTimes
+			A.employee_no		as employeeNo,
+			A.employee_name 	as name,
+			B.position_name 	as positionName,
+			C.dept_name			as deptName,
+			D.hobong_grade 		as hobongGrade
 		from
-			employee_attendances
+			employees A,
+			positions B,
+			departments C,
+			grades D
 		where
-			employee_no = #{value}
-		order by
-			working_date desc
+			A.position_No = B.position_No
+			and A.dept_No = C.dept_No
+			and A.hobong_grade = D.hobong_grade
+		order by 
+			employee_no asc
+			
+	</select>
+	
+	<!-- 월근태일수정보 -->
+	<select id="getMonthlyWorkDaysSummary" resultType="DaysSummaryDto">
+		select sum(decode(attendances_type, '정상', 1, 0)) 					as normalWorkedDays,
+		       sum(decode(attendances_type, '연장', 1, '지각/연장근무', 1, 0)) 	as overtimeWorkedDays,
+		       sum(decode(attendances_type, '야근', 1, '지각/야근', 1, 0)) 		as nightWorkedDays,
+		       sum(decode(attendances_type, '조퇴', 1, '지각/조퇴', 1, 0)) 		as leaveEarlyDays,
+		       sum(decode(attendances_type, '지각', 1, '지각/조퇴', 1, '지각/연장근무', 1, '지각/야근', 1,0)) as tardyDays
+		from 
+			employee_attendances
+		where 
+			employee_no = #{employeeNo}
+			and to_char(working_date, 'yyyy-mm') = #{yearMonth}
+	</select>
+	
+	<!-- 월근태시간정보 -->
+	<select id="getMonthlyWorkTimesSummary" resultType="TimesSummaryDto">
+		select sum(worked_times) as totalWorkedTimes, 
+        	   sum(overtime_worked_times) as overtimeWorkedTimes, 
+               sum(night_worked_times) as nightWorkedTimes
+		from 
+			employee_attendances
+		where 
+			employee_no = #{employeeNo}
+			and to_char(working_date, 'yyyy-mm') = #{yearMonth}
 	</select>
 	
 	<select id="getAttendanceByNo" parameterType="int" resultType="AdminAttendanceDto">
@@ -156,62 +185,6 @@
 		order by
 			working_date desc
 		
-	</select>
-	
-	
-	<select id="getAdminAttendancesByEmpNo" parameterType="int" resultType="AdminAttendanceDto">
-		select
-			A.attendance_no		as no,
-			A.working_date		as workingDate,
-			A.start_work_time 	as startWorkTime,
-			A.end_work_time 	as endWorkTime,
-			B.employee_name 	as empName,
-			B.employee_no		as empNo,
-			C.dept_name 		as deptName,
-			D.position_name 	as positionName,
-			A.attendances_type	as attendancesType,
-			A.worked_times		as workedTimes,
-			A.holiday_work_time		as holidayWorkTime,
-			A.overtime_worked_times	as overtimeWorkedTimes,
-			A.night_worked_times	as nightWorkedTimes
-		from
-			employee_attendances A,
-			employees B,
-			departments C,
-			positions D
-		where
-			A.employee_no = #{empNo}	
-			and A.working_date between trunc(sysdate - 1)  and trunc(sysdate + 1)
-			and A.employee_no = B.employee_no
-			and B.dept_no = C.dept_no
-			and B.position_no = D.position_no
-	</select>
-	
-	<select id="getAdminAttendanceByNo" parameterType="int" resultType="AdminAttendanceDto">
-		select
-			A.attendance_no		as no,
-			A.working_date		as workingDate,
-			A.start_work_time 	as startWorkTime,
-			A.end_work_time 	as endWorkTime,
-			B.employee_name 	as empName,
-			B.employee_no		as empNo,
-			C.dept_name 		as deptName,
-			D.position_name 	as positionName,
-			A.attendances_type	as attendancesType,
-			A.worked_times		as workedTimes,
-			A.holiday_work_time		as holidayWorkTime,
-			A.overtime_worked_times	as overtimeWorkedTimes,
-			A.night_worked_times	as nightWorkedTimes
-		from
-			employee_attendances A,
-			employees B,
-			departments C,
-			positions D
-		where
-			A.attendance_no = #{value}	
-			and A.employee_no = B.employee_no
-			and B.dept_no = C.dept_no
-			and B.position_no = D.position_no
 	</select>
 	
 	<!-- 
