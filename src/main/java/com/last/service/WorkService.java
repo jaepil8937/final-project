@@ -1,6 +1,8 @@
 package com.last.service;
 
 import java.text.SimpleDateFormat;
+
+
 import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.HashMap;
@@ -11,11 +13,16 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.last.dto.WorkDaysSummaryDto;
+import com.last.dto.MonthlyAttendanceDto;
 import com.last.dto.WorkAdminAttendanceDto;
-import com.last.dto.WorkMonthlyAttendanceDto;
+import com.last.dto.WorkTimesSummaryDto;
+import com.last.exception.ApplicationException;
 import com.last.mapper.WorkMapper;
 import com.last.utils.Pagination;
+import com.last.vo.Employees;
 import com.last.vo.WorkAttendance;
+import com.last.vo.WorkAttendanceSummary;
 
 @Service
 public class WorkService {
@@ -84,7 +91,7 @@ public class WorkService {
 
 		// 연장, 야근시간계산 수정중
 		if (nowHour < 21 && nowHour > 19) {
-			overHour = nowHour - 19;
+			overHour = nowHour - 18;
 			attendance.setAttendancesType("연장");
 		}
 		if (nowHour > 19 && nowHour > 21) {
@@ -120,13 +127,7 @@ public class WorkService {
 	public List<WorkAttendance> getAllAttendances(int empNo, String startDate, String endDate) {
 		return workMapper.getAllAttendancesByDateRange(empNo, startDate, endDate);
 	}
-
-
-	// 근태번호로 근태정보를 받아오기
-	public WorkAdminAttendanceDto getAdminAttendance(int attendanceNo) {
-		return workMapper.getAdminAttendanceByNo(attendanceNo);
-	}
-
+	
 	// 일일근태관리에 근태정보 불러오기
 	public Map<String, Object> getAllAdminAttendances(Map<String, Object> param) {
 
@@ -161,7 +162,7 @@ public class WorkService {
 
 		int startHour = Integer.parseInt(startTime.substring(0,2)); 
 		int endHour = Integer.parseInt(endTime.substring(0,2)); 
-
+		
 		if (startHour < 9) {
 			if (endHour <= 13) {
 				workHour = endHour - 9 - overHour - nightHour;
@@ -176,7 +177,7 @@ public class WorkService {
 			}
 		} else {
 			if (endHour <= 13) {	// 
-				workHour = endHour - startHour- overHour - nightHour; 
+				workHour = endHour - startHour - overHour - nightHour; 
 				attendance.setAttendancesType("지각/조퇴");	// 지각 & 13시 이전에 조퇴
 
 			} else {
@@ -196,7 +197,7 @@ public class WorkService {
 
 		// 연장, 야근시간계산 둘다 입력되도록 수정하기
 		if (endHour >= 19 && endHour <= 21) {
-			overHour = endHour - 19;
+			overHour = endHour - 18;
 			attendance.setAttendancesType("연장");
 		}
 		
@@ -213,14 +214,22 @@ public class WorkService {
 
 		workMapper.updateAttendance(attendance);
 	}
-	
-	public WorkAdminAttendanceDto getAttendanceByNo(int attendanceNo) {
-		WorkAdminAttendanceDto dto = workMapper.getAttendanceByNo(attendanceNo);
+
+	// 월근태 사원목록을 가져옴
+	public List<MonthlyAttendanceDto> getEmployees() {
+		return workMapper.getEmployees();
+	}
+
+	// 월근태일수
+	public WorkDaysSummaryDto getMonthlyWorkDaysSummary(String yearMonth, int employeeNo) {
+		WorkDaysSummaryDto dto = workMapper.getMonthlyWorkDaysSummary(yearMonth, employeeNo);
 		return dto;
 	}
 
-	public List<WorkMonthlyAttendanceDto> getMonthlyAttendance(int no) {
-		return null;
+	// 월근태시간
+	public WorkTimesSummaryDto getMonthlyWorkTimesSummary(String yearMonth, int employeeNo) {
+		WorkTimesSummaryDto dto = workMapper.getMonthlyWorkTimesSummary(yearMonth, employeeNo);
+		return dto;
 	}
 
 }

@@ -30,14 +30,14 @@
 				<div class="col-4">
 					<a href="/work/startAttendance" onclick="javascript:btnStart()" name="" value="${param.empNo }"
 						class="btn btn-success btn-lg ${isStartAttendanced ? 'disabled' : '' }">출근</a>
-					<a href="/work/endAttendance" onclick="javascript:btnEnd()"
+					<a href="/work/endAttendance" onclick="javascript:btnEnd(event)"
 						class="btn btn-danger btn-lg ${isEndAttendanced ? 'disabled' : ''}">퇴근</a>
 				</div>
 				<div class="col-2" style="text-align: right;" >
 					<b>근무일자:</b>
 				</div>
 				<div class="col-6" text-align:"end" >
-					<form method="get" action="/work/searchAttendances" name="calform">
+					<form method="get" action="/work/searchAttendances" id="form-search" name="calform">
 						<input autocomplete="off" type="date" name="startDate" id="start-cal" value="${param.startDate }">
 						~ <input autocomplete="off" type="date" name="endDate" id="end-cal" value="${param.endDate }">
 						<button type="submit" id="search-btn" class="btn btn-danger btn-sm">조회</button>
@@ -127,11 +127,15 @@
 	    alert('출근완료');
 	}
 	
-	function btnEnd(){
-		if (confirm("퇴근하시겠습니까?")) {
+	function btnEnd(event){
+		var result = confirm("퇴근하시겠습니까?");
+		if (result) {
 			alert("퇴근완료");
+		} else {
+			event.preventDefault();
 		}
-	}
+		 
+ 	}
 $(function() {
 	
 	//end-cal 현재날짜 이후로는 비활성화함
@@ -139,7 +143,21 @@ $(function() {
 	var timeOff = new Date().getTimezoneOffset()*60000; 
 	var today = new Date(now_utc-timeOff).toISOString().split("T")[0];
 	document.getElementById("end-cal").setAttribute("max", today);
-
+		
+	$("#form-search").submit(function() {
+		let startDate = $("#form-search :input[name=startDate]").val();
+		let endDate = $("#form-search :input[name=endDate]").val();
+			
+		if (startDate == "") {
+			alert("시작일자를 지정해주세요.");
+			return false;
+		}
+		if (endDate == "") {
+			alert("종료일자를 지정해주세요.");
+			return false;
+		}
+		return true;
+	});
 })
 </script>
 </body>
