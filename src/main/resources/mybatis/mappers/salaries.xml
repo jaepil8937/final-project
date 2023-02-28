@@ -51,6 +51,8 @@
 	 		<if test="paydate != null">
 		 		and	A.PAY_DATE = #{paydate}
 	 		</if>
+		 	and 
+		 		B.EMPLOYEE_STATUS = 'N'
 	 	</where>
 	 	order by B.EMPLOYEE_NO asc
 	</select>
@@ -149,7 +151,7 @@
 	</select>
 	
 	<!-- 급여계산 - 급여내역 없는 사원의 기본정보 가져오기 -->
-	<select id="getBasicSalaryInfo" parameterType="int" resultType="BankInfo">
+	<select id="getBasicSalaryInfo" parameterType="map" resultType="BankInfo">
 		select
 			employee_no		as employeeNo,
 			base_salary		as baseSalary,
@@ -162,7 +164,11 @@
 		from
 			salary_basic_item_info
 		where
-			employee_no = ${value}
+			employee_no = #{empNo}
+		and 
+			start_date &lt;= #{basemonth}
+		and 
+			end_date >= #{basemonth}  	
 	</select>
 	
 	

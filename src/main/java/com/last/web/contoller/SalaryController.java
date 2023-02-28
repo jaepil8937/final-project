@@ -55,8 +55,8 @@ public class SalaryController {
 	
 	@GetMapping("/basicInfo")     // 급여계산 - 급여내역 없는 사원의 기본정보
 	@ResponseBody
-	public PayBankInfo basicInfo(@RequestParam("empNo") int empNo) {
-		PayBankInfo payBankInfo = salaryService.getBasicSalaryInfo(empNo);
+	public PayBankInfo basicInfo(@RequestParam("empNo") int empNo, @RequestParam("basemonth") String basemonth) {
+		PayBankInfo payBankInfo = salaryService.getBasicSalaryInfo(empNo, basemonth);
 		
 		return payBankInfo;
 	}
@@ -94,9 +94,11 @@ public class SalaryController {
 		
 		if (basemonth != null) {
 			List<SalaryDto> salaryDtoLists = salaryService.getSalaryDtoLists(basemonth, opt, keyword);
-			SalaryTableDto tableDto = new SalaryTableDto();
-			tableDto.setSalaryDtoLists(salaryDtoLists);
-			model.addAttribute("TableDto", tableDto);
+			if (!salaryDtoLists.isEmpty()) {
+				SalaryTableDto tableDto = new SalaryTableDto();
+				tableDto.setSalaryDtoLists(salaryDtoLists);
+				model.addAttribute("TableDto", tableDto);
+			}	
 		}	
 		
 		return "salary/salarycheck";
@@ -110,14 +112,16 @@ public class SalaryController {
 		return salaryDto;
 	}
 	
-	@GetMapping("/salarybook")          // 급여대장
+	@GetMapping("/salarybook")      // 급여대장
 	public String salarybook(@RequestParam(name="basemonth", required=false) String basemonth, Model model) {
 		
 		if (basemonth != null) {
 			List<SalaryDto> salaryDtoLists = salaryService.getSalaryDtoLists(basemonth);
-			SalaryBookDto bookDto = new SalaryBookDto();
-			bookDto.setSalaryDtoLists(salaryDtoLists);
-			model.addAttribute("SalaryBookDto", bookDto);
+			if (!salaryDtoLists.isEmpty()) {
+				SalaryBookDto bookDto = new SalaryBookDto();
+				bookDto.setSalaryDtoLists(salaryDtoLists);
+				model.addAttribute("SalaryBookDto", bookDto);
+			}
 		}
 		
 		return "salary/salarybook";
