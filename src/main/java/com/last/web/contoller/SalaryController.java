@@ -1,5 +1,7 @@
 package com.last.web.contoller;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;  
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -147,22 +149,34 @@ public class SalaryController {
 	}
 	
 	@GetMapping("/national-pension")      // 국민연금 기본정보
-	public String getNationalPension(@RequestParam(name="baseYear", required=false) String baseYear, 
-									 @RequestParam(name="opt", required=false) String opt, 
-									 @RequestParam(name="keyword", required=false) String keyword, Model model) {
+	public String getNationalPension(@RequestParam(name="baseYear", required=false, defaultValue="") String baseYear, 
+									 @RequestParam(name="opt", required=false, defaultValue="") String opt, 
+									 @RequestParam(name="keyword", required=false, defaultValue="") String keyword, Model model) {
 		if (baseYear != null) {
 			List<SalaryDto> salaryDtoInfos = salaryService.getSalaryDtoInfos(baseYear, opt, keyword);
 			model.addAttribute("SalaryDtos", salaryDtoInfos);
-		}	
+		} else {
+			Date now = new Date();
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy");
+			baseYear = sdf.format(now);
+			List<SalaryDto> salaryDtoInfos = salaryService.getSalaryDtoInfos(baseYear, opt, keyword);
+			model.addAttribute("SalaryDtos", salaryDtoInfos);
+		}
 		
 		return "salary/national-pension";
 	}
 	
 	@GetMapping("/health-insurance")      // 건강보험 기본정보
-	public String healthInsurance(@RequestParam(name="baseYear", required=false) String baseYear, 
-								  @RequestParam(name="opt", required=false) String opt, 
-								  @RequestParam(name="keyword", required=false) String keyword, Model model) {
+	public String healthInsurance(@RequestParam(name="baseYear", required=false, defaultValue="") String baseYear, 
+								  @RequestParam(name="opt", required=false, defaultValue="") String opt, 
+								  @RequestParam(name="keyword", required=false, defaultValue="") String keyword, Model model) {
 		if (baseYear != null) {
+			List<SalaryDto> salaryDtoInfos = salaryService.getSalaryDtoInfos(baseYear, opt, keyword);
+			model.addAttribute("SalaryDtos", salaryDtoInfos);
+		} else {
+			Date now = new Date();
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy");
+			baseYear = sdf.format(now);
 			List<SalaryDto> salaryDtoInfos = salaryService.getSalaryDtoInfos(baseYear, opt, keyword);
 			model.addAttribute("SalaryDtos", salaryDtoInfos);
 		}	
@@ -171,12 +185,18 @@ public class SalaryController {
 	}
 	
 	@GetMapping("/employment-insurance")      // 고용보험 기본정보
-	public String employmentInsurance(@RequestParam(name="baseYear", required=false) String baseYear, 
-									  @RequestParam(name="opt", required=false) String opt, 
-									  @RequestParam(name="keyword", required=false) String keyword, Model model) {
+	public String employmentInsurance(@RequestParam(name="baseYear", required=false, defaultValue="") String baseYear, 
+									  @RequestParam(name="opt", required=false, defaultValue="") String opt, 
+									  @RequestParam(name="keyword", required=false, defaultValue="") String keyword, Model model) {
 		if (baseYear != null) {
 		List<SalaryDto> salaryDtoInfos = salaryService.getSalaryDtoInfos(baseYear, opt, keyword);
 		model.addAttribute("SalaryDtos", salaryDtoInfos);
+		} else {
+			Date now = new Date();
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy");
+			baseYear = sdf.format(now);
+			List<SalaryDto> salaryDtoInfos = salaryService.getSalaryDtoInfos(baseYear, opt, keyword);
+			model.addAttribute("SalaryDtos", salaryDtoInfos);
 		}	
 		
 		return "salary/employment-insurance";

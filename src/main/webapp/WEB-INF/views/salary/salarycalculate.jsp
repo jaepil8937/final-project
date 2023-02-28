@@ -446,10 +446,11 @@ $(function() {
 					$("#table-salaries tbody tr.table-primary a").attr('data-salary-calculated', "Y");   
 
 					alert("저장되었습니다.");
-					
 				}
 			})
 		}	
+		
+		// 급여정보 수정하기
 		function updateSalary(){
 			$.ajax({
 				type : 'PUT',
@@ -475,7 +476,6 @@ $(function() {
 					generateTotalSalary();
 					
 					alert("수정되었습니다.");	
-					
 				}
 			})
 		}
@@ -494,28 +494,29 @@ $(function() {
 					$("input[name=startdate]").val("");
 					$("input[name=enddate]").val("");
 					$("input[name=paydate]").val("");
-					$("#base-salary").val("");
-					$("#income-tax").val("");
-					$("#meal-salary").val("");
-					$("#residence-tax").val("");
-					$("#overtime-salary").val("");
-					$("#national-pension").val("");
-					$("#night-salary").val("");
-					$("#health-insurance").val("");
-					$("#holiday-salary").val("");
-					$("#longterm-insurance").val("");
-					$("#care-salary").val("");
-					$("#employment-insurance").val("");
-					$("#business-salary").val("");
-					$("#reward-salary").val("");
-					$("#total-salary").val("");
-					$("#deduction-salary").val("");
-					$("#real-salary").text("");
-					selectedTotalSalary.text("0"); 
-					selectedDeductionSalary.text("0");
-					selectedRealSalary.text("0");
+					$("#base-salary").val(0);
+					$("#income-tax").val(0);
+					$("#meal-salary").val(0);
+					$("#residence-tax").val(0);
+					$("#overtime-salary").val(0);
+					$("#national-pension").val(0);
+					$("#night-salary").val(0);
+					$("#health-insurance").val(0);
+					$("#holiday-salary").val(0);
+					$("#longterm-insurance").val(0);
+					$("#care-salary").val(0);
+					$("#employment-insurance").val(0);
+					$("#business-salary").val(0);
+					$("#reward-salary").val(0);
+					$("#total-salary").val(0);
+					$("#deduction-salary").val(0);
+					$("#real-salary").text(0);
+					selectedTotalSalary.text(0); 
+					selectedDeductionSalary.text(0);
+					selectedRealSalary.text(0);
 					
 					generateTotalSalary();
+					setSalaryBasicInfo(selectedEmployeeNo, selectedMonth);
 					
 					$("#table-salaries tbody tr.table-primary a").attr('data-salary-calculated', "N");
 				}
