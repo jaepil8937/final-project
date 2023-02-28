@@ -157,6 +157,7 @@ $(function() {
 		currentYear--;
 	}
 	
+	// 기준년도 변경하여 검색하기
  	$("select[name=baseYear]").change(function() {
 		$("#salary-search").trigger("submit")
 	}) 

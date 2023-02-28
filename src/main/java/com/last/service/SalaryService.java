@@ -52,9 +52,12 @@ public class SalaryService {
 	}
 	
 	// 급여계산 - 급여내역 없는 사원의 기본정보 가져오기
-	public PayBankInfo getBasicSalaryInfo(int empNo) {
+	public PayBankInfo getBasicSalaryInfo(int empNo, String basemonth) {
 		
-		PayBankInfo payBankInfo = salaryMapper.getBasicSalaryInfo(empNo);
+		Map<String, Object> param = new HashMap<String, Object>();
+		param.put("empNo", empNo);
+		param.put("basemonth", basemonth);
+		PayBankInfo payBankInfo = salaryMapper.getBasicSalaryInfo(param);
 		
 		return payBankInfo;
 	}

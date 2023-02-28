@@ -21,7 +21,7 @@ public interface SalaryMapper {
 	// 급여계산 - 사원 급여 정보 가져오기
 	SalaryDto getCalculatedSalaryDto(Map<String, Object> param);
 	// 급여계산 - 급여내역 없는 사원의 기본정보 가져오기
-	PayBankInfo getBasicSalaryInfo(int empNo);
+	PayBankInfo getBasicSalaryInfo(Map<String, Object> param);
 	// 급여계산 - 입력한 급여 저장하기
 	void insertSalary(SalaryDto salaryDetail);
 	// 급여계산 - 입력한 사원의 급여 반영하기
