@@ -1,10 +1,6 @@
 package com.last.service;
 
-import java.text.SimpleDateFormat;
-
-
 import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -17,12 +13,9 @@ import com.last.dto.WorkDaysSummaryDto;
 import com.last.dto.MonthlyAttendanceDto;
 import com.last.dto.WorkAdminAttendanceDto;
 import com.last.dto.WorkTimesSummaryDto;
-import com.last.exception.ApplicationException;
 import com.last.mapper.WorkMapper;
 import com.last.utils.Pagination;
-import com.last.vo.Employees;
 import com.last.vo.WorkAttendance;
-import com.last.vo.WorkAttendanceSummary;
 
 @Service
 public class WorkService {
