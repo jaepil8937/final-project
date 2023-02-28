@@ -431,6 +431,9 @@
                 <if test="status != null">
                 	and a.employee_status = #{status}
                 </if>
+                <if test="empNo != null">
+                	and a.employee_status = #{status}
+                </if>
                
             order by
 				employee_no asc

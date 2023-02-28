@@ -262,7 +262,7 @@
 							<button type="submit" class="btn btn-dark" style="float:right;" >저장</button>
 								<a href="register" class="btn btn-outline-dark" style="float:right; margin-right: 4px;" >삭제</a>
 								<a href="/hr/upload" class="btn btn-outline-dark" style="float:right; margin-right: 4px;" >엑셀업로드</a>
-								<a href="/hr/download" class="btn btn-outline-primary btn-sm">엑셀 다운로드</a>
+								<button type="button" class="btn btn-outline-primary btn-sm" id="btn-down-xls">엑셀 다운로드</button>
 						</div>
 					</div>
 			</form>
@@ -279,6 +279,11 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
 <script type="text/javascript">
 $(function() {
+	
+	$("#btn-down-xls").click(function() {
+		var empNo = $(":input[name=employeeNo]").val();
+		location.href= "/hr/download?employeeNo=" + empNo;
+	});
 	
 	$("#table-emp-list tbody a").click(function(event) {
 		event.preventDefault();
@@ -306,8 +311,8 @@ $(function() {
 			$(":input[name=birthday]").val(emp.birthday);
 			$(":input[name=hireDate]").val(emp.hireDate);
 			$(":input[name=retirementDate]").val(emp.retirementDate);
-			$(":input[name=gender]").val(emp.gender);
-			$(":input[name=employeeRoleName]").val(emp.employeeRoleName);
+			$(":input[name=gender][value="+emp.gender+"]").prop("checked", true);
+			$(":input[name=employeeRoleName][value="+emp.employeeRoleName+"]").prop("checked", true);
 		});
 	});
 	
