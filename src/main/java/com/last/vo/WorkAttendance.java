@@ -1,6 +1,5 @@
 package com.last.vo;
 
-import java.time.LocalDateTime;
 import java.util.Date;
 
 import org.apache.ibatis.type.Alias;
