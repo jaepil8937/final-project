@@ -18,5 +18,4 @@ public class HolidayEvent {
 	
 	private String dateType;
 	private String holidayType;
-	
 }

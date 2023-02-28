@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.last.dto.HolidayEvent;
 import com.last.dto.OvertimeHistoryDto;
+import com.last.security.AuthenticatedUser;
+import com.last.security.LoginEmployee;
 import com.last.service.HolidayService;
 import com.last.vo.Holiday;
 import com.last.vo.VacationDay;
@@ -30,9 +32,11 @@ public class HolidayController {
 	
 	// 휴일,연장,야간 근무조회
 	@GetMapping("/overtime-history")
-	public String history(@RequestParam(name="month", required = false, defaultValue = "")String month,
+	public String history(@AuthenticatedUser LoginEmployee loginEmployee,
+			@RequestParam(name="month", required = false, defaultValue = "")String month,
 			@RequestParam(name="empNo", required = false, defaultValue = "0") int empNo, 
 			@RequestParam(name="pages", required = false, defaultValue = "1") int pages, Model model) {
+		System.out.println("로그인한 사용자" + loginEmployee);
 		
 	 	Map<String, Object> param = new HashMap<>();
 	 	if (!month.isBlank()) {
@@ -43,7 +47,7 @@ public class HolidayController {
 	 	}
 	 	param.put("pages", pages);
 	 	
-	 	Map<String, Object> result= holidayService.getOvertimeHistories(param);
+	 	Map<String, Object> result= holidayService.getOvertimeHistories(loginEmployee, param);
 	 	model.addAttribute("histories", result.get("dtos"));
 	 	model.addAttribute("pagination", result.get("pagination"));
 	 	

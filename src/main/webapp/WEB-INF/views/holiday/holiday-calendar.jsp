@@ -1,16 +1,12 @@
-<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"
-	trimDirectiveWhitespaces="true"%>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" trimDirectiveWhitespaces="true"%>
 <%@ include file="../common/tags.jsp"%>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link
-	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
-	rel="stylesheet" crossorigin="anonymous">
-<link rel="stylesheet"
-	href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.1/font/bootstrap-icons.css">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.1/font/bootstrap-icons.css">
 <title>애플리케이션</title>
 </head>
 <style>
@@ -63,10 +59,14 @@ select[class="form-select form-select-sm"]:disabled {
   background: white;
 } 
 .fc-h-event .fc-event-title-container {
-    text-align: center;
+    text-align: right;
     font-weight: bold;
 }
-
+.fc-event-title-container{
+color: white;
+background: red;
+border-color:white;
+} 
 </style>
 <body>
 	<c:set var="menu" value="work" />
@@ -142,7 +142,7 @@ select[class="form-select form-select-sm"]:disabled {
                     <div class="form-group">
                         <label for="taskId" class="col-form-label">기준일자</label>
                         	<sec:authorize  access="hasRole('ADMIN')"> 
-                       			<input type="date" class="form-control" id="calendarDate" name="calendarDate">
+                       			<input type="date" class="form-control" id="calendarDate" name="calendarDate" >
                        		</sec:authorize>
                        		<sec:authorize access="hasRole('EMPLOYEE')">
                        			<input type="date" class="form-control" id="calendarDate" name="calendarDate" disabled="disabled" />
@@ -208,9 +208,10 @@ select[class="form-select form-select-sm"]:disabled {
               locale: 'ko',
               initialView: 'dayGridMonth',
               events: function(info, successCallback, failureCallback) {
-              	//console.log(info.start, info.end);
       			refreshEvents(info, successCallback);
-      		}, 
+      		   }, 
+      		   color: 'yellow',
+      		
       		eventClick: function(info) {   // 동록된 일정 클릭시 휴일상세정보 모달
       		
       			//console.log(info);
@@ -272,7 +273,7 @@ select[class="form-select form-select-sm"]:disabled {
               //내용 입력 여부 확인
               if(calendarDate == ""){
                   alert("기준일자를 선택해주세요.");
-                  return ;
+                  return;
               }
               if(content ==""){
                   alert("휴일명을 입력해주세요.");
@@ -360,6 +361,8 @@ select[class="form-select form-select-sm"]:disabled {
       			 
       		}); 
       	}  
+      
+  
 	</script>
 </body>
 </html>
