@@ -6,13 +6,20 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.management.relation.Role;
+
+import org.apache.ibatis.annotations.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.last.dto.HolidayEvent;
 import com.last.dto.OvertimeHistoryDto;
+import com.last.mapper.EmployeeMapper;
 import com.last.mapper.HolidayMapper;
+import com.last.security.AuthenticatedUser;
+import com.last.security.LoginEmployee;
 import com.last.utils.Pagination;
+import com.last.vo.Employees;
 import com.last.vo.Holiday;
 
 @Service
@@ -21,8 +28,13 @@ public class HolidayService {
 	@Autowired
 	private HolidayMapper holidayMapper;
 
-	public Map<String, Object> getOvertimeHistories(Map<String, Object> param) {
-		int pages = (Integer) param.get("pages");
+	public Map<String, Object> getOvertimeHistories(LoginEmployee loginEmployee, Map<String, Object> param) {
+		
+		
+		if("ROLE_EMPLOYEE".equals(loginEmployee.getRoleName())) {
+			param.put("empNo", loginEmployee.getNo());
+		} 
+ 		int pages = (Integer) param.get("pages"); 
 		int totalRows = holidayMapper.getOvertimeHistoriesTotalRows(param);
 		
 		Pagination pagination = new Pagination(pages, totalRows);

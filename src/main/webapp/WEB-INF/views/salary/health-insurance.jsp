@@ -125,7 +125,8 @@
 									<th>납입일자</th>
 									<th>기준소득월액</th>
 									<th>요율(%)</th>
-									<th>납입금액</th>
+									<th>건강보험 <br> 납입금액</th>
+									<th>장기요양보험 <br> 납입금액</th>
 								</tr>
 							</thead>
 							<tbody>
@@ -157,6 +158,7 @@ $(function() {
 		currentYear--;
 	}
 	
+	// 기준년도 변경하여 검색하기
  	$("select[name=baseYear]").change(function() {
 		$("#salary-search").trigger("submit")
 	}) 
@@ -184,6 +186,7 @@ $(function() {
 							<td>\${health.baseIncome.toLocaleString()}</td>
 							<td>\${health.healthEmployeeRate.toLocaleString()}</td>
 							<td>\${health.healthInsurance.toLocaleString()}</td>
+							<td>\${health.longtermInsurance.toLocaleString()}</td>
 						</tr>
 					`;
 					$tbody.append(tr);

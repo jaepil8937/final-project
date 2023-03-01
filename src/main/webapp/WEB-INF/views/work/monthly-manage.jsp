@@ -24,9 +24,10 @@
 			<hr>
 		<div class="row mb-3 p-4 bg-light">
 			<div>
-				<label class="form-label"><strong>근무년월: </strong></label>
-				<input type="month" id="currentMonth" name="month-work" value="" min="" max="2023-12-31" style="width: 130px">
-				<button type="button" class="btn btn-danger" style="float:right;" id="btn-search">조회</button>
+				<form id="form-yearMonth" method="get" action="/work/monthDetail">
+					<label class="form-label"><strong>근무년월: </strong></label>
+					<input type="month" id="currentMonth" name="yearMonth" value="${param.yearMonth }" style="width: 130px">
+				</form>
 			</div>
 		</div>	
 		<div class="row">
@@ -40,12 +41,12 @@
 		<div class="row">
 		<div class="col-6">
 			<div class="card">
-				<div class="card-header" style="font-weight: bold;">월근태 사용정보</div>
+				<div class="card-header" style="font-weight: bold;">사용자정보</div>
 				<div class="card-body">
 				<div class="text-start align="right">
 						<button class="btn btn-secondary btn-sm id="btn-down">월근태엑셀다운로드</button>
 					</div>
-					<table class="table" id="table-month-list">
+					<table class="table" id="table-emp-list">
 						<colgroup>
 								<col width="20%">
 								<col width="18%">
@@ -63,13 +64,15 @@
 							</tr>
 						</thead>
 						<tbody>
+							<c:forEach var="monthlyAttendanceDto" items="${monthlyAttendanceDtos }">
 							<tr>
-								<td>1001</td>
-								<td>홍길동</td>
-								<td>사원</td>
-								<td>개발팀</td>
-								<td>0</td>
+								<td>${monthlyAttendanceDto.employeeNo }</td>
+								<td><a href="" class="text-decoration-none" data-emp-no="${monthlyAttendanceDto.employeeNo }">${monthlyAttendanceDto.name }</a></td>
+								<td>${monthlyAttendanceDto.positionName }</td>
+								<td>${monthlyAttendanceDto.deptName }</td>
+								<td>${monthlyAttendanceDto.hobong }</td>
 							</tr>
+							</c:forEach>
 						</tbody>
 					</table>
 					<div class="text-end">
@@ -77,13 +80,9 @@
 					</div>
 				<p>
 					<i class="bi bi-exclamation-circle-fill"></i>
-					월 근태 정보를 확인하세요.<br>
+					근무년월을 선택하여 근태 정보를 확인하세요.<br>
 					<i class="bi bi-exclamation-circle-fill"></i>
-					총근무일수는 평일근무일수와 휴일근무일수를 합한 일수입니다.<br>
-					<i class="bi bi-exclamation-circle-fill"></i>
-					휴가사용일수는 연차 사용에 반영되는 일수입니다.<br>
-					<i class="bi bi-exclamation-circle-fill"></i>
-					기타휴가일수는 연차 사용에 반영되지 않는 일수입니다.
+					총근무일수는 정상근무, 연장근무, 야간근무를 합한 일수입니다.<br>
 				</p>
 				</div>
 			</div>
@@ -100,24 +99,26 @@
 								<col width="20%">
 							</colgroup>
 						<tbody>
+							
 							<tr>
 								<th>총근무일수</th>
-								<td id="">20</td>
-								<th>평일근무일수</th>
-								<td id="">20</td>
+								<td><span id="total-day"></span> 일</td>
+								<th>정상근무일수</th>
+								<td><span id="normal-day"></span>일</td>
 							</tr>
 							<tr>
-								<th>휴일근무일수</th>
-								<td id="">0</td>
-								<th>휴가사용일수</th>
-								<td id="">0</td>
+								<th>연장근무일수</th>
+								<td><span id="over-day"></span>일</td>
+								<th>야근일수</th>
+								<td><span id="night-day"></span>일</td>
 							</tr>
 							<tr>
-								<th>기타휴가일수</th>
-								<td id="">0</td>
-								<th>결근일수</th>
-								<td id="">0</td>
+								<th>조퇴일수</th>
+								<td><span id="early-day"></span>일</td>
+								<th>지각일수</th>
+								<td><span id="tardy-day"></span>일</td>
 							</tr>
+							
 						</tbody>
 					</table>
 					</div>
@@ -127,31 +128,17 @@
 						<colgroup>
 							<col width="20%">
 							<col width="30%">
-							<col width="20%">
-							<col width="30%">
 						</colgroup>
 						<tbody>
 							<tr>
-								<th>평일연장</th>
-								<td id="">01:00</td>
-								<th>평일야간</th>
-								<td id="">00:00</td>
+								<th>총근무시간</th>
+								<td><span id="total-time"></span>시간</td>
+								<th>연장근무시간</th>
+								<td><span id="over-time"></span>시간</td>
 							</tr>
 							<tr>
-								<th>휴일근로</th>
-								<td id="">00:00</td>
-								<th>휴일연장</th>
-								<td id="">00:00</td>
-							</tr>
-							<tr>
-								<th>휴일야간</th>
-								<td id="">00:00</td>
-								<th>지각</th>
-								<td id="">00:00</td>
-							</tr>
-							<tr>
-								<th>조퇴</th>
-								<td id="">00:00</td>
+								<th>야근시간</th>
+								<td><span id="night-time"></span>시간</td>
 							</tr>
 						</tbody>
 					</table>
@@ -172,6 +159,28 @@
 <script type="text/javascript">
 $(function() {
 	$("#currentMonth").val(new Date().toISOString().slice(0, 7));
+	
+	$("#table-emp-list tbody a").click(function(event) {
+		event.preventDefault();
+		
+		$("#table-emp-list tbody tr").removeClass("table-primary");
+		$(this).closest('tr').addClass("table-primary");
+		let month = $(":input[name='yearMonth']").val();
+		let empNo = $(this).attr("data-emp-no");
+		
+		$.getJSON("/work/monthDetail", {yearMonth: month, empNo: empNo}, function(response) {
+			// response = {'daysDto': {totalWorkedDays:3, normalWorkedDay:2}}
+			$("#total-day").text(response.daysDto.totalDays);
+			$("#normal-day").text(response.daysDto.normalWorkedDays);
+			$("#over-day").text(response.daysDto.overtimeWorkedDays);
+			$("#night-day").text(response.daysDto.nightWorkedDays);
+			$("#early-day").text(response.daysDto.leaveEarlyDays);
+			$("#tardy-day").text(response.daysDto.tardyDays);
+			$("#total-time").text(response.timesDto.totalWorkedTimes);
+			$("#over-time").text(response.timesDto.overtimeWorkedTimes);
+			$("#night-time").text(response.timesDto.nightWorkedTimes);
+		})
+	});
 });
 </script>
 </body>

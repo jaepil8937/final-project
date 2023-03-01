@@ -1,5 +1,7 @@
 package com.last.web.contoller;
 
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.io.File;
 import java.io.IOException;
@@ -10,6 +12,7 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.FileCopyUtils;
@@ -259,7 +262,9 @@ public class HrController {
 	}
 
 	@GetMapping("/order")			// 발령정보
-	public String order() {
+	public String order(EmployeeRequest form) {
+		employeeService.updatePersonnel(form);
+		
 		return "hr/order";
 	}
 
@@ -365,12 +370,23 @@ public class HrController {
 	 * 상품정보를 엑셀문서로 다운로드 한다.
 	 */
 	@GetMapping(path = "/download", produces = "application/octet-stream")
-	public String download(Model model) {
+	public String download(@RequestParam("employeeNo") int employeeNo, Model model) {
 		// 엑셀문서 생성에 필요한 정보를 생성한다.
 		List<String> keys = List.of("EMPLOYEE_NO", "EMPLOYEE_NAME", "EMPLOYEE_GENDER", "MOBILE_TEL", "EXTERNAL_EMAIL", "MEMO");
 		List<String> headers = List.of("사원번호", "직원이름", "성별", "핸드폰번호", "외부이메일", "메모");
 		List<Integer> widths = List.of(10, 30, 20, 20, 20, 20);
-		List<Map<String, Object>> items = employeeService.getProducts();
+		EmployeeDetailDto dto = employeeService.getAllEmployeeDetailDto(employeeNo);
+		
+		List<Map<String, Object>> items = new ArrayList<Map<String,Object>>();
+		Map<String, Object> item = new HashMap<String, Object>();
+		item.put("EMPLOYEE_NO", dto.getEmployeeNo());
+		item.put("EMPLOYEE_NAME", dto.getName());
+		item.put("EMPLOYEE_GENDER", dto.getGender());
+		item.put("MOBILE_TEL", dto.getMobileTel());
+		item.put("EXTERNAL_EMAIL", dto.getExtEmail());
+		item.put("MEMO", dto.getMemo());
+		
+		items.add(item);
 		
 		model.addAttribute("filename", "직원목록.xlsx");
 		model.addAttribute("keys", keys);

@@ -119,7 +119,14 @@
 													<td>${salaryDto.deptName }</td>
 													<td>${salaryDto.positionName }</td>
 													<td>${salaryDto.hireDate }</td>
-													<td>${salaryDto.retirementDate }</td>
+													<c:choose>
+														<c:when test="${empty salaryDto.retirementDate }">
+															<td>-</td>
+														</c:when>
+														<c:otherwise>
+															<td>${salaryDto.retirementDate }</td>
+														</c:otherwise>
+													</c:choose>
 													<td><fmt:formatNumber value="${salaryDto.baseSalary }"/></td>
 													<td><fmt:formatNumber value="${salaryDto.mealSalary }"/></td>
 													<td><fmt:formatNumber value="${salaryDto.overtimeSalary }"/></td>

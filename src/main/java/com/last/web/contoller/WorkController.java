@@ -1,31 +1,28 @@
 package com.last.web.contoller;
 
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.last.dto.WorkAdminAttendanceDto;
-import com.last.dto.WorkMonthlyAttendanceDto;
+import com.last.dto.MonthlyAttendanceDto;
+import com.last.dto.WorkDaysSummaryDto;
+import com.last.dto.WorkTimesSummaryDto;
 import com.last.security.AuthenticatedUser;
 import com.last.security.LoginEmployee;
 import com.last.service.WorkService;
-import com.last.vo.Employees;
 import com.last.vo.WorkAttendance;
-import com.last.vo.WorkAttendanceSummary;
 
 @Controller
 @RequestMapping("/work")
@@ -145,11 +142,25 @@ public class WorkController {
 		return "redirect:/work/dayadmin";
 		}
 	
-	// 월근태상세정보관리
 	@GetMapping("/month")
-	public String monthSetting(@AuthenticatedUser LoginEmployee loginEmployee, Model model) {
-		List<WorkMonthlyAttendanceDto> monthlyAttendanceDtos = workService.getMonthlyAttendance(loginEmployee.getNo());
+	public String getMonthlyAttendance(Model model) {
+		List<MonthlyAttendanceDto> monthlyAttendanceDtos = workService.getEmployees();
+		model.addAttribute("monthlyAttendanceDtos", monthlyAttendanceDtos);
 		return "work/monthly-manage";
+	}
+	
+	@GetMapping("/monthDetail")
+	@ResponseBody
+	public Map<String, Object> getMonthlyAttendanceDetail(@RequestParam("yearMonth") String yearMonth, 
+			@RequestParam("empNo") int employeeNo) {
+		WorkDaysSummaryDto daysDto = workService.getMonthlyWorkDaysSummary(yearMonth, employeeNo);
+		WorkTimesSummaryDto timesDto = workService.getMonthlyWorkTimesSummary(yearMonth, employeeNo);
+
+		Map<String, Object> result = new HashMap<String, Object>();
+		result.put("daysDto", daysDto);
+		result.put("timesDto", timesDto);
+		
+		return result;
 	}
 
 	// 월근태현황
