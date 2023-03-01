@@ -11,6 +11,7 @@ import java.util.Map;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -30,6 +31,7 @@ import com.last.dto.EmployeeDetailDto;
 import com.last.dto.EmployeeDto;
 import com.last.dto.EmployeebasicDto;
 import com.last.dto.PersonnelDto;
+import com.last.exception.ApplicationException;
 import com.last.security.AuthenticatedUser;
 import com.last.security.LoginEmployee;
 import com.last.service.EducationService;
@@ -158,11 +160,23 @@ public class HrController {
 	}
 	
 	@PostMapping("/issue")		// 증명서 등록 insert
-	public String insertCertificate(CertificateRequest form) {
-	//	employeeService.insertCertificate(form);
+	public String insertCertificate(@AuthenticatedUser LoginEmployee loginEmployee, CertificateRequest form) {
+		employeeService.insertCertificate(loginEmployee.getNo(), form);
 		return "redirect:issue";
 	}
 
+	@GetMapping("/approval")
+	public String approval(@RequestParam(name = "no") int no) {
+		employeeService.approval(no);
+		return "redirect:issue";
+	}
+	
+	@GetMapping("/refer")
+	public String refer(@RequestParam(name = "no") int no) {
+		employeeService.refer(no);
+		return "redirect:issue";
+	}
+	
 	@GetMapping("/delete")		// 회원탈퇴
 	@AuthenticatedUser
 	public String deleteform() {
@@ -171,7 +185,13 @@ public class HrController {
 	
 	@PostMapping("/delete")
 	public String delete(@AuthenticatedUser LoginEmployee loginEmployee, String password) {
-		employeeService.deleteEmployee(loginEmployee.getNo(), password);
+		try {
+			employeeService.deleteEmployee(loginEmployee.getNo(), password);
+		} catch (ApplicationException ex) {
+			return "redirect:/hr/delete?error=fail";
+		}
+		
+		SecurityContextHolder.clearContext();
 		return "redirect:delete-success";
 	}
 	 

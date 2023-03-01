@@ -228,6 +228,66 @@
 			employee_no = #{value}
 	</select>
 	
+	<select id="getAllCertficate" parameterType="int" resultType="HrCertifcateRequest">
+		select
+			request_no				as requestNo,
+			certificate_type		as type,
+			request_date			as requestDate,
+			publish_date			as publishDate,
+			request_status			as status,
+			purpose					as purpose,
+			note					as note,
+			request_created_date	as createdDate,
+			request_updated_date	as updatedDate,
+			employee_no				as no
+		from
+			certificate_request_histories
+		where
+			employee_no = #{value}
+	</select>
+	
+	<select id="getCertificatebyNo" parameterType="int" resultType="HrCertifcateRequest">
+		select
+			request_no				as requestNo,
+			certificate_type		as type,
+			request_date			as requestDate,
+			publish_date			as publishDate,
+			request_status			as status,
+			purpose					as purpose,
+			note					as note,
+			request_created_date	as createdDate,
+			request_updated_date	as updatedDate,
+			employee_no				as no
+		from
+			certificate_request_histories
+		where
+			request_no = #{value}
+	</select>
+	
+	<update id="updateCertificatebyNo" parameterType="HrCertifcateRequest">
+		update
+			certificate_request_histories
+		set
+			request_no = #{requestNo},
+			certificate_type = #{type},
+			request_date = #{requestDate},
+			publish_date = #{publishDate},
+			request_status = #{status},
+			purpose = #{purpose},
+			note = #{note},
+			request_updated_date = sysdate,
+			employee_no = #{no}
+		where
+			request_no = #{requestNo}
+	</update>
+	
+	<delete id="deleteCertificate" parameterType="int">
+		delete from
+			certificate_request_histories
+		where
+			employee_no = #{value}
+	</delete>
+	
 	<delete id="deleteAppointment" parameterType="int">
 		delete from
 			employee_appointment_histories
@@ -371,9 +431,9 @@
 	
 	<insert id="insertCertificate" parameterType="HrCertifcateRequest">
 		insert into certificate_request_histories
-			(request_no, certificate_type, request_date, publish_date, request_status, purpose, note, request_created_date, request_updated_date, employee_no)
+			(request_no, certificate_type, request_date, publish_date, request_status, purpose, employee_no)
 		values
-			(#{requestNo}, #{type}, #{requestDate}, #{publishDate}, #{status}, #{purpose}, #{note}, #{createdDate}, #{updatedDate}, #{no})
+			(CERTIFICATE_REQUEST_HISTORIES_SEQ.nextval, #{type}, #{requestDate}, #{publishDate}, #{status}, #{purpose}, #{no})
 	</insert>
 	
 	<select id="getAllPosition" resultType="Position">

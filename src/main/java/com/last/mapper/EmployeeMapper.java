@@ -45,6 +45,12 @@ public interface EmployeeMapper {
 	void insertDepartments(Department department);
 	void insertAppointment(HrAppointment hrAppointment);
 	
+	HrCertifcateRequest getAllCertficate(int no);
+	void deleteCertificate(int no);
+	void insertCertificate(HrCertifcateRequest hrcertificaterequest);
+	
+	HrCertifcateRequest getCertificatebyNo(int no);
+	void updateCertificatebyNo(HrCertifcateRequest hrcertificaterequest);
 	
 	List<Department> getAllDepartment();
 	List<Position> getAllPosition();
