@@ -102,8 +102,8 @@ public class EmployeeService {
 		if (hrappointment != null) {
 			employeeMapper.deleteAppointment(form.getEmployeeNo());
 		}
+		
 		Employees employee = employeeMapper.getAllEmployeebyNo(form.getEmployeeNo());
-
 		if (form.getPositionNo() != 0) {
 			employee.setPositionNo(form.getPositionNo());
 		}
@@ -122,8 +122,29 @@ public class EmployeeService {
 		
 	}
 	
-	public void insertCertificate(CertificateRequest form) {
+	public void insertCertificate(int no, CertificateRequest form) {	// 증명서신청 insert
+		//HrCertifcateRequest hrcertificaterequest = employeeMapper.getAllCertficate(no);
 		
+		HrCertifcateRequest hrcertificaterequest = new HrCertifcateRequest();
+		hrcertificaterequest.setNo(no);
+		hrcertificaterequest.setType(form.getType());
+		hrcertificaterequest.setPublishDate(form.getPublishDate());
+		hrcertificaterequest.setRequestDate(form.getRequestDate());
+		hrcertificaterequest.setStatus("대기");
+		hrcertificaterequest.setPurpose(form.getPurpose());
+		employeeMapper.insertCertificate(hrcertificaterequest);
+	}
+	
+	public void approval(int no) {
+		HrCertifcateRequest hrcertificaterequest = employeeMapper.getCertificatebyNo(no);
+		hrcertificaterequest.setStatus("승인");
+		employeeMapper.updateCertificatebyNo(hrcertificaterequest);
+	}
+	
+	public void refer(int no) {
+		HrCertifcateRequest hrcertificaterequest = employeeMapper.getCertificatebyNo(no);
+		hrcertificaterequest.setStatus("반려");
+		employeeMapper.updateCertificatebyNo(hrcertificaterequest);
 	}
 	
 	public void deleteEmployee(int employeeNo, String password) {

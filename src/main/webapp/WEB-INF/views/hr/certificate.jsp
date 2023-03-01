@@ -72,6 +72,7 @@
 						<thead>
 							<tr class="table-primary text-center">
 								<th></th>
+								<th>사원번호</th>
 								<th>증명서구분</th>
 								<th>신청일자</th>
 								<th>성명</th>
@@ -91,13 +92,14 @@
 									<c:forEach var="certificate" items="${certificates }">
 										<tr class="text-center">
 											<td><input type="checkbox" /></td>
+											<td>${certificate.no }</td>
 											<td>${certificate.type }</td>
 											<td><fmt:formatDate value="${certificate.requestDate }" pattern="yyyy-MM-dd"/></td>
 											<td>${certificate.name }</td>
 											<td>
 												<sec:authorize access="hasAnyRole('ROLE_ADMIN')">
-													<a href="approval?no=100" class="btn btn-primary btn-sm">승인</a>
-													<a href="approval?no=100" class="btn btn-danger btn-sm">반려</a>
+													<a href="approval?no=${certificate.requestNo }" id="btn-approval" class="btn btn-primary btn-sm">승인</a>
+													<a href="refer?no=${certificate.requestNo }" id="btn-refer" class="btn btn-danger btn-sm">반려</a>
 												</sec:authorize>
 												<sec:authorize access="hasAnyRole('ROLE_EMPLOYEE')">
 													<span class="badge text-bg-primary">${certificate.requestStatus }</span>
@@ -148,13 +150,13 @@
 									<tr>
 										<th class="table-primary">증명서구분</th>
 										<td>
-											<select class="form-select" name="sort">
+											<select class="form-select" name="type">
 												<option>선택</option>
-												<option value="proof">재직증명서</option>
-												<option value="career">경력증명서</option>
-												<option value="withholding">원천징수영수증</option>
-												<option value="income">각종근로소득증명서</option>
-												<option value="payslip">급여명세서</option>
+												<option value="재직증명서">재직증명서</option>
+												<option value="경력증명서">경력증명서</option>
+												<option value="원천징수영수증">원천징수영수증</option>
+												<option value="각종근로소득증명서">각종근로소득증명서</option>
+												<option value="급여명세서">급여명세서</option>
 											</select>
 										</td>
 										<th class="table-primary">신청일자</th>
@@ -170,10 +172,10 @@
 										<th class="table-primary">비고</th>
 										<td class="text-start" colspan="6"><input type="text" class="form-control w-75" name="note"/></td>
 									</tr> -->
+								<div class="text-end">
+									<button type="button" id="btn-certificate-insert" class="btn btn-dark float-end">등록</button>
+								</div>
 							</table>
-							<div class="text-end">
-								<button class="btn btn-dark float-end">등록</button>
-							</div>
 						</form>
 					</div>
 				</div>
@@ -191,6 +193,39 @@ $(function() {
 	$("#btn-close-form").click(function() {
 		$("#box-register-form").addClass("d-none");
 	});
+	
+	$("#btn-certificate-insert").click(function() {
+		
+		let type = $("select[name=type] option:selected").val();
+		if (type == '선택') {
+			alert("증명서구분을 선택해주세요.");
+			return false;
+		}
+		
+		let requestDate = $("input[name=requestDate]").val();
+		if (requestDate == "") {
+			alert("신청일자를 선택해주세요.");
+			return false;
+		}
+		
+		let publishDate = $("input[name=publishDate]").val();
+		if (publishDate == "") {
+			alert("발행일자를 선택해주세요.");
+			return false;
+		}
+		$("#register-form").trigger("submit");
+	});
+	
+	/* $("#btn-approval").click(function() {
+		 let result = confirm('승인하시겠습니까?');
+
+	        if(result) {
+	           //yes
+	            location.replace('index.php');
+	        } else {
+	            //no
+	        }
+	}) */
 })
 </script>
 </body>

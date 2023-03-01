@@ -84,7 +84,7 @@
 								<input type="text" name="content" style="width:100px;"/>
 								<label>비고</label>
 								<input type="text" name="note" style="width:100px;"/>
-								<button type="button" id="btn-appiontment-update" class="btn btn-dark float-end btn-sm ms-3">발령수정</button>
+								<!-- <button type="button" id="btn-appiontment-update" class="btn btn-dark float-end btn-sm ms-3">발령수정</button> -->
 								<button type="button" id="btn-appiontment-insert" class="btn btn-dark float-end btn-sm">발령등록</button>
 							</div>
 						</div>
