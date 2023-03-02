@@ -47,19 +47,19 @@
 			<div class="row">
 				<div class="col-12">
 					<h2><strong>급여조회</strong></h2>
-					<li>월별 급여내역을 확인할 수 있습니다.</li>
+					<li>급여내역을 기준연월, 성명, 사원번호, 부서명으로 검색할 수 있습니다.</li>
 				</div>
 			</div>
 			<hr>
 			<div class="row mt-3">
 				<div class="col-12">
 					<form id="salary-search" class="row row-cols-sm-auto g-3 align-items-center float-end" action="/salary/salarycheck">
-						<label>급여년월</label> <input type="month" name="basemonth" value="${param.basemonth }"/> &nbsp; 
+						<label>기준연월</label> <input type="month" name="basemonth" value="${param.basemonth }"/> &nbsp; 
 						<div class="col-12">
 							<select class="form-select" name="opt">
 								<option value="empName" ${param.opt == 'empName' ? 'selected' : '' }>성명</option>
 								<option value="empNo" ${param.opt == 'empNo' ? 'selected' : '' }>사원번호</option>
-								<option value="dept" ${param.opt == 'dept' ? 'selected' : '' }>부서</option>
+								<option value="dept" ${param.opt == 'dept' ? 'selected' : '' }>부서명</option>
 							</select>
 						</div>
 						<div class="col-12">
@@ -98,7 +98,7 @@
 										<tr>
 											<td id="pay-date">${salaryDto.payDate }</td>
 											<td>${salaryDto.employeeNo }</td>
-											<td><a href="" data-employee-no="${salaryDto.employeeNo }" class="text-decoration-none"> ${salaryDto.name }</a></td>
+											<td>${salaryDto.name }</a></td>
 											<td>${salaryDto.deptName }</td>
 											<td><fmt:formatNumber value="${salaryDto.totalSalary }" /></td>
 											<td><fmt:formatNumber value="${salaryDto.deductionSalary }" /></td>
@@ -219,14 +219,15 @@ $(function() {
 		$("#salary-search").trigger("submit")
 	})
 	
-	$("#salary-list a[data-employee-no]").click(function(event) {
-		
+	$("#salary-list tr").click(function(event) {
 		clearTable();
 		event.preventDefault();
-		$(this).closest("tr").addClass("table-primary")
-		       .siblings().removeClass("table-primary");
-		let no = $(this).attr('data-employee-no');
-		let date = $("#pay-date").text();
+		let tr = $(this);
+		tr.addClass("table-primary").siblings().removeClass("table-primary");
+		
+		let no = $(this).find("td:nth(1)").text();
+		let date = $(this).find("td:nth(0)").text();
+	
 		$.getJSON('/salary/salaryDetail', {empNo : no, paydate : date}, function(salary) { 
 			let baseSalary = new Number(salary.baseSalary).toLocaleString()
 			$("#base-salary").text(baseSalary);
@@ -262,6 +263,7 @@ $(function() {
 			$("#deduction-salary").text(deductionSalary);
 		})
 	})
+	
 	function clearTable() {
 		$("#base-salary").text(0);
 		$("#income-tax").text(0);

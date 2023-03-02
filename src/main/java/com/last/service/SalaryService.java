@@ -19,28 +19,15 @@ public class SalaryService {
 	@Autowired
 	private SalaryMapper salaryMapper;
 	
-	// 급여계산
-	public List<SalaryDto> getSalaryDtoLists(String basemonth, String startdate, String enddate, String paydate) {
+	// 급여대상 
+	public List<SalaryDto> getSalaryDtos(String basemonth) {
 		
-		Map<String, Object> param = new HashMap<String, Object>();
-		if (!basemonth.isBlank()) {
-			param.put("basemonth", basemonth);	
-		}
-		if (!startdate.isBlank()) {
-			param.put("startdate", startdate);			
-		}
-		if (!enddate.isBlank()) {
-			param.put("enddate", enddate);			
-		}
-		if (!paydate.isBlank()) {
-			param.put("paydate", paydate);			
-		}
-		List<SalaryDto> salaryDtoLists = salaryMapper.getSalaryLists(param);
+		List<SalaryDto> salaryDtos = salaryMapper.getSalaryLists(basemonth);
 		
-		return salaryDtoLists;
+		return salaryDtos;
 	}
 
-	// 급여계산 - 사원 급여 정보 가져오기
+	// 사원 급여 정보 가져오기
 	public SalaryDto getCalculatedSalaryDto(int empNo, String basemonth) {
 		
 		Map<String, Object> param = new HashMap<String, Object>();
@@ -51,7 +38,7 @@ public class SalaryService {
 		return salaryDto;
 	}
 	
-	// 급여계산 - 급여내역 없는 사원의 기본정보 가져오기
+	// 급여내역 없는 사원의 기본정보 가져오기
 	public PayBankInfo getBasicSalaryInfo(int empNo, String basemonth) {
 		
 		Map<String, Object> param = new HashMap<String, Object>();
@@ -62,21 +49,21 @@ public class SalaryService {
 		return payBankInfo;
 	}
 	
-	// 급여계산 - 입력한 급여 저장 및 반영하기
+	// 급여저장
 	public SalaryDto saveSalary (SalaryDto salaryDetail) {
 		salaryMapper.insertSalary(salaryDetail);
 		
 		return salaryMapper.getCalculatedSalaryByNo(salaryDetail.getEmployeeNo(), salaryDetail.getBaseYearMonth());
 	}
 	
-	// 급여계산 - 입력된 급여 수정 및 반영하기
+	// 급여수정
 	public SalaryDto updateSalary (SalaryDto salaryDetail) {
 		salaryMapper.updateSalary(salaryDetail);
 		
 		return salaryMapper.getCalculatedSalaryByNo(salaryDetail.getEmployeeNo(), salaryDetail.getBaseYearMonth());
 	}
 	
-	// 급여계산 - 입력된 급여 삭제하기
+	// 급여삭제
 	public SalaryDto deleteSalary(int empNo, String basemonth) {
 		SalaryDto salaryDto = salaryMapper.getCalculatedSalaryByNo(empNo, basemonth);
 		salaryMapper.deleteSalary(empNo, basemonth);
@@ -112,7 +99,7 @@ public class SalaryService {
 	}
 	
 	// 급여대장
-	public List<SalaryDto> getSalaryDtoLists(String basemonth) {
+	public List<SalaryDto> getSalaryBookLists(String basemonth) {
 		
 		Map<String,Object> param = new HashMap<String, Object>();
 		if (!basemonth.isBlank()) {
