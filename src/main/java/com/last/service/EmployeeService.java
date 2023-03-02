@@ -221,17 +221,19 @@ public class EmployeeService {
 	}
 		
 			
-		public void insertEmployees(List<Map<String, Object>> datas) {
-			employeeMapper.insertEmployees(datas);
+	public void insertEmployees(List<Map<String, Object>> datas) {
+		for (Map<String, Object> map : datas) {
+			employeeMapper.insertEmployeesForExcel(map);
 		}
-			
-		public List<Employees> getAllProducts() {
-			return employeeMapper.getAllProducts();
-		}
-			
-		public List<Map<String, Object>> getProducts() {
-			return employeeMapper.getAllProductsForMap();
-		}
-		
 	}
+		
+	public List<Employees> getAllProducts() {
+		return employeeMapper.getAllProducts();
+	}
+		
+	public List<Map<String, Object>> getProducts() {
+		return employeeMapper.getAllProductsForMap();
+	}
+		
+}
 
