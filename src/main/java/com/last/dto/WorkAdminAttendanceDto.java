@@ -23,6 +23,7 @@ public class WorkAdminAttendanceDto {
 	private String empName;			// 사원명
 	private String positionName;	// 직급명
 	private String deptName;		// 부서명
-	private int positionNo;
-	private int deptNo;
+	private int positionNo;			// 직급번호
+	private int deptNo;				// 부서번호
+	private String note;			// 비고
 }

@@ -14,7 +14,7 @@
 	#detail-table {
 		max-height: 300px; 
 		overflow: scroll;
-		white-space: nowrap;   <%-- 자식 엘리먼트가 한줄로 정렬되게 하는 요소 --%>
+		white-space: nowrap; 
 	}
 	table {
 		width: 100%;
@@ -51,7 +51,7 @@
 			<div class="row">
 				<div class="col-12">
 					<h2><strong>기간별 급여현황</strong></h2>
-					<li>연간 급여 내역을 급여년월 기간을 지정하여 조회합니다.</li>
+					<li>기간별 급여 현황을 확인할 수 있습니다.</li>
 				</div>
 			</div>
 			<div class="row mt-3">

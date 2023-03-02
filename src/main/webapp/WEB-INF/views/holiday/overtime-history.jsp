@@ -144,11 +144,11 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
 <script src="https://momentjs.com/downloads/moment.js" type="text/javascript"></script>
 <script type="text/javascript">
-	//근무년월에 당일 날짜 선택
+	/* //근무년월에 당일 날짜 선택
 	$(function() {
 		let startDate = moment().format("YYYY-MM")
 		$(":input[name=month]").val(startDate);
-	})
+	}) */
 </script>
 </body>
 </html>

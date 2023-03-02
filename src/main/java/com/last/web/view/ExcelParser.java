@@ -55,14 +55,15 @@ public class ExcelParser {
 			headerNames.add(headerRow.getCell(cellIndex).getStringCellValue());
 		}		
 		
+		System.out.println("행번호: " + sheet.getLastRowNum());
 		// 엑셀문서의 데이터부분의 조회한다.
-		for (int rowIndex = 1; rowIndex < sheet.getLastRowNum(); rowIndex++) {
+		for (int rowIndex = 1; rowIndex <= sheet.getLastRowNum(); rowIndex++) {
 			// 엑셀문서의 시트에서 데이터가 저장된 행을 조회한다.
 			Row row = sheet.getRow(rowIndex);
-			
 			// 데이터를 저장하는 Map<String, Object> 객체를 생성한다.
 			Map<String, Object> data = new HashMap<>();
 			
+			System.out.println("셀번호: " + row.getLastCellNum());
 			// 50번째 라인에서 조회된 행의 0번째 셀부터 마지막번째 셀까지 값을 조회해서 Map<String, Object>객체에 저장한다.
 			for (int cellIndex = 0; cellIndex < row.getLastCellNum(); cellIndex++) {
 				// 셀을 조회한다. 

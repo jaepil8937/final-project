@@ -67,6 +67,6 @@ public interface EmployeeMapper {
 
 	List<Employees> getAllProducts();
 	List<Map<String, Object>> getAllProductsForMap();
-	void insertEmployees(@Param("employee") List<Map<String, Object>> employees);
+	void insertEmployeesForExcel(Map<String, Object> map);
 }
 

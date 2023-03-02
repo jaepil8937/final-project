@@ -89,6 +89,8 @@ public class HolidayService {
 		holidayEvent.setId(String.valueOf(holiday.getBaseDate().getTime()));
 		holidayEvent.setTitle(holiday.getName());
 		holidayEvent.setAllDay(true);
+		holidayEvent.setHolidayType(holidayType);
+		holidayEvent.setDateType(dateType);
 		
 		return holidayEvent;
 	}

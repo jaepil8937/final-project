@@ -277,9 +277,18 @@ public class HrController {
 	}
 
 	@GetMapping("/order")			// 발령정보
-	public String order(EmployeeRequest form) {
-		employeeService.updatePersonnel(form);
+	public String order(Model model) {
+		Map<String, Object> param = new HashMap<String, Object>();
+		List<PersonnelDto> personnel = employeeService.getAllPersonnel(param);
+		model.addAttribute("personnels", personnel);
 		
+		List<Position> positions = employeeService.getAllPosition();
+		List<Department> departments = employeeService.getAllDepartment();
+		List<Grades> grades = employeeService.getAllGrade();
+		
+		model.addAttribute("positions", positions);
+		model.addAttribute("departments", departments);
+		model.addAttribute("grade", grades);
 		return "hr/order";
 	}
 
@@ -292,7 +301,7 @@ public class HrController {
 		List<Grades> grades = employeeService.getAllGrade();
 
 		if ("ROLE_ADMIN".equals(LoginEmployee.getRoleName())) {
-			List<Employees> employees = employeeService.getAllEmployee(null);
+			List<Employees> employees = employeeService.getAllEmployee("N");
 			model.addAttribute("employees", employees);
 		} else {
 			Employees employees = employeeService.getEmployeesByNo(LoginEmployee.getNo());
@@ -375,11 +384,23 @@ public class HrController {
 	
 	@GetMapping("/empInfo")
 	@ResponseBody
-	public Employees getEmployees(@RequestParam int empNo) {
+	public Employees getEmployees(@RequestParam int empNo, Model model) {
 		
 		Employees employees = employeeService.getEmployeesByNo(empNo);
+
+		
+		List<Position> positions = employeeService.getAllPosition();
+		List<Department> departments = employeeService.getAllDepartment();
+		List<Grades> grades = employeeService.getAllGrade();
+		
+		model.addAttribute("positions", positions);
+		model.addAttribute("departments", departments);
+		model.addAttribute("grade", grades);
+		
 		return employees;
 	}
+	
+	
 	
 	/*
 	 * 상품정보를 엑셀문서로 다운로드 한다.

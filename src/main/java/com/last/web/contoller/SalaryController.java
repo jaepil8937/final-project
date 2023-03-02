@@ -31,23 +31,20 @@ public class SalaryController {
 	@Autowired
 	private SalaryService salaryService;
 	
-	@GetMapping("/salarycalculate")       // 급여계산결과 
-	public String salarycalculate (@RequestParam(name="basemonth", required=false) String basemonth, 
-								   @RequestParam(name="startdate", required=false) String startdate,
-								   @RequestParam(name="enddate", required=false) String enddate,
-								   @RequestParam(name="paydate", required=false) String paydate, Model model) {
+	@GetMapping("/salarycalculate")       // 급여대상
+	public String salarycalculate (@RequestParam(name="basemonth", required=false) String basemonth, Model model) {
 		
 		if (basemonth != null) {
-				List<SalaryDto> salaryDtoLists = salaryService.getSalaryDtoLists(basemonth, startdate, enddate, paydate);
-				SalaryTableDto tableDto = new SalaryTableDto();
-				tableDto.setSalaryDtoLists(salaryDtoLists);
-				model.addAttribute("TableDto", tableDto);
+			List<SalaryDto> salaryDtoLists = salaryService.getSalaryDtos(basemonth);
+			SalaryTableDto tableDto = new SalaryTableDto();
+			tableDto.setSalaryDtoLists(salaryDtoLists);
+			model.addAttribute("TableDto", tableDto);
 		}
 				
 		return "salary/salarycalculate";
 	}
 
-	@GetMapping("/calculateDetail")     // 급여계산 - 사원별 상세 급여내역 
+	@GetMapping("/calculateDetail")     // 사원 급여 정보 가져오기
 	@ResponseBody
 	public SalaryDto calculateDetail(@RequestParam("empNo") int empNo, @RequestParam("basemonth") String basemonth) {
 		SalaryDto salaryDto = salaryService.getCalculatedSalaryDto(empNo, basemonth);
@@ -55,7 +52,7 @@ public class SalaryController {
 		return salaryDto;
 	}
 	
-	@GetMapping("/basicInfo")     // 급여계산 - 급여내역 없는 사원의 기본정보
+	@GetMapping("/basicInfo")     // 급여내역 없는 사원의 기본정보
 	@ResponseBody
 	public PayBankInfo basicInfo(@RequestParam("empNo") int empNo, @RequestParam("basemonth") String basemonth) {
 		PayBankInfo payBankInfo = salaryService.getBasicSalaryInfo(empNo, basemonth);
@@ -63,7 +60,7 @@ public class SalaryController {
 		return payBankInfo;
 	}
 	
-	@PostMapping("/saveSalary")       // 급여계산 - 입력한 급여 저장 및 반영하기
+	@PostMapping("/saveSalary")       // 급여저장
 	@ResponseBody
 	public SalaryDto saveSalary(@RequestBody SalaryDto salaryDetail) {
 		
@@ -72,7 +69,7 @@ public class SalaryController {
 		return salaryDetail;
 	}
 	
-	@PutMapping("/updateSalary")     // 급여계산 - 입력된 급여 수정 및 반영하기
+	@PutMapping("/updateSalary")     // 급여수정
 	@ResponseBody
 	public SalaryDto updateSalary(@RequestBody SalaryDto salaryDetail) {
 		
@@ -81,7 +78,7 @@ public class SalaryController {
 		return salaryDetail;
 	}
 	
-	@GetMapping("/deleteSalary") 	 // 급여계산 - 삭제하기
+	@GetMapping("/deleteSalary") 	 // 급여삭제
 	@ResponseBody
 	public SalaryDto deleteSalary(@RequestParam("empNo") int empNo, @RequestParam("basemonth") String basemonth) {
 		SalaryDto salaryDto = salaryService.deleteSalary(empNo, basemonth);
@@ -118,7 +115,7 @@ public class SalaryController {
 	public String salarybook(@RequestParam(name="basemonth", required=false) String basemonth, Model model) {
 		
 		if (basemonth != null) {
-			List<SalaryDto> salaryDtoLists = salaryService.getSalaryDtoLists(basemonth);
+			List<SalaryDto> salaryDtoLists = salaryService.getSalaryBookLists(basemonth);
 			if (!salaryDtoLists.isEmpty()) {
 				SalaryBookDto bookDto = new SalaryBookDto();
 				bookDto.setSalaryDtoLists(salaryDtoLists);

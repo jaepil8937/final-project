@@ -180,7 +180,7 @@ border-color:white;
                        	 		<input type="text" class="form-control" id="calendarContent" name="calendarContent">
                        	 	</sec:authorize>
                        	 	<sec:authorize  access="hasRole('EMPLOYEE')">
-                       	 		<input type="text" class="form-control" id="calendarContent" name="calendarContent" disabled="disabled"s>
+                       	 		<input type="text" class="form-control" id="calendarContent" name="calendarContent" disabled="disabled">
                        	 	</sec:authorize>
                     </div>
                 </div>
@@ -210,16 +210,13 @@ border-color:white;
               events: function(info, successCallback, failureCallback) {
       			refreshEvents(info, successCallback);
       		   }, 
-      		   color: 'yellow',
-      		
       		eventClick: function(info) {   // 동록된 일정 클릭시 휴일상세정보 모달
-      		
-      			//console.log(info);
+      			console.log(info);
            	    clickedEvent = info.event;
            	    
       			let date = info.event.startStr;
       			let name = info.event.title;
-      			let dateType = info.event.extendedProps.dateType;;
+      			let dateType = info.event.extendedProps.dateType;
       			let holidayType = info.event.extendedProps.holidayType;
       			
       			$("#calendar-info-modal :input[name=calendarDate]").val(date);
@@ -228,8 +225,6 @@ border-color:white;
       			$("#calendar-info-modal :input[name=calendarContent]").val(name);
   
       			calendarInfoModal.show();
-      		
-      			 
       		},
             <sec:authorize access="hasRole('ADMIN')">  // 휴일등록 모달창 : 관리자만 접근
               dateClick: function(info) {
@@ -335,7 +330,6 @@ border-color:white;
       		// done(함수)는 ajax 요청이 성공적으로 완료되면 실행되는 함수를 등록한다.
       		.done(function(holidayEvent) {
       			calendar.addEvent(holidayEvent); 
-      			
       		})
       		// fail(함수)는 ajax 요청이 실팽하면 실행되는 함수를 등록한다.
       		.fail(function() {
