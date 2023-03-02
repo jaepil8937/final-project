@@ -96,14 +96,12 @@ public class VacationController {
 	@GetMapping("/apply-list")
 	@ResponseBody
 	public Map<String, Object> getVacationRequestList(@RequestParam("baseYear") int baseYear,
-			@RequestParam("status") String status, @RequestParam("empNo") int empNo,
-			@RequestParam(name = "page", required = false, defaultValue = "1")  int pages, Model model) {
+			@RequestParam("status") String status, @RequestParam("empNo") int empNo) {
 		
 		Map<String, Object> param = new HashMap<>();
 		param.put("baseYear", baseYear);
 		param.put("empNo", empNo);
 		param.put("status", status);
-		param.put("pages", pages);
 		
 		VacationCalculateDto calculatedDays = vacationService.calculatedVacation(param);
 		
@@ -193,7 +191,3 @@ public class VacationController {
 	}
   
 }
-	
-	
-	
-	
