@@ -124,11 +124,12 @@
 				    </tr>
 			  	</thead>
 				<tbody>
+					<c:forEach var="attendanceDto" items="${attendanceDtos }">
 				    <tr class="text-center" style="text-align: center;">
-				    		<td rowspan="2">1001</TD>
-				    		<td rowspan="2">홍길동</td>
-				    		<td rowspan="2">개발팀</td>
-				    		<td rowspan="2">사원</td>
+				    		<td rowspan="2">${attendanceDto.empNo }</TD>
+				    		<td rowspan="2">${attendanceDto.empName }</td>
+				    		<td rowspan="2">${attendanceDto.deptName }</td>
+				    		<td rowspan="2">${attendanceDto.positionName }</td>
 				      		<td id="1">1</td>
 							<td id="2">2</td>
 							<td id="3">3</td>
@@ -141,7 +142,7 @@
 							<td id="10">10</td>
 							<td id="11">11</td>
 							<td id="12">12</td>
-							<td id="13">13</td>
+							<td id="13">13</td>							
 							<td id="14">14</td>
 							<td id="15">15</td>
 							<td id="16">16</td>
@@ -166,6 +167,7 @@
 							<td id="30">30</td>
 							<td id="31">31</td>
 						</tr>
+						</c:forEach>
 				    </tr>
 			  </tbody>
 			</table>
