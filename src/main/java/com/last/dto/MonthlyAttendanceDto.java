@@ -10,7 +10,7 @@ import lombok.ToString;
 @ToString
 @Getter
 @Setter
-@Alias("monthlyAttendanceDto")
+@Alias("MonthlyAttendanceDto")
 public class MonthlyAttendanceDto {
 	
 	private int no;					// 근태정보번호

@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.last.dto.MonthlyAttendanceDto;
+import com.last.dto.WorkAdminAttendanceDto;
 import com.last.dto.WorkDaysSummaryDto;
 import com.last.dto.WorkTimesSummaryDto;
 import com.last.security.AuthenticatedUser;
@@ -142,11 +143,20 @@ public class WorkController {
 		return "redirect:/work/dayadmin";
 		}
 	
+	// 월근태관리자페이지
 	@GetMapping("/month")
 	public String getMonthlyAttendance(Model model) {
 		List<MonthlyAttendanceDto> monthlyAttendanceDtos = workService.getEmployees();
 		model.addAttribute("monthlyAttendanceDtos", monthlyAttendanceDtos);
 		return "work/monthly-manage";
+	}
+	
+	// 월근태사원페이지
+	@GetMapping("/my-month")
+	public String getMyMonthlyAttendance(@AuthenticatedUser LoginEmployee loginEmployee, Model model) {
+		List<MonthlyAttendanceDto> monthlyAttendanceDtos = workService.getEmployeesByEmpNo(loginEmployee.getNo());
+		model.addAttribute("monthlyAttendanceDtos", monthlyAttendanceDtos);
+		return "work/monthly-manage-user";
 	}
 	
 	@GetMapping("/monthDetail")
@@ -165,8 +175,9 @@ public class WorkController {
 
 	// 월근태현황
 	@GetMapping("/monthstatus")
-	public String monthStatus(@AuthenticatedUser LoginEmployee loginEmployee, Model model) {
-		
+	public String monthStatus(Model model) {
+		List<WorkAdminAttendanceDto> attendanceDtos = workService.getMonthStatusList();
+		model.addAttribute("attendanceDtos",attendanceDtos);
 		return "work/monthly-status";
 	}
 	

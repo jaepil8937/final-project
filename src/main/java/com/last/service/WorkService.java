@@ -225,4 +225,12 @@ public class WorkService {
 		return dto;
 	}
 
+	public List<WorkAdminAttendanceDto> getMonthStatusList() {
+		return workMapper.getMonthStatusList();
+	}
+
+	public List<MonthlyAttendanceDto> getEmployeesByEmpNo(int empNo) {
+		return workMapper.getEmployeesByEmpNo(empNo);
+	}
+
 }

@@ -37,10 +37,14 @@ public interface WorkMapper {
 	WorkAdminAttendanceDto getAttendanceByNo(int attendanceNo);
 	// 근태정보수정
 	void updateAttendance(WorkAttendance workAttendance);
-	// 월근태관리 사용자 목록
+	// 월근태관리 사원목록조회
 	List<MonthlyAttendanceDto> getEmployees();
 	// 월근무일조회
 	WorkDaysSummaryDto getMonthlyWorkDaysSummary(@Param("yearMonth") String yearMonth,@Param("employeeNo") int employeeNo);
 	// 월근무시간조회
 	WorkTimesSummaryDto getMonthlyWorkTimesSummary(@Param("yearMonth") String yearMonth,@Param("employeeNo") int employeeNo);
+	// 월근태현황 사원목록조회
+	List<WorkAdminAttendanceDto> getMonthStatusList();
+	
+	List<MonthlyAttendanceDto> getEmployeesByEmpNo(int empNo);
 }

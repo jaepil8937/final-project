@@ -57,7 +57,7 @@
 	</select>
 	
 	<!-- 월근태관리 사용자목록을 불러옴 -->
-	<select id="getEmployees" resultType="monthlyAttendanceDto">
+	<select id="getEmployees" resultType="MonthlyAttendanceDto">
 		select
 			A.employee_no		as employeeNo,
 			A.employee_name 	as name,
@@ -73,6 +73,46 @@
 			A.position_No = B.position_No
 			and A.dept_No = C.dept_No
 			and A.hobong_grade = D.hobong_grade
+		order by 
+			employee_no asc
+			
+	</select>
+	<select id="getEmployeesByEmpNo" resultType="MonthlyAttendanceDto">
+		select
+			A.employee_no		as employeeNo,
+			A.employee_name 	as name,
+			B.position_name 	as positionName,
+			C.dept_name			as deptName,
+			D.hobong_grade 		as hobongGrade
+		from
+			employees A,
+			positions B,
+			departments C,
+			grades D
+		where
+			A.position_No = B.position_No
+			and A.employee_no = #{value}
+			and A.dept_No = C.dept_No
+			and A.hobong_grade = D.hobong_grade
+		order by 
+			employee_no asc
+			
+	</select>
+	
+	<select id="getMonthStatusList" resultType="AdminAttendanceDto">
+		select
+			A.employee_no		as empNo,
+			A.employee_name 	as empName,
+			B.position_name 	as positionName,
+			C.dept_name			as deptName
+		from
+			employees A,
+			positions B,
+			departments C,
+			grades D
+		where
+			A.position_No = B.position_No
+			and A.dept_No = C.dept_No
 		order by 
 			employee_no asc
 			
