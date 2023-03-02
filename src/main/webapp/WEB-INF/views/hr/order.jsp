@@ -53,17 +53,17 @@
 						</colgroup>
 						<tr>
 							<th class="table-secondary text-end">현부서</th>
-							<td colspan="1"><input type="text" class="form-control form-control-sm"  style="width: 130px;" name="deptNo" value="${dept.deptName }" disabled/></td>
+							<td colspan="1"><input type="text" class="form-control form-control-sm"  style="width: 130px;" name="deptName" /></td>
 							<th class="table-secondary text-end">현직급</th>
-							<td colspan="1"><input type="text" class="form-control form-control-sm"  style="width: 130px;" disabled/></td>
+							<td colspan="1"><input type="text" class="form-control form-control-sm"  style="width: 130px;" name="positionName"  /></td>
 							<th class="table-secondary text-end">호봉</th>
-							<td colspan="1"><input type="text" class="form-control form-control-sm"  style="width: 130px;" disabled/></td>
+							<td colspan="1"><input type="text" class="form-control form-control-sm"  style="width: 130px;" name="hobong" /></td>
 						</tr>
 					</table>
 				</div>
 			</div>
 				<div class="row">
-					<table class="table table-bordered table-hover table-striped table-sm">
+					<table class="table table-bordered table-hover table-striped table-sm"  id="table-orders">
 						<colgroup>
 							<col width="5%">
 							<col width="7%">
@@ -81,13 +81,24 @@
 							</tr>
 						</thead>
 						<tbody>
-							<tr class="text-center">
-								<td>1</td>
-								<td>부서이동</td>
-								<td>2022.01.02</td>
-								<td>채널개선</td>
-								<td>부서이동</td>
-							</tr>						
+							<c:choose>
+								<c:when test="${empty personnels }">
+									<tr>
+										<td id="item-nothing" colspan="12" class="text-center">목록이 없습니다.</td>
+									</tr>
+								</c:when> 
+								<c:otherwise>
+									<c:forEach var="personnel" items="${personnels }">
+										<tr class="text-center">
+											<td><a href="" class="text-decoration-none" > ${personnel.no }</a></td>
+											<td>${personnel.type }</td>
+											<td><fmt:formatDate value="${personnel.appointmentDate }" pattern="yyyy-MM-dd"/></td>
+											<td>${personnel.content }</td>
+											<td>${personnel.note }</td>
+										</tr>
+									</c:forEach>
+								</c:otherwise>
+							</c:choose>
 						</tbody>
 					</table>
 				</div>
@@ -103,5 +114,24 @@
 				
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+<script type="text/javascript">
+$(function() {
+	
+	$("#table-orders tbody a").click(function(event) {
+		event.preventDefault();
+		
+		var empNo = $(this).text();
+		
+		$.getJSON("/hr/empInfo", {empNo:empNo}, function(emp) {
+			$(":input[name=deptName]").val(emp.deptName);
+			$(":input[name=positionName]").val(emp.positionName);
+			$(":input[name=hobong]").val(emp.hobong);
+		
+		})
+	
+	});
+});
+
+</script>
 </body>
 </html>

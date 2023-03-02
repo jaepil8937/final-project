@@ -257,15 +257,26 @@
 						</table>
 					</div>
 				</div>
-					<div class="row p-3">
-						<div class="col">
-							<button type="submit" class="btn btn-dark" style="float:right;" >저장</button>
-								<a href="register" class="btn btn-outline-dark" style="float:right; margin-right: 4px;" >삭제</a>
-								<a href="/hr/upload" class="btn btn-outline-dark" style="float:right; margin-right: 4px;" >엑셀업로드</a>
-								<button type="button" class="btn btn-outline-primary btn-sm" id="btn-down-xls">엑셀 다운로드</button>
-						</div>
-					</div>
 			</form>
+			<div class="row p-3">
+				<div class="col-7">
+					<form class="row row-cols-lg-auto g-3 align-items-center" method="post" action="/hr/upload" enctype="multipart/form-data">
+						<div class="col-12">
+							<div class="input-group">
+								<input type="file" class="form-control form-control-sm me-3" style="width: 250px;"  name="xls" >
+								<button type="submit" class="btn btn-dark btn-sm">엑셀 업로드</button>
+							</div>
+						</div>
+					</form>
+				</div>
+				<div class="col-2">
+					<button type="button" class="btn btn-outline-primary btn-sm" id="btn-down-xls">엑셀 다운로드</button>
+				</div>
+				<div class="col-3 text-end">
+					<button type="submit" class="btn btn-dark btn-sm" >저장</button>
+					<a href="register" class="btn btn-danger btn-sm" >삭제</a>
+				</div>
+			</div>
 		</div>
 	</div>
 </div>
