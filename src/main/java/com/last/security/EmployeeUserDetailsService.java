@@ -23,6 +23,10 @@ public class EmployeeUserDetailsService implements UserDetailsService {
 			throw new UsernameNotFoundException("직원정보가 존재하지 않습니다.");
 		}
 		
+		if ("Y".equals(employees.getEmployeeStatus())) {
+			throw new UsernameNotFoundException("직원정보가 존재하지 않습니다.");			
+		}
+		
 		EmployeeUserDetails userDetails = new EmployeeUserDetails();
 		userDetails.setNo(employees.getEmployeeNo());
 		userDetails.setEncryptPassword(employees.getPassword());

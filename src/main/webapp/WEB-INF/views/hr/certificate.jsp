@@ -60,10 +60,16 @@
 					</form>
 				</div>
 				<div class="row">
-					<div class="col-12">
+					<div class="col-12 d-flex justify-content-between align-items-center mb-3">
 						<h6 class="mt-3 mb-3">
 							<strong>증명서신청내역</strong>
 						</h6>
+						<div class="float-end">
+							<form id="delete" method="post" action="certificate-delete">
+								<input type="hidden" name="employeeNo" />
+									<button type="submit" id="btn-delete" class="btn btn-dark float-end">신청취소</button>
+							</form>
+						</div>	
 					</div>
 				</div>
 				<div class="row">
@@ -91,7 +97,7 @@
 								<c:otherwise>
 									<c:forEach var="certificate" items="${certificates }">
 										<tr class="text-center">
-											<td><input type="checkbox" /></td>
+											<td><input type="checkbox" name="empNo" value="${certificate.no }"/></td>
 											<td>${certificate.no }</td>
 											<td>${certificate.type }</td>
 											<td><fmt:formatDate value="${certificate.requestDate }" pattern="yyyy-MM-dd"/></td>
@@ -105,7 +111,7 @@
 													<span class="badge text-bg-primary">${certificate.requestStatus }</span>
 												</sec:authorize>
 											</td>
-											<td>${certificate.publishDate }</td>
+											<td><fmt:formatDate value="${certificate.publishDate }" pattern="yyyy-MM-dd"/></td>
 											<td>${certificate.purpose }</td>
 										</tr>
 									</c:forEach>
@@ -114,8 +120,8 @@
 						</tbody>
 					</table>
 						<div class="modal-footer text-end">
-							<button type="button" id="btn-open-form" class="btn btn-dark ">발령등록</button>
-							<button type="button" id="btn-close-form" class="btn btn-dark ">발령취소</button>
+							<button type="button" id="btn-open-form" class="btn btn-dark">신청</button>
+							<button type="button" id="btn-close-form" class="btn btn-dark">취소</button>
 						</div>
 				</div>
 				<div id="box-register-form" class="row d-none">
@@ -216,17 +222,34 @@ $(function() {
 		$("#register-form").trigger("submit");
 	});
 	
-	/* $("#btn-approval").click(function() {
-		 let result = confirm('승인하시겠습니까?');
-
-	        if(result) {
-	           //yes
-	            location.replace('index.php');
-	        } else {
-	            //no
-	        }
-	}) */
-})
+	$("#btn-delete").click(function() {
+		let empNo = $("input[name=empNo]:checked").val();
+		$("input[name=employeeNo]").val(empNo);
+		
+		let checkedLength = $("input[name=empNo]:checked").length;
+		if (checkedLength == 0) {
+			alert("삭제할 신청서를 선택해주세요.");
+			return false;
+		}	
+		
+		if (checkedLength > 1) {
+			alert("삭제는 하나씩 처리 가능합니다.");
+			return false;
+		}
+		
+		$("#delete").trigger("submit");
+	});
+	
+	$("#btn-approval").click(function() {
+		alert("승인되었습니다.");
+		return true;
+	});
+	$("#btn-refer").click(function() {
+		alert("반려되었습니다.");
+		return true;
+	});
+	
+});
 </script>
 </body>
 </html>

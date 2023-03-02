@@ -86,6 +86,8 @@
 		</if>
 		and
 			E.employee_status = 'N'								<!-- 인사발령등록에서는 퇴직자는 안나오게 함 -->
+		order by
+			E.employee_no asc
 	</select>
 
 	<select id="getAllCertificate" parameterType="map" resultType="CertificateDto">
@@ -491,10 +493,6 @@
                 <if test="status != null">
                 	and a.employee_status = #{status}
                 </if>
-                <if test="empNo != null">
-                	and a.employee_status = #{status}
-                </if>
-               
             order by
 				employee_no asc
 	</select>

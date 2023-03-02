@@ -122,8 +122,11 @@ public class EmployeeService {
 		
 	}
 	
+	public void deletePersonnel(int no) {		// 인사발령삭제
+		employeeMapper.deleteAppointment(no);
+	}
+	
 	public void insertCertificate(int no, CertificateRequest form) {	// 증명서신청 insert
-		//HrCertifcateRequest hrcertificaterequest = employeeMapper.getAllCertficate(no);
 		
 		HrCertifcateRequest hrcertificaterequest = new HrCertifcateRequest();
 		hrcertificaterequest.setNo(no);
@@ -145,6 +148,10 @@ public class EmployeeService {
 		HrCertifcateRequest hrcertificaterequest = employeeMapper.getCertificatebyNo(no);
 		hrcertificaterequest.setStatus("반려");
 		employeeMapper.updateCertificatebyNo(hrcertificaterequest);
+	}
+	
+	public void deleteCertificate(int no) {		// 증명서신청삭제
+		employeeMapper.deleteCertificate(no);
 	}
 	
 	public void deleteEmployee(int employeeNo, String password) {

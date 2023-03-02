@@ -26,6 +26,9 @@
 				</div>
 			</div>
 				<div class="col-12">
+					<c:if test="${param.error eq 'fail' }">
+						<h3>이전 비밀번호가 일치하지 않습니다.</h3>
+					</c:if>
 					<form id="form-change-password" class="border bg-light p-3" method="post" action="password">
 						<div class="mb-3">
 							<label class="form-label">이전 비밀번호</label>
