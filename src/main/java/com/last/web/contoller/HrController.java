@@ -133,6 +133,18 @@ public class HrController {
 		return "redirect:personnel";
 	}
 	
+	@PostMapping("/personnel-delete")		// 인사발령삭제 delete
+	public String deletePersonnel(@RequestParam(name = "employeeNo") int no) {
+		employeeService.deletePersonnel(no);
+		return "redirect:personnel";
+	}
+	
+	@PostMapping("/certificate-delete")		// 증명서신청삭제 delete
+	public String deleteCertificate(@RequestParam(name = "employeeNo") int no) {
+		employeeService.deleteCertificate(no);
+		return "redirect:issue";
+	}
+	
 	@GetMapping("/issue")		// 증명서발급
 	public String issue(@AuthenticatedUser LoginEmployee loginEmployee,
 						@RequestParam(name = "sort", required = false, defaultValue = "") String sort,
@@ -210,8 +222,11 @@ public class HrController {
 	public String changePassword(@AuthenticatedUser LoginEmployee loginEmployee, 
 			@RequestParam(name = "oldPassword") String oldPassword,
 			@RequestParam(name = "password") String password) {
-		employeeService.changePassword(loginEmployee.getNo(), oldPassword, password);
-		
+		try {
+			employeeService.changePassword(loginEmployee.getNo(), oldPassword, password);
+		} catch (ApplicationException ex) {
+			return "redirect:/hr/password?error=fail";
+		}
 		return "redirect:password-success";
 	}
 	

@@ -61,13 +61,15 @@
 				</div>
 				<div class="row">
 					<div class="col-12 d-flex justify-content-between align-items-center mb-3">
-						<h6>
+						<h6 class="mt-3 mb-3">
 							<strong>인사발령조회</strong>
 						</h6>
 						<div class="float-end">
-							<form method="post" action="personnel">
+							<form id="delete" method="post" action="personnel-delete">
 								<input type="hidden" name="employeeNo" />
-									<button type="submit" id="btn-delete" class="btn btn-dark float-end">발령취소</button>
+									<sec:authorize access="hasAnyRole('ROLE_ADMIN')">
+										<button type="submit" id="btn-delete" class="btn btn-dark float-end">발령취소</button>
+									</sec:authorize>
 							</form>
 						</div>	
 					</div>
@@ -105,7 +107,7 @@
 										<c:otherwise>
 											<c:forEach var="personnel" items="${personnels }">
 												<tr class="text-center">
-													<td><input type="checkbox" /></td>
+													<td><input type="checkbox" name="empNo" value="${personnel.no }"/></td>
 													<td>${personnel.type }</td>
 													<td><fmt:formatDate value="${personnel.appointmentDate }" pattern="yyyy-MM-dd"/></td>
 													<td>${personnel.no }</td>
@@ -124,7 +126,9 @@
 				<div class="row">
 					<div class="col-12 text-end">
 						<form>
-							<a href="personnel-register" class="btn btn-dark float-end">발령등록</a>
+							<sec:authorize access="hasAnyRole('ROLE_ADMIN')">
+								<a href="personnel-register" class="btn btn-dark float-end">발령등록</a>
+							</sec:authorize>
 						</form>
 					</div>		
 				</div>			
@@ -138,9 +142,22 @@
 $(function() {
 	$("#btn-delete").click(function() {
 		let empNo = $("input[name=empNo]:checked").val();
-		alert("fkadsf");
-	})
-})
+		$("input[name=employeeNo]").val(empNo);
+		
+		let checkedLength = $("input[name=empNo]:checked").length;
+		if (checkedLength == 0) {
+			alert("삭제할 사원을 선택해주세요.");
+			return false;
+		}	
+		
+		if (checkedLength > 1) {
+			alert("삭제는 하나씩 처리 가능합니다.");
+			return false;
+		}
+		
+		$("#delete").trigger("submit");
+	});
+});
 
 </script>
 </body>
