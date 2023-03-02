@@ -10,7 +10,7 @@
 	.table {
 		max-height: 500px; 
 		overflow: scroll;
-		white-space: nowrap;   <%-- 자식 엘리먼트가 한줄로 정렬되게 하는 요소 --%>
+		white-space: nowrap;  
 		border-collapse: collapse; 
 		border-spacing: 0; 
 		width: 100%;
@@ -55,7 +55,7 @@
 			<div class="row">
 				<div class="col-12">
 					<h2><strong>급여대장</strong></h2>
-					<li>급여테이블 리스트와 세부 급여정보를 한눈에 확인하고 관리할 수 있습니다.</li>
+					<li>전체 사원의 급여 지급 내역을 한눈에 확인할 수 있습니다.</li>
 				</div>
 			</div>
 			<div class="row mt-3">
@@ -73,7 +73,7 @@
 			<form id="salary-table" action="/salary/salarybook">
 				<div class="row mt-3 text-end">
 					<div class="col-12">
-						<label>급여년월</label> <input type="month" name="basemonth" value="${param.basemonth }"/> &nbsp; 
+						<label>기준연월</label> <input type="month" name="basemonth" value="${param.basemonth }"/> &nbsp; 
 					</div>
 				</div>
 				<div class="row mt-3">

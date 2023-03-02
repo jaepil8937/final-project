@@ -65,7 +65,7 @@
 							<select class="form-select" name="opt">
 								<option value="empName" ${param.opt == 'empName' ? 'selected' : '' }>성명</option>
 								<option value="empNo" ${param.opt == 'empNo' ? 'selected' : '' }>사원번호</option>
-								<option value="dept" ${param.opt == 'dept' ? 'selected' : '' }>부서</option>
+								<option value="dept" ${param.opt == 'dept' ? 'selected' : '' }>부서명</option>
 							</select>
 						</div>
 						<div class="col-12">
@@ -163,7 +163,7 @@ $(function() {
 		$("#salary-search").trigger("submit")
 	}) 
 	
-	// 사원 클릭시
+	// 사원별 보험금 납입내역 출력하기
 	$("#employee-info a[data-employee-no]").click(function(event) {
 		
 		let $tbody = $("#payment-detail table tbody").empty();

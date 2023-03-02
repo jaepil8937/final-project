@@ -13,7 +13,7 @@
 		display: block;
 		max-height: 430px; 
 		overflow-y: scroll;
-		white-space: nowrap;   <%-- 자식 엘리먼트가 한줄로 정렬되게 하는 요소 --%>
+		white-space: nowrap;  
 	}
 	
 	table {
@@ -57,17 +57,16 @@
 			<div class="row">
 				<div class="col-12">
 					<h2><strong>급여계산</strong></h2>
-					<li>월별, 사원별 급여정보를 입력, 저장, 관리하는 메뉴입니다. 귀속연월을 확인하세요.</li>
+					<li>월별, 사원들의 급여정보를 저장, 수정, 삭제할 수 있습니다.</li>
 				</div>
 			</div>
 			<hr>
 			<form id="form-salary" action="/salary/salarycalculate">
 				<div class="row mt-3">
 					<div class="col-12">
-							<label>귀속연월</label> <input type="month" name="basemonth" value="${param.basemonth }"/> &nbsp; 
+							<label>기준연월</label> <input type="month" name="basemonth" value="${param.basemonth }"/> &nbsp; 
 							<label>정산기간</label> <input type="date" name="startdate" value="${param.startdate }"/> ~ <input type="date" name="enddate" value="${param.enddate }"/> &nbsp; 
 							<label>급여지급일</label> <input type="date" name="paydate" value="${param.paydate }"/> &nbsp; 
-							<button type="submit" class="btn btn-danger btn-sm" id="btn-search">검색</button>
 					</div>	
 					<div class="row mt-4">
 						<div class="col-7">
@@ -95,7 +94,7 @@
 										<c:choose>
 											<c:when test="${empty TableDto }">
 												<tr>
-													<td colspan="6" class="text-center">급여 내역이 존재하지 않습니다.</td>
+													<td colspan="6" class="text-center">기준연월을 선택해주십시오.</td>
 												</tr>
 											</c:when>
 											<c:otherwise>
@@ -240,9 +239,9 @@ $(function() {
 		let no = $(this).attr('data-employee-no');              
 		let month = $("input[name=basemonth]").val();
 		let completed = $(this).attr('data-salary-calculated');    
-		let totalSalary = $(this).closest("tr").find("td:eq(3)");      // 선택된 지급총액
-		let deductionSalary = $(this).closest("tr").find("td:eq(4)");  // 선택된 공제총액
-		let realSalary = $(this).closest("tr").find("td:eq(5)");       // 선택된 실지급액
+		let totalSalary = $(this).closest("tr").find("td:eq(3)");      
+		let deductionSalary = $(this).closest("tr").find("td:eq(4)");  
+		let realSalary = $(this).closest("tr").find("td:eq(5)");
 		
 		if (completed == "Y") {
 			setSalaryHistory(no, month);
@@ -425,14 +424,14 @@ $(function() {
 				contentType : 'application/json',
 				dataType : 'json',
 				success : function(savedSalary) {
-				 	let totalSalary = new Number(savedSalary.totalSalary).toLocaleString();        // 저장버튼 클릭하면 1번째 테이블 지급총액 변경
+				 	let totalSalary = new Number(savedSalary.totalSalary).toLocaleString();       
 					selectedTotalSalary.text(totalSalary);           
 					let deductionSalary = new Number(savedSalary.deductionSalary).toLocaleString();
 					selectedDeductionSalary.text(deductionSalary);
 					let realSalary = new Number(savedSalary.realSalary).toLocaleString();
 					selectedRealSalary.text(realSalary); 
 					
-					let totalSalary2 = new Number(salary.totalSalary).toLocaleString();            // 저장버튼 클릭하면 2번째 테이블 지급총액 변경
+					let totalSalary2 = new Number(salary.totalSalary).toLocaleString();            
 					$("#total-salary").val(totalSalary);
 					let deductionSalary2 = new Number(salary.deductionSalary).toLocaleString();
 					$("#deduction-salary").val(deductionSalary);
@@ -442,7 +441,7 @@ $(function() {
 					// 저장과 동시에 합계 출력하기
 					generateTotalSalary();
 					
-					// 저장버튼 클릭 후에 다시 사원을 클릭해도 저장한 급여가 출력되도록 하기.
+					// 저장버튼 클릭 후에 다시 사원을 클릭해도 저장한 급여가 출력되도록 하기
 					$("#table-salaries tbody tr.table-primary a").attr('data-salary-calculated', "Y");   
 
 					alert("저장되었습니다.");
@@ -459,14 +458,14 @@ $(function() {
 				contentType : 'application/json',
 				dataType : 'json',
 				success : function(updatedSalary) {
-					let totalSalary = new Number(updatedSalary.totalSalary).toLocaleString();        // 저장버튼 클릭하면 1번째 테이블 지급총액 변경
+					let totalSalary = new Number(updatedSalary.totalSalary).toLocaleString();        
 					selectedTotalSalary.text(totalSalary);           
 					let deductionSalary = new Number(updatedSalary.deductionSalary).toLocaleString();
 					selectedDeductionSalary.text(deductionSalary);
 					let realSalary = new Number(updatedSalary.realSalary).toLocaleString();
 					selectedRealSalary.text(realSalary);
 					
-					let totalSalary2 = new Number(salary.totalSalary).toLocaleString();            // 저장버튼 클릭하면 2번째 테이블 지급총액 변경
+					let totalSalary2 = new Number(salary.totalSalary).toLocaleString();           
 					$("#total-salary").val(totalSalary);
 					let deductionSalary2 = new Number(salary.deductionSalary).toLocaleString();
 					$("#deduction-salary").val(deductionSalary);
