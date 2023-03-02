@@ -180,5 +180,4 @@ public class VacationService {
 			vacationMapper.deleteYearVacationDay(year);
 		}
 	}
-}	
-
+}

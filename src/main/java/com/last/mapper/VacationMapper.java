@@ -62,6 +62,8 @@ public interface VacationMapper {
 
 	void cancelVacationRequest(VacationRequest request);
 
+	int getUsedVacationsTotalRows(Map<String, Object> param);
+
 }
 	
 
