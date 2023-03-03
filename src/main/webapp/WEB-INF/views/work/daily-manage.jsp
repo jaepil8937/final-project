@@ -37,19 +37,23 @@
 						<label class="form-label"><strong>직급: </strong></label>
 						<select id="positionNo" name="positionNo" style="width: 100px" >
 							<option value="">선택하세요</option>
-							<option value="100" ${param.positionNo eq '100' ? 'selected' : '' }>사원</option>
-					        <option value="101" ${param.positionNo eq '101' ? 'selected' : '' }>대리</option>
-							<option value="102" ${param.positionNo eq '102' ? 'selected' : '' }>과장</option>
-							<option value="103" ${param.positionNo eq '103' ? 'selected' : '' }>차장</option>
-							<option value="104" ${param.positionNo eq '104' ? 'selected' : '' }>부장</option>
+							<option value="1" ${param.positionNo eq '1' ? 'selected' : '' }>사원</option>
+					        <option value="2" ${param.positionNo eq '2' ? 'selected' : '' }>대리</option>
+							<option value="3" ${param.positionNo eq '3' ? 'selected' : '' }>과장</option>
+							<option value="4" ${param.positionNo eq '4' ? 'selected' : '' }>차장</option>
+							<option value="5" ${param.positionNo eq '5' ? 'selected' : '' }>부장</option>
+							<option value="6" ${param.positionNo eq '6' ? 'selected' : '' }>사장</option>
 						</select>
 						<label class="form-label"><strong>부서: </strong></label>
 						<select name="deptNo" style="width: 100px" >
 							<option value="">선택하세요</option>
-							<option value="100" ${param.deptNo eq '100' ? 'selected' : '' }>영업팀</option>
-							<option value="101" ${param.deptNo eq '101' ? 'selected' : '' }>인사팀</option>
-							<option value="102" ${param.deptNo eq '102' ? 'selected' : '' }>관리팀</option>
-							<option value="103" ${param.deptNo eq '103' ? 'selected' : '' }>홍보팀</option>
+							<option value="100" ${param.deptNo eq '100' ? 'selected' : '' }>기획팀</option>
+							<option value="101" ${param.deptNo eq '101' ? 'selected' : '' }>설계팀</option>
+							<option value="102" ${param.deptNo eq '102' ? 'selected' : '' }>분석팀</option>
+							<option value="103" ${param.deptNo eq '103' ? 'selected' : '' }>디자인팀</option>
+							<option value="104" ${param.deptNo eq '104' ? 'selected' : '' }>개발팀</option>
+							<option value="105" ${param.deptNo eq '105' ? 'selected' : '' }>테스트팀</option>
+							<option value="106" ${param.deptNo eq '106' ? 'selected' : '' }>운영팀</option>
 						</select>
 						<button type="button" class="btn btn-danger" style="float:right;" id="btn-search">조회</button>
 					</div>
