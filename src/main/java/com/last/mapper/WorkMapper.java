@@ -3,6 +3,7 @@ package com.last.mapper;
 import java.util.List;
 
 
+
 import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
@@ -31,6 +32,8 @@ public interface WorkMapper {
 	List<WorkAttendance> getAllAttendancesByDateRange(@Param("empNo") int empNo, @Param("startDate") String startDate, @Param("endDate") String endDate);
 	// 조건으로 근태정보조회
 	List<WorkAdminAttendanceDto> getAllAdminAttendancesByOptions(Map<String, Object> param);
+	// 엑셀용리스트
+	List<Map<String, Object>> getAllAdminAttendancesForExcel(Map<String, Object> param);
 	// 전체행조회
 	int getTotalRows(Map<String, Object> param);
 	
@@ -43,8 +46,8 @@ public interface WorkMapper {
 	WorkDaysSummaryDto getMonthlyWorkDaysSummary(@Param("yearMonth") String yearMonth,@Param("employeeNo") int employeeNo);
 	// 월근무시간조회
 	WorkTimesSummaryDto getMonthlyWorkTimesSummary(@Param("yearMonth") String yearMonth,@Param("employeeNo") int employeeNo);
-	// 월근태현황 사원목록조회
-	List<WorkAdminAttendanceDto> getMonthStatusList();
-	
+	// 사원번호로 월근태조회
 	List<MonthlyAttendanceDto> getEmployeesByEmpNo(int empNo);
+	// 월근태현황
+	//List<WorkAdminAttendanceDto> getMonthStatusList();	
 }

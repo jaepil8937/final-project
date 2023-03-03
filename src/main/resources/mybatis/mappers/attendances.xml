@@ -108,8 +108,7 @@
 		from
 			employees A,
 			positions B,
-			departments C,
-			grades D
+			departments C
 		where
 			A.position_No = B.position_No
 			and A.dept_No = C.dept_No
@@ -281,8 +280,61 @@
 				<if test="endDate != null">
 					and working_date &lt; to_date(#{endDate}) + 1 	
 				</if>)
-			where row_numbers between #{begin} and #{end}
+			<if test="begin != null and end != null">
+				where row_numbers between #{begin} and #{end}
+			</if>
 	</select>
+	
+	<!-- 엑셀에 들어가는 정보 -->
+	<select id="getAllAdminAttendancesForExcel" parameterType="map" resultType="hashmap">
+	
+			select 
+				A.attendance_no		as no,
+				to_char(A.working_date, 'yyyy-mm-dd')		as workingDate,
+				A.start_work_time 	as startWorkTime,
+				A.end_work_time 	as endWorkTime,
+				B.employee_name 	as empName,
+				B.employee_no		as empNo,
+				C.dept_name 		as deptName,
+				D.position_name 	as positionName,
+				A.attendances_type	as attendancesType,
+				A.worked_times		as workedTimes,
+				A.holiday_work_time		as holidayWorkTime,
+				A.overtime_worked_times	as overtimeWorkedTimes,
+				A.night_worked_times	as nightWorkedTimes
+			from
+				employee_attendances A,
+				employees B,
+				departments C,
+				positions D
+			where
+				A.employee_no = B.employee_no
+				and B.dept_no = C.dept_no
+				and B.position_no = D.position_no
+				<if test="empNo == null and deptNo == null and positionNo == null and startDate == null and endDate == null">
+					and A.working_date between trunc(sysdate) and trunc(sysdate + 1)
+				</if>
+				<if test="empNo != null">
+					and A.employee_no = #{empNo}			
+				</if>
+					
+				<if test="deptNo != null">
+					and C.dept_no = #{deptNo}
+				</if>
+				
+				<if test="positionNo != null">
+					and D.position_no = #{positionNo}
+				</if>
+				
+				<if test="startDate != null">
+					and working_date >= #{startDate} 		
+				</if>
+				
+				<if test="endDate != null">
+					and working_date &lt; to_date(#{endDate}) + 1 	
+				</if>
+	</select>
+	
 	
 	<select id="getTotalRows" parameterType="map" resultType="int">
 		select
@@ -319,5 +371,5 @@
 				and working_date &lt; to_date(#{endDate}) + 1 	
 			</if>
 	</select>
-	
+
 </mapper>

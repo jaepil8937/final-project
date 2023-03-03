@@ -24,7 +24,7 @@
 			<div class="row mb-3 p-4 bg-light">
 				<div>
 					<label class="form-label"><strong>근무년월: </strong></label>
-					<input type="month" id="currentMonth" name="month-work" value="" min="" max="2023-12-31" style="width: 130px">
+					<input type="month" id="currentMonth" name="month-work" value="${param.yearMonth }" min="" max="2023-12-31" style="width: 130px">
 					<label class="form-label"><strong>사원번호: </strong></label>
 					<input type="text" style="text-align:center; width:100px" />
 					<label class="form-label"><strong>부서: </strong></label>
@@ -130,7 +130,7 @@
 				    		<td rowspan="2">${attendanceDto.empName }</td>
 				    		<td rowspan="2">${attendanceDto.deptName }</td>
 				    		<td rowspan="2">${attendanceDto.positionName }</td>
-				      		<td id="1">1</td>
+				      		<td id="1">${attendanceDto.attendancesType }</td>
 							<td id="2">2</td>
 							<td id="3">3</td>
 							<td id="4">4</td>

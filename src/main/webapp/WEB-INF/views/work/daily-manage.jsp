@@ -26,7 +26,7 @@
 					<h2>일일근태관리</h2>
 			</div>
 			<hr>
-			<form mehod="get" action="/work/dayadmin" id="form-search">
+			<form  mehod="get" action="/work/dayadmin" id="form-search">
 				<div class="row mb-3 p-4 bg-light">
 					<div>
 						<label class="form-label"><strong>근무일자: </strong></label>
@@ -51,7 +51,7 @@
 							<option value="102" ${param.deptNo eq '102' ? 'selected' : '' }>관리팀</option>
 							<option value="103" ${param.deptNo eq '103' ? 'selected' : '' }>홍보팀</option>
 						</select>
-						<button type="submit" class="btn btn-danger" style="float:right;" id="btn-search">조회</button>
+						<button type="button" class="btn btn-danger" style="float:right;" id="btn-search">조회</button>
 					</div>
 				</div>	
 			</form>
@@ -64,7 +64,9 @@
 					</p>
 				</div>
 			</div>
-		<form>
+		<div class="col-12 text-end">
+			<button   class="btn btn-secondary btn-sm" id="btn-down-xls">근태엑셀다운로드</button>
+		</div>
 		<div class="row" style="width: 100%; overflow: auto;">
 			<table class="table table-bordered table-hover table-striped table-sm" id="table-daily-attendance" style="white-space: nowrap;">
 				<colgroup>
@@ -129,7 +131,7 @@
 			  </tbody>
 			</table>
 	    	</div>
-			<c:if test="${not empty pagination }">
+			<c:if test="${not empty adminAttendanceDtos }">
 				<nav aria-label="Page navigation example">
 					<ul class="pagination justify-content-center">
 						<li class="page-item">
@@ -153,7 +155,6 @@
 					</ul>
 				</nav>
 			</c:if>
-		</form>
 		<div class="row mb-2 bg-light m-2">
 		  	<hr>
 		  	<div class="col">
@@ -211,12 +212,29 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script type="text/javascript" src="https://momentjs.com/downloads/moment.min.js"></script>
 <script type="text/javascript">
 $(function() {
 	let hourModifyModal = new bootstrap.Modal("#modal-modify-hour");
+	
+	// 근무일자에 오늘날짜를 기본값으로 넣음
+	if ( $("#form-search :input[name=startDate]").val() == "") {
+		let currentDate = moment().format("YYYY-MM-DD");
+		$("#form-search :input[name=startDate]").val(currentDate)
+		$("#form-search :input[name=endDate]").val(currentDate)
+	}
+	
+	// 조회버튼누르면 /work/dayadmin로 이동
+	$("#btn-search").click(function() {
+		$("#form-search").attr("action", "/work/dayadmin").trigger("submit")
+	});
+	
+	// 엑셀버튼 누르면 /work/download로 이동
+	$("#btn-down-xls").click(function() {
+		$("#form-search").attr("action", "/work/download").trigger("submit")
+	});
 
 	$("#table-daily-attendance tbody button").click(function() {
-	
 		// 근태번호 출근시간, 퇴근 시간을 읽어서 모달창의 히든, 출근시간, 퇴근시간 필드에 표시한다.
 		var no = $(this).attr("data-att-no");
 		var startTime = $(this).closest("tr").find("td:eq(6)").text();

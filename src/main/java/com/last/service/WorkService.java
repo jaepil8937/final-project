@@ -1,6 +1,7 @@
 package com.last.service;
 
 import java.time.LocalDateTime;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -140,6 +141,10 @@ public class WorkService {
 		return result;
 
 	}
+	
+	public List<Map<String, Object>> getAttendancesByOptions(Map<String, Object> param) {
+		return workMapper.getAllAdminAttendancesForExcel(param);
+	}
 
 	// 근태시간수정
 	public void updateAttendance(int attendanceNo, String startTime, String endTime) {
@@ -224,13 +229,13 @@ public class WorkService {
 		WorkTimesSummaryDto dto = workMapper.getMonthlyWorkTimesSummary(yearMonth, employeeNo);
 		return dto;
 	}
-
-	public List<WorkAdminAttendanceDto> getMonthStatusList() {
-		return workMapper.getMonthStatusList();
-	}
-
+	
 	public List<MonthlyAttendanceDto> getEmployeesByEmpNo(int empNo) {
 		return workMapper.getEmployeesByEmpNo(empNo);
 	}
 
+//	public List<WorkAdminAttendanceDto> getMonthStatusList() {
+//		// TODO Auto-generated method stub
+//		return workMapper.getMonthStatusList();
+//	}
 }

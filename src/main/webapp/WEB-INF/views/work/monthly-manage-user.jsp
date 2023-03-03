@@ -154,8 +154,8 @@ $(function() {
 	$("#table-emp-list tbody a").click(function(event) {
 		event.preventDefault();
 		
-		$("#table-emp-list tbody tr").removeClass("table-primary");
-		$(this).closest('tr').addClass("table-primary");
+		//$("#table-emp-list tbody tr").removeClass("table-primary");
+		//$(this).closest('tr').addClass("table-primary");
 		let month = $(":input[name='yearMonth']").val();
 		let empNo = $(this).attr("data-emp-no");
 		
