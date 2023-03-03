@@ -1,6 +1,8 @@
 package com.last.web.contoller;
 
+
 import java.util.HashMap;
+
 import java.util.List;
 import java.util.Map;
 
@@ -17,7 +19,6 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.last.dto.MonthlyAttendanceDto;
-import com.last.dto.WorkAdminAttendanceDto;
 import com.last.dto.WorkDaysSummaryDto;
 import com.last.dto.WorkTimesSummaryDto;
 import com.last.security.AuthenticatedUser;
@@ -159,6 +160,7 @@ public class WorkController {
 		return "work/monthly-manage-user";
 	}
 	
+	// 월근태상세정보
 	@GetMapping("/monthDetail")
 	@ResponseBody
 	public Map<String, Object> getMonthlyAttendanceDetail(@RequestParam("yearMonth") String yearMonth, 
@@ -173,12 +175,58 @@ public class WorkController {
 		return result;
 	}
 
-	// 월근태현황
-	@GetMapping("/monthstatus")
-	public String monthStatus(Model model) {
-		List<WorkAdminAttendanceDto> attendanceDtos = workService.getMonthStatusList();
-		model.addAttribute("attendanceDtos",attendanceDtos);
-		return "work/monthly-status";
+	// 엑셀파일다운로드
+	//produces = "application/octet-stream" : 바이너리 데이터를 응답으로 내려줌
+	@GetMapping(path = "/download", produces = "application/octet-stream")
+	public String downloadAttendances(@RequestParam(name = "startDate", required = false, defaultValue = "") String startDate, 
+			@RequestParam(name = "endDate", required = false, defaultValue = "") String endDate,
+			@RequestParam(name = "empNo", required = false, defaultValue = "0") int empNo,
+			@RequestParam(name = "positionNo", required = false, defaultValue = "0") int positionNo,
+			@RequestParam(name = "deptNo", required = false, defaultValue = "0") int deptNo, 
+			@RequestParam(name = "page", required = false, defaultValue = "1") int page, Model model) {
+		
+		Map<String, Object> param = new HashMap<String, Object>();
+		if (!startDate.isBlank()) {
+			param.put("startDate", startDate);
+		}
+		if (!endDate.isBlank()) {
+			param.put("endDate", endDate);
+		}
+		if (empNo > 0) {
+			param.put("empNo", empNo);
+		}
+		if (positionNo > 0) {
+			param.put("positionNo", positionNo);
+		}
+		if (deptNo > 0) {
+			param.put("deptNo", deptNo);
+		}
+		param.put("page", page);
+		
+		List<Map<String, Object>> items = workService.getAttendancesByOptions(param);
+		
+		// xml과 동일한 명칭을 적어야함
+		List<String> keys = List.of("WORKINGDATE", "EMPNO", "EMPNAME", "DEPTNAME", "POSITIONNAME","ATTENDANCESTYPE", 
+									"STARTWORKTIME", "ENDWORKTIME", "WORKEDTIMES", "OVERTIMEWORKEDTIMES", "NIGHTWORKEDTIMES");
+		List<String> headers = List.of("근무일자", "사원번호", "성명", "부서", "직급", "근태구분", "출근시간", "퇴근시간", "근무시간", "연장근무시간", "야근시간");
+		List<Integer> widths = List.of(20, 10, 10, 10, 10, 20, 10, 10, 10, 20, 10);
+		
+		
+		model.addAttribute("filename", "일일근태목록.xlsx");
+		model.addAttribute("keys", keys);
+		model.addAttribute("headers", headers);
+		model.addAttribute("widths", widths);
+		model.addAttribute("items", items);
+		
+		return "excelView";
 	}
+	
+	// 월근태현황
+//	@GetMapping("/monthstatus")
+//	public String monthStatus(Model model) {
+//		List<WorkAdminAttendanceDto> attendanceDtos = workService.getMonthStatusList();
+//		model.addAttribute("attendanceDtos",attendanceDtos);
+//		return "work/monthly-status";
+//	}
 	
 }

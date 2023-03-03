@@ -4,10 +4,12 @@ import java.util.Date;
 import org.apache.ibatis.type.Alias;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 @Alias("AdminAttendanceDto")
 @Getter
 @Setter
+@ToString
 public class WorkAdminAttendanceDto {
 	
 	private int no;

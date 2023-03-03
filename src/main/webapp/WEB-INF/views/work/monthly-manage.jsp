@@ -43,9 +43,6 @@
 			<div class="card">
 				<div class="card-header" style="font-weight: bold;">사용자정보</div>
 				<div class="card-body">
-				<div class="text-start align="right">
-						<button class="btn btn-secondary btn-sm id="btn-down">월근태엑셀다운로드</button>
-					</div>
 					<table class="table" id="table-emp-list">
 						<colgroup>
 								<col width="20%">

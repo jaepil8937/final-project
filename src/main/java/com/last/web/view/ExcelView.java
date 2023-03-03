@@ -1,5 +1,7 @@
 package com.last.web.view;
 
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.net.URLEncoder;
 import java.util.Date;
 import java.util.List;
@@ -76,6 +78,12 @@ public class ExcelView extends AbstractXlsxView {
 					dataCell.setCellValue((Long) value);
 				} else if (value instanceof Double) {
 					dataCell.setCellValue((Double) value);
+				} else if (value instanceof BigInteger) {
+					dataCell.setCellValue(((BigInteger) value).toString());
+				} else if (value instanceof BigDecimal) {
+					dataCell.setCellValue(((BigDecimal) value).toString());
+				} else {
+					dataCell.setCellValue(String.valueOf(value));
 				}
 			}
 			rowIndex++;

@@ -26,7 +26,6 @@
 						<sec:authorize access="hasAnyRole('ROLE_EMPLOYEE')">
 							<li><a class="dropdown-item ${side eq 'monthly-manage-user' ? 'text-light fw-bold' : '' }" href="/work/my-month">월간근태조회</a></li>
 						</sec:authorize>
-						<li><a class="dropdown-item ${side eq 'monthly-status' ? 'text-light fw-bold' : '' }" href="/work/monthstatus">월근태현황</a></li>
 						<li><a class="dropdown-item ${side eq 'holiday-calendar' ? 'text-light fw-bold' : '' }" href="/holiday/calendar">휴일달력</a></li>
 						<sec:authorize access="hasAnyRole('ROLE_ADMIN')">
 							<li><a class="dropdown-item ${side eq 'holiday-setting' ? 'text-light fw-bold' : '' }" href="/holiday/holiday-setting">휴일일괄설정</a></li>
