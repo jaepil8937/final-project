@@ -176,9 +176,8 @@ public class VacationController {
 	@PostMapping("/add")
 	@ResponseBody
 	public VacationDay addVacationDay(@RequestParam("workedYear") int workedYear, @RequestParam("vacationDays") int vacationDays ) {
-		VacationDay vacationDay = vacationService.addVacationDay(workedYear, vacationDays);
 		
-		return vacationDay;
+		return vacationService.addVacationDay(workedYear, vacationDays);
 	}
 	
 	// 모든 근속연수별 휴가일수 행삭제
