@@ -309,6 +309,7 @@
 	 		</if>
 	 	</where>
 	 	group by B.EMPLOYEE_NO, B.EMPLOYEE_NAME
+	 	order by B.EMPLOYEE_NO
 	</select>
 	
 	<!-- 기간별 급여현황 - 급여 상세내역 -->
