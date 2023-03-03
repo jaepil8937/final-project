@@ -330,7 +330,7 @@ public class HrController {
 		}
 		employeeService.saveEmployee(employeeRegisterForm);
 
-		return "hr/register";
+		return "redirect:/hr/register";
 	}
 	
 

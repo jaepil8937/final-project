@@ -112,7 +112,8 @@
 					</div>
 				</div>
 			</div>
-		<form id="form-register" class="border bg-light p-3" method="post" action="register" enctype="multipart/form-data">
+		<div class="border bg-light p-3">
+		<form id="form-register"  method="post" action="register" enctype="multipart/form-data">
 			<div class="row mb-3">
 				<div class="col-12">
 					<table class="table table-bordered" id="table-employees">
@@ -127,7 +128,14 @@
 							<tbody>
 								<tr>
 									<td rowspan="4">
-										<img id="dest-image" src="/resources/images/employee/${emp.photo }" class="img-fluid" alt="...">
+										<c:choose>
+											<c:when test="${empty emp or empty emp.photo}">
+												<img id="dest-image" src="/resources/images/employee/default.jpg" class="img-fluid" alt="...">
+											</c:when>
+											<c:otherwise>
+												<img id="dest-image" src="/resources/images/employee/${emp.photo }" class="img-fluid" alt="...">
+											</c:otherwise>
+										</c:choose>
 										<input type="file" class="form-control form-control-sm" name="file1" >	
 									</td>	
 									<th class="table-secondary text-end">사원번호</th>
@@ -258,7 +266,7 @@
 					</div>
 				</div>
 			</form>
-			<div class="row p-3">
+			<div class="row">
 				<div class="col-7">
 					<form class="row row-cols-lg-auto g-3 align-items-center" method="post" action="/hr/upload" enctype="multipart/form-data">
 						<div class="col-12">
@@ -273,10 +281,11 @@
 					<button type="button" class="btn btn-outline-primary btn-sm" id="btn-down-xls">엑셀 다운로드</button>
 				</div>
 				<div class="col-3 text-end">
-					<button type="submit" class="btn btn-dark btn-sm" >저장</button>
+					<button type="button" class="btn btn-dark btn-sm" id="btn-save">저장</button>
 					<a href="register" class="btn btn-danger btn-sm" >삭제</a>
 				</div>
 			</div>
+		</div>
 		</div>
 	</div>
 </div>
@@ -291,6 +300,9 @@
 <script type="text/javascript">
 $(function() {
 	
+	$("#btn-save").click(function() {
+		$("#form-register").trigger("submit")
+	});
 	$("#btn-down-xls").click(function() {
 		var empNo = $(":input[name=employeeNo]").val();
 		location.href= "/hr/download?employeeNo=" + empNo;
