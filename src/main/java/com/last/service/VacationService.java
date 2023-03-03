@@ -158,9 +158,8 @@ public class VacationService {
 	
     // 모든 근속연수별 휴가일수 조회
 	public List<VacationDay> getYearVacationDay() {
-		List<VacationDay> vacationDays = vacationMapper.getYearVacationDay();
 		
-		return vacationDays;
+		return vacationMapper.getYearVacationDay();
 	}
 	
 	// 근속연수별 휴가일수 행추가 
