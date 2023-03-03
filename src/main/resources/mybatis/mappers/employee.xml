@@ -132,6 +132,8 @@
 		</if>
 		and
 			E.employee_status = 'N'
+		order by
+			E.employee_no asc
 	</select>
 	
 	<select id="getEmployee" resultType="EmployeeDto">		<!-- personnel-register에서 사원 목록 조회 -->
