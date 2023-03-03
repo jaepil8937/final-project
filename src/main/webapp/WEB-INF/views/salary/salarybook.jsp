@@ -88,6 +88,7 @@
 										<th>직책</th>
 										<th>입사일</th>
 										<th>퇴사일</th>
+										<th>급여지급일</th>
 										<th>기본급</th>
 										<th>식대</th>
 										<th>연장수당</th>
@@ -127,6 +128,7 @@
 															<td>${salaryDto.retirementDate }</td>
 														</c:otherwise>
 													</c:choose>
+													<td>${salaryDto.payDate }</td>
 													<td><fmt:formatNumber value="${salaryDto.baseSalary }"/></td>
 													<td><fmt:formatNumber value="${salaryDto.mealSalary }"/></td>
 													<td><fmt:formatNumber value="${salaryDto.overtimeSalary }"/></td>
@@ -149,6 +151,7 @@
 								<tfoot>
 									<tr>
 										<th colspan="2" style="background-color: lightgray">합 계</th>
+										<th></th>
 										<th></th>
 										<th></th>
 										<th></th>
